@@ -1,7 +1,6 @@
 
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.beans.InvalidationListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -19,15 +18,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-
-import java.util.logging.Handler;
 
 // this class provides the user interface for the login page
 class LoginDisplayPane extends BorderPane {
 
-    private CreateAcctDisplayPane createAcctViewPane;
-    private double WIDTH, HEIGHT;
+    private final double WIDTH;
+    private final double HEIGHT;
     private Boolean focusBoolean;
     private final TextField usernameTextField;
     private final Button signinButton;
@@ -70,8 +66,8 @@ class LoginDisplayPane extends BorderPane {
         usernameTextField.setPrefHeight(40);
             // this helps us unfocus the username text field when first launched
         focusBoolean = true;
-        usernameTextField.focusedProperty().addListener((observable, oldValue, newValue) -> {
-        
+        usernameTextField.focusedProperty().addListener((_, _, newValue) -> {
+
             if(newValue && focusBoolean) {
                 this.requestFocus();
                 focusBoolean = false;
@@ -98,8 +94,6 @@ class LoginDisplayPane extends BorderPane {
             "-fx-background-color: #ffc627;"
         );
 
-            // using set styles removes the default effects buttons have
-            // so this is what will provide us with those missing effects
         signinButton.setOnAction(new ButtonHandler());
 
         // set attributes of the or label
@@ -160,10 +154,14 @@ class LoginDisplayPane extends BorderPane {
 
         @Override
         public void handle(ActionEvent a) {
-            if(a.getSource() == createAcctButton) {
-                createAcctViewPane = new CreateAcctDisplayPane(WIDTH, HEIGHT);
+            if (a.getSource() == createAcctButton) {
+
+                CreateAcctDisplayPane createAcctViewPane = new CreateAcctDisplayPane(WIDTH, HEIGHT);
                 Main.mainWindow.setScene(new Scene(createAcctViewPane, WIDTH, HEIGHT));
+
             } else if (a.getSource() == signinButton) {
+                // using set styles removes the default effects buttons have
+                // so this is what will provide us with those missing effects
                 signinButton.setOnMouseEntered(e -> {
                     System.out.println("mouse entered");
                     signinButton.setStyle("-fx-background-radius: 5em; -fx-background-color: #ffb600;");
@@ -184,14 +182,6 @@ class LoginDisplayPane extends BorderPane {
                     signinButton.setStyle("-fx-background-radius: 5em; -fx-background-color: #ffc627;");
                 });
             }
-        }
-    }
-
-    private class TextFieldHanlder implements ChangeListener<Text> {
-
-        @Override
-        public void changed(ObservableValue<? extends Text> observableValue, Text text, Text t1) {
-
         }
     }
 
