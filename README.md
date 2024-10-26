@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <title>CSE360_Team32</title>
-</head>
-
 <h2>
     Sun Devil Bookstore System
 </h2>
