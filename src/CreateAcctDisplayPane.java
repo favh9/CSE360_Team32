@@ -24,9 +24,9 @@ import javafx.scene.text.FontWeight;
 
 // this class will provide the user interface 
 // for the create account page
-public class CreateAcctView extends BorderPane {
+public class CreateAcctDisplayPane extends BorderPane {
     
-    private LoginView loginViewPane;
+    private LoginDisplayPane loginViewPane;
     private final TextField firstnameTextField;
     private final TextField lastnameTextField;
     private final TextField usernameTextField;
@@ -36,7 +36,7 @@ public class CreateAcctView extends BorderPane {
     private Alert acctCreatedAlert;
 
     // parameterized constructor
-    public CreateAcctView(double width, double height) {
+    public CreateAcctDisplayPane(double width, double height) {
         
         // set attributes for the image to be used for the back button
         ImageView backImageView = new ImageView(Main.backIcon);
@@ -53,7 +53,7 @@ public class CreateAcctView extends BorderPane {
 
             @Override
             public void handle(ActionEvent arg0) {
-                loginViewPane = new LoginView(width, height);
+                loginViewPane = new LoginDisplayPane(width, height);
                 Main.mainWindow.setScene(new Scene(loginViewPane,width,height));
             }
             
@@ -212,7 +212,7 @@ public class CreateAcctView extends BorderPane {
                 @Override
                 public void handle(DialogEvent arg0) {
                     // TODO Auto-generated method stub
-                    loginViewPane = new LoginView(width, height);
+                    loginViewPane = new LoginDisplayPane(width, height);
                     Main.mainWindow.setScene(new Scene(loginViewPane,width,height));
                 }
                 

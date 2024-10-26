@@ -1,6 +1,6 @@
 
 
-public class LoginViewController {
+public class LoginControlPane {
     
     // class instance variables
     

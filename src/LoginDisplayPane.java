@@ -19,16 +19,16 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 // this class provides the user interface for the login page
-class LoginView extends BorderPane {
+class LoginDisplayPane extends BorderPane {
 
-    private CreateAcctView createAcctViewPane;
+    private CreateAcctDisplayPane createAcctViewPane;
     private Boolean focusBoolean;
     private final TextField usernameTextField;
     private final Button signinButton;
     private final PasswordField passwordField;
 
     // parameterized constructor for login view
-    public LoginView(double width, double height) {
+    public LoginDisplayPane(double width, double height) {
         
         // load custom font
         Font arima = Font.loadFont(getClass().getResourceAsStream("Arima-Bold.ttf"), 65);
@@ -127,7 +127,7 @@ class LoginView extends BorderPane {
 
             @Override
             public void handle(ActionEvent arg0) {
-                createAcctViewPane = new CreateAcctView(width, height);
+                createAcctViewPane = new CreateAcctDisplayPane(width, height);
                 Main.mainWindow.setScene(new Scene(createAcctViewPane,width,height));
             }
             

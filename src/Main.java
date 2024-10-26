@@ -41,7 +41,7 @@ public class Main extends Application {
 
         // the initial page to be displayed
         // instance variables
-        LoginView loginViewPane = new LoginView(WIDTH, HEIGHT);
+        LoginDisplayPane loginViewPane = new LoginDisplayPane(WIDTH, HEIGHT);
 
         // create new scene and assign children, and window dimensions
         Scene scene1 = new Scene(loginViewPane, WIDTH, HEIGHT);
