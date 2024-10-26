@@ -13,9 +13,6 @@ public class Main extends Application {
         return n + n2;
     }
 
-    // instance variables
-    private LoginView loginViewPane;
-    private Scene scene1;
     public static Stage mainWindow;
 
     // these should be included in all pages to keep the window the same size
@@ -43,10 +40,11 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
 
         // the initial page to be displayed
-        loginViewPane = new LoginView(WIDTH, HEIGHT);
+        // instance variables
+        LoginView loginViewPane = new LoginView(WIDTH, HEIGHT);
 
         // create new scene and assign children, and window dimensions
-        scene1 = new Scene(loginViewPane,WIDTH,HEIGHT);
+        Scene scene1 = new Scene(loginViewPane, WIDTH, HEIGHT);
 
         // create stage
         mainWindow = new Stage();

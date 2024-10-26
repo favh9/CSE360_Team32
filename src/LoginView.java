@@ -23,13 +23,9 @@ class LoginView extends BorderPane {
 
     private CreateAcctView createAcctViewPane;
     private Boolean focusBoolean;
-    private Label titleLabel,signinLabel,orLabel;
-    private HBox signinAsuiconHBox;
-    private ImageView imageView;
-    private TextField usernameTextField;
-    private VBox mainVBox,usernamePasswordVBox,signinOrCreateacctVBox;
-    private Button signinButton,createAcctButton;
-    private PasswordField passwordField;
+    private final TextField usernameTextField;
+    private final Button signinButton;
+    private final PasswordField passwordField;
 
     // parameterized constructor for login view
     public LoginView(double width, double height) {
@@ -38,24 +34,24 @@ class LoginView extends BorderPane {
         Font arima = Font.loadFont(getClass().getResourceAsStream("Arima-Bold.ttf"), 65);
 
         // set attributes for the title label
-        titleLabel = new Label("ASU Bookstore");
+        Label titleLabel = new Label("ASU Bookstore");
         titleLabel.setFont(arima);
         titleLabel.setPadding(new Insets(20,0,0,0));
         titleLabel.setTextFill(Color.WHITE);
 
         // set attributes for the sign in label that sits next to the asu icon
-        signinLabel = new Label("Sign in");
+        Label signinLabel = new Label("Sign in");
         signinLabel.setFont(Font.font("Arial",FontWeight.NORMAL,36));
         signinLabel.setTextFill(Color.BLACK);
         signinLabel.setPrefHeight(80);
         
         // set attributes for the asu icon
-        imageView = new ImageView(Main.asuIcon);
+        ImageView imageView = new ImageView(Main.asuIcon);
         imageView.setFitHeight(80);
         imageView.setFitWidth(120);
 
         // add the sign in label and asu icon, adjust their position in the HBox
-        signinAsuiconHBox = new HBox(signinLabel,imageView);
+        HBox signinAsuiconHBox = new HBox(signinLabel, imageView);
         signinAsuiconHBox.setSpacing(20);
         signinAsuiconHBox.setPadding(new Insets(20,20,0,20));
 
@@ -80,7 +76,7 @@ class LoginView extends BorderPane {
         passwordField.deselect();
 
         // add the username and password text fields to a VBox
-        usernamePasswordVBox = new VBox(usernameTextField,passwordField);
+        VBox usernamePasswordVBox = new VBox(usernameTextField, passwordField);
         usernamePasswordVBox.setSpacing(20);
         usernamePasswordVBox.setPadding(new Insets(20,20,0,20));
 
@@ -112,14 +108,14 @@ class LoginView extends BorderPane {
         });
 
         // set attributes of the or label
-        orLabel = new Label("or");
+        Label orLabel = new Label("or");
         orLabel.setFont(Font.font("Arial", FontWeight.THIN, 15));
         orLabel.setTextFill(Color.BLACK);
         orLabel.setPrefWidth(300);
         orLabel.setAlignment(Pos.CENTER);
 
         // set attributes of create account button
-        createAcctButton = new Button();
+        Button createAcctButton = new Button();
         createAcctButton.setText("Create account");
         createAcctButton.setPrefSize(260, 40);
         createAcctButton.setStyle(
@@ -138,13 +134,13 @@ class LoginView extends BorderPane {
         });
 
         // add the sign in button, or label, and create account button to this VBox
-        signinOrCreateacctVBox = new VBox(signinButton,orLabel,createAcctButton);
+        VBox signinOrCreateacctVBox = new VBox(signinButton, orLabel, createAcctButton);
         signinOrCreateacctVBox.setSpacing(5);
         signinOrCreateacctVBox.setPadding(new Insets(20,20,0,20));
 
 
         // add the boxes to this VBox to make it into one
-        mainVBox = new VBox(signinAsuiconHBox,usernamePasswordVBox,signinOrCreateacctVBox);
+        VBox mainVBox = new VBox(signinAsuiconHBox, usernamePasswordVBox, signinOrCreateacctVBox);
         mainVBox.setMaxWidth(300);
         mainVBox.setMaxHeight(380);
         mainVBox.setBackground(Background.fill(Color.WHITE));

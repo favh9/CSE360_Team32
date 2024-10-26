@@ -27,26 +27,24 @@ import javafx.scene.text.FontWeight;
 public class CreateAcctView extends BorderPane {
     
     private LoginView loginViewPane;
-    private Label createacctLabel,instructionLabel,firstnameLabel,lastnameLabel,emailLabel,usernameLabel,passwordLabel,confirmpasswordLabel;
-    private TextField firstnameTextField,lastnameTextField,emailTextField,usernameTextField;
-    private PasswordField passwordPasswordfield,confirmpasswordPasswordfield;
-    private ImageView backImageView,confirmImageView;
-    private Button backButton,confirmButton;
-    private HBox backbuttonCreateacctLabelHBox,firstnameTextfieldHBox,lastnameTextfieldHBox,emailTextFieldHBox,
-                usernameTextfieldHBox,passwordPasswordfieldHBox,confirmpasswordPasswordfieldHBox;
-    private VBox whiteVBox, greyVBox;
+    private final TextField firstnameTextField;
+    private final TextField lastnameTextField;
+    private final TextField usernameTextField;
+    private final PasswordField passwordPasswordfield;
+    private PasswordField confirmpasswordPasswordfield;
+    private ImageView confirmImageView;
     private Alert acctCreatedAlert;
 
     // parameterized constructor
     public CreateAcctView(double width, double height) {
         
         // set attributes for the image to be used for the back button
-        backImageView = new ImageView(Main.backIcon);
+        ImageView backImageView = new ImageView(Main.backIcon);
         backImageView.setFitWidth(40);
         backImageView.setFitHeight(40);
 
         // set attributes for the back button and add the back icon
-        backButton = new Button();
+        Button backButton = new Button();
         backButton.setGraphic(backImageView);
         backButton.setBackground(null);
             // this event handler will set the scene of the main window
@@ -62,22 +60,22 @@ public class CreateAcctView extends BorderPane {
         });
 
         // set attributes for the create account label
-        createacctLabel = new Label("Create Account");
+        Label createacctLabel = new Label("Create Account");
         createacctLabel.setFont(Font.font("Arial",FontWeight.NORMAL,36));
         createacctLabel.setTextFill(Color.BLACK);
         createacctLabel.setPrefHeight(40);
 
         // add the back button and create account label to this HBox
-        backbuttonCreateacctLabelHBox = new HBox(backButton, createacctLabel);
+        HBox backbuttonCreateacctLabelHBox = new HBox(backButton, createacctLabel);
         backbuttonCreateacctLabelHBox.setAlignment(Pos.CENTER_LEFT);
         backbuttonCreateacctLabelHBox.setSpacing(20);
 
         // set attributes for the instructions label
-        instructionLabel = new Label("Fill in the information below and click on the confirm button to create your account.");
+        Label instructionLabel = new Label("Fill in the information below and click on the confirm button to create your account.");
         instructionLabel.setFont(Font.font("Arial",FontWeight.NORMAL,18));
 
         // set attributes for the first name label
-        firstnameLabel = new Label("First Name:");
+        Label firstnameLabel = new Label("First Name:");
         firstnameLabel.setFont(Font.font("Arial",FontWeight.NORMAL,16));
 
         // set attributes for the first name text field
@@ -86,12 +84,12 @@ public class CreateAcctView extends BorderPane {
         firstnameTextField.setFont(Font.font("Arial",FontWeight.NORMAL,16));
 
         // add the first name label and first name text field into this hbox
-        firstnameTextfieldHBox = new HBox(firstnameLabel,firstnameTextField);
+        HBox firstnameTextfieldHBox = new HBox(firstnameLabel, firstnameTextField);
         firstnameTextfieldHBox.setAlignment(Pos.CENTER_RIGHT);
         firstnameTextfieldHBox.setSpacing(10);
 
         // set attributes for the last name label
-        lastnameLabel = new Label("Last Name:");
+        Label lastnameLabel = new Label("Last Name:");
         lastnameLabel.setFont(Font.font("Arial",FontWeight.NORMAL,16));
 
         // set attributes for the last name text field
@@ -100,26 +98,26 @@ public class CreateAcctView extends BorderPane {
         lastnameTextField.setFont(Font.font("Arial",FontWeight.NORMAL,16));
 
         // add the first name label and first name text field into this hbox
-        lastnameTextfieldHBox = new HBox(lastnameLabel,lastnameTextField);
+        HBox lastnameTextfieldHBox = new HBox(lastnameLabel, lastnameTextField);
         lastnameTextfieldHBox.setAlignment(Pos.CENTER_RIGHT);
         lastnameTextfieldHBox.setSpacing(10);
         
         // set attributes for the email label
-        emailLabel = new Label("E-mail:");
+        Label emailLabel = new Label("E-mail:");
         emailLabel.setFont(Font.font("Arial",FontWeight.NORMAL,16));
 
         // set attributes for the email text field
-        emailTextField = new TextField();
+        TextField emailTextField = new TextField();
         emailTextField.setPromptText("E-mail");
         emailTextField.setFont(Font.font("Arial",FontWeight.NORMAL,16));
 
         // add the email label and email text field into this hbox
-        emailTextFieldHBox = new HBox(emailLabel,emailTextField);
+        HBox emailTextFieldHBox = new HBox(emailLabel, emailTextField);
         emailTextFieldHBox.setAlignment(Pos.CENTER_RIGHT);
         emailTextFieldHBox.setSpacing(10);
         
         // set attributes for the username label
-        usernameLabel = new Label("Username:");
+        Label usernameLabel = new Label("Username:");
         usernameLabel.setFont(Font.font("Arial",FontWeight.NORMAL,16));
 
         // set attributes for the username text field
@@ -128,12 +126,12 @@ public class CreateAcctView extends BorderPane {
         usernameTextField.setFont(Font.font("Arial",FontWeight.NORMAL,16));
 
         // add the username label and username text field into this hbox
-        usernameTextfieldHBox = new HBox(usernameLabel,usernameTextField);
+        HBox usernameTextfieldHBox = new HBox(usernameLabel, usernameTextField);
         usernameTextfieldHBox.setAlignment(Pos.CENTER_RIGHT);
         usernameTextfieldHBox.setSpacing(10);
 
         // set attributes for the password label
-        passwordLabel = new Label("Password:");
+        Label passwordLabel = new Label("Password:");
         passwordLabel.setFont(Font.font("Arial",FontWeight.NORMAL,16));
 
         // set attributes for the password password field
@@ -161,12 +159,12 @@ public class CreateAcctView extends BorderPane {
         });
 
         // add the password label and password password field into this hbox
-        passwordPasswordfieldHBox = new HBox(passwordLabel,passwordPasswordfield);
+        HBox passwordPasswordfieldHBox = new HBox(passwordLabel, passwordPasswordfield);
         passwordPasswordfieldHBox.setAlignment(Pos.CENTER_RIGHT);
         passwordPasswordfieldHBox.setSpacing(10);
 
         // set attributes for the confirm password label
-        confirmpasswordLabel = new Label("Confirm Password:");
+        Label confirmpasswordLabel = new Label("Confirm Password:");
         confirmpasswordLabel.setFont(Font.font("Arial",FontWeight.NORMAL,16));
 
         // set attributes for the password password field
@@ -186,13 +184,13 @@ public class CreateAcctView extends BorderPane {
         });
 
         // add the password label and password password field into this hbox
-        confirmpasswordPasswordfieldHBox = new HBox(confirmpasswordLabel,confirmpasswordPasswordfield);
+        HBox confirmpasswordPasswordfieldHBox = new HBox(confirmpasswordLabel, confirmpasswordPasswordfield);
         confirmpasswordPasswordfieldHBox.setAlignment(Pos.CENTER_RIGHT);
         confirmpasswordPasswordfieldHBox.setSpacing(10);
 
 
         // set the attributes for the confirm button
-        confirmButton = new Button("Confirm");
+        Button confirmButton = new Button("Confirm");
         confirmButton.setFont(Font.font("Arial",FontWeight.NORMAL,16));
         confirmButton.setPrefSize(100,40);
             // this displays a pop up displaying account was successfully created
@@ -224,7 +222,7 @@ public class CreateAcctView extends BorderPane {
         
 
         // add the grey box elements which includes the instructions label and all HBoxes
-        greyVBox = new VBox(instructionLabel,firstnameTextfieldHBox,lastnameTextfieldHBox,emailTextFieldHBox,usernameTextfieldHBox,passwordPasswordfieldHBox,confirmpasswordPasswordfieldHBox,confirmButton);
+        VBox greyVBox = new VBox(instructionLabel, firstnameTextfieldHBox, lastnameTextfieldHBox, emailTextFieldHBox, usernameTextfieldHBox, passwordPasswordfieldHBox, confirmpasswordPasswordfieldHBox, confirmButton);
             // readjust the width of the HBoxes inside the greyVBox
         VBox.setMargin(firstnameTextfieldHBox, new Insets(0,450,0,0));
         VBox.setMargin(lastnameTextfieldHBox, new Insets(0,450,0,0));
@@ -241,7 +239,7 @@ public class CreateAcctView extends BorderPane {
         );
 
         // the white VBox is our main box
-        whiteVBox = new VBox(backbuttonCreateacctLabelHBox,greyVBox);
+        VBox whiteVBox = new VBox(backbuttonCreateacctLabelHBox, greyVBox);
         whiteVBox.setSpacing(10);
         whiteVBox.setPadding(new Insets(40,40,40,40));
         whiteVBox.setStyle(
