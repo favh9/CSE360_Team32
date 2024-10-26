@@ -1,5 +1,7 @@
 
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -17,19 +19,26 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+
+import java.util.logging.Handler;
 
 // this class provides the user interface for the login page
 class LoginDisplayPane extends BorderPane {
 
     private CreateAcctDisplayPane createAcctViewPane;
+    private double WIDTH, HEIGHT;
     private Boolean focusBoolean;
     private final TextField usernameTextField;
     private final Button signinButton;
+    private final Button createAcctButton;
     private final PasswordField passwordField;
 
     // parameterized constructor for login view
     public LoginDisplayPane(double width, double height) {
-        
+        WIDTH = width;
+        HEIGHT = height;
+
         // load custom font
         Font arima = Font.loadFont(getClass().getResourceAsStream("Arima-Bold.ttf"), 65);
 
@@ -91,21 +100,7 @@ class LoginDisplayPane extends BorderPane {
 
             // using set styles removes the default effects buttons have
             // so this is what will provide us with those missing effects
-        signinButton.setOnMouseEntered(e -> {
-            signinButton.setStyle("-fx-background-radius: 5em; -fx-background-color: #ffb600;");
-        });
-
-        signinButton.setOnMouseExited(e -> {
-            signinButton.setStyle("-fx-background-radius: 5em; -fx-background-color: #ffc627;");
-        });
-
-        signinButton.setOnMousePressed(e -> {
-            signinButton.setStyle("-fx-background-radius: 5em; -fx-background-color: #ffa500;");
-        });
-        
-        signinButton.setOnMouseReleased(e -> {
-            signinButton.setStyle("-fx-background-radius: 5em; -fx-background-color: #ffc627;");
-        });
+        signinButton.setOnAction(new ButtonHandler());
 
         // set attributes of the or label
         Label orLabel = new Label("or");
@@ -115,7 +110,7 @@ class LoginDisplayPane extends BorderPane {
         orLabel.setAlignment(Pos.CENTER);
 
         // set attributes of create account button
-        Button createAcctButton = new Button();
+        createAcctButton = new Button();
         createAcctButton.setText("Create account");
         createAcctButton.setPrefSize(260, 40);
         createAcctButton.setStyle(
@@ -123,15 +118,7 @@ class LoginDisplayPane extends BorderPane {
         );
             // this event handler will set the scene of the main window
             // to Create Account
-        createAcctButton.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent arg0) {
-                createAcctViewPane = new CreateAcctDisplayPane(width, height);
-                Main.mainWindow.setScene(new Scene(createAcctViewPane,width,height));
-            }
-            
-        });
+        createAcctButton.setOnAction(new ButtonHandler());
 
         // add the sign in button, or label, and create account button to this VBox
         VBox signinOrCreateacctVBox = new VBox(signinButton, orLabel, createAcctButton);
@@ -167,6 +154,45 @@ class LoginDisplayPane extends BorderPane {
     // accessor for password text field
     public String getPassword() {
         return passwordField.getText();
+    }
+
+    private class ButtonHandler implements EventHandler<ActionEvent> {
+
+        @Override
+        public void handle(ActionEvent a) {
+            if(a.getSource() == createAcctButton) {
+                createAcctViewPane = new CreateAcctDisplayPane(WIDTH, HEIGHT);
+                Main.mainWindow.setScene(new Scene(createAcctViewPane, WIDTH, HEIGHT));
+            } else if (a.getSource() == signinButton) {
+                signinButton.setOnMouseEntered(e -> {
+                    System.out.println("mouse entered");
+                    signinButton.setStyle("-fx-background-radius: 5em; -fx-background-color: #ffb600;");
+                });
+
+                signinButton.setOnMouseExited(e -> {
+                    System.out.println("mouse exited");
+                    signinButton.setStyle("-fx-background-radius: 5em; -fx-background-color: #ffc627;");
+                });
+
+                signinButton.setOnMousePressed(e -> {
+                    System.out.println("mouse pressed");
+                    signinButton.setStyle("-fx-background-radius: 5em; -fx-background-color: #ffa500;");
+                });
+
+                signinButton.setOnMouseReleased(e -> {
+                    System.out.println("mouse released");
+                    signinButton.setStyle("-fx-background-radius: 5em; -fx-background-color: #ffc627;");
+                });
+            }
+        }
+    }
+
+    private class TextFieldHanlder implements ChangeListener<Text> {
+
+        @Override
+        public void changed(ObservableValue<? extends Text> observableValue, Text text, Text t1) {
+
+        }
     }
 
 }
