@@ -6,10 +6,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
@@ -36,7 +33,7 @@ class LoginDisplayPane extends BorderPane {
         HEIGHT = height;
 
         // load custom font
-        Font arima = Font.loadFont(getClass().getResourceAsStream("Arima-Bold.ttf"), 65);
+        Font arima = Font.loadFont(getClass().getResourceAsStream("fonts/Arima-Bold.ttf"), 65);
 
         // set attributes for the title label
         Label titleLabel = new Label("ASU Bookstore");
@@ -183,6 +180,7 @@ class LoginDisplayPane extends BorderPane {
                 });
             }
         }
+
     }
 
 }

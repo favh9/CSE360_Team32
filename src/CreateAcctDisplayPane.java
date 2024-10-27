@@ -25,19 +25,24 @@ import javafx.scene.text.FontWeight;
 // this class will provide the user interface 
 // for the create account page
 public class CreateAcctDisplayPane extends BorderPane {
-    
+
+    private final double WIDTH;
+    private final double HEIGHT;
     private LoginDisplayPane loginViewPane;
     private final TextField firstnameTextField;
     private final TextField lastnameTextField;
+    private final TextField emailTextField;
     private final TextField usernameTextField;
     private final PasswordField passwordPasswordfield;
     private PasswordField confirmpasswordPasswordfield;
-    private ImageView confirmImageView;
-    private Alert acctCreatedAlert;
+    private final Button confirmButton;
 
     // parameterized constructor
     public CreateAcctDisplayPane(double width, double height) {
-        
+
+        WIDTH = width;
+        HEIGHT = height;
+
         // set attributes for the image to be used for the back button
         ImageView backImageView = new ImageView(Main.backIcon);
         backImageView.setFitWidth(40);
@@ -107,7 +112,7 @@ public class CreateAcctDisplayPane extends BorderPane {
         emailLabel.setFont(Font.font("Arial",FontWeight.NORMAL,16));
 
         // set attributes for the email text field
-        TextField emailTextField = new TextField();
+        emailTextField = new TextField();
         emailTextField.setPromptText("E-mail");
         emailTextField.setFont(Font.font("Arial",FontWeight.NORMAL,16));
 
@@ -190,35 +195,11 @@ public class CreateAcctDisplayPane extends BorderPane {
 
 
         // set the attributes for the confirm button
-        Button confirmButton = new Button("Confirm");
+        confirmButton = new Button("Confirm");
         confirmButton.setFont(Font.font("Arial",FontWeight.NORMAL,16));
         confirmButton.setPrefSize(100,40);
             // this displays a pop up displaying account was successfully created
-        confirmButton.setOnAction(e -> {
-            
-            acctCreatedAlert = new Alert(AlertType.INFORMATION);
-            acctCreatedAlert.setTitle("");
-            acctCreatedAlert.setHeaderText("Congratulations!");
-            acctCreatedAlert.setContentText("Welcome " + firstnameTextField.getText() + " " + lastnameTextField.getText() + 
-            ",\nYour account was successfully created." +
-            "\nYour username is " + usernameTextField.getText() + ".");
-            confirmImageView = new ImageView(Main.successIcon);
-            confirmImageView.setFitHeight(40);
-            confirmImageView.setFitWidth(100);
-            acctCreatedAlert.setGraphic(confirmImageView);
-                // this will ensure upon closing the login page appears
-            acctCreatedAlert.setOnCloseRequest(new EventHandler<DialogEvent>() {
-
-                @Override
-                public void handle(DialogEvent arg0) {
-                    // TODO Auto-generated method stub
-                    loginViewPane = new LoginDisplayPane(width, height);
-                    Main.mainWindow.setScene(new Scene(loginViewPane,width,height));
-                }
-                
-            });
-            acctCreatedAlert.show();
-        });
+        confirmButton.setOnAction(new ButtonHandler());
         
 
         // add the grey box elements which includes the instructions label and all HBoxes
@@ -254,5 +235,100 @@ public class CreateAcctDisplayPane extends BorderPane {
         this.setPrefSize(width, height);;
         this.setBackground(Background.fill(Color.web("#4A1E2C"))); // darker maroon 
         
+    }
+
+    private class ButtonHandler implements EventHandler<ActionEvent> {
+
+        @Override
+        public void handle(ActionEvent a) {
+
+            if (a.getSource() == confirmButton) {
+
+                if(emptyFields()) {
+                    displayEmptyFields();
+                } else if(!passwordsMatch()){
+                    displayPasswordsMatch();
+                }else {
+                    Alert acctCreatedAlert = new Alert(AlertType.INFORMATION);
+                    acctCreatedAlert.setTitle("");
+                    acctCreatedAlert.setHeaderText("Congratulations!");
+                    acctCreatedAlert.setContentText("Welcome " + firstnameTextField.getText() + " " + lastnameTextField.getText() +
+                            ",\nYour account was successfully created." +
+                            "\nYour username is " + usernameTextField.getText() + ".");
+                    ImageView confirmImageView = new ImageView(Main.successIcon);
+                    confirmImageView.setFitHeight(40);
+                    confirmImageView.setFitWidth(100);
+                    acctCreatedAlert.setGraphic(confirmImageView);
+                    // this will ensure upon closing the login page appears
+                    acctCreatedAlert.setOnCloseRequest(new EventHandler<DialogEvent>() {
+
+                        @Override
+                        public void handle(DialogEvent arg0) {
+                            // TODO Auto-generated method stub
+                            loginViewPane = new LoginDisplayPane(WIDTH,HEIGHT);
+                            Main.mainWindow.setScene(new Scene(loginViewPane,WIDTH,HEIGHT));
+                        }
+
+                    });
+                    acctCreatedAlert.show();
+                }
+            }
+        }
+
+        public boolean passwordsMatch() {
+            return passwordPasswordfield.getText().compareTo(confirmpasswordPasswordfield.getText()) == 0;
+        }
+
+        public void displayPasswordsMatch() {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+
+            alert.setTitle("Warning");
+            alert.setHeaderText(null);
+            alert.setContentText("Please verify or re-enter your password\n");
+            alert.show();
+        }
+
+        public boolean emptyFields() {
+
+            if(firstnameTextField.getText().isEmpty())
+                return true;
+            if(lastnameTextField.getText().isEmpty())
+                return true;
+            if(emailTextField.getText().isEmpty())
+                return true;
+            if(usernameTextField.getText().isEmpty())
+                return true;
+            if(passwordPasswordfield.getText().isEmpty())
+                return true;
+            if(confirmpasswordPasswordfield.getText().isEmpty())
+                return true;
+
+            return false;
+        }
+
+        public void displayEmptyFields() {
+
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            String missingData = "Please enter the following fields to create your account:\n";
+
+            if(firstnameTextField.getText().isEmpty())
+                missingData += "\tfirst name\n";
+            if(lastnameTextField.getText().isEmpty())
+                missingData += "\tlast name\n";
+            if(emailTextField.getText().isEmpty())
+                missingData += "\te-mail\n";
+            if(usernameTextField.getText().isEmpty())
+                missingData += "\tusername\n";
+            if(passwordPasswordfield.getText().isEmpty())
+                missingData += "\tpassword\n";
+            if(confirmpasswordPasswordfield.getText().isEmpty())
+                missingData += "\tconfirm password\n";
+
+            alert.setTitle("Warning");
+            alert.setHeaderText(null);
+            alert.setContentText(missingData);
+            alert.show();
+
+        }
     }
 }
