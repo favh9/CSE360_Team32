@@ -13,6 +13,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
@@ -34,8 +35,9 @@ public class CreateAcctDisplayPane extends BorderPane {
     private final TextField emailTextField;
     private final TextField usernameTextField;
     private final PasswordField passwordPasswordfield;
-    private PasswordField confirmpasswordPasswordfield;
+    private final PasswordField confirmpasswordPasswordfield;
     private final Button confirmButton;
+    private final Button backButton;
 
     // parameterized constructor
     public CreateAcctDisplayPane(double width, double height) {
@@ -49,20 +51,12 @@ public class CreateAcctDisplayPane extends BorderPane {
         backImageView.setFitHeight(40);
 
         // set attributes for the back button and add the back icon
-        Button backButton = new Button();
+        backButton = new Button();
         backButton.setGraphic(backImageView);
         backButton.setBackground(null);
             // this event handler will set the scene of the main window
             // to Create Account
-        backButton.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent arg0) {
-                loginViewPane = new LoginDisplayPane(width, height);
-                Main.mainWindow.setScene(new Scene(loginViewPane,width,height));
-            }
-            
-        });
+        backButton.setOnAction(new ButtonHandler());
 
         // set attributes for the create account label
         Label createacctLabel = new Label("Create Account");
@@ -143,25 +137,8 @@ public class CreateAcctDisplayPane extends BorderPane {
         passwordPasswordfield = new PasswordField();
         passwordPasswordfield.setPromptText("Password");
         passwordPasswordfield.setFont(Font.font("Arial",FontWeight.NORMAL,16));
-            // this handler will find passwor mismatch
-            passwordPasswordfield.setOnKeyReleased(e -> {
-            // sleep the thread to find a password mismatch
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            }
-            if(confirmpasswordPasswordfield.getText().isEmpty())
-                return;
-            if(passwordPasswordfield.getText().compareTo(confirmpasswordPasswordfield.getText()) != 0) {
-                passwordPasswordfield.setBorder(Border.stroke(Color.RED));
-                confirmpasswordPasswordfield.setBorder(Border.stroke(Color.RED));
-            } else {
-                passwordPasswordfield.setBorder(Border.stroke(Color.TRANSPARENT));
-                confirmpasswordPasswordfield.setBorder(Border.stroke(Color.TRANSPARENT));
-            }
-        });
+            // this handler will find password mismatch
+            passwordPasswordfield.setOnKeyReleased(new PasswordFieldHandler());
 
         // add the password label and password password field into this hbox
         HBox passwordPasswordfieldHBox = new HBox(passwordLabel, passwordPasswordfield);
@@ -177,16 +154,7 @@ public class CreateAcctDisplayPane extends BorderPane {
         confirmpasswordPasswordfield.setPromptText("Confirm Password");
         confirmpasswordPasswordfield.setFont(Font.font("Arial",FontWeight.NORMAL,16));
             // this handler will find passwor mismatch
-        confirmpasswordPasswordfield.setOnMouseExited(e -> {
-            
-            if(passwordPasswordfield.getText().compareTo(confirmpasswordPasswordfield.getText()) != 0) {
-                passwordPasswordfield.setBorder(Border.stroke(Color.RED));
-                confirmpasswordPasswordfield.setBorder(Border.stroke(Color.RED));
-            } else {
-                passwordPasswordfield.setBorder(Border.stroke(Color.TRANSPARENT));
-                confirmpasswordPasswordfield.setBorder(Border.stroke(Color.TRANSPARENT));
-            }
-        });
+        confirmpasswordPasswordfield.setOnKeyReleased(new PasswordFieldHandler());
 
         // add the password label and password password field into this hbox
         HBox confirmpasswordPasswordfieldHBox = new HBox(confirmpasswordLabel, confirmpasswordPasswordfield);
@@ -242,7 +210,10 @@ public class CreateAcctDisplayPane extends BorderPane {
         @Override
         public void handle(ActionEvent a) {
 
-            if (a.getSource() == confirmButton) {
+            if(a.getSource() == backButton) {
+                loginViewPane = new LoginDisplayPane(WIDTH,HEIGHT);
+                Main.mainWindow.setScene(new Scene(loginViewPane,WIDTH,HEIGHT));
+            } else if (a.getSource() == confirmButton) {
 
                 if(emptyFields()) {
                     displayEmptyFields();
@@ -260,15 +231,10 @@ public class CreateAcctDisplayPane extends BorderPane {
                     confirmImageView.setFitWidth(100);
                     acctCreatedAlert.setGraphic(confirmImageView);
                     // this will ensure upon closing the login page appears
-                    acctCreatedAlert.setOnCloseRequest(new EventHandler<DialogEvent>() {
-
-                        @Override
-                        public void handle(DialogEvent arg0) {
-                            // TODO Auto-generated method stub
-                            loginViewPane = new LoginDisplayPane(WIDTH,HEIGHT);
-                            Main.mainWindow.setScene(new Scene(loginViewPane,WIDTH,HEIGHT));
-                        }
-
+                    acctCreatedAlert.setOnCloseRequest(arg0 -> {
+                        // TODO Auto-generated method stub
+                        loginViewPane = new LoginDisplayPane(WIDTH,HEIGHT);
+                        Main.mainWindow.setScene(new Scene(loginViewPane,WIDTH,HEIGHT));
                     });
                     acctCreatedAlert.show();
                 }
@@ -329,6 +295,45 @@ public class CreateAcctDisplayPane extends BorderPane {
             alert.setContentText(missingData);
             alert.show();
 
+        }
+    }
+
+    private class PasswordFieldHandler implements EventHandler<KeyEvent> {
+
+        @Override
+        public void handle(KeyEvent keyEvent) {
+
+            if(keyEvent.getSource() == passwordPasswordfield) {
+
+                // sleep the thread to find a password mismatch
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+
+                if (confirmpasswordPasswordfield.getText().isEmpty())
+                    return;
+                if (passwordPasswordfield.getText().compareTo(confirmpasswordPasswordfield.getText()) != 0) {
+                    passwordPasswordfield.setBorder(Border.stroke(Color.RED));
+                    confirmpasswordPasswordfield.setBorder(Border.stroke(Color.RED));
+                } else {
+                    passwordPasswordfield.setBorder(Border.stroke(Color.TRANSPARENT));
+                    confirmpasswordPasswordfield.setBorder(Border.stroke(Color.TRANSPARENT));
+                }
+
+            } else if(keyEvent.getSource() == confirmpasswordPasswordfield) {
+
+                if(passwordPasswordfield.getText().compareTo(confirmpasswordPasswordfield.getText()) != 0) {
+                    passwordPasswordfield.setBorder(Border.stroke(Color.RED));
+                    confirmpasswordPasswordfield.setBorder(Border.stroke(Color.RED));
+                } else {
+                    passwordPasswordfield.setBorder(Border.stroke(Color.TRANSPARENT));
+                    confirmpasswordPasswordfield.setBorder(Border.stroke(Color.TRANSPARENT));
+                }
+
+            }
         }
     }
 }

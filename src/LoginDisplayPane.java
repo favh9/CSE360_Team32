@@ -29,6 +29,7 @@ class LoginDisplayPane extends BorderPane {
 
     // parameterized constructor for login view
     public LoginDisplayPane(double width, double height) {
+
         WIDTH = width;
         HEIGHT = height;
 
@@ -91,6 +92,7 @@ class LoginDisplayPane extends BorderPane {
             "-fx-background-color: #ffc627;"
         );
 
+        // register button with the button handler
         signinButton.setOnAction(new ButtonHandler());
 
         // set attributes of the or label
@@ -107,15 +109,14 @@ class LoginDisplayPane extends BorderPane {
         createAcctButton.setStyle(
             "-fx-background-radius: 5em;"
         );
-            // this event handler will set the scene of the main window
-            // to Create Account
+
+        // register button with the button handler
         createAcctButton.setOnAction(new ButtonHandler());
 
         // add the sign in button, or label, and create account button to this VBox
         VBox signinOrCreateacctVBox = new VBox(signinButton, orLabel, createAcctButton);
         signinOrCreateacctVBox.setSpacing(5);
         signinOrCreateacctVBox.setPadding(new Insets(20,20,0,20));
-
 
         // add the boxes to this VBox to make it into one
         VBox mainVBox = new VBox(signinAsuiconHBox, usernamePasswordVBox, signinOrCreateacctVBox);
@@ -147,12 +148,15 @@ class LoginDisplayPane extends BorderPane {
         return passwordField.getText();
     }
 
+    // handles action events for the buttons in the login page
     private class ButtonHandler implements EventHandler<ActionEvent> {
 
         @Override
         public void handle(ActionEvent a) {
+
             if (a.getSource() == createAcctButton) {
 
+                // set the scene of the main window to Create Account
                 CreateAcctDisplayPane createAcctViewPane = new CreateAcctDisplayPane(WIDTH, HEIGHT);
                 Main.mainWindow.setScene(new Scene(createAcctViewPane, WIDTH, HEIGHT));
 
