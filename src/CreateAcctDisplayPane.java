@@ -219,7 +219,7 @@ public class CreateAcctDisplayPane extends BorderPane {
                     displayEmptyFields();
                 } else if(!passwordsMatch()){
                     displayPasswordsMatch();
-                }else {
+                } else {
                     Alert acctCreatedAlert = new Alert(AlertType.INFORMATION);
                     acctCreatedAlert.setTitle("");
                     acctCreatedAlert.setHeaderText("Congratulations!");
