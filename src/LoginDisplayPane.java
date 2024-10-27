@@ -64,7 +64,7 @@ class LoginDisplayPane extends BorderPane {
         usernameTextField.setPrefHeight(40);
             // this helps us unfocus the username text field when first launched
         focusBoolean = true;
-        usernameTextField.focusedProperty().addListener((_, _, newValue) -> {
+        usernameTextField.focusedProperty().addListener((observable,oldValue, newValue) -> {
 
             if(newValue && focusBoolean) {
                 this.requestFocus();
