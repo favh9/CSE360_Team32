@@ -19,8 +19,6 @@ import javafx.scene.text.FontWeight;
 // this class provides the user interface for the login page
 class LoginDisplayPane extends BorderPane {
 
-    private final double WIDTH;
-    private final double HEIGHT;
     private CreateAcctDisplayPane createAcctDisplayPane;
     private Boolean focusBoolean;
     private final TextField usernameTextField;
@@ -32,8 +30,7 @@ class LoginDisplayPane extends BorderPane {
     // parameterized constructor for login view
     public LoginDisplayPane(double width, double height) {
 
-        WIDTH = width;
-        HEIGHT = height;
+        createAcctDisplayPane = new CreateAcctDisplayPane(width,height);
 
         // load custom font
         Font arima = Font.loadFont(getClass().getResourceAsStream("fonts/Arima-Bold.ttf"), 65);
@@ -169,8 +166,7 @@ class LoginDisplayPane extends BorderPane {
             if (a.getSource() == createAcctButton) {
 
                 // set the scene of the main window to Create Account
-                createAcctDisplayPane = new CreateAcctDisplayPane(WIDTH, HEIGHT);
-                Main.mainWindow.setScene(new Scene(createAcctDisplayPane, WIDTH, HEIGHT));
+                Main.mainWindow.setScene(new Scene(createAcctDisplayPane));
 
             } else if (a.getSource() == signinButton) {
                 // using set styles removes the default effects buttons have
