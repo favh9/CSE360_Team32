@@ -23,9 +23,10 @@ class LoginDisplayPane extends BorderPane {
     private final double HEIGHT;
     private Boolean focusBoolean;
     private final TextField usernameTextField;
+    protected final PasswordField passwordField;
+    final Hyperlink forgotpasswordHyperlink;
     private final Button signinButton;
     private final Button createAcctButton;
-    private final PasswordField passwordField;
 
     // parameterized constructor for login view
     public LoginDisplayPane(double width, double height) {
@@ -83,6 +84,16 @@ class LoginDisplayPane extends BorderPane {
         usernamePasswordVBox.setSpacing(20);
         usernamePasswordVBox.setPadding(new Insets(20,20,0,20));
 
+        forgotpasswordHyperlink = new Hyperlink("Forgot password?");
+        forgotpasswordHyperlink.setFont(Font.font("Arial",FontWeight.NORMAL,14));
+        forgotpasswordHyperlink.setTextFill(Color.valueOf("#4A8DD2"));
+        forgotpasswordHyperlink.setPrefHeight(40);
+        forgotpasswordHyperlink.setOnAction(new LinkHandler());
+
+        HBox forgotpasswordHBox = new HBox(forgotpasswordHyperlink);
+        forgotpasswordHBox.setPadding(new Insets(0,20,0,20));
+        forgotpasswordHBox.setPrefWidth(300);
+
         // set attributes of sign in button
         signinButton = new Button();
         signinButton.setText("Sign in");
@@ -116,10 +127,10 @@ class LoginDisplayPane extends BorderPane {
         // add the sign in button, or label, and create account button to this VBox
         VBox signinOrCreateacctVBox = new VBox(signinButton, orLabel, createAcctButton);
         signinOrCreateacctVBox.setSpacing(5);
-        signinOrCreateacctVBox.setPadding(new Insets(20,20,0,20));
+        signinOrCreateacctVBox.setPadding(new Insets(0,20,20,20));
 
         // add the boxes to this VBox to make it into one
-        VBox mainVBox = new VBox(signinAsuiconHBox, usernamePasswordVBox, signinOrCreateacctVBox);
+        VBox mainVBox = new VBox(signinAsuiconHBox, usernamePasswordVBox,forgotpasswordHBox,signinOrCreateacctVBox);
         mainVBox.setMaxWidth(300);
         mainVBox.setMaxHeight(380);
         mainVBox.setBackground(Background.fill(Color.WHITE));
@@ -185,6 +196,17 @@ class LoginDisplayPane extends BorderPane {
             }
         }
 
+    }
+
+    private class LinkHandler implements EventHandler<ActionEvent> {
+
+        @Override
+        public void handle(ActionEvent a) {
+            if(a.getSource() == forgotpasswordHyperlink) {
+                ForgotPasswordDisplayPane forgotPasswordDisplayPane = new ForgotPasswordDisplayPane(WIDTH, HEIGHT);
+                Main.mainWindow.setScene(new Scene(forgotPasswordDisplayPane,WIDTH,HEIGHT));
+            }
+        }
     }
 
 }
