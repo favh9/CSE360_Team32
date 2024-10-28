@@ -20,6 +20,7 @@ import javafx.scene.text.FontWeight;
 class LoginDisplayPane extends BorderPane {
 
     private CreateAcctDisplayPane createAcctDisplayPane;
+    private ForgotPasswordDisplayPane forgotPasswordDisplayPane;
     private Boolean focusBoolean;
     private final TextField usernameTextField;
     protected final PasswordField passwordField;
@@ -31,6 +32,7 @@ class LoginDisplayPane extends BorderPane {
     public LoginDisplayPane(double width, double height) {
 
         createAcctDisplayPane = new CreateAcctDisplayPane(width,height);
+        forgotPasswordDisplayPane = new ForgotPasswordDisplayPane(width,height);
 
         // load custom font
         Font arima = Font.loadFont(getClass().getResourceAsStream("fonts/Arima-Bold.ttf"), 65);
@@ -200,8 +202,7 @@ class LoginDisplayPane extends BorderPane {
         @Override
         public void handle(ActionEvent a) {
             if(a.getSource() == forgotpasswordHyperlink) {
-                ForgotPasswordDisplayPane forgotPasswordDisplayPane = new ForgotPasswordDisplayPane(WIDTH, HEIGHT);
-                Main.mainWindow.setScene(new Scene(forgotPasswordDisplayPane,WIDTH,HEIGHT));
+                Main.mainWindow.setScene(new Scene(forgotPasswordDisplayPane));
             }
         }
     }
