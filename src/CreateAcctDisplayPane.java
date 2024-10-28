@@ -229,8 +229,7 @@ public class CreateAcctDisplayPane extends BorderPane {
                     // this will ensure upon closing the login page appears
                     acctCreatedAlert.setOnCloseRequest(arg0 -> {
                         // TODO Auto-generated method stub
-                        loginViewPane = new LoginDisplayPane(WIDTH,HEIGHT);
-                        Main.mainWindow.setScene(new Scene(loginViewPane,WIDTH,HEIGHT));
+                        Main.mainWindow.setScene(new Scene(loginViewPane));
                     });
                     acctCreatedAlert.show();
                 }
