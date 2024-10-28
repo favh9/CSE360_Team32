@@ -27,8 +27,6 @@ import javafx.scene.text.FontWeight;
 // for the create account page
 public class CreateAcctDisplayPane extends BorderPane {
 
-    private final double WIDTH;
-    private final double HEIGHT;
     private LoginDisplayPane loginViewPane;
     private final TextField firstnameTextField;
     private final TextField lastnameTextField;
@@ -42,8 +40,7 @@ public class CreateAcctDisplayPane extends BorderPane {
     // parameterized constructor
     public CreateAcctDisplayPane(double width, double height) {
 
-        WIDTH = width;
-        HEIGHT = height;
+        loginViewPane = new LoginDisplayPane(width,height);
 
         // set attributes for the image to be used for the back button
         ImageView backImageView = new ImageView(Main.backIcon);
@@ -211,8 +208,7 @@ public class CreateAcctDisplayPane extends BorderPane {
         public void handle(ActionEvent a) {
 
             if(a.getSource() == backButton) {
-                loginViewPane = new LoginDisplayPane(WIDTH,HEIGHT);
-                Main.mainWindow.setScene(new Scene(loginViewPane,WIDTH,HEIGHT));
+                Main.mainWindow.setScene(new Scene(loginViewPane));
             } else if (a.getSource() == confirmButton) {
 
                 if(emptyFields()) {
