@@ -213,6 +213,8 @@ public class CreateAcctDisplayPane extends BorderPane {
 
                 if(emptyFields()) {
                     displayEmptyFields();
+                } else if(!(EmailValidator.isValidEmail(emailTextField.getText()))){
+                    displayInvalidEmail();
                 } else if(!passwordsMatch()){
                     displayPasswordsMatch();
                 } else {
@@ -290,6 +292,15 @@ public class CreateAcctDisplayPane extends BorderPane {
             alert.setContentText(missingData);
             alert.show();
 
+        }
+
+        public void displayInvalidEmail() {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+
+            alert.setTitle("Warning");
+            alert.setHeaderText(null);
+            alert.setContentText("Please verify or re-enter your e-mail\n");
+            alert.show();
         }
     }
 
