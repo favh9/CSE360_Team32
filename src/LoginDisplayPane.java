@@ -21,6 +21,7 @@ class LoginDisplayPane extends BorderPane {
 
     private final double WIDTH;
     private final double HEIGHT;
+    private CreateAcctDisplayPane createAcctDisplayPane;
     private Boolean focusBoolean;
     private final TextField usernameTextField;
     protected final PasswordField passwordField;
@@ -168,8 +169,8 @@ class LoginDisplayPane extends BorderPane {
             if (a.getSource() == createAcctButton) {
 
                 // set the scene of the main window to Create Account
-                CreateAcctDisplayPane createAcctViewPane = new CreateAcctDisplayPane(WIDTH, HEIGHT);
-                Main.mainWindow.setScene(new Scene(createAcctViewPane, WIDTH, HEIGHT));
+                createAcctDisplayPane = new CreateAcctDisplayPane(WIDTH, HEIGHT);
+                Main.mainWindow.setScene(new Scene(createAcctDisplayPane, WIDTH, HEIGHT));
 
             } else if (a.getSource() == signinButton) {
                 // using set styles removes the default effects buttons have
