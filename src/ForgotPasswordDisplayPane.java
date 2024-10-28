@@ -30,6 +30,7 @@ public class ForgotPasswordDisplayPane extends BorderPane {
     private final double WIDTH;
     private final double HEIGHT;
     private LoginDisplayPane loginViewPane;
+    private final TextField emailTextField;
     private final TextField usernameTextField;
     private final PasswordField passwordPasswordfield;
     private final PasswordField confirmpasswordPasswordfield;
@@ -69,6 +70,20 @@ public class ForgotPasswordDisplayPane extends BorderPane {
         // set attributes for the instructions label
         Label instructionLabel = new Label("Fill in the information below and click on the confirm button to reset your password.");
         instructionLabel.setFont(Font.font("Arial",FontWeight.NORMAL,18));
+
+        // set attributes for the email label
+        Label emailLabel = new Label("E-mail:");
+        emailLabel.setFont(Font.font("Arial",FontWeight.NORMAL,16));
+
+        // set attributes for the email text field
+        emailTextField = new TextField();
+        emailTextField.setPromptText("E-mail");
+        emailTextField.setFont(Font.font("Arial",FontWeight.NORMAL,16));
+
+        // add the email label and email text field into this hbox
+        HBox emailTextFieldHBox = new HBox(emailLabel, emailTextField);
+        emailTextFieldHBox.setAlignment(Pos.CENTER_RIGHT);
+        emailTextFieldHBox.setSpacing(10);
 
         // set attributes for the username label
         Label usernameLabel = new Label("Username:");
@@ -124,8 +139,9 @@ public class ForgotPasswordDisplayPane extends BorderPane {
         confirmButton.setOnAction(new ButtonHandler());
 
         // add the grey box elements which includes the instructions label and all HBoxes
-        VBox greyVBox = new VBox(instructionLabel, usernameTextfieldHBox, passwordPasswordfieldHBox, confirmpasswordPasswordfieldHBox, confirmButton);
+        VBox greyVBox = new VBox(instructionLabel, emailTextFieldHBox, usernameTextfieldHBox, passwordPasswordfieldHBox, confirmpasswordPasswordfieldHBox, confirmButton);
         // readjust the width of the HBoxes inside the greyVBox
+        VBox.setMargin(emailTextFieldHBox, new Insets(0,450,0,0));
         VBox.setMargin(usernameTextfieldHBox, new Insets(0,450,0,0));
         VBox.setMargin(passwordPasswordfieldHBox, new Insets(0,450,0,0));
         VBox.setMargin(confirmpasswordPasswordfieldHBox, new Insets(0,450,0,0));
@@ -205,6 +221,8 @@ public class ForgotPasswordDisplayPane extends BorderPane {
 
         public boolean emptyFields() {
 
+            if(emailTextField.getText().isEmpty())
+                return true;
             if(usernameTextField.getText().isEmpty())
                 return true;
             if(passwordPasswordfield.getText().isEmpty())
@@ -220,6 +238,8 @@ public class ForgotPasswordDisplayPane extends BorderPane {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             String missingData = "Please enter the following fields to create your account:\n";
 
+            if(emailTextField.getText().isEmpty())
+                missingData += "\temail\n";
             if(usernameTextField.getText().isEmpty())
                 missingData += "\tusername\n";
             if(passwordPasswordfield.getText().isEmpty())
@@ -233,6 +253,7 @@ public class ForgotPasswordDisplayPane extends BorderPane {
             alert.show();
 
         }
+
     }
 
     private class PasswordFieldHandler implements EventHandler<KeyEvent> {
