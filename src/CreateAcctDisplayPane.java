@@ -27,7 +27,7 @@ import javafx.scene.text.FontWeight;
 // for the create account page
 public class CreateAcctDisplayPane extends BorderPane {
 
-    private LoginDisplayPane loginViewPane;
+    private final LoginDisplayPane loginViewPane;
     private final TextField firstnameTextField;
     private final TextField lastnameTextField;
     private final TextField emailTextField;

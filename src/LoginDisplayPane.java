@@ -15,12 +15,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.transform.Shear;
 
 // this class provides the user interface for the login page
 class LoginDisplayPane extends BorderPane {
 
-    private CreateAcctDisplayPane createAcctDisplayPane;
-    private ForgotPasswordDisplayPane forgotPasswordDisplayPane;
+
+    public double width;
+    public double height;
     private Boolean focusBoolean;
     private final TextField usernameTextField;
     protected final PasswordField passwordField;
@@ -30,9 +32,9 @@ class LoginDisplayPane extends BorderPane {
 
     // parameterized constructor for login view
     public LoginDisplayPane(double width, double height) {
+        this.width = width;
+        this.height = height;
 
-        createAcctDisplayPane = new CreateAcctDisplayPane(width,height);
-        forgotPasswordDisplayPane = new ForgotPasswordDisplayPane(width,height);
 
         // load custom font
         Font arima = Font.loadFont(getClass().getResourceAsStream("fonts/Arima-Bold.ttf"), 65);
@@ -168,6 +170,7 @@ class LoginDisplayPane extends BorderPane {
             if (a.getSource() == createAcctButton) {
 
                 // set the scene of the main window to Create Account
+                CreateAcctDisplayPane createAcctDisplayPane = new CreateAcctDisplayPane(width,height);
                 Main.mainWindow.setScene(new Scene(createAcctDisplayPane));
 
             } else if (a.getSource() == signinButton) {
@@ -202,6 +205,7 @@ class LoginDisplayPane extends BorderPane {
         @Override
         public void handle(ActionEvent a) {
             if(a.getSource() == forgotpasswordHyperlink) {
+                ForgotPasswordDisplayPane forgotPasswordDisplayPane = new ForgotPasswordDisplayPane(width,height);
                 Main.mainWindow.setScene(new Scene(forgotPasswordDisplayPane));
             }
         }
