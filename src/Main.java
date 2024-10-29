@@ -5,6 +5,8 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import javax.xml.crypto.Data;
+
 // this class initiates the gui app, loading the login page as the initial view
 public class Main extends Application {
     
@@ -61,6 +63,10 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+
+        DataBase db = new DataBase();
+        db.insertUser("sparky","isparky");
+
         launch(args);
         
     }
