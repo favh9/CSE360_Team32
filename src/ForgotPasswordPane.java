@@ -7,7 +7,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.DialogEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -25,11 +24,11 @@ import javafx.scene.text.FontWeight;
 
 // this class will provide the user interface
 // for the create account page
-public class ForgotPasswordDisplayPane extends BorderPane {
+public class ForgotPasswordPane extends BorderPane {
 
     private final double WIDTH;
     private final double HEIGHT;
-    private LoginDisplayPane loginViewPane;
+    private LoginPane loginViewPane;
     private final TextField emailTextField;
     private final TextField usernameTextField;
     private final PasswordField passwordPasswordfield;
@@ -38,7 +37,7 @@ public class ForgotPasswordDisplayPane extends BorderPane {
     private final Button backButton;
 
     // parameterized constructor
-    public ForgotPasswordDisplayPane(double width, double height) {
+    public ForgotPasswordPane(double width, double height) {
 
         WIDTH = width;
         HEIGHT = height;
@@ -177,7 +176,7 @@ public class ForgotPasswordDisplayPane extends BorderPane {
         public void handle(ActionEvent a) {
 
             if(a.getSource() == backButton) {
-                loginViewPane = new LoginDisplayPane(WIDTH,HEIGHT);
+                loginViewPane = new LoginPane(WIDTH,HEIGHT);
                 Main.mainWindow.setScene(new Scene(loginViewPane,WIDTH,HEIGHT));
             } else if (a.getSource() == confirmButton) {
 
@@ -198,7 +197,7 @@ public class ForgotPasswordDisplayPane extends BorderPane {
                     // this will ensure upon closing the login page appears
                     acctCreatedAlert.setOnCloseRequest(arg0 -> {
                         // TODO Auto-generated method stub
-                        loginViewPane = new LoginDisplayPane(WIDTH,HEIGHT);
+                        loginViewPane = new LoginPane(WIDTH,HEIGHT);
                         Main.mainWindow.setScene(new Scene(loginViewPane,WIDTH,HEIGHT));
                     });
                     acctCreatedAlert.show();

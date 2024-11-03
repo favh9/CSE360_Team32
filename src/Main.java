@@ -5,8 +5,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-import javax.xml.crypto.Data;
-
 // this class initiates the gui app, loading the login page as the initial view
 public class Main extends Application {
     
@@ -43,10 +41,10 @@ public class Main extends Application {
 
         // the initial page to be displayed
         // instance variables
-        LoginDisplayPane loginViewPane = new LoginDisplayPane(WIDTH, HEIGHT);
+        LoginControl mainPane = new LoginControl(WIDTH, HEIGHT);
 
         // create new scene and assign children, and window dimensions
-        Scene scene1 = new Scene(loginViewPane, WIDTH, HEIGHT);
+        Scene scene1 = new Scene(mainPane, WIDTH, HEIGHT);
 
         // create stage
         mainWindow = new Stage();

@@ -8,7 +8,7 @@ public class DataBase {
 
     public static void createTable() {
 
-        String createTableSQL = "CREATE TABLE IF NOT EXISTS Users ("
+        String createTableSQL = "CREATE TABLE IF NOT EXISTS UsersPane ("
                 + "id INT AUTO_INCREMENT PRIMARY KEY, "
                 + "username VARCHAR(255) NOT NULL UNIQUE, "
                 + "password VARCHAR(255) NOT NULL)";
@@ -41,7 +41,7 @@ public class DataBase {
     public static void insertUser(String username, String pwd) {
 
 
-        String insertUserSQL = "INSERT INTO Users (username, password) VALUES (?, ?)";
+        String insertUserSQL = "INSERT INTO UsersPane (username, password) VALUES (?, ?)";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);
              PreparedStatement pstmt = conn.prepareStatement(insertUserSQL)) {
@@ -57,7 +57,7 @@ public class DataBase {
 
     public static void getUser(String username, String pwd) {
 
-        String selectUserSQL = "SELECT * FROM Users WHERE username = ? AND password = ?";
+        String selectUserSQL = "SELECT * FROM UsersPane WHERE username = ? AND password = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);
              PreparedStatement pstmt = conn.prepareStatement(selectUserSQL)) {

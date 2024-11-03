@@ -7,7 +7,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.DialogEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -25,9 +24,8 @@ import javafx.scene.text.FontWeight;
 
 // this class will provide the user interface 
 // for the create account page
-public class CreateAcctDisplayPane extends BorderPane {
+public class CreateAccountPane extends BorderPane {
 
-    private final LoginDisplayPane loginViewPane;
     private final TextField firstnameTextField;
     private final TextField lastnameTextField;
     private final TextField emailTextField;
@@ -38,9 +36,7 @@ public class CreateAcctDisplayPane extends BorderPane {
     private final Button backButton;
 
     // parameterized constructor
-    public CreateAcctDisplayPane(double width, double height) {
-
-        loginViewPane = new LoginDisplayPane(width,height);
+    public CreateAccountPane(double width, double height) {
 
         // set attributes for the image to be used for the back button
         ImageView backImageView = new ImageView(Main.backIcon);
@@ -51,9 +47,6 @@ public class CreateAcctDisplayPane extends BorderPane {
         backButton = new Button();
         backButton.setGraphic(backImageView);
         backButton.setBackground(null);
-            // this event handler will set the scene of the main window
-            // to Create Account
-        backButton.setOnAction(new ButtonHandler());
 
         // set attributes for the create account label
         Label createacctLabel = new Label("Create Account");
@@ -134,8 +127,6 @@ public class CreateAcctDisplayPane extends BorderPane {
         passwordPasswordfield = new PasswordField();
         passwordPasswordfield.setPromptText("Password");
         passwordPasswordfield.setFont(Font.font("Arial",FontWeight.NORMAL,16));
-            // this handler will find password mismatch
-            passwordPasswordfield.setOnKeyReleased(new PasswordFieldHandler());
 
         // add the password label and password password field into this hbox
         HBox passwordPasswordfieldHBox = new HBox(passwordLabel, passwordPasswordfield);
@@ -150,8 +141,7 @@ public class CreateAcctDisplayPane extends BorderPane {
         confirmpasswordPasswordfield = new PasswordField();
         confirmpasswordPasswordfield.setPromptText("Confirm Password");
         confirmpasswordPasswordfield.setFont(Font.font("Arial",FontWeight.NORMAL,16));
-            // this handler will find passwor mismatch
-        confirmpasswordPasswordfield.setOnKeyReleased(new PasswordFieldHandler());
+
 
         // add the password label and password password field into this hbox
         HBox confirmpasswordPasswordfieldHBox = new HBox(confirmpasswordLabel, confirmpasswordPasswordfield);
@@ -163,9 +153,6 @@ public class CreateAcctDisplayPane extends BorderPane {
         confirmButton = new Button("Confirm");
         confirmButton.setFont(Font.font("Arial",FontWeight.NORMAL,16));
         confirmButton.setPrefSize(100,40);
-            // this displays a pop up displaying account was successfully created
-        confirmButton.setOnAction(new ButtonHandler());
-        
 
         // add the grey box elements which includes the instructions label and all HBoxes
         VBox greyVBox = new VBox(instructionLabel, firstnameTextfieldHBox, lastnameTextfieldHBox, emailTextFieldHBox, usernameTextfieldHBox, passwordPasswordfieldHBox, confirmpasswordPasswordfieldHBox, confirmButton);
@@ -202,148 +189,35 @@ public class CreateAcctDisplayPane extends BorderPane {
         
     }
 
-    private class ButtonHandler implements EventHandler<ActionEvent> {
-
-        @Override
-        public void handle(ActionEvent a) {
-
-            if(a.getSource() == backButton) {
-                Main.mainWindow.setScene(new Scene(loginViewPane));
-            } else if (a.getSource() == confirmButton) {
-
-                if(emptyFields()) {
-                    displayEmptyFields();
-                } else if(!(EmailValidator.isValidEmail(emailTextField.getText()))){
-                    displayInvalidEmail();
-                } else if(!passwordsMatch()){
-                    displayPasswordsMatch();
-                } else {
-                    Alert acctCreatedAlert = new Alert(AlertType.INFORMATION);
-                    acctCreatedAlert.setTitle("");
-                    acctCreatedAlert.setHeaderText("Congratulations!");
-                    acctCreatedAlert.setContentText("Welcome " + firstnameTextField.getText() + " " + lastnameTextField.getText() +
-                            ",\nYour account was successfully created." +
-                            "\nYour username is " + usernameTextField.getText() + ".");
-                    ImageView confirmImageView = new ImageView(Main.successIcon);
-
-//                    // TESTING DATA BASE
-//                    DataBase.insertUser(usernameTextField.getText(),usernameTextField.getText());
-
-                    confirmImageView.setFitHeight(40);
-                    confirmImageView.setFitWidth(100);
-                    acctCreatedAlert.setGraphic(confirmImageView);
-                    // this will ensure upon closing the login page appears
-                    acctCreatedAlert.setOnCloseRequest(arg0 -> {
-                        // TODO Auto-generated method stub
-                        Main.mainWindow.setScene(new Scene(loginViewPane));
-                    });
-                    acctCreatedAlert.show();
-                }
-            }
-        }
-
-        public boolean passwordsMatch() {
-            return passwordPasswordfield.getText().compareTo(confirmpasswordPasswordfield.getText()) == 0;
-        }
-
-        public void displayPasswordsMatch() {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-
-            alert.setTitle("Warning");
-            alert.setHeaderText(null);
-            alert.setContentText("Please verify or re-enter your password\n");
-            alert.show();
-        }
-
-        public boolean emptyFields() {
-
-            if(firstnameTextField.getText().isEmpty())
-                return true;
-            if(lastnameTextField.getText().isEmpty())
-                return true;
-            if(emailTextField.getText().isEmpty())
-                return true;
-            if(usernameTextField.getText().isEmpty())
-                return true;
-            if(passwordPasswordfield.getText().isEmpty())
-                return true;
-            if(confirmpasswordPasswordfield.getText().isEmpty())
-                return true;
-
-            return false;
-        }
-
-        public void displayEmptyFields() {
-
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            String missingData = "Please enter the following fields to create your account:\n";
-
-            if(firstnameTextField.getText().isEmpty())
-                missingData += "\tfirst name\n";
-            if(lastnameTextField.getText().isEmpty())
-                missingData += "\tlast name\n";
-            if(emailTextField.getText().isEmpty())
-                missingData += "\te-mail\n";
-            if(usernameTextField.getText().isEmpty())
-                missingData += "\tusername\n";
-            if(passwordPasswordfield.getText().isEmpty())
-                missingData += "\tpassword\n";
-            if(confirmpasswordPasswordfield.getText().isEmpty())
-                missingData += "\tconfirm password\n";
-
-            alert.setTitle("Warning");
-            alert.setHeaderText(null);
-            alert.setContentText(missingData);
-            alert.show();
-
-        }
-
-        public void displayInvalidEmail() {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-
-            alert.setTitle("Warning");
-            alert.setHeaderText(null);
-            alert.setContentText("Please verify or re-enter your e-mail\n");
-            alert.show();
-        }
+    public TextField getFirstnameTextField() {
+        return firstnameTextField;
     }
 
-    private class PasswordFieldHandler implements EventHandler<KeyEvent> {
+    public TextField getLastnameTextField() {
+        return lastnameTextField;
+    }
 
-        @Override
-        public void handle(KeyEvent keyEvent) {
+    public TextField getEmailTextField() {
+        return emailTextField;
+    }
 
-            if(keyEvent.getSource() == passwordPasswordfield) {
+    public TextField getUsernameTextField() {
+        return usernameTextField;
+    }
 
-                // sleep the thread to find a password mismatch
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
+    public PasswordField getPasswordPasswordfield() {
+        return passwordPasswordfield;
+    }
 
-                if (confirmpasswordPasswordfield.getText().isEmpty())
-                    return;
-                if (passwordPasswordfield.getText().compareTo(confirmpasswordPasswordfield.getText()) != 0) {
-                    passwordPasswordfield.setBorder(Border.stroke(Color.RED));
-                    confirmpasswordPasswordfield.setBorder(Border.stroke(Color.RED));
-                } else {
-                    passwordPasswordfield.setBorder(Border.stroke(Color.TRANSPARENT));
-                    confirmpasswordPasswordfield.setBorder(Border.stroke(Color.TRANSPARENT));
-                }
+    public PasswordField getConfirmpasswordPasswordfield() {
+        return confirmpasswordPasswordfield;
+    }
 
-            } else if(keyEvent.getSource() == confirmpasswordPasswordfield) {
+    public Button getConfirmButton() {
+        return confirmButton;
+    }
 
-                if(passwordPasswordfield.getText().compareTo(confirmpasswordPasswordfield.getText()) != 0) {
-                    passwordPasswordfield.setBorder(Border.stroke(Color.RED));
-                    confirmpasswordPasswordfield.setBorder(Border.stroke(Color.RED));
-                } else {
-                    passwordPasswordfield.setBorder(Border.stroke(Color.TRANSPARENT));
-                    confirmpasswordPasswordfield.setBorder(Border.stroke(Color.TRANSPARENT));
-                }
-
-            }
-        }
+    public Button getBackButton() {
+        return backButton;
     }
 }

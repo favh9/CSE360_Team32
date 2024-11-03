@@ -1,6 +1,5 @@
 
 
-import javafx.beans.InvalidationListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -15,26 +14,19 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.transform.Shear;
 
 // this class provides the user interface for the login page
-class LoginDisplayPane extends BorderPane {
+class LoginPane extends BorderPane {
 
-
-    public double width;
-    public double height;
     private Boolean focusBoolean;
     private final TextField usernameTextField;
     protected final PasswordField passwordField;
-    final Hyperlink forgotpasswordHyperlink;
+    private final Hyperlink forgotpasswordHyperlink;
     private final Button signinButton;
     private final Button createAcctButton;
 
     // parameterized constructor for login view
-    public LoginDisplayPane(double width, double height) {
-        this.width = width;
-        this.height = height;
-
+    public LoginPane(double width, double height) {
 
         // load custom font
         Font arima = Font.loadFont(getClass().getResourceAsStream("fonts/Arima-Bold.ttf"), 65);
@@ -90,7 +82,6 @@ class LoginDisplayPane extends BorderPane {
         forgotpasswordHyperlink.setFont(Font.font("Arial",FontWeight.NORMAL,14));
         forgotpasswordHyperlink.setTextFill(Color.valueOf("#4A8DD2"));
         forgotpasswordHyperlink.setPrefHeight(40);
-        forgotpasswordHyperlink.setOnAction(new LinkHandler());
 
         HBox forgotpasswordHBox = new HBox(forgotpasswordHyperlink);
         forgotpasswordHBox.setPadding(new Insets(0,20,0,20));
@@ -104,9 +95,6 @@ class LoginDisplayPane extends BorderPane {
             "-fx-background-radius: 5em;" +
             "-fx-background-color: #ffc627;"
         );
-
-        // register button with the button handler
-        signinButton.setOnAction(new ButtonHandler());
 
         // set attributes of the or label
         Label orLabel = new Label("or");
@@ -122,9 +110,6 @@ class LoginDisplayPane extends BorderPane {
         createAcctButton.setStyle(
             "-fx-background-radius: 5em;"
         );
-
-        // register button with the button handler
-        createAcctButton.setOnAction(new ButtonHandler());
 
         // add the sign in button, or label, and create account button to this VBox
         VBox signinOrCreateacctVBox = new VBox(signinButton, orLabel, createAcctButton);
@@ -161,57 +146,19 @@ class LoginDisplayPane extends BorderPane {
         return passwordField.getText();
     }
 
-    // handles action events for the buttons in the login page
-    private class ButtonHandler implements EventHandler<ActionEvent> {
-
-        @Override
-        public void handle(ActionEvent a) {
-
-            if (a.getSource() == createAcctButton) {
-
-                // set the scene of the main window to Create Account
-                CreateAcctDisplayPane createAcctDisplayPane = new CreateAcctDisplayPane(width,height);
-                Main.mainWindow.setScene(new Scene(createAcctDisplayPane));
-
-            } else if (a.getSource() == signinButton) {
-                // using set styles removes the default effects buttons have
-                // so this is what will provide us with those missing effects
-                signinButton.setOnMouseEntered(e -> {
-                    signinButton.setStyle("-fx-background-radius: 5em; -fx-background-color: #ffb600;");
-                });
-
-                signinButton.setOnMouseExited(e -> {
-                    signinButton.setStyle("-fx-background-radius: 5em; -fx-background-color: #ffc627;");
-                });
-
-                signinButton.setOnMousePressed(e -> {
-                    signinButton.setStyle("-fx-background-radius: 5em; -fx-background-color: #ffa500;");
-
-//                    // TESTING DATABASE
-//                    DataBase.getUser(usernameTextField.getText(),usernameTextField.getText());
-
-                    Users users = new Users(width,height);
-                    Main.mainWindow.setScene(new Scene(users));
-
-                });
-
-                signinButton.setOnMouseReleased(e -> {
-                    signinButton.setStyle("-fx-background-radius: 5em; -fx-background-color: #ffc627;");
-                });
-            }
-        }
-
+    // accessor for sign in button
+    public Button getSigninButton() {
+        return signinButton;
     }
 
-    private class LinkHandler implements EventHandler<ActionEvent> {
-
-        @Override
-        public void handle(ActionEvent a) {
-            if(a.getSource() == forgotpasswordHyperlink) {
-                ForgotPasswordDisplayPane forgotPasswordDisplayPane = new ForgotPasswordDisplayPane(width,height);
-                Main.mainWindow.setScene(new Scene(forgotPasswordDisplayPane));
-            }
-        }
+    // accessor for create account button
+    public Button getCreateAcctButton() {
+        return createAcctButton;
     }
+
+    public Hyperlink getForgotpasswordHyperlink() {
+        return forgotpasswordHyperlink;
+    }
+
 
 }
