@@ -52,9 +52,8 @@ public class LoginControl extends Pane {
         public void handle(ActionEvent a) {
 
             if (a.getSource() == createAcctButton) {
-
-                // set the scene of the main window to Create Account
                 CreateAccountControl createAccount = new CreateAccountControl(width,height);
+                // set the scene of the main window to Create Account
                 Main.mainWindow.setScene(new Scene(createAccount));
 
             } else if(a.getSource() == signinButton) {
@@ -62,7 +61,7 @@ public class LoginControl extends Pane {
 //              // TESTING DATABASE
 //              DataBase.getUser(usernameTextField.getText(),usernameTextField.getText());
                 signinButton.setStyle("-fx-background-radius: 5em; -fx-background-color: #ffa500;");
-                UsersPane users = new UsersPane(width, height);
+                UserControl users = new UserControl(width,height);
                 Main.mainWindow.setScene(new Scene(users));
 
             }
@@ -76,8 +75,8 @@ public class LoginControl extends Pane {
         @Override
         public void handle(ActionEvent a) {
             if(a.getSource() == forgotpasswordHyperlink) {
-                ForgotPasswordPane forgotPasswordDisplayPane = new ForgotPasswordPane(width,height);
-                Main.mainWindow.setScene(new Scene(forgotPasswordDisplayPane));
+                ForgotPasswordControl forgotPassword = new ForgotPasswordControl(width,height);
+                Main.mainWindow.setScene(new Scene(forgotPassword));
             }
         }
     }
