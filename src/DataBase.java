@@ -2,27 +2,18 @@ import java.sql.*;
 
 public class DataBase {
 
-    private String url;
-    private String user;
-    private String password;
+    private static String URL = "jdbc:mysql://127.0.0.1:3306/demo";
+    private static String USER = "root";
+    private static String PASWWORD = "November12024!";
 
-    public DataBase(){
-       createDataBase();
-       createTable();
-    }
-
-    private void createTable() {
-
-        url = "jdbc:mysql://localhost:3306/demo_db";
-        user = "root";
-        password = "November12024!";
+    public static void createTable() {
 
         String createTableSQL = "CREATE TABLE IF NOT EXISTS Users ("
                 + "id INT AUTO_INCREMENT PRIMARY KEY, "
                 + "username VARCHAR(255) NOT NULL UNIQUE, "
                 + "password VARCHAR(255) NOT NULL)";
 
-        try (Connection conn = DriverManager.getConnection(url, user, password);
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);
              Statement stmt = conn.createStatement()) {
 
             stmt.executeUpdate(createTableSQL);
@@ -32,17 +23,13 @@ public class DataBase {
         }
     }
 
-    private void createDataBase() {
+    public static void createDataBase() {
 
-        url = "jdbc:mysql://localhost:3306/demo_db";
-        user = "root";
-        password = "November12024!";
-
-        try (Connection conn = DriverManager.getConnection(url, user, password);
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);
              Statement stmt = conn.createStatement()) {
 
             // SQL command to create a new database
-            String sql = "CREATE DATABASE IF NOT EXISTS demo_db";
+            String sql = "CREATE DATABASE IF NOT EXISTS demo";
             stmt.executeUpdate(sql);
             System.out.println("Database created successfully...");
         } catch (SQLException e) {
@@ -51,15 +38,12 @@ public class DataBase {
 
     }
 
-    public void insertUser(String username, String pwd) {
+    public static void insertUser(String username, String pwd) {
 
-        url = "jdbc:mysql://localhost:3306/demo_db";
-        user = "root";
-        password = "November12024!";
 
         String insertUserSQL = "INSERT INTO Users (username, password) VALUES (?, ?)";
 
-        try (Connection conn = DriverManager.getConnection(url, user, password);
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);
              PreparedStatement pstmt = conn.prepareStatement(insertUserSQL)) {
 
             pstmt.setString(1, username);
@@ -70,4 +54,31 @@ public class DataBase {
             e.printStackTrace();
         }
     }
+
+    public static void getUser(String username, String pwd) {
+
+        String selectUserSQL = "SELECT * FROM Users WHERE username = ? AND password = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);
+             PreparedStatement pstmt = conn.prepareStatement(selectUserSQL)) {
+
+            pstmt.setString(1, username);
+            pstmt.setString(2, pwd);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    // User found with matching credentials
+                    int id = rs.getInt("id");
+                    String dbUsername = rs.getString("username");
+
+                    System.out.println("User found: ID = " + id + ", Username = " + dbUsername);
+                } else {
+                    System.out.println("Invalid username or password.");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

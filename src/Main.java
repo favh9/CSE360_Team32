@@ -63,10 +63,8 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-
-        DataBase db = new DataBase();
-        db.insertUser("sparky","isparky");
-
+        DataBase.createDataBase();
+        DataBase.createTable();
         launch(args);
         
     }

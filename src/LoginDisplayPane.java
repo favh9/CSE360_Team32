@@ -177,22 +177,25 @@ class LoginDisplayPane extends BorderPane {
                 // using set styles removes the default effects buttons have
                 // so this is what will provide us with those missing effects
                 signinButton.setOnMouseEntered(e -> {
-                    System.out.println("mouse entered");
                     signinButton.setStyle("-fx-background-radius: 5em; -fx-background-color: #ffb600;");
                 });
 
                 signinButton.setOnMouseExited(e -> {
-                    System.out.println("mouse exited");
                     signinButton.setStyle("-fx-background-radius: 5em; -fx-background-color: #ffc627;");
                 });
 
                 signinButton.setOnMousePressed(e -> {
-                    System.out.println("mouse pressed");
                     signinButton.setStyle("-fx-background-radius: 5em; -fx-background-color: #ffa500;");
+
+//                    // TESTING DATABASE
+//                    DataBase.getUser(usernameTextField.getText(),usernameTextField.getText());
+
+                    Users users = new Users(width,height);
+                    Main.mainWindow.setScene(new Scene(users));
+
                 });
 
                 signinButton.setOnMouseReleased(e -> {
-                    System.out.println("mouse released");
                     signinButton.setStyle("-fx-background-radius: 5em; -fx-background-color: #ffc627;");
                 });
             }

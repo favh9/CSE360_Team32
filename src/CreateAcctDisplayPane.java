@@ -225,6 +225,10 @@ public class CreateAcctDisplayPane extends BorderPane {
                             ",\nYour account was successfully created." +
                             "\nYour username is " + usernameTextField.getText() + ".");
                     ImageView confirmImageView = new ImageView(Main.successIcon);
+
+//                    // TESTING DATA BASE
+//                    DataBase.insertUser(usernameTextField.getText(),usernameTextField.getText());
+
                     confirmImageView.setFitHeight(40);
                     confirmImageView.setFitWidth(100);
                     acctCreatedAlert.setGraphic(confirmImageView);
