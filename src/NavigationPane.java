@@ -53,6 +53,7 @@ public class NavigationPane extends VBox {
 
         VBox logoutButtonTextVBox = new VBox(logoutButton,logoutButtonText);
         logoutButtonTextVBox.setAlignment(Pos.CENTER);
+        logoutButtonTextVBox.setSpacing(-10);
 
         // set attributes for the navigation bar
         VBox navBarVBox = new VBox(asuIcon,usersButtonTextVBox,statsButtonTextVBox,transButtonTextVBox,settButtonTextVBox,logoutButtonTextVBox);
