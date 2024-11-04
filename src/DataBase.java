@@ -12,9 +12,7 @@ import java.sql.SQLException;
 // prevent things like sql injection
 public class DataBase {
 
-    private static String URL = "jdbc:mysql://98.177.43.137:3306/team32";
-    private static String USER = "admin";
-    private static String PASWWORD = "Pineapple32!";
+
 
     public static void createDataBase() {
 
