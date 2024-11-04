@@ -7,9 +7,7 @@ import java.sql.*;
 // prevent things like sql injection
 public class DataBase {
 
-    private static String URL = "jdbc:mysql://192.168.1.222:3306/team32";
-    private static String USER = "admin";
-    private static String PASWWORD = "Pineapple32!";
+
 
     public static void createDataBase() {
 
