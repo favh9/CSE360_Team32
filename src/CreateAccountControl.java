@@ -70,9 +70,9 @@ public class CreateAccountControl extends Pane {
 
                 if(emptyFields()) {
                     displayEmptyFields();
-                } else if(!(EmailValidator.isValidEmail(emailTextField.getText()))){
+                } else if(!(EmailValidator.isValidEmail(emailTextField.getText()))) {
                     displayInvalidEmail();
-                } else if(!passwordsMatch()){
+                } else if(!passwordsMatch()) {
                     displayPasswordsNotMatch();
                 } else if(!(DataBase.insertUser(firstnameTextField.getText(),lastnameTextField.getText(),emailTextField.getText(),usernameTextField.getText(),passwordPasswordfield.getText()))) {
                     displayUserAlreadyExists();

@@ -1,4 +1,9 @@
 import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 // the database is yet to do the following
 // hash passwords,
@@ -7,7 +12,9 @@ import java.sql.*;
 // prevent things like sql injection
 public class DataBase {
 
-
+    private static String URL = "jdbc:mysql://98.177.43.137:3306/team32";
+    private static String USER = "admin";
+    private static String PASWWORD = "Pineapple32!";
 
     public static void createDataBase() {
 
@@ -58,6 +65,7 @@ public class DataBase {
             pstmt.setString(3, email);
             pstmt.setString(4, username);
             pstmt.setString(5, pwd);
+
             pstmt.executeUpdate();
             System.out.println("User inserted successfully: " + username);
         } catch (SQLException e) {
