@@ -1,6 +1,10 @@
 import java.sql.*;
 
-
+// the database is yet to do the following
+// hash passwords,
+// store transactions,
+// store books,
+// prevent things like sql injection
 public class DataBase {
 
     private static String URL = "jdbc:mysql://192.168.1.222:3306/team32";
@@ -8,7 +12,7 @@ public class DataBase {
     private static String PASWWORD = "Pineapple32!";
 
     public static void createDataBase() {
-        
+
         try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);
              Statement stmt = conn.createStatement()) {
 
