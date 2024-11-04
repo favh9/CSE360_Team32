@@ -46,6 +46,7 @@ public class DataBase {
             System.out.println("Table created successfully...");
         } catch (SQLException e) {
             System.out.println("Table created.. SIKE!...");
+            e.printStackTrace();
         }
     }
 
