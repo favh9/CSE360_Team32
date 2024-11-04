@@ -21,7 +21,7 @@ public class DataBase {
             stmt.executeUpdate(sql);
             System.out.println("Database created successfully...");
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Database boom!.. failure!...");
         }
 
     }
@@ -42,7 +42,7 @@ public class DataBase {
             stmt.executeUpdate(createTableSQL);
             System.out.println("Table created successfully...");
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Table created.. SIKE!...");
         }
     }
 
@@ -63,7 +63,7 @@ public class DataBase {
             pstmt.executeUpdate();
             System.out.println("User inserted successfully: " + username);
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Invalid username or password: " + username);
             return false;
         }
 
