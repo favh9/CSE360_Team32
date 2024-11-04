@@ -137,13 +137,13 @@ class LoginPane extends BorderPane {
     }
 
     // accessor for username text field
-    public String getUsername() {
-        return usernameTextField.getText();
+    public TextField getUsernameTextField() {
+        return usernameTextField;
     }
 
     // accessor for password text field
-    public String getPassword() {
-        return passwordField.getText();
+    public PasswordField getPasswordField() {
+        return passwordField;
     }
 
     // accessor for sign in button

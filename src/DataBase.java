@@ -1,15 +1,34 @@
 import java.sql.*;
 
+
 public class DataBase {
 
-    private static String URL = "jdbc:mysql://127.0.0.1:3306/demo";
-    private static String USER = "root";
-    private static String PASWWORD = "November12024!";
+    private static String URL = "jdbc:mysql://192.168.1.222:3306/team32";
+    private static String USER = "admin";
+    private static String PASWWORD = "Pineapple32!";
 
-    public static void createTable() {
+    public static void createDataBase() {
+        
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);
+             Statement stmt = conn.createStatement()) {
 
-        String createTableSQL = "CREATE TABLE IF NOT EXISTS UsersPane ("
+            // SQL command to create a new database
+            String sql = "CREATE DATABASE IF NOT EXISTS team32";
+            stmt.executeUpdate(sql);
+            System.out.println("Database created successfully...");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void createUsersTable() {
+
+        String createTableSQL = "CREATE TABLE IF NOT EXISTS Users ("
                 + "id INT AUTO_INCREMENT PRIMARY KEY, "
+                + "firstname VARCHAR(255) NOT NULL, "
+                + "lastname VARCHAR(255) NOT NULL, "
+                + "email VARCHAR(255) NOT NULL UNIQUE, "
                 + "username VARCHAR(255) NOT NULL UNIQUE, "
                 + "password VARCHAR(255) NOT NULL)";
 
@@ -23,41 +42,33 @@ public class DataBase {
         }
     }
 
-    public static void createDataBase() {
-
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);
-             Statement stmt = conn.createStatement()) {
-
-            // SQL command to create a new database
-            String sql = "CREATE DATABASE IF NOT EXISTS demo";
-            stmt.executeUpdate(sql);
-            System.out.println("Database created successfully...");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public static void insertUser(String username, String pwd) {
+    public static boolean insertUser(String firstname, String lastname, String email, String username, String pwd) {
 
 
-        String insertUserSQL = "INSERT INTO UsersPane (username, password) VALUES (?, ?)";
+        String insertUserSQL = "INSERT INTO Users (firstname, lastname, email, username, password) " +
+                               "VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);
              PreparedStatement pstmt = conn.prepareStatement(insertUserSQL)) {
 
-            pstmt.setString(1, username);
-            pstmt.setString(2, pwd);
+            pstmt.setString(1, firstname);
+            pstmt.setString(2, lastname);
+            pstmt.setString(3, email);
+            pstmt.setString(4, username);
+            pstmt.setString(5, pwd);
             pstmt.executeUpdate();
             System.out.println("User inserted successfully: " + username);
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
+
+        return true;
     }
 
-    public static void getUser(String username, String pwd) {
+    public static boolean getUser(String username, String pwd) {
 
-        String selectUserSQL = "SELECT * FROM UsersPane WHERE username = ? AND password = ?";
+        String selectUserSQL = "SELECT * FROM Users WHERE username = ? AND password = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);
              PreparedStatement pstmt = conn.prepareStatement(selectUserSQL)) {
@@ -72,13 +83,17 @@ public class DataBase {
                     String dbUsername = rs.getString("username");
 
                     System.out.println("User found: ID = " + id + ", Username = " + dbUsername);
+
                 } else {
                     System.out.println("Invalid username or password.");
+                    return false;
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return true;
     }
 
 }

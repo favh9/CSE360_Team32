@@ -44,7 +44,8 @@ public class Main extends Application {
         LoginControl mainPane = new LoginControl(WIDTH, HEIGHT);
 
         // create new scene and assign children, and window dimensions
-        Scene scene1 = new Scene(mainPane, WIDTH, HEIGHT);
+        Scene scene1 = new Scene(mainPane);
+        scene1.setFill(null); // gets rid of annoying flashes from switching scenes
 
         // create stage
         mainWindow = new Stage();
@@ -62,7 +63,7 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         DataBase.createDataBase();
-        DataBase.createTable();
+        DataBase.createUsersTable();
         launch(args);
         
     }

@@ -13,6 +13,10 @@ import javafx.scene.text.Text;
 
 public class UsersPane extends BorderPane {
 
+    private final Button deleteButton;
+    private final Button adduserButton;
+    private final VBox userlistVBox;
+
     public UsersPane(double width, double height) {
 
         NavigationControl navBarVBox = new NavigationControl(width,height);
@@ -34,19 +38,30 @@ public class UsersPane extends BorderPane {
         quantityHBox.setSpacing(10);
         quantityHBox.setAlignment(Pos.BASELINE_CENTER);
 
+        // set attributes for the add user image
+        ImageView adduserImage = new ImageView(Main.addUserIcon);
+        adduserImage.setFitWidth(30);
+        adduserImage.setFitHeight(30);
+
+        // set attributes for the add user button
+        adduserButton = new Button();
+        adduserButton.setGraphic(adduserImage);
+        adduserButton.setBackground(Background.fill(Color.TRANSPARENT));
+        adduserButton.setAlignment(Pos.CENTER);
+
         // set attributes for delete button image
         ImageView deleteImage = new ImageView(Main.delUserIcon);
         deleteImage.setFitHeight(30);
         deleteImage.setFitWidth(30);
 
         // set attributes for delete button button
-        Button deleteButton = new Button();
+        deleteButton = new Button();
         deleteButton.setGraphic(deleteImage);
         deleteButton.setBackground(Background.fill(Color.TRANSPARENT));
         deleteButton.setAlignment(Pos.CENTER);
 
         // set attributes for the header of the page
-        HBox headerHBox = new HBox(titleLabel,quantityHBox,deleteButton);
+        HBox headerHBox = new HBox(titleLabel,quantityHBox,adduserButton,deleteButton);
         headerHBox.setAlignment(Pos.BASELINE_LEFT);
         headerHBox.setSpacing(40);
         HBox.setMargin(deleteButton,new Insets(0,0,20,0));
@@ -80,12 +95,17 @@ public class UsersPane extends BorderPane {
         lineSeparator.setHeight(2);
         lineSeparator.setFill(Color.BLACK);
 
+        // set attributes for the VBox that holds the lists of users
+        userlistVBox = new VBox();
+
         // set attributes for the scrollpane
-        ScrollPane sp = new ScrollPane();
+        ScrollPane sp = new ScrollPane(userlistVBox);
         sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         sp.minViewportHeightProperty().set(400);
+        sp.setPrefHeight(400);
         sp.setStyle("-fx-background-color:transparent;");
+
 
         // set attributes for the users box that includes their header and scrollpane
         VBox headerAndScrollPane = new VBox(bodyheaderHBox,lineSeparator,sp);
@@ -109,6 +129,14 @@ public class UsersPane extends BorderPane {
         this.setPrefSize(width, height);;
         this.setBackground(Background.fill(Color.web("#4A1E2C"))); // darker maroon
 
+    }
+
+    public VBox getUserListVBox() {
+        return userlistVBox;
+    }
+
+    public Button getAdduserButton() {
+        return adduserButton;
     }
 
 }

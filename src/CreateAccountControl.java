@@ -64,14 +64,18 @@ public class CreateAccountControl extends Pane {
 
             if(a.getSource() == backButton) {
                 Main.mainWindow.setScene(new Scene(login));
-            } else if (a.getSource() == confirmButton) {
+
+            }
+            else if (a.getSource() == confirmButton) {
 
                 if(emptyFields()) {
                     displayEmptyFields();
                 } else if(!(EmailValidator.isValidEmail(emailTextField.getText()))){
                     displayInvalidEmail();
                 } else if(!passwordsMatch()){
-                    displayPasswordsMatch();
+                    displayPasswordsNotMatch();
+                } else if(!(DataBase.insertUser(firstnameTextField.getText(),lastnameTextField.getText(),emailTextField.getText(),usernameTextField.getText(),passwordPasswordfield.getText()))) {
+                    displayUserAlreadyExists();
                 } else {
                     Alert acctCreatedAlert = new Alert(Alert.AlertType.INFORMATION);
                     acctCreatedAlert.setTitle("");
@@ -80,14 +84,9 @@ public class CreateAccountControl extends Pane {
                             ",\nYour account was successfully created." +
                             "\nYour username is " + usernameTextField.getText() + ".");
                     ImageView confirmImageView = new ImageView(Main.successIcon);
-
-//                    // TESTING DATA BASE
-//                    DataBase.insertUser(usernameTextField.getText(),usernameTextField.getText());
-
                     confirmImageView.setFitHeight(40);
                     confirmImageView.setFitWidth(100);
                     acctCreatedAlert.setGraphic(confirmImageView);
-                    // this will ensure upon closing the login page appears
                     acctCreatedAlert.setOnCloseRequest(arg0 -> {
                         // TODO Auto-generated method stub
                         Main.mainWindow.setScene(new Scene(login));
@@ -101,7 +100,7 @@ public class CreateAccountControl extends Pane {
             return passwordPasswordfield.getText().compareTo(confirmpasswordPasswordfield.getText()) == 0;
         }
 
-        public void displayPasswordsMatch() {
+        public void displayPasswordsNotMatch() {
             Alert alert = new Alert(Alert.AlertType.WARNING);
 
             alert.setTitle("Warning");
@@ -161,6 +160,16 @@ public class CreateAccountControl extends Pane {
             alert.setContentText("Please verify or re-enter your e-mail\n");
             alert.show();
         }
+
+        public void displayUserAlreadyExists() {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+
+            alert.setTitle("Warning");
+            alert.setHeaderText(null);
+            alert.setContentText("Please choose a different email\n");
+            alert.show();
+        }
+
     }
 
     private class PasswordFieldHandler implements EventHandler<KeyEvent> {

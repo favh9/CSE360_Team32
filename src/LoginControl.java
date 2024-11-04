@@ -1,14 +1,15 @@
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 
 public class LoginControl extends Pane {
 
     public double width;
     public double height;
+    private final TextField usernameTextField;
+    private final PasswordField passwordField;
     private final Button signinButton;
     private final Button createAcctButton;
     private final Hyperlink forgotpasswordHyperlink;
@@ -19,6 +20,9 @@ public class LoginControl extends Pane {
         this.height = height;
 
         LoginPane pane = new LoginPane(width,height);
+
+        usernameTextField = pane.getUsernameTextField();
+        passwordField = pane.getPasswordField();
 
         signinButton = pane.getSigninButton();
         signinButton.setOnAction(new ButtonHandler());
@@ -58,13 +62,27 @@ public class LoginControl extends Pane {
 
             } else if(a.getSource() == signinButton) {
 
-//              // TESTING DATABASE
-//              DataBase.getUser(usernameTextField.getText(),usernameTextField.getText());
-                signinButton.setStyle("-fx-background-radius: 5em; -fx-background-color: #ffa500;");
-                UserControl users = new UserControl(width,height);
-                Main.mainWindow.setScene(new Scene(users));
+                if(!(DataBase.getUser(usernameTextField.getText(),passwordField.getText()))) {
+                    displayIncorrectPasswordOrUsername();
+
+                } else {
+                    signinButton.setStyle("-fx-background-radius: 5em; -fx-background-color: #ffa500;");
+                    UserControl users = new UserControl(width, height);
+                    Main.mainWindow.setScene(new Scene(users));
+                }
 
             }
+
+        }
+
+        public void displayIncorrectPasswordOrUsername() {
+
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+
+            alert.setTitle("Warning");
+            alert.setHeaderText(null);
+            alert.setContentText("Please verify your username or re-enter your password\n");
+            alert.show();
 
         }
 

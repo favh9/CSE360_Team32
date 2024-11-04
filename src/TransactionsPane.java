@@ -88,6 +88,7 @@ public class TransactionsPane extends BorderPane {
         sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         sp.minViewportHeightProperty().set(400);
+        sp.prefHeight(400);
         sp.setStyle("-fx-background-color:transparent;");
 
         // set attributes for the box that includes the header and scrollpane
