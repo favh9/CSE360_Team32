@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b9f62c8b-130d-4e78-a527-6bbd541ffcde" name="Changes" comment="Add current project files">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataBase.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +33,6 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="SHOW_RECENT_BRANCHES" value="false" />
-    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -71,7 +72,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "phase3",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/favh/Documents/IntelliJ-workspace/CSE360/CSE360_Team32",
+    "last_opened_file_path": "/Users/favh/Documents/IntelliJ-workspace/CSE360_Team32",
     "onboarding.tips.debug.path": "/Users/favh/Documents/IntelliJ-workspace/CSE360/main/src/Main.java",
     "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15",
@@ -91,7 +92,7 @@
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="CSE360_Team32" />
-      <option name="VM_PARAMETERS" value="--module-path $PROJECT_DIR$/../../../javafx-sdk-22.0.2/lib --add-modules javafx.controls,javafx.fxml" />
+      <option name="VM_PARAMETERS" value="--module-path $USER_HOME$/javafx-sdk-22.0.2/lib --add-modules javafx.controls,javafx.fxml" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
