@@ -8,7 +8,9 @@ import java.sql.*;
 public class DataBase {
 
     // add url, user and password
-
+    public static String URL = "jdbc:mysql://98.177.43.137:3306/team32";
+    public static String USER = "admin";
+    public static String PASWWORD = "Pineapple32!";
 
     public static void createDataBase() {
 
