@@ -1,9 +1,4 @@
 import java.sql.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 // the database is yet to do the following
 // hash passwords,
@@ -12,7 +7,7 @@ import java.sql.SQLException;
 // prevent things like sql injection
 public class DataBase {
 
-
+    // add url, user and password
 
     public static void createDataBase() {
 

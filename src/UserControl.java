@@ -1,54 +1,60 @@
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 
 public class UserControl extends Pane {
 
-    private final VBox userlistVBox;
-    private final Button adduserButton;
+    private final UsersPane pane;
+    private final Button b1;
 
     public UserControl(double width, double height) {
 
-        UsersPane pane = new UsersPane(width, height);
+        pane = new UsersPane(width, height);
 
-        userlistVBox = pane.getUserListVBox();
-        adduserButton = pane.getAdduserButton();
-        adduserButton.setOnAction(new ButtonHandler());
+        b1 = pane.getButton1();
+        b1.setOnAction(new ButtonHandler());
 
         this.getChildren().addAll(pane);
-    }
-
-    public void addUserToList(String username, String balance, String type) {
-
-        Text usernameText = new Text(username);
-        usernameText.setFont(Font.font(20));
-
-        Text balanceText = new Text(balance);
-        balanceText.setFont(Font.font(20));
-
-        Text typeText = new Text(type);
-        typeText.setFont(Font.font(20));
-
-        HBox userHBox = new HBox(usernameText,balanceText,typeText);
-
-        userlistVBox.getChildren().add(userHBox);
-
     }
 
     private class ButtonHandler implements EventHandler<ActionEvent> {
 
         public void handle(ActionEvent a) {
 
-            if(a.getSource() == adduserButton) {
+            if(a.getSource() == b1) {
 
-                addUserToList("sparky","0","0");
-            }
+                // clear data in case refresh is hit 1+ times
+                pane.clearUsers();
+
+                String query = "SELECT username FROM Users";  // quaery to retrieve data from tabl
+
+                // JDBC connection
+                try (Connection connection = DriverManager.getConnection(DataBase.URL, DataBase.USER, DataBase.PASWWORD);
+                    Statement statement = connection.createStatement();
+                    ResultSet resultSet = statement.executeQuery(query)) {
+
+                    // Iterate through the ResultSet and process the data
+                    while (resultSet.next()) {
+                        // Get the data from the result set
+                        String username = resultSet.getString("username");
+
+                        // use the data
+                        pane.addUser(username, "0", "admin");
+                    }
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                
+            } 
         }
     }
 

@@ -1,7 +1,5 @@
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
@@ -57,7 +55,7 @@ public class NavigationPane extends VBox {
 
         // set attributes for the navigation bar
         VBox navBarVBox = new VBox(asuIcon,usersButtonTextVBox,statsButtonTextVBox,transButtonTextVBox,settButtonTextVBox,logoutButtonTextVBox);
-        navBarVBox.setSpacing(3);
+        navBarVBox.setSpacing(5);
         navBarVBox.setPadding(new Insets(20,20,20,20));
         navBarVBox.setStyle(
                 "-fx-background-radius: 2em;" + "-fx-background-color: #ffffff;"
