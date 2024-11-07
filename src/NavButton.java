@@ -12,8 +12,8 @@ public class NavButton extends Button {
     public NavButton(Image image) {
 
         ImageView imageView = new ImageView(image);
-        imageView.setFitHeight(70);
-        imageView.setFitWidth(70);
+        imageView.setFitHeight(65);
+        imageView.setFitWidth(65);
         this.setGraphic(imageView);
         this.setBackground(Background.EMPTY);
 

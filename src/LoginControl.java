@@ -69,6 +69,8 @@ public class LoginControl extends Pane {
                     signinButton.setStyle("-fx-background-radius: 5em; -fx-background-color: #ffa500;");
                     UserControl users = new UserControl(width, height);
                     Main.mainWindow.setScene(new Scene(users));
+//                    SellerControl seller = new SellerControl(width,height);
+//                    Main.mainWindow.setScene(new Scene(seller));
                 }
 
             }

@@ -25,7 +25,7 @@ public class TransactionsPane extends BorderPane {
         Font titleFont = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 42);
         Font quantityFont = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 24);
 
-        NavigationControl navBarVBox = new NavigationControl(width,height);
+        NavigationAdminControl navBarVBox = new NavigationAdminControl(width,height);
 
         // set attributes for the Title Label
         Label titleLabel = new Label("Transactions");

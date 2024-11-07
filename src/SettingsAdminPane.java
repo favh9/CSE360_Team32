@@ -1,6 +1,5 @@
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
@@ -9,11 +8,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-public class SettingsPane extends BorderPane {
+public class SettingsAdminPane extends BorderPane {
 
-    public SettingsPane(double width, double height) {
+    public SettingsAdminPane(double width, double height) {
 
-        NavigationControl navBarVBox = new NavigationControl(width,height);
+        NavigationAdminControl navBarVBox = new NavigationAdminControl(width,height);
 
         // set attributes for the Title Label
         Label titleLabel = new Label("Settings");

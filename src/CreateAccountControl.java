@@ -74,26 +74,34 @@ public class CreateAccountControl extends Pane {
                     displayInvalidEmail();
                 } else if(!passwordsMatch()) {
                     displayPasswordsNotMatch();
-                } else if(!(DataBase.insertUser(firstnameTextField.getText(),lastnameTextField.getText(),emailTextField.getText(),usernameTextField.getText(),passwordPasswordfield.getText()))) {
-                    displayUserAlreadyExists();
+                } else if(!(validUser())) {
+                    displayInvalidUser();
                 } else {
-                    Alert acctCreatedAlert = new Alert(Alert.AlertType.INFORMATION);
-                    acctCreatedAlert.setTitle("");
-                    acctCreatedAlert.setHeaderText("Congratulations!");
-                    acctCreatedAlert.setContentText("Welcome " + firstnameTextField.getText() + " " + lastnameTextField.getText() +
-                            ",\nYour account was successfully created." +
-                            "\nYour username is " + usernameTextField.getText() + ".");
-                    ImageView confirmImageView = new ImageView(Main.successIcon);
-                    confirmImageView.setFitHeight(40);
-                    confirmImageView.setFitWidth(100);
-                    acctCreatedAlert.setGraphic(confirmImageView);
-                    acctCreatedAlert.setOnCloseRequest(arg0 -> {
-                        // TODO Auto-generated method stub
-                        Main.mainWindow.setScene(new Scene(login));
-                    });
-                    acctCreatedAlert.show();
+                    displaySuccess();
                 }
             }
+        }
+
+        public boolean validUser() {
+            return DataBase.insertUser(firstnameTextField.getText(),lastnameTextField.getText(),emailTextField.getText(),usernameTextField.getText(),passwordPasswordfield.getText());
+        }
+
+        public void displaySuccess() {
+            Alert acctCreatedAlert = new Alert(Alert.AlertType.INFORMATION);
+            acctCreatedAlert.setTitle("");
+            acctCreatedAlert.setHeaderText("Congratulations!");
+            acctCreatedAlert.setContentText("Welcome " + firstnameTextField.getText() + " " + lastnameTextField.getText() +
+                    ",\nYour account was successfully created." +
+                    "\nYour username is " + usernameTextField.getText() + ".");
+            ImageView confirmImageView = new ImageView(Main.successIcon);
+            confirmImageView.setFitHeight(40);
+            confirmImageView.setFitWidth(100);
+            acctCreatedAlert.setGraphic(confirmImageView);
+            acctCreatedAlert.setOnCloseRequest(arg0 -> {
+                // TODO Auto-generated method stub
+                Main.mainWindow.setScene(new Scene(login));
+            });
+            acctCreatedAlert.show();
         }
 
         public boolean passwordsMatch() {
@@ -161,12 +169,12 @@ public class CreateAccountControl extends Pane {
             alert.show();
         }
 
-        public void displayUserAlreadyExists() {
+        public void displayInvalidUser() {
             Alert alert = new Alert(Alert.AlertType.WARNING);
 
             alert.setTitle("Warning");
             alert.setHeaderText(null);
-            alert.setContentText("Please choose a different email\n");
+            alert.setContentText("Please choose a different email and/or username\n");
             alert.show();
         }
 

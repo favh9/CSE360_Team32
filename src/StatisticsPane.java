@@ -3,7 +3,6 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Side;
-import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -21,7 +20,7 @@ public class StatisticsPane extends BorderPane {
 
     public StatisticsPane(double width, double height) {
 
-        NavigationControl navBarVBox = new NavigationControl(width,height);
+        NavigationAdminControl navBarVBox = new NavigationAdminControl(width,height);
 
         // set attributes for the Title Label
         Label titleLabel = new Label("Statistics");

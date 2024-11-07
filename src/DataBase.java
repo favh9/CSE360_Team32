@@ -8,7 +8,9 @@ import java.sql.*;
 public class DataBase {
 
     // add url, user and password
-
+    protected static String URL = "jdbc:mysql://70.176.17.178:3306/team32";
+    protected static String USER = "admin";
+    protected static String PASWWORD = "admin";
 
     public static void createDataBase() {
 
@@ -33,7 +35,27 @@ public class DataBase {
                 + "lastname VARCHAR(255) NOT NULL, "
                 + "email VARCHAR(255) NOT NULL UNIQUE, "
                 + "username VARCHAR(255) NOT NULL UNIQUE, "
-                + "password VARCHAR(255) NOT NULL)";
+                + "password VARCHAR(255) NOT NULL, "
+                + "usertype ENUM('buyer', 'seller') DEFAULT NULL)";
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);
+             Statement stmt = conn.createStatement()) {
+
+            stmt.executeUpdate(createTableSQL);
+            System.out.println("Table created successfully...");
+        } catch (SQLException e) {
+            System.out.println("Table created.. SIKE!...");
+            e.printStackTrace();
+        }
+    }
+
+    public static void createTransactionsTable() {
+
+        String createTableSQL = "CREATE TABLE IF NOT EXISTS Transactions ("
+                + "id INT AUTO_INCREMENT PRIMARY KEY, "
+                + "username VARCHAR(255) NOT NULL, "
+                + "timestmap VARCHAR(255) NOT NULL, "
+                + "amount VARCHAR(255) NOT NULL UNIQUE, ";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);
              Statement stmt = conn.createStatement()) {
@@ -48,9 +70,8 @@ public class DataBase {
 
     public static boolean insertUser(String firstname, String lastname, String email, String username, String pwd) {
 
-
-        String insertUserSQL = "INSERT INTO Users (firstname, lastname, email, username, password) " +
-                               "VALUES (?, ?, ?, ?, ?)";
+        String insertUserSQL = "INSERT INTO Users (firstname, lastname, email, username, password, usertype) " +
+                               "VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);
              PreparedStatement pstmt = conn.prepareStatement(insertUserSQL)) {
@@ -60,6 +81,7 @@ public class DataBase {
             pstmt.setString(3, email);
             pstmt.setString(4, username);
             pstmt.setString(5, pwd);
+            pstmt.setString(6, "");
 
             pstmt.executeUpdate();
             System.out.println("User inserted successfully: " + username);

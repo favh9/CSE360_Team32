@@ -5,9 +5,14 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar; // test
+import java.util.Date;
+
 // this class initiates the gui app, loading the login page as the initial view
 public class Main extends Application {
-    
+
     // testing junit
     public int sum(int n, int n2) {
         return n + n2;
@@ -20,6 +25,7 @@ public class Main extends Application {
     public final double HEIGHT = 600;
 
     // static images to later use for the rest of the project
+    public static Image profileIcon = new Image("https://i.pinimg.com/originals/57/00/c0/5700c04197ee9a4372a35ef16eb78f4e.png");
     public static Image buyIcon = new Image("https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQaDLfkvJ_2GkXDrtsbWa3Cl6h34L8J1zYFmT0EQEzZev_jp2e5");
     public static Image sellIcon = new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQH44eEh0ZTrAQWWz7GQ2e34lAnpPa4cHkM0foB-CcNbmsnvAPO");
     public static Image usersIcon = new Image("https://www.shareicon.net/data/128x128/2015/11/29/679698_add_512x512.png");
@@ -36,6 +42,8 @@ public class Main extends Application {
     public static Image refreshIcon = new Image("https://static-00.iconduck.com/assets.00/gui-refresh-icon-2048x2048-xgbnerm5.png");
     public static Image asuIcon = new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTbPLkDfxyWiu0Qho5hOJdgOkseNLcxiscVg&s");
     public static Image successIcon = new Image("https://mardizu.co.id/assets/asset_admin/img/illustration/success.png");
+    public static Image infoIcon = new Image("https://uxwing.com/wp-content/themes/uxwing/download/web-app-development/more-info-icon.png");
+    public static Image booksIcon = new Image("https://cdn0.iconfinder.com/data/icons/carbon-mobile-browser-1/48/reading_list-512.png");
 
     public void start(Stage primaryStage) {
 
@@ -65,7 +73,7 @@ public class Main extends Application {
         DataBase.createDataBase();
         DataBase.createUsersTable();
         launch(args);
-        
+
     }
 
 }

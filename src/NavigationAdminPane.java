@@ -4,7 +4,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
-public class NavigationPane extends VBox {
+public class NavigationAdminPane extends VBox {
 
     private final NavButton usersButton;
     private final NavButton statsButton;
@@ -12,7 +12,7 @@ public class NavigationPane extends VBox {
     private final NavButton settButton;
     private final NavButton logoutButton;
 
-    public NavigationPane(double height) {
+    public NavigationAdminPane(double height) {
 
         // set attributes for the navigation bar buttons
         ImageView asuIcon = new ImageView(Main.asuIcon);
@@ -32,7 +32,7 @@ public class NavigationPane extends VBox {
         Label settButtonText = new Label("Settings");
         Label logoutButtonText = new Label("Logout");
 
-        // set attributes for the NavigationPane Bar Buttons
+        // set attributes for the NavigationAdminPane Bar Buttons
         // their respective images and/or descriptions are stored in VBoxes
         VBox usersButtonTextVBox = new VBox(usersButton,usersButtonText);
         usersButtonTextVBox.setAlignment(Pos.CENTER);
@@ -55,7 +55,7 @@ public class NavigationPane extends VBox {
 
         // set attributes for the navigation bar
         VBox navBarVBox = new VBox(asuIcon,usersButtonTextVBox,statsButtonTextVBox,transButtonTextVBox,settButtonTextVBox,logoutButtonTextVBox);
-        navBarVBox.setSpacing(5);
+        navBarVBox.setSpacing(9);
         navBarVBox.setPadding(new Insets(20,20,20,20));
         navBarVBox.setStyle(
                 "-fx-background-radius: 2em;" + "-fx-background-color: #ffffff;"

@@ -1,11 +1,9 @@
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
-public class NavigationControl extends VBox {
+public class NavigationAdminControl extends VBox {
 
     public double width;
     public double height;
@@ -16,12 +14,12 @@ public class NavigationControl extends VBox {
     private final NavButton settButton;
     private final NavButton logoutButton;
 
-    public NavigationControl(double width, double height) {
+    public NavigationAdminControl(double width, double height) {
 
         this.width = width;
         this.height = height;
 
-        NavigationPane pane = new NavigationPane(height);
+        NavigationAdminPane pane = new NavigationAdminPane(height);
 
         usersButton = pane.getUsersButton();
         usersButton.setOnAction(new ButtonHandler());
@@ -65,7 +63,7 @@ public class NavigationControl extends VBox {
             }
 
             if(a.getSource() == settButton) {
-                SettingsControl sett = new SettingsControl(width, height);
+                SettingsAdminControl sett = new SettingsAdminControl(width, height);
                 Main.mainWindow.setScene(new Scene(sett));
             }
 

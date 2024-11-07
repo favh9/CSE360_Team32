@@ -17,7 +17,7 @@ public class UserControl extends Pane {
     public UserControl(double width, double height) {
 
         pane = new UsersPane(width, height);
-
+        displayUsers();
         b1 = pane.getButton1();
         b1.setOnAction(new ButtonHandler());
 
@@ -30,31 +30,33 @@ public class UserControl extends Pane {
 
             if(a.getSource() == b1) {
 
-                // clear data in case refresh is hit 1+ times
                 pane.clearUsers();
-
-                String query = "SELECT username FROM Users";  // quaery to retrieve data from tabl
-
-                // JDBC connection
-                try (Connection connection = DriverManager.getConnection(DataBase.URL, DataBase.USER, DataBase.PASWWORD);
-                    Statement statement = connection.createStatement();
-                    ResultSet resultSet = statement.executeQuery(query)) {
-
-                    // Iterate through the ResultSet and process the data
-                    while (resultSet.next()) {
-                        // Get the data from the result set
-                        String username = resultSet.getString("username");
-
-                        // use the data
-                        pane.addUser(username, "0", "admin");
-                    }
-
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-
-                
+                displayUsers();
             } 
+        }
+    }
+
+    // displays the users in table
+    public void displayUsers() {
+
+        String query = "SELECT username FROM Users";  // query to retrieve data from table
+
+        // JDBC connection
+        try (Connection connection = DriverManager.getConnection(DataBase.URL, DataBase.USER, DataBase.PASWWORD);
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+
+            // Iterate through the ResultSet and process the data
+            while (resultSet.next()) {
+                // Get the data from the result set
+                String username = resultSet.getString("username");
+
+                // use the data
+                pane.addUser(username, "0", "admin");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
