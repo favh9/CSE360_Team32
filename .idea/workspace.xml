@@ -5,7 +5,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9f62c8b-130d-4e78-a527-6bbd541ffcde" name="Changes" comment="Add current project files">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/lib.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSE360_Team32.iml" beforeDir="false" afterPath="$PROJECT_DIR$/CSE360_Team32.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/hamcrest-core-1.3.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/javafx-swt.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/javafx.base.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/javafx.controls.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/javafx.fxml.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/javafx.graphics.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/javafx.media.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/javafx.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/javafx.swing.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/javafx.web.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/junit-4.13.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/libdecora_sse.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/libfxplugins.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/libglass.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/libglib-lite.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/libgstreamer-lite.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/libjavafx_font.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/libjavafx_iio.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/libjfxmedia.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/libjfxmedia_avf.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/libjfxwebkit.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/libprism_common.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/libprism_es2.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/libprism_sw.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/mysql-connector-j-9.1.0.jar" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DataBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataBase.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -56,29 +83,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Application.Main.executor": "Run",
-    "Application.Unnamed.executor": "Run",
-    "Application.main.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "true",
-    "JUnit.TestMain.testSum.executor": "Run",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "phase3",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/favh/Documents/IntelliJ-workspace/CSE360_Team32",
-    "onboarding.tips.debug.path": "/Users/favh/Documents/IntelliJ-workspace/CSE360/main/src/Main.java",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;Application.main.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;true&quot;,
+    &quot;JUnit.TestMain.testSum.executor&quot;: &quot;Run&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;phase3&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/favh/Documents/IntelliJ-workspace/CSE360_Team32&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;/Users/favh/Documents/IntelliJ-workspace/CSE360/main/src/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/lib" />
@@ -92,7 +119,7 @@
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="CSE360_Team32" />
-      <option name="VM_PARAMETERS" value="--module-path $PROJECT_DIR$/lib --add-modules javafx.controls,javafx.fxml" />
+      <option name="VM_PARAMETERS" value="--module-path $PROJECT_DIR$/lib_mac --add-modules javafx.controls,javafx.fxml" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -148,11 +175,6 @@
           <url>file://$PROJECT_DIR$/src/CreateAccountControl.java</url>
           <line>72</line>
           <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/DataBase.java</url>
-          <line>16</line>
-          <option name="timeStamp" value="8" />
         </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.RuntimeException" package="java.lang" />

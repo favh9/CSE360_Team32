@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="lib_mac">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/lib_mac" />
+    </CLASSES>
+    <JAVADOC />
+    <NATIVE>
+      <root url="file://$PROJECT_DIR$/lib_mac" />
+    </NATIVE>
+    <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/lib_mac" recursive="false" />
+  </library>
+</component>
