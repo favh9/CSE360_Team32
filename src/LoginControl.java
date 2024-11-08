@@ -4,20 +4,25 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 
+import java.util.Objects;
+
 public class LoginControl extends Pane {
 
     public double width;
     public double height;
+    private User user;
     private final TextField usernameTextField;
     private final PasswordField passwordField;
     private final Button signinButton;
     private final Button createAcctButton;
     private final Hyperlink forgotpasswordHyperlink;
 
-    public LoginControl(double width,double height) {
+    public LoginControl(double width, double height) {
 
         this.width = width;
         this.height = height;
+
+        user = new User();
 
         LoginPane pane = new LoginPane(width,height);
 
@@ -56,21 +61,41 @@ public class LoginControl extends Pane {
         public void handle(ActionEvent a) {
 
             if (a.getSource() == createAcctButton) {
+
                 CreateAccountControl createAccount = new CreateAccountControl(width,height);
-                // set the scene of the main window to Create Account
                 Main.mainWindow.setScene(new Scene(createAccount));
 
             } else if(a.getSource() == signinButton) {
+                signinButton.setStyle("-fx-background-radius: 5em; -fx-background-color: #ffa500;");
 
-                if(!(DataBase.getUser(usernameTextField.getText(),passwordField.getText()))) {
+                if(!(DataBase.userExists(usernameTextField.getText(),passwordField.getText()))) {
+
                     displayIncorrectPasswordOrUsername();
 
-                } else {
-                    signinButton.setStyle("-fx-background-radius: 5em; -fx-background-color: #ffa500;");
-                    UserControl users = new UserControl(width, height);
-                    Main.mainWindow.setScene(new Scene(users));
-//                    SellerControl seller = new SellerControl(width,height);
-//                    Main.mainWindow.setScene(new Scene(seller));
+                } else if(DataBase.getUserType(usernameTextField.getText()) == null) {
+
+                    user = DataBase.getUserByUsername(usernameTextField.getText());
+                    NewUserControl newUser = new NewUserControl(user,width,height);
+                    Main.mainWindow.setScene(new Scene(newUser));
+
+                } else if(Objects.equals(DataBase.getUserType(usernameTextField.getText()), "seller")) {
+
+                    user = DataBase.getUserByUsername(usernameTextField.getText());
+                    SellerControl seller = new SellerControl(user,width,height);
+                    Main.mainWindow.setScene(new Scene(seller));
+
+                } else if(Objects.equals(DataBase.getUserType(usernameTextField.getText()), "buyer")) {
+
+                    user = DataBase.getUserByUsername(usernameTextField.getText());
+                    BuyerControl buyer = new BuyerControl(user,width,height);
+                    Main.mainWindow.setScene(new Scene(buyer));
+
+                } else if(Objects.equals(DataBase.getUserType(usernameTextField.getText()), "admin")) {
+
+                    user = DataBase.getUserByUsername(usernameTextField.getText());
+                    AdminControl admin = new AdminControl(user,width,height);
+                    Main.mainWindow.setScene(new Scene(admin));
+
                 }
 
             }

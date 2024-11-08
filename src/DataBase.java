@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 // the database is yet to do the following
 // hash passwords,
@@ -8,9 +9,53 @@ import java.sql.*;
 public class DataBase {
 
     // add url, user and password
-    protected static String URL = "jdbc:mysql://70.176.17.178:3306/team32";
-    protected static String USER = "admin";
-    protected static String PASWWORD = "admin";
+
+
+    // idea for tracking active users
+    protected static ConcurrentHashMap<Long,User> activeUsers = new ConcurrentHashMap<>();
+
+    public static void addUser(User user) {
+        activeUsers.put(user.getUserID(), user);
+    }
+
+    public static void removeUser(Long userID) {
+        activeUsers.remove(userID);
+    }
+
+    public boolean isUserActive(Long userID) {
+        return activeUsers.containsKey(userID);
+    }
+
+    public User getUser(Long userID) {
+        return activeUsers.get(userID);
+    }
+
+    public static boolean updateUserType(String username, String usertype) {
+
+        String updateUserSQL = "UPDATE Users SET usertype = ? WHERE username = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);
+             PreparedStatement pstmt = conn.prepareStatement(updateUserSQL)) {
+
+            pstmt.setString(1, usertype);
+            pstmt.setString(2, username);
+
+            int rowsAffected = pstmt.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("User type updated successfully for username: " + username);
+            } else {
+                System.out.println("User not found with username: " + username);
+                return false;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error updating user type for username: " + username);
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
 
     public static void createDataBase() {
 
@@ -36,7 +81,7 @@ public class DataBase {
                 + "email VARCHAR(255) NOT NULL UNIQUE, "
                 + "username VARCHAR(255) NOT NULL UNIQUE, "
                 + "password VARCHAR(255) NOT NULL, "
-                + "usertype ENUM('buyer', 'seller') DEFAULT NULL)";
+                + "usertype ENUM('buyer', 'seller', 'admin') DEFAULT NULL)";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);
              Statement stmt = conn.createStatement()) {
@@ -70,8 +115,8 @@ public class DataBase {
 
     public static boolean insertUser(String firstname, String lastname, String email, String username, String pwd) {
 
-        String insertUserSQL = "INSERT INTO Users (firstname, lastname, email, username, password, usertype) " +
-                               "VALUES (?, ?, ?, ?, ?, ?)";
+        String insertUserSQL = "INSERT INTO Users (firstname, lastname, email, username, password) " +
+                               "VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);
              PreparedStatement pstmt = conn.prepareStatement(insertUserSQL)) {
@@ -81,7 +126,6 @@ public class DataBase {
             pstmt.setString(3, email);
             pstmt.setString(4, username);
             pstmt.setString(5, pwd);
-            pstmt.setString(6, "");
 
             pstmt.executeUpdate();
             System.out.println("User inserted successfully: " + username);
@@ -93,7 +137,7 @@ public class DataBase {
         return true;
     }
 
-    public static boolean getUser(String username, String pwd) {
+    public static boolean userExists(String username, String pwd) {
 
         String selectUserSQL = "SELECT * FROM Users WHERE username = ? AND password = ?";
 
@@ -122,5 +166,67 @@ public class DataBase {
 
         return true;
     }
+
+    public static User getUserByUsername(String username) {
+        String selectUserSQL = "SELECT firstname, lastname, email, username, password, usertype FROM Users WHERE username = ?";
+        User user = null;
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);
+             PreparedStatement pstmt = conn.prepareStatement(selectUserSQL)) {
+
+            pstmt.setString(1, username);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    // Map the result set to a User object
+                    String firstname = rs.getString("firstname");
+                    String lastname = rs.getString("lastname");
+                    String email = rs.getString("email");
+                    String password = rs.getString("password");
+                    String usertype = rs.getString("usertype");
+
+                    // Create a new User object from the database result
+                    user = new User(firstname, lastname, email, username, password, usertype);
+                }
+            }
+
+            if (user != null) {
+                System.out.println("User retrieved successfully: " + user.getUsername());
+            } else {
+                System.out.println("No user found with username: " + username);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+
+    public static String getUserType(String username) {
+        String selectUserSQL = "SELECT usertype FROM Users WHERE username = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);
+             PreparedStatement pstmt = conn.prepareStatement(selectUserSQL)) {
+
+            pstmt.setString(1, username);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    // User found with matching credentials
+                    String userType = rs.getString("usertype");  // Retrieve the user_type
+                    return userType;
+                } else {
+                    System.out.println("Invalid username.");
+                    return null;  // Return null if the user is not found
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;  // Return null in case of an error
+        }
+    }
+
+
+
 
 }

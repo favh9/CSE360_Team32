@@ -1,5 +1,4 @@
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -25,12 +24,12 @@ public class SellerPane extends BorderPane {
     private TextField tf4;
     private Button b1;
 
-    public SellerPane(double width, double height) {
+    public SellerPane(User user, double width, double height) {
 
         Font titleFont = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 42);
         Font instructionFont = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 16);
 
-        NavigationUserControl navbarVBox = new NavigationUserControl(width,height);
+        NavigationSellerControl navbarVBox = new NavigationSellerControl(user,width,height);
 
 
         // set attributes for the Title Label
@@ -109,6 +108,14 @@ public class SellerPane extends BorderPane {
         tf4.setPrefWidth(270);
         generatedPriceHBox.setSpacing(5);
 
+        // set attributes for the text field
+        tf4 = new TextField();
+        tf4.setText("Generated Price");
+        tf4.setStyle("-fx-text-fill: #B0B0B0;");
+        tf4.setPrefWidth(400);
+        tf4.setEditable(false);
+        HBox hbox4 = new HBox(tf4);
+
         // set attributes for the image
         ImageView image1 = new ImageView(Main.infoIcon);
         image1.setFitHeight(15);
@@ -122,7 +129,7 @@ public class SellerPane extends BorderPane {
         infoHBox.setSpacing(5);
 
         // set attributes for the VBox
-        VBox priceVBox = new VBox(generatedPriceHBox,infoHBox);
+        VBox priceVBox = new VBox(hbox4,infoHBox);
         priceVBox.setSpacing(5);
 
         // set attributes for the button

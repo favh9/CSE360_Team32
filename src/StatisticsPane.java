@@ -18,9 +18,9 @@ public class StatisticsPane extends BorderPane {
 
     private final Button refreshButton;
 
-    public StatisticsPane(double width, double height) {
+    public StatisticsPane(User user, double width, double height) {
 
-        NavigationAdminControl navBarVBox = new NavigationAdminControl(width,height);
+        NavigationAdminControl navBarVBox = new NavigationAdminControl(user,width,height);
 
         // set attributes for the Title Label
         Label titleLabel = new Label("Statistics");

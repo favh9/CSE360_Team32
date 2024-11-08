@@ -9,6 +9,8 @@ public class SellerControl extends Pane {
 
     public double width;
     public double height;
+    private SellerPane pane;
+    private User user;
     private String bookName;
     private String author;
     private int selectedYear;
@@ -17,14 +19,14 @@ public class SellerControl extends Pane {
     private double price;
     private double generatedPrice;
     private Button listBookButton;
-    SellerPane pane;
 
-    public SellerControl(double width, double height) {
+    public SellerControl(User user, double width, double height) {
 
         this.width = width;
         this.height = height;
+        this.user = user;
 
-        pane = new SellerPane(width,height);
+        pane = new SellerPane(user,width,height);
 
         listBookButton = pane.getListBookButton();
         listBookButton.setOnAction(new ButtonHandler());
@@ -37,9 +39,10 @@ public class SellerControl extends Pane {
         @Override
         public void handle(ActionEvent actionEvent) {
             if(emptyFields()) {
+                System.out.println(user.getFirstName());
                 displayEmptyFields();
             } else {
-                System.out.println("wooooo");
+
             }
         }
 
@@ -93,7 +96,7 @@ public class SellerControl extends Pane {
             acctCreatedAlert.setGraphic(confirmImageView);
             acctCreatedAlert.setOnCloseRequest(arg0 -> {
                 // TODO Auto-generated method stub
-                SellerControl seller = new SellerControl(width, height);
+                SellerControl seller = new SellerControl(user, width, height);
                 Main.mainWindow.setScene(new Scene(seller));
             });
             acctCreatedAlert.show();

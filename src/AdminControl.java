@@ -9,14 +9,14 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 
-public class UserControl extends Pane {
+public class AdminControl extends Pane {
 
-    private final UsersPane pane;
+    private final AdminPane pane;
     private final Button b1;
 
-    public UserControl(double width, double height) {
+    public AdminControl(User user,double width, double height) {
 
-        pane = new UsersPane(width, height);
+        pane = new AdminPane(user, width, height);
         displayUsers();
         b1 = pane.getButton1();
         b1.setOnAction(new ButtonHandler());

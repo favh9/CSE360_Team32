@@ -8,11 +8,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-public class SettingsAdminPane extends BorderPane {
+public class SettingsUserPane extends BorderPane {
 
-    public SettingsAdminPane(User user, double width, double height) {
+    public SettingsUserPane(User user, double width, double height) {
 
-        NavigationAdminControl navBarVBox = new NavigationAdminControl(user,width,height);
+        NavigationSellerControl navBarVBox = new NavigationSellerControl(user,width,height);
 
         // set attributes for the Title Label
         Label titleLabel = new Label("Settings");

@@ -13,22 +13,22 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-public class TransactionsPane extends BorderPane {
+public class AdminPane extends BorderPane {
 
     private final Button b1;
     private final Button b2;
     private final VBox listVBox;
     private final Text quantityText;
 
-    public TransactionsPane(double width, double height) {
+    public AdminPane(User user, double width, double height) {
 
         Font titleFont = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 42);
         Font quantityFont = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 24);
 
-        NavigationAdminControl navBarVBox = new NavigationAdminControl(width,height);
+        NavigationAdminControl navBarVBox = new NavigationAdminControl(user,width,height);
 
         // set attributes for the Title Label
-        Label titleLabel = new Label("Transactions");
+        Label titleLabel = new Label("Users");
         titleLabel.setFont(titleFont);
 
         // set attributes for the quantity label
@@ -88,13 +88,13 @@ public class TransactionsPane extends BorderPane {
         headerLabel1.setAlignment(Pos.BASELINE_LEFT);
 
         // set attributes for the header label
-        Label headerLabel2 = new Label("Timestamp");
+        Label headerLabel2 = new Label("Balance");
         headerLabel2.setFont(Font.font(20));
         headerLabel2.setPrefWidth(150);
         headerLabel2.setAlignment(Pos.BASELINE_CENTER);
 
         // set attributes for the header label
-        Label headerLabel3 = new Label("Amount");
+        Label headerLabel3 = new Label("Type");
         headerLabel3.setFont(Font.font(20));
         headerLabel3.setPrefWidth(150);
         headerLabel3.setAlignment(Pos.BASELINE_CENTER);
@@ -148,13 +148,12 @@ public class TransactionsPane extends BorderPane {
         return b1;
     }
 
-    public void clearTransactions() {
+    public void clearUsers() {
         listVBox.getChildren().clear();
         quantityText.setText("0");
     }
 
     // returns a container where a user's information is displayed
-    // modify it to match the transaction box
     public void addUser(String username, String balance, String type) {
         
         NumberFormat nf = NumberFormat.getCurrencyInstance();

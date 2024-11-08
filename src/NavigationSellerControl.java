@@ -4,7 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
-public class NavigationUserControl extends VBox {
+public class NavigationSellerControl extends VBox {
 
     public double width;
     public double height;
@@ -16,13 +16,12 @@ public class NavigationUserControl extends VBox {
     private final NavButton settButton;
     private final NavButton logoutButton;
 
-    public NavigationUserControl(User user, double width, double height) {
+    public NavigationSellerControl(User user, double width, double height) {
 
         this.width = width;
         this.height = height;
         this.user = user;
-
-        NavigationUserPane pane = new NavigationUserPane(user,height);
+        NavigationSellerPane pane = new NavigationSellerPane(user,height);
 
         profileButton = pane.getProfileButton();
         profileButton.setOnAction(new ButtonHandler());
@@ -63,6 +62,12 @@ public class NavigationUserControl extends VBox {
                 MyBooksControl mybooks = new MyBooksControl(user,width, height);
                 Main.mainWindow.setScene(new Scene(mybooks));
             }
+
+            if(a.getSource() == settButton) {
+                SettingsUserControl sett = new SettingsUserControl(user, width, height);
+                Main.mainWindow.setScene(new Scene(sett));
+            }
+
 
             if(a.getSource() == logoutButton) {
                 LoginControl login = new LoginControl(width, height);

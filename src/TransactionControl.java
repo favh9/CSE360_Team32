@@ -2,9 +2,15 @@ import javafx.scene.layout.Pane;
 
 public class TransactionControl extends Pane {
 
-    public TransactionControl(double width, double height) {
+    private User user;
+    private double width;
+    private double height;
+    private TransactionPane pane;
 
-        TransactionsPane pane = new TransactionsPane(width,height);
+    public TransactionControl(User user, double width, double height) {
+
+        pane = new TransactionPane(user,width,height);
+
         this.getChildren().addAll(pane);
     }
 

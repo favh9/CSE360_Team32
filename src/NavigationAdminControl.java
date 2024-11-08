@@ -5,8 +5,10 @@ import javafx.scene.layout.VBox;
 
 public class NavigationAdminControl extends VBox {
 
-    public double width;
-    public double height;
+    private User user;
+    private double width;
+    private double height;
+    NavigationAdminPane pane;
 
     private final NavButton usersButton;
     private final NavButton statsButton;
@@ -14,12 +16,13 @@ public class NavigationAdminControl extends VBox {
     private final NavButton settButton;
     private final NavButton logoutButton;
 
-    public NavigationAdminControl(double width, double height) {
+    public NavigationAdminControl(User user, double width, double height) {
 
+        this.user = user;
         this.width = width;
         this.height = height;
 
-        NavigationAdminPane pane = new NavigationAdminPane(height);
+        pane = new NavigationAdminPane(height);
 
         usersButton = pane.getUsersButton();
         usersButton.setOnAction(new ButtonHandler());
@@ -45,25 +48,25 @@ public class NavigationAdminControl extends VBox {
         public void handle(ActionEvent a) {
 
             if(a.getSource() == usersButton) {
-                UserControl users = new UserControl(width, height);
+                AdminControl users = new AdminControl(user, width, height);
                 Main.mainWindow.setScene(new Scene(users));
 
             }
 
             if(a.getSource() == statsButton) {
-                StatisticsControl stats = new StatisticsControl(width, height);
+                StatisticsControl stats = new StatisticsControl(user, width, height);
                 Main.mainWindow.setScene(new Scene(stats));
 
             }
 
             if(a.getSource() == transButton) {
-                TransactionControl trans = new TransactionControl(width, height);
+                TransactionControl trans = new TransactionControl(user, width, height);
                 Main.mainWindow.setScene(new Scene(trans));
 
             }
 
             if(a.getSource() == settButton) {
-                SettingsAdminControl sett = new SettingsAdminControl(width, height);
+                SettingsAdminControl sett = new SettingsAdminControl(user,width, height);
                 Main.mainWindow.setScene(new Scene(sett));
             }
 

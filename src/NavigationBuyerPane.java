@@ -3,7 +3,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -11,7 +10,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public class NavigationUserPane extends VBox {
+public class NavigationBuyerPane extends VBox {
 
     private final Button button;
     private final NavButton sellButton;
@@ -19,7 +18,7 @@ public class NavigationUserPane extends VBox {
     private final NavButton settButton;
     private final NavButton logoutButton;
 
-    public NavigationUserPane(User user, double height) {
+    public NavigationBuyerPane(User user, double height) {
 
         // set attributes for the navigation bar buttons
         ImageView asuIcon = new ImageView(Main.asuIcon);
@@ -45,8 +44,8 @@ public class NavigationUserPane extends VBox {
         button.setGraphic(new StackPane(circle, letter));  // Stack the circle and text
         button.setStyle("-fx-background-color: transparent; -fx-border-width: 0;");  // Remove default button background and border
 
-        sellButton = new NavButton(Main.sellIcon);
-        booksButton = new NavButton(Main.booksIcon);
+        sellButton = new NavButton(Main.buyIcon);
+        booksButton = new NavButton(Main.transIcon);
         settButton = new NavButton(Main.settingsIcon);
         logoutButton = new NavButton(Main.logOutIcon);
 
@@ -80,24 +79,15 @@ public class NavigationUserPane extends VBox {
         logoutButtonTextVBox.setSpacing(-10);
 
         // set attributes for the navigation bar
-//        VBox navBarVBox = new VBox(asuIcon,profileButtonTextVBox,sellButtonTextVBox,booksButtonTextVBox,settButtonTextVBox,logoutButtonTextVBox);
-        VBox navBarVBox = new VBox(asuIcon,logoutButtonTextVBox);
+        VBox navBarVBox = new VBox(asuIcon,profileButtonTextVBox,sellButtonTextVBox,booksButtonTextVBox,settButtonTextVBox,logoutButtonTextVBox);
+        navBarVBox.setSpacing(3);
         navBarVBox.setPadding(new Insets(20,20,20,20));
         navBarVBox.setStyle(
                 "-fx-background-radius: 2em;" + "-fx-background-color: #ffffff;"
         );
 
-        BorderPane navbarPane = new BorderPane();
-        navbarPane.setPrefHeight(height);
-        navbarPane.setPadding(new Insets(20,20,20,20));
-        navbarPane.setTop(asuIcon);
-        navbarPane.setBottom(logoutButtonTextVBox);
-        navbarPane.setStyle(
-                "-fx-background-radius: 2em;" + "-fx-background-color: #ffffff;"
-        );
-
         this.setPrefHeight(height);
-        this.getChildren().addAll(navbarPane);
+        this.getChildren().addAll(navBarVBox);
 
     }
 

@@ -5,11 +5,17 @@ import javafx.scene.layout.Pane;
 
 public class StatisticsControl extends Pane {
 
+    private User user;
+    private double width;
+    private double height;
+    private StatisticsPane pane;
+
     private final Button refreshButton;
 
-    public StatisticsControl(double width,double height) {
+    public StatisticsControl(User user, double width,double height) {
 
-        StatisticsPane pane = new StatisticsPane(width,height);
+        pane = new StatisticsPane(user,width,height);
+
         refreshButton = pane.getRefreshButton();
 
         this.getChildren().addAll(pane);
