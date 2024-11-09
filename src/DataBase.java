@@ -9,9 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DataBase {
 
     // add url, user and password
-    protected static String URL = "jdbc:mysql://70.176.17.178:3306/team32";
-    protected static String USER = "admin";
-    protected static String PASWWORD = "admin";
+
 
     // idea for tracking active users
     protected static ConcurrentHashMap<Long,User> activeUsers = new ConcurrentHashMap<>();
