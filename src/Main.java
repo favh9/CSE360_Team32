@@ -75,7 +75,7 @@ public class Main extends Application {
         DataBase.createDataBase();
         DataBase.createUsersTable();
 //        DataBase.insertUser("admin","lastname","email","admin","admin");
-//        DataBase.updateUserType("admin", "admin");
+        DataBase.updateUserType("faisalb", "admin");
         launch(args);
 
 

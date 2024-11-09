@@ -11,8 +11,8 @@ public class NavigationBuyerControl extends VBox {
 
     private User user;
     private final Button profileButton;
-    private final NavButton sellButton;
-    private final NavButton booksButton;
+    private final NavButton shopButton;
+    private final NavButton purchaseHistoryButton;
     private final NavButton settButton;
     private final NavButton logoutButton;
 
@@ -21,16 +21,16 @@ public class NavigationBuyerControl extends VBox {
         this.width = width;
         this.height = height;
         this.user = user;
-        NavigationSellerPane pane = new NavigationSellerPane(user,height);
+        NavigationBuyerPane pane = new NavigationBuyerPane(user,height);
 
         profileButton = pane.getProfileButton();
         profileButton.setOnAction(new ButtonHandler());
 
-        sellButton = pane.getSellButton();
-        sellButton.setOnAction(new ButtonHandler());
+        shopButton = pane.getShopButton();
+        shopButton.setOnAction(new ButtonHandler());
 
-        booksButton = pane.getBooksButton();
-        booksButton.setOnAction(new ButtonHandler());
+        purchaseHistoryButton = pane.getPurchaseHistoryButton();
+        purchaseHistoryButton.setOnAction(new ButtonHandler());
 
         settButton = pane.getSettButton();
         settButton.setOnAction(new ButtonHandler());
@@ -47,24 +47,24 @@ public class NavigationBuyerControl extends VBox {
         public void handle(ActionEvent a) {
 
             if(a.getSource() == profileButton) {
-                ProfileControl profile = new ProfileControl(user, width, height);
+                BuyerProfileControl profile = new BuyerProfileControl(user, width, height);
                 Main.mainWindow.setScene(new Scene(profile));
 
             }
 
-            if(a.getSource() == sellButton) {
-                SellerControl seller = new SellerControl(user, width, height);
-                Main.mainWindow.setScene(new Scene(seller));
+            if(a.getSource() == shopButton) {
+                BuyerControl buyer = new BuyerControl(user, width, height);
+                Main.mainWindow.setScene(new Scene(buyer));
 
             }
 
-            if(a.getSource() == booksButton) {
-                MyBooksControl mybooks = new MyBooksControl(user,width, height);
-                Main.mainWindow.setScene(new Scene(mybooks));
+            if(a.getSource() == purchaseHistoryButton) {
+                PurchaseHistoryControl purhcaseHistory = new PurchaseHistoryControl(user,width, height);
+                Main.mainWindow.setScene(new Scene(purhcaseHistory));
             }
 
             if(a.getSource() == settButton) {
-                SettingsUserControl sett = new SettingsUserControl(user, width, height);
+                BuyerSettingsControl sett = new BuyerSettingsControl(user, width, height);
                 Main.mainWindow.setScene(new Scene(sett));
             }
 

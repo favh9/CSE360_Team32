@@ -12,9 +12,9 @@ import javafx.scene.text.Text;
 
 public class NavigationBuyerPane extends VBox {
 
-    private final Button button;
-    private final NavButton sellButton;
-    private final NavButton booksButton;
+    private final Button profileButton;
+    private final NavButton shopButton;
+    private final NavButton purchaseHistoryButton;
     private final NavButton settButton;
     private final NavButton logoutButton;
 
@@ -40,36 +40,36 @@ public class NavigationBuyerPane extends VBox {
         letter.setFill(Color.BLACK);  // Set the text color (white for contrast)
 
         // Create a button and set the graphic (circle + text) as the button content
-        button = new Button();
-        button.setGraphic(new StackPane(circle, letter));  // Stack the circle and text
-        button.setStyle("-fx-background-color: transparent; -fx-border-width: 0;");  // Remove default button background and border
+        profileButton = new Button();
+        profileButton.setGraphic(new StackPane(circle, letter));  // Stack the circle and text
+        profileButton.setStyle("-fx-background-color: transparent; -fx-border-width: 0;");  // Remove default button background and border
 
-        sellButton = new NavButton(Main.buyIcon);
-        booksButton = new NavButton(Main.transIcon);
+        shopButton = new NavButton(Main.buyIcon);
+        purchaseHistoryButton = new NavButton(Main.transIcon);
         settButton = new NavButton(Main.settingsIcon);
         logoutButton = new NavButton(Main.logOutIcon);
 
         // set attributes for the buttons' labels
         Label profileButtonText = new Label("Profile");
-        Label sellButtonText = new Label("Sell");
-        Label booksButtonText = new Label("My Books");
-        booksButtonText.setAlignment(Pos.CENTER);
+        Label shopButtonText = new Label("Shop");
+        Label purchaseHistoryButtonText = new Label("Purchase History");
+        purchaseHistoryButtonText.setAlignment(Pos.CENTER);
         Label settButtonText = new Label("Settings");
         Label logoutButtonText = new Label("Logout");
 
         // set attributes for the NavigationAdminPane Bar Buttons
         // their respective images and/or descriptions are stored in VBoxes
-        VBox profileButtonTextVBox = new VBox(button,profileButtonText);
+        VBox profileButtonTextVBox = new VBox(profileButton,profileButtonText);
         profileButtonTextVBox.setAlignment(Pos.CENTER);
         profileButtonTextVBox.setSpacing(0);
 
-        VBox sellButtonTextVBox = new VBox(sellButton,sellButtonText);
-        sellButtonTextVBox.setAlignment(Pos.CENTER);
-        sellButtonTextVBox.setSpacing(0);
+        VBox shopButtonTextVBox = new VBox(shopButton,shopButtonText);
+        shopButtonTextVBox.setAlignment(Pos.CENTER);
+        shopButtonTextVBox.setSpacing(0);
 
-        VBox booksButtonTextVBox = new VBox(booksButton,booksButtonText);
-        booksButtonTextVBox.setAlignment(Pos.CENTER);
-        booksButtonTextVBox.setSpacing(-10);
+        VBox purchaseHistoryButtonTextVBox = new VBox(purchaseHistoryButton,purchaseHistoryButtonText);
+        purchaseHistoryButtonTextVBox.setAlignment(Pos.CENTER);
+        purchaseHistoryButtonTextVBox.setSpacing(-10);
 
         VBox settButtonTextVBox = new VBox(settButton,settButtonText);
         settButtonTextVBox.setAlignment(Pos.CENTER);
@@ -79,7 +79,7 @@ public class NavigationBuyerPane extends VBox {
         logoutButtonTextVBox.setSpacing(-10);
 
         // set attributes for the navigation bar
-        VBox navBarVBox = new VBox(asuIcon,profileButtonTextVBox,sellButtonTextVBox,booksButtonTextVBox,settButtonTextVBox,logoutButtonTextVBox);
+        VBox navBarVBox = new VBox(asuIcon,profileButtonTextVBox,shopButtonTextVBox,purchaseHistoryButtonTextVBox,settButtonTextVBox,logoutButtonTextVBox);
         navBarVBox.setSpacing(3);
         navBarVBox.setPadding(new Insets(20,20,20,20));
         navBarVBox.setStyle(
@@ -92,15 +92,15 @@ public class NavigationBuyerPane extends VBox {
     }
 
     public Button getProfileButton() {
-        return button;
+        return profileButton;
     }
 
-    public NavButton getSellButton() {
-        return sellButton;
+    public NavButton getShopButton() {
+        return shopButton;
     }
 
-    public NavButton getBooksButton() {
-        return booksButton;
+    public NavButton getPurchaseHistoryButton() {
+        return purchaseHistoryButton;
     }
 
     public NavButton getSettButton() {

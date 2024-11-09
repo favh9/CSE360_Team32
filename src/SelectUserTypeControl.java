@@ -42,6 +42,8 @@ public class SelectUserTypeControl extends Pane {
             if (a.getSource().equals(buyButton)) {
                 user.setUserType("buyer");
                 DataBase.updateUserType(user.getUsername(), "buyer");
+                BuyerControl buyer = new BuyerControl(user,width,height);
+                Main.mainWindow.setScene(new Scene(buyer));
 
             } else if (a.getSource().equals(sellButton)) {
                 user.setUserType("seller");
