@@ -21,7 +21,7 @@ public class NewUser_WelcomePane extends BorderPane {
         NewUser_NavigationControl navBarVBox = new NewUser_NavigationControl(user,width,height);
 
         // load custom font for title
-        Font arima = Font.loadFont(getClass().getResourceAsStream("fonts/Arima-sBold.ttf"), 65);
+        Font arima = Font.loadFont(getClass().getResourceAsStream("fonts/Arima-Bold.ttf"), 65);
 
         Font bodyFont = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 20);
 

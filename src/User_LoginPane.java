@@ -26,7 +26,7 @@ class User_LoginPane extends BorderPane {
     public User_LoginPane(double width, double height) {
 
         // load custom font
-        Font arima = Font.loadFont(getClass().getResourceAsStream("fonts/Arima-sBold.ttf"), 65);
+        Font arima = Font.loadFont(getClass().getResourceAsStream("fonts/Arima-Bold.ttf"), 65);
 
         // set attributes for the title label
         Label titleLabel = new Label("ASU Bookstore");
