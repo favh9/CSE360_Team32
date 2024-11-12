@@ -5,12 +5,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-import javax.xml.crypto.Data;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar; // test
-import java.util.Date;
-
 // this class initiates the gui app, loading the login page as the initial view
 public class Main extends Application {
 
@@ -51,7 +45,7 @@ public class Main extends Application {
 
         // the initial page to be displayed
         // instance variables
-        LoginControl mainPane = new LoginControl(WIDTH, HEIGHT);
+        User_LoginControl mainPane = new User_LoginControl(WIDTH, HEIGHT);
 
         // create new scene and assign children, and window dimensions
         Scene scene1 = new Scene(mainPane);
