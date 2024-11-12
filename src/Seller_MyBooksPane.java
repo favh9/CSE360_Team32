@@ -39,7 +39,7 @@ public class Seller_MyBooksPane extends BorderPane {
 
         // these are by default what we use for the scene
         this.setPrefSize(width, height);;
-        this.setBackground(Background.fill(Color.web("#4A1E2C"))); // darker maroon
+        this.setBackground(Background.fill(Color.web("#4A1E2C"))); // darker maroon color
 
     }
 }
