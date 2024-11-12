@@ -144,7 +144,7 @@ public class User_ForgotPasswordPane extends BorderPane {
         BorderPane.setMargin(whiteVBox, new Insets(20,20,20,20));
 
         this.setPrefSize(width, height);;
-        this.setBackground(Background.fill(Color.web("#4A1E2C"))); // darker maroon
+        this.setBackground(Background.fill(Color.web("#4A1E2C"))); // darker maroon color
 
     }
 
