@@ -4,57 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9f62c8b-130d-4e78-a527-6bbd541ffcde" name="Changes" comment="Add current project files">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_3_24,_8_15 PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_3_24,_8_16 PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_3_24,_8_17 PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_3_24,_8_17 PM_[Changes]1/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AdminControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Admin_UsersControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AdminPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Admin_UsersPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BuyerControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Buyer_ShopControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BuyerPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Buyer_ShopPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BuyerProfileControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Buyer_ProfileControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BuyerProfilePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Buyer_ProfilePane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BuyerSettingsControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Buyer_SettingsControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BuyerSettingsPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Buyer_SettingsPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CreateAccountControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/User_CreateAccountControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CreateAccountPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/User_CreateAccountPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DataBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataBase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ForgotPasswordControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/User_ForgotPasswordControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ForgotPasswordPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/User_ForgotPasswordPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/LoginControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/User_LoginControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/LoginPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/User_LoginPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MyBooksControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Seller_MyBooksControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MyBooksPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Seller_MyBooksPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/NavigationAdminControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Admin_NavigationControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/NavigationAdminPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Admin_NavigationPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/NavigationBuyerControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Buyer_NavigationControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/NavigationBuyerPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Buyer_NavigationPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/NavigationSellerControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Seller_NavigationControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/NavigationSellerPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Seller_NavigationPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/NavigationUserControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/NewUser_NavigationControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/NavigationUserPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/NewUser_NavigationPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/NewUserControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/NewUser_WelcomeControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/NewUserPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/NewUser_WelcomePane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ProfileControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Seller_ProfileControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ProfilePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Seller_ProfilePane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PurchaseHistoryControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Buyer_PurchaseHistoryControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PurchaseHistoryPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Buyer_PurchaseHistoryPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SelectUserTypeControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/NewUser_SelectUserTypeControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SelectUserTypePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/NewUser_SelectUserTypePane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SellerControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Seller_PostBookControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SellerPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Seller_PostBookPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SettingsAdminControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Admin_SettingsControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SettingsAdminPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Admin_SettingsPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SettingsUserControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Seller_SettingsControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SettingsUserPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Seller_SettingsPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StatisticsControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Admin_StatisticsControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StatisticsPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Admin_StatisticsPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TransactionControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Admin_TransactionsControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TransactionPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Admin_TransactionsPane.java" afterDir="false" />
-    </list>
+    <list default="true" id="b9f62c8b-130d-4e78-a527-6bbd541ffcde" name="Changes" comment="Add current project files" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
