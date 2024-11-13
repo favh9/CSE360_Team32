@@ -1,5 +1,6 @@
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
@@ -9,6 +10,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 public class Buyer_SettingsPane extends BorderPane {
+
+
+    private Button changePasswordButton;
+    private Button adjustpriceButton;
 
     public Buyer_SettingsPane(User user, double width, double height) {
 
@@ -22,8 +27,29 @@ public class Buyer_SettingsPane extends BorderPane {
         HBox headerHBox = new HBox(titleLabel);
         headerHBox.setAlignment(Pos.BASELINE_LEFT);
 
+        // buttons to show
+        changePasswordButton = new Button("Change Password");
+        adjustpriceButton = new Button("Delete Account");
+        changePasswordButton.setFont(Font.font(20));
+        adjustpriceButton.setFont(Font.font(20));
+        changePasswordButton.setStyle(
+                "-fx-background-radius: 3em;"
+        );
+        adjustpriceButton.setStyle(
+                "-fx-background-radius: 3em;"
+        );
+        changePasswordButton.setPrefSize(300,40);
+        adjustpriceButton.setPrefSize(300,40);
+
+
+        // store buttons in VBox
+        VBox buttonVBox = new VBox(changePasswordButton, adjustpriceButton);
+        buttonVBox.setSpacing(10);
+        buttonVBox.setPadding(new Insets(100,0,0,0));
+        buttonVBox.setAlignment(Pos.CENTER);
+
         // set attributes for the main VBox
-        VBox mainVBox = new VBox(headerHBox);
+        VBox mainVBox = new VBox(headerHBox, buttonVBox);
         mainVBox.setPadding(new Insets(40,40,0,40));
         mainVBox.setPrefWidth(width - navBarVBox.getWidth() - 40);
         mainVBox.setStyle(
