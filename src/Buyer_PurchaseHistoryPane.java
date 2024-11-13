@@ -33,7 +33,7 @@ public class Buyer_PurchaseHistoryPane extends BorderPane {
         Buyer_NavigationControl navBarVBox = new Buyer_NavigationControl(user,width,height);
 
         // set attributes for the Title Label
-        Label titleLabel = new Label("Purchase History");
+        Label titleLabel = new Label("Orders");
         titleLabel.setFont(titleFont);
 
         // set attributes for the quantity label
