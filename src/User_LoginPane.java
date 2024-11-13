@@ -128,6 +128,8 @@ class User_LoginPane extends BorderPane {
         BorderPane.setAlignment(titleLabel, Pos.CENTER);
         BorderPane.setMargin(mainVBox, new Insets(0,0,50,0));
 
+        System.out.println("hakunamatata");
+
         // these are by default what we use for the scene
         this.setPrefSize(width, height);;
         this.setBackground(Background.fill(Color.web("#4A1E2C"))); // darker maroon colors
