@@ -52,7 +52,7 @@ public class Buyer_NavigationPane extends VBox {
         // set attributes for the buttons' labels
         Label profileButtonText = new Label("Profile");
         Label shopButtonText = new Label("Shop");
-        Label purchaseHistoryButtonText = new Label("Orders");
+        Label purchaseHistoryButtonText = new Label("Orders"); // change from purchase history
         purchaseHistoryButtonText.setAlignment(Pos.CENTER);
         Label settButtonText = new Label("Settings");
         Label logoutButtonText = new Label("Logout");
