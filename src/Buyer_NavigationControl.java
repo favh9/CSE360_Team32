@@ -59,7 +59,7 @@ public class Buyer_NavigationControl extends VBox {
             }
 
             if(a.getSource() == purchaseHistoryButton) {
-                Buyer_PurchaseHistoryControl purhcaseHistory = new Buyer_PurchaseHistoryControl(user,width, height);
+                Buyer_OrdersControl purhcaseHistory = new Buyer_OrdersControl(user,width, height);
                 Main.mainWindow.setScene(new Scene(purhcaseHistory));
             }
 

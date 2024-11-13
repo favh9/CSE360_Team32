@@ -18,14 +18,14 @@ import javafx.scene.text.Text;
 import java.text.NumberFormat;
 
 
-public class Buyer_PurchaseHistoryPane extends BorderPane {
+public class Buyer_OrdersPane extends BorderPane {
 
     private final Button b1;
     private final Button b2;
     private final VBox listVBox;
     private final Text quantityText;
 
-    public Buyer_PurchaseHistoryPane(User user, double width, double height) {
+    public Buyer_OrdersPane(User user, double width, double height) {
 
         Font titleFont = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 42);
         Font quantityFont = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 24);
@@ -87,13 +87,13 @@ public class Buyer_PurchaseHistoryPane extends BorderPane {
 
         // set attributes for the header of the body
         // set attributes for the header label
-        Label headerLabel1 = new Label("Username");
+        Label headerLabel1 = new Label("Title");
         headerLabel1.setFont(Font.font(20));
         headerLabel1.setPrefWidth(390);
         headerLabel1.setAlignment(Pos.BASELINE_LEFT);
 
         // set attributes for the header label
-        Label headerLabel2 = new Label("Timestamp");
+        Label headerLabel2 = new Label("Ordered on");
         headerLabel2.setFont(Font.font(20));
         headerLabel2.setPrefWidth(150);
         headerLabel2.setAlignment(Pos.BASELINE_CENTER);
