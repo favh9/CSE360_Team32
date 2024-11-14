@@ -67,4 +67,20 @@ public class Admin_SettingsPane extends BorderPane {
         this.setBackground(Background.fill(Color.web("#4A1E2C"))); // darker maroon color
 
     }
+
+    public Button getChangePasswordButton() {
+        return changePasswordButton;
+    }
+
+    public void setChangePasswordButton(Button changePasswordButton) {
+        this.changePasswordButton = changePasswordButton;
+    }
+
+    public Button getAdjustpriceButton() {
+        return adjustpriceButton;
+    }
+
+    public void setAdjustpriceButton(Button adjustpriceButton) {
+        this.adjustpriceButton = adjustpriceButton;
+    }
 }
