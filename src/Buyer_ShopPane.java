@@ -310,4 +310,28 @@ public class Buyer_ShopPane extends BorderPane {
     public void setToggleGroupPrices(ToggleGroup toggleGroupPrices) {
         this.toggleGroupPrices = toggleGroupPrices;
     }
+
+    public void setGp(GridPane gp) {
+        this.gp = gp;
+    }
+
+    public void setSearchButton(Button searchButton) {
+        this.searchButton = searchButton;
+    }
+
+    public void setResetfiltersButton(Button resetfiltersButton) {
+        this.resetfiltersButton = resetfiltersButton;
+    }
+
+    public void setCartButton(Button cartButton) {
+        this.cartButton = cartButton;
+    }
+
+    public void setRb2(RadioButton rb2) {
+        this.rb2 = rb2;
+    }
+
+    public void setRb1(RadioButton rb1) {
+        this.rb1 = rb1;
+    }
 }
