@@ -11,6 +11,7 @@ import javafx.scene.text.Text;
 public class Buyer_ShopPane extends BorderPane {
 
     private TextField searchField;
+    private Label cartCount;
     private CheckBox ch1,ch2,ch3,ch4,ch5;
     private CheckBox ch6,ch7,ch8;
     private RadioButton rb1,rb2;
@@ -47,7 +48,8 @@ public class Buyer_ShopPane extends BorderPane {
         badge.setFill(Color.RED);
 
         // Create the text to show the item count inside the badge
-        Text badgeText = new Text("0");
+        cartCount = new Label("0");
+        Text badgeText = new Text(cartCount.getText());
         badgeText.setFill(Color.WHITE);
         badgeText.setStyle("-fx-font-size: 12; -fx-font-weight: bold;");
 
@@ -200,6 +202,10 @@ public class Buyer_ShopPane extends BorderPane {
         return searchField;
     }
 
+    public int getCartCount() {
+        return Integer.parseInt(cartCount.getText());
+    }
+
     public CheckBox getCh1() {
         return ch1;
     }
@@ -250,5 +256,49 @@ public class Buyer_ShopPane extends BorderPane {
 
     public GridPane getGp() {
         return gp;
+    }
+
+    public void setSearchField(TextField searchField) {
+        this.searchField = searchField;
+    }
+
+    public void setCartCount(Label cartCount) {
+        this.cartCount = cartCount;
+    }
+
+    public void setCh1(CheckBox ch1) {
+        this.ch1 = ch1;
+    }
+
+    public void setCh2(CheckBox ch2) {
+        this.ch2 = ch2;
+    }
+
+    public void setCh3(CheckBox ch3) {
+        this.ch3 = ch3;
+    }
+
+    public void setCh4(CheckBox ch4) {
+        this.ch4 = ch4;
+    }
+
+    public void setCh5(CheckBox ch5) {
+        this.ch5 = ch5;
+    }
+
+    public void setCh6(CheckBox ch6) {
+        this.ch6 = ch6;
+    }
+
+    public void setCh7(CheckBox ch7) {
+        this.ch7 = ch7;
+    }
+
+    public void setCh8(CheckBox ch8) {
+        this.ch8 = ch8;
+    }
+
+    public void setToggleGroupPrices(ToggleGroup toggleGroupPrices) {
+        this.toggleGroupPrices = toggleGroupPrices;
     }
 }
