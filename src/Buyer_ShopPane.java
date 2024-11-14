@@ -1,13 +1,14 @@
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 public class Buyer_ShopPane extends BorderPane {
+
+
+    private Button resetfiltersButton;
 
     public Buyer_ShopPane(User user, double width, double height) {
 
@@ -22,7 +23,7 @@ public class Buyer_ShopPane extends BorderPane {
         headerHBox.setAlignment(Pos.BASELINE_LEFT);
 
         // set attributes for instruction label
-        Label instructionLabel1 = new Label("Browse books by category and condition.");
+        Label instructionLabel1 = new Label("Please use the filters on the left and/or search bar to find your book.");
 
         // set attributes for category label
         Label categoryLabel = new Label("Category");
@@ -36,6 +37,7 @@ public class Buyer_ShopPane extends BorderPane {
 
         // set attributes for the VBox that holds these items
         VBox vbox1 = new VBox(categoryLabel,ch1,ch2,ch3,ch4,ch5);
+        vbox1.setSpacing(2);
 
         // set attributes for the condition label
         Label conditionLabel = new Label("Condition");
@@ -47,12 +49,58 @@ public class Buyer_ShopPane extends BorderPane {
 
         // set attributes for the VBox that holds these items
         VBox vbox2 = new VBox(conditionLabel,ch6,ch7,ch8);
+        vbox2.setSpacing(2);
+
+        // set attribute for label
+        Label l1 = new Label("Prices");
+
+        // set attributes for toggle buttons
+        RadioButton rb1 = new RadioButton("Ascending");
+        RadioButton rb2 = new RadioButton("Descending");
+
+        ToggleGroup toggleGroupPrices = new ToggleGroup();
+        toggleGroupPrices.getToggles().addAll(rb1,rb2);
+
+        // set attributes for VBox
+        VBox vbox3 = new VBox(l1,rb1,rb2);
+        vbox3.setSpacing(2);
+
+        // set attributes for label
+        Label resetLabel = new Label("Reset Filters");
+
+        // set attributes for button
+        resetfiltersButton = new Button("reset");
+
+        // set attributes for VBox
+        VBox vbox4 = new VBox(resetLabel,resetfiltersButton);
+        vbox4.setSpacing(2);
 
         // set atributes for the VBox that holds all Left side items
-        VBox leftVBox = new VBox(vbox1,vbox2);
+        VBox leftVBox = new VBox(vbox1,vbox2,vbox3,vbox4);
+        leftVBox.setSpacing(10);
 
         // set attributes for the title of the scrollpane
         Label spTitle = new Label("Available Books");
+        spTitle.setFont(Font.font(20));
+        spTitle.setPrefHeight(20);
+
+        // set attributes for text field
+        TextField searchField = new TextField();
+        searchField.setPrefWidth(300);
+        searchField.setPrefHeight(20);
+        searchField.setPromptText("Enter a title or author to search...");
+
+        // Create a Button to trigger the search action
+        Button searchButton = new Button("Search");
+        searchButton.setPrefHeight(20);
+
+        // Layout the TextField and Button in an HBox
+        HBox searchbarHBox = new HBox(searchField, searchButton);
+        searchbarHBox.setSpacing(10);
+
+        // set attributes for the HBox
+        HBox spHeaderHBox = new HBox(spTitle,searchbarHBox);
+        spHeaderHBox.setSpacing(20);
 
         // set attributes for the container inside the scrollpane
         GridPane gp = new GridPane();
@@ -61,24 +109,29 @@ public class Buyer_ShopPane extends BorderPane {
         ScrollPane sp = new ScrollPane(gp);
         sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        sp.minViewportHeightProperty().set(10);
-        sp.setPrefHeight(10);
-        sp.setStyle("-fx-background: transparent;");
+        sp.minViewportHeightProperty().set(350);
+        sp.minViewportWidthProperty().set(525);
+        sp.setStyle("-fx-background: white;");
 
         // set attributes for the VBox that contains these items on the right
-        VBox rightVBox = new VBox(spTitle,sp);
+        VBox rightVBox = new VBox(spHeaderHBox,sp);
+        rightVBox.setSpacing(10);
 
         // set attributes for the HBox where the right side displays the list of books
         HBox hbox = new HBox(leftVBox,rightVBox);
+        hbox.setSpacing(20);
 
         // set attributes for the submain VBox
         VBox submainVBox = new VBox(instructionLabel1,hbox);
+        submainVBox.setSpacing(20);
+        submainVBox.setPadding(new Insets(10,10,10,10));
         submainVBox.setStyle(
-                "-fx-background-radius: 2em;" + "-fx-background-color: #FFC627;"
+                "-fx-background-radius: 2em;" + "-fx-background-color: #ffffff;" //ffffff white //FFC627 asu yellow
         );
 
         // set attributes for the main VBox
         VBox mainVBox = new VBox(headerHBox,submainVBox);
+        mainVBox.setSpacing(5);
         mainVBox.setPadding(new Insets(40,40,0,40));
         mainVBox.setPrefWidth(width - navBarVBox.getWidth() - 40);
         mainVBox.setStyle(
