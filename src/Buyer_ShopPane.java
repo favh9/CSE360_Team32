@@ -10,8 +10,13 @@ import javafx.scene.text.Text;
 
 public class Buyer_ShopPane extends BorderPane {
 
-
-    private Button resetfiltersButton;
+    private TextField searchField;
+    private CheckBox ch1,ch2,ch3,ch4,ch5;
+    private CheckBox ch6,ch7,ch8;
+    private RadioButton rb1,rb2;
+    private ToggleGroup toggleGroupPrices;
+    private Button cartButton, resetfiltersButton, searchButton;
+    private GridPane gp;
 
     public Buyer_ShopPane(User user, double width, double height) {
 
@@ -30,7 +35,7 @@ public class Buyer_ShopPane extends BorderPane {
         cartImage.setFitWidth(45);
 
         // add the cart button
-        Button cartButton = new Button();
+        cartButton = new Button();
         cartButton.setGraphic(cartImage);
         cartButton.setBackground(Background.fill(Color.TRANSPARENT));
 
@@ -69,11 +74,11 @@ public class Buyer_ShopPane extends BorderPane {
         Label categoryLabel = new Label("Category");
 
         // set attributes for category check boxes
-        CheckBox ch1 = new CheckBox("Natural Science");
-        CheckBox ch2 = new CheckBox("Computer Science");
-        CheckBox ch3 = new CheckBox("Math");
-        CheckBox ch4 = new CheckBox("English");
-        CheckBox ch5 = new CheckBox("Other");
+        ch1 = new CheckBox("Natural Science");
+        ch2 = new CheckBox("Computer Science");
+        ch3 = new CheckBox("Math");
+        ch4 = new CheckBox("English");
+        ch5 = new CheckBox("Other");
 
         // set attributes for the VBox that holds these items
         VBox vbox1 = new VBox(categoryLabel,ch1,ch2,ch3,ch4,ch5);
@@ -83,9 +88,9 @@ public class Buyer_ShopPane extends BorderPane {
         Label conditionLabel = new Label("Condition");
 
         // set attributes for condition check boxes
-        CheckBox ch6 = new CheckBox("Used Like New");
-        CheckBox ch7 = new CheckBox("Moderately Used");
-        CheckBox ch8 = new CheckBox("Heavily Used");
+        ch6 = new CheckBox("Used Like New");
+        ch7 = new CheckBox("Moderately Used");
+        ch8 = new CheckBox("Heavily Used");
 
         // set attributes for the VBox that holds these items
         VBox vbox2 = new VBox(conditionLabel,ch6,ch7,ch8);
@@ -95,10 +100,10 @@ public class Buyer_ShopPane extends BorderPane {
         Label l1 = new Label("Prices");
 
         // set attributes for toggle buttons
-        RadioButton rb1 = new RadioButton("Ascending");
-        RadioButton rb2 = new RadioButton("Descending");
+        rb1 = new RadioButton("Ascending");
+        rb2 = new RadioButton("Descending");
 
-        ToggleGroup toggleGroupPrices = new ToggleGroup();
+        toggleGroupPrices = new ToggleGroup();
         toggleGroupPrices.getToggles().addAll(rb1,rb2);
 
         // set attributes for VBox
@@ -125,13 +130,13 @@ public class Buyer_ShopPane extends BorderPane {
         spTitle.setPrefHeight(20);
 
         // set attributes for text field
-        TextField searchField = new TextField();
+        searchField = new TextField();
         searchField.setPrefWidth(310);
         searchField.setPrefHeight(20);
         searchField.setPromptText("Enter a title or author to search...");
 
         // Create a Button to trigger the search action
-        Button searchButton = new Button("Search");
+        searchButton = new Button("Search");
         searchButton.setPrefHeight(20);
 
         // Layout the TextField and Button in an HBox
@@ -143,7 +148,7 @@ public class Buyer_ShopPane extends BorderPane {
         spHeaderHBox.setSpacing(20);
 
         // set attributes for the container inside the scrollpane
-        GridPane gp = new GridPane();
+        gp = new GridPane();
 
         // set attributes for the scrollpane
         ScrollPane sp = new ScrollPane(gp);
@@ -189,5 +194,61 @@ public class Buyer_ShopPane extends BorderPane {
         this.setPrefSize(width, height);;
         this.setBackground(Background.fill(Color.web("#4A1E2C"))); // darker maroon color
 
+    }
+
+    public TextField getSearchField() {
+        return searchField;
+    }
+
+    public CheckBox getCh1() {
+        return ch1;
+    }
+
+    public CheckBox getCh2() {
+        return ch2;
+    }
+
+    public CheckBox getCh3() {
+        return ch3;
+    }
+
+    public CheckBox getCh4() {
+        return ch4;
+    }
+
+    public CheckBox getCh5() {
+        return ch5;
+    }
+
+    public CheckBox getCh6() {
+        return ch6;
+    }
+
+    public CheckBox getCh7() {
+        return ch7;
+    }
+
+    public CheckBox getCh8() {
+        return ch8;
+    }
+
+    public ToggleGroup getToggleGroupPrices() {
+        return toggleGroupPrices;
+    }
+
+    public Button getCartButton() {
+        return cartButton;
+    }
+
+    public Button getResetfiltersButton() {
+        return resetfiltersButton;
+    }
+
+    public Button getSearchButton() {
+        return searchButton;
+    }
+
+    public GridPane getGp() {
+        return gp;
     }
 }
