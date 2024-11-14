@@ -1,9 +1,12 @@
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 public class Buyer_ShopPane extends BorderPane {
 
@@ -18,9 +21,46 @@ public class Buyer_ShopPane extends BorderPane {
         Label titleLabel = new Label("Shop");
         titleLabel.setFont(Font.font(42));
 
+        // Create a StackPane to hold both the cart image and the badge
+        StackPane stackPane = new StackPane();
+
+        // add the cart image
+        ImageView cartImage = new ImageView(Main.cartIcon);
+        cartImage.setFitHeight(45);
+        cartImage.setFitWidth(45);
+
+        // add the cart button
+        Button cartButton = new Button();
+        cartButton.setGraphic(cartImage);
+        cartButton.setBackground(Background.fill(Color.TRANSPARENT));
+
+        // add the button to the stack pane
+        stackPane.getChildren().add(cartButton);
+
+        // Create the badge circle to display the number of items
+        Circle badge = new Circle(12);
+        badge.setFill(Color.RED);
+
+        // Create the text to show the item count inside the badge
+        Text badgeText = new Text("0");
+        badgeText.setFill(Color.WHITE);
+        badgeText.setStyle("-fx-font-size: 12; -fx-font-weight: bold;");
+
+        // Set the elements in stack pane position
+        StackPane.setAlignment(badge, Pos.TOP_RIGHT); // This positions the badge at the top-right of the image
+        StackPane.setAlignment(badgeText, Pos.TOP_RIGHT);
+        badgeText.setTranslateX(-8);
+        badgeText.setTranslateY(4);
+
+        // Add the badge and the text to the StackPane
+        stackPane.getChildren().addAll(badge, badgeText);
+
+
         // set attributes for the header of the main page
-        HBox headerHBox = new HBox(titleLabel);
-        headerHBox.setAlignment(Pos.BASELINE_LEFT);
+        HBox headerHBox = new HBox(titleLabel, stackPane);
+        headerHBox.setAlignment(Pos.CENTER_LEFT);
+        headerHBox.setSpacing(530);
+        HBox.setMargin(stackPane, new Insets(5,0,0,0));
 
         // set attributes for instruction label
         Label instructionLabel1 = new Label("Please use the filters on the left and/or search bar to find your book.");
@@ -86,7 +126,7 @@ public class Buyer_ShopPane extends BorderPane {
 
         // set attributes for text field
         TextField searchField = new TextField();
-        searchField.setPrefWidth(300);
+        searchField.setPrefWidth(310);
         searchField.setPrefHeight(20);
         searchField.setPromptText("Enter a title or author to search...");
 

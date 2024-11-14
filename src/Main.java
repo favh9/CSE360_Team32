@@ -21,6 +21,7 @@ public class Main extends Application {
 
     // images are not ours, we get them from the following links
     // static images to later use for the rest of the project
+    public static Image cartIcon = new Image("https://static-00.iconduck.com/assets.00/cart-icon-250x256-xgkwtkpu.png");
     public static Image profileIcon = new Image("https://i.pinimg.com/originals/57/00/c0/5700c04197ee9a4372a35ef16eb78f4e.png");
     public static Image buyIcon = new Image("https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQaDLfkvJ_2GkXDrtsbWa3Cl6h34L8J1zYFmT0EQEzZev_jp2e5");
     public static Image sellIcon = new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQH44eEh0ZTrAQWWz7GQ2e34lAnpPa4cHkM0foB-CcNbmsnvAPO");
