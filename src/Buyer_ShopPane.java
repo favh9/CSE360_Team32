@@ -11,7 +11,7 @@ import javafx.scene.text.Text;
 public class Buyer_ShopPane extends BorderPane {
 
     private TextField searchField;
-    private Label cartCount;
+    private int cartCount;
     private CheckBox ch1,ch2,ch3,ch4,ch5;
     private CheckBox ch6,ch7,ch8;
     private RadioButton rb1,rb2;
@@ -48,8 +48,7 @@ public class Buyer_ShopPane extends BorderPane {
         badge.setFill(Color.RED);
 
         // Create the text to show the item count inside the badge
-        cartCount = new Label("0");
-        Text badgeText = new Text(cartCount.getText());
+        Text badgeText = new Text(Integer.toString(cartCount));
         badgeText.setFill(Color.WHITE);
         badgeText.setStyle("-fx-font-size: 12; -fx-font-weight: bold;");
 
@@ -61,7 +60,6 @@ public class Buyer_ShopPane extends BorderPane {
 
         // Add the badge and the text to the StackPane
         stackPane.getChildren().addAll(badge, badgeText);
-
 
         // set attributes for the header of the main page
         HBox headerHBox = new HBox(titleLabel, stackPane);
@@ -203,7 +201,7 @@ public class Buyer_ShopPane extends BorderPane {
     }
 
     public int getCartCount() {
-        return Integer.parseInt(cartCount.getText());
+        return cartCount;
     }
 
     public CheckBox getCh1() {
@@ -262,7 +260,7 @@ public class Buyer_ShopPane extends BorderPane {
         this.searchField = searchField;
     }
 
-    public void setCartCount(Label cartCount) {
+    public void setCartCount(int cartCount) {
         this.cartCount = cartCount;
     }
 
