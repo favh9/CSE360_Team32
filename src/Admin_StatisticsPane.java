@@ -1,5 +1,6 @@
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Side;
@@ -7,6 +8,7 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -46,14 +48,14 @@ public class Admin_StatisticsPane extends BorderPane {
         // set attributes for the pie chart
         ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList(
-                        new PieChart.Data("Users",3),
-                        new PieChart.Data("Available Books",10),
-                        new PieChart.Data("Sold Books",2),
-                        new PieChart.Data("Revenue",5),
-                        new PieChart.Data("Most Sold",5),
-                        new PieChart.Data("Top Seller",3)
+                        new PieChart.Data("Natural Science",3),
+                        new PieChart.Data("Computer Science",10),
+                        new PieChart.Data("Math",2),
+                        new PieChart.Data("English",5),
+                        new PieChart.Data("Other",5)
                 );
         final PieChart chart = new PieChart(pieChartData);
+        chart.setTitle("Top selling categories");
         chart.setLegendSide(Side.LEFT);
 
         // set attributes for the main VBox which stores the header and the body
