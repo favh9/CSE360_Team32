@@ -11,6 +11,7 @@ import javafx.scene.text.Text;
 public class Buyer_ShopPane extends BorderPane {
 
     private TextField searchField;
+    private Label cartCountLabel;
     private int cartCount;
     private CheckBox ch1,ch2,ch3,ch4,ch5;
     private CheckBox ch6,ch7,ch8;
@@ -48,7 +49,9 @@ public class Buyer_ShopPane extends BorderPane {
         badge.setFill(Color.RED);
 
         // Create the text to show the item count inside the badge
-        Text badgeText = new Text(Integer.toString(cartCount));
+        cartCount = 0;
+        cartCountLabel = new Label(Integer.toString(cartCount));
+        Text badgeText = new Text(cartCountLabel.getText());
         badgeText.setFill(Color.WHITE);
         badgeText.setStyle("-fx-font-size: 12; -fx-font-weight: bold;");
 
@@ -200,6 +203,10 @@ public class Buyer_ShopPane extends BorderPane {
         return searchField;
     }
 
+    public Label getCartCountLabel() {
+        return cartCountLabel;
+    }
+
     public int getCartCount() {
         return cartCount;
     }
@@ -258,6 +265,10 @@ public class Buyer_ShopPane extends BorderPane {
 
     public void setSearchField(TextField searchField) {
         this.searchField = searchField;
+    }
+
+    public void setCartCountLabel(Label cartCountLabel) {
+        this.cartCountLabel = cartCountLabel;
     }
 
     public void setCartCount(int cartCount) {
