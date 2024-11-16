@@ -11,14 +11,14 @@ public class Seller_PostBookControl extends Pane {
     public double height;
     private Seller_PostBookPane pane;
     private User user;
-    private String bookName;
-    private String author;
-    private int selectedYear;
-    private String selectedCategory;
-    private String selectedCondition;
-    private double price;
-    private double generatedPrice;
-    private Button listBookButton;
+    private TextField booknameField;
+    private TextField authorField;
+    private ComboBox<String> yearComboBox;
+    private ChoiceBox<String> categoryChoiceBox;
+    private ChoiceBox<String> conditionChoiceBox;
+    private TextField priceField;
+    private TextField generatedpriceField;
+    private Button listmybookButton;
 
     public Seller_PostBookControl(User user, double width, double height) {
 
@@ -27,9 +27,15 @@ public class Seller_PostBookControl extends Pane {
         this.user = user;
 
         pane = new Seller_PostBookPane(user,width,height);
-
-        listBookButton = pane.getListBookButton();
-        listBookButton.setOnAction(new ButtonHandler());
+        booknameField = pane.getBooknameField();
+        authorField = pane.getAuthorField();
+        yearComboBox = pane.getYearComboBox();
+        categoryChoiceBox = pane.getCategoryChoiceBox();
+        conditionChoiceBox = pane.getConditionChoiceBox();
+        priceField = pane.getPriceField();
+        generatedpriceField = pane.getGeneratedpriceField();
+        listmybookButton = pane.getListmybookButton();
+        listmybookButton.setOnAction(new ButtonHandler());
 
         this.getChildren().addAll(pane);
     }
@@ -42,40 +48,40 @@ public class Seller_PostBookControl extends Pane {
                 System.out.println(user.getFirstName());
                 displayEmptyFields();
             } else {
-
+                // insert book??
             }
         }
 
         public boolean emptyFields() {
 
-            if(pane.getBookName().isEmpty()) {
+            if(booknameField.getText().isEmpty()) {
                 return true;
-            } else if (pane.getAuthorName().isEmpty() ) {
+            } else if (authorField.getText().isEmpty()) {
                 return true;
-            } else if (pane.getSelectedCategory().compareTo("Select Category") == 0) {
+            } else if(yearComboBox.getValue().equals("Select Year")) {
                 return true;
-            } else if (pane.getSelectedYear() == -1) {
+            } else if (categoryChoiceBox.getValue().equals("Select Category")) {
                 return true;
-            } else if (pane.getSelectedCondition().compareTo("Select Condition") == 0) {
+            } else if (conditionChoiceBox.getValue().equals("Select Condition")) {
                 return true;
-            } else return pane.getOriginalPrice() == -1;
+            } else return priceField.getText().isEmpty();
         }
 
         public void displayEmptyFields() {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             String missingData = "Please check the following fields:\n";
 
-            if(pane.getBookName().isEmpty())
+            if(booknameField.getText().isEmpty())
                 missingData += "\tBook Name\n";
-            if(pane.getAuthorName().isEmpty())
+            if(authorField.getText().isEmpty())
                 missingData += "\tAuthor\n";
-            if(pane.getSelectedYear() == -1)
+            if(yearComboBox.getValue().equals("Select Year"))
                 missingData += "\tYear\n";
-            if(pane.getSelectedCategory().equals("Select Category"))
+            if(categoryChoiceBox.getValue().equals("Select Category"))
                 missingData += "\tCategory\n";
-            if(pane.getSelectedCondition().equals("Select Condition"))
+            if(conditionChoiceBox.getValue().equals("Select Condition"))
                 missingData += "\tCondition\n";
-            if(pane.getOriginalPrice() == -1)
+            if(priceField.getText().isEmpty())
                 missingData += "\tPrice\n";
 
             alert.setTitle("Warning");

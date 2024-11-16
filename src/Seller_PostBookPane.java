@@ -10,27 +10,26 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-
 import java.util.Calendar;
 
 public class Seller_PostBookPane extends BorderPane {
 
-    private TextField tf1;
-    private TextField tf2;
+    private Seller_NavigationControl navigationControl;
+    private TextField booknameField;
+    private TextField authorField;
     private ComboBox<String> yearComboBox;
     private ChoiceBox<String> categoryChoiceBox;
     private ChoiceBox<String> conditionChoiceBox;
-    private TextField tf3;
-    private TextField tf4;
-    private Button b1;
+    private TextField priceField;
+    private TextField generatedpriceField;
+    private Button listmybookButton;
 
     public Seller_PostBookPane(User user, double width, double height) {
 
         Font titleFont = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 42);
         Font instructionFont = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 16);
 
-        Seller_NavigationControl navbarVBox = new Seller_NavigationControl(user,width,height);
-
+        navigationControl = new Seller_NavigationControl(user,width,height);
 
         // set attributes for the Title Label
         Label titleLabel = new Label("Post a Book for Sale");
@@ -42,16 +41,16 @@ public class Seller_PostBookPane extends BorderPane {
         instructionLabel.setFont(instructionFont);
 
         // set attributes for the text field
-        tf1 = new TextField();
-        tf1.setPromptText("Book Name");
-        tf1.setPrefWidth(400);
-        HBox hbox1 = new HBox(tf1);
+        booknameField = new TextField();
+        booknameField.setPromptText("Book Name");
+        booknameField.setPrefWidth(400);
+        HBox booknameHBox = new HBox(booknameField);
 
         // set attributes for the text field
-        tf2 = new TextField();
-        tf2.setPromptText("Author");
-        tf2.setPrefWidth(400);
-        HBox hbox2 = new HBox(tf2);
+        authorField = new TextField();
+        authorField.setPromptText("Author");
+        authorField.setPrefWidth(400);
+        HBox authorHBox = new HBox(authorField);
 
         // set attributes for label
         Label yearLabel = new Label("Year:");
@@ -90,53 +89,40 @@ public class Seller_PostBookPane extends BorderPane {
         conditionChoiceBox.getItems().add("Heavily Used");
 
         // set attributes for the text field
-        tf3 = new TextField();
-        tf3.setPromptText("Price");
-        tf3.setPrefWidth(400);
-        HBox hbox3 = new HBox(tf3);
-
-        // set attributes for the label
-        Label generatedPriceLabel = new Label("The Generated Price is:");
+        priceField = new TextField();
+        priceField.setPromptText("Price");
+        priceField.setPrefWidth(400);
+        HBox priceHBox = new HBox(priceField);
 
         // set attributes for the text field
-        tf4 = new TextField();
-        tf4.setPromptText("");
-        tf4.setDisable(true);
-
-        // set attributes for the HBox
-        HBox generatedPriceHBox = new HBox(generatedPriceLabel,tf4);
-        tf4.setPrefWidth(270);
-        generatedPriceHBox.setSpacing(5);
-
-        // set attributes for the text field
-        tf4 = new TextField();
-        tf4.setText("Generated Price");
-        tf4.setStyle("-fx-text-fill: #B0B0B0;");
-        tf4.setPrefWidth(400);
-        tf4.setEditable(false);
-        HBox hbox4 = new HBox(tf4);
+        generatedpriceField = new TextField();
+        generatedpriceField.setText("Generated Price");
+        generatedpriceField.setStyle("-fx-text-fill: #B0B0B0;");
+        generatedpriceField.setPrefWidth(400);
+        generatedpriceField.setEditable(false);
+        HBox generatedpriceHBox = new HBox(generatedpriceField);
 
         // set attributes for the image
-        ImageView image1 = new ImageView(Main.infoIcon);
+        ImageView image1 = new ImageView(Main.infoIcon); // the 'i' icon
         image1.setFitHeight(15);
         image1.setFitWidth(15);
 
         // set attributes for the text
-        Text t1 = new Text("Note: The price will be determined by the original price and the book condition");
+        Text infoText = new Text("Note: The price will be determined by the original price and the book condition");
 
         // set attributes for the HBox
-        HBox infoHBox = new HBox(image1,t1);
+        HBox infoHBox = new HBox(image1,infoText);
         infoHBox.setSpacing(5);
 
         // set attributes for the VBox
-        VBox priceVBox = new VBox(hbox4,infoHBox);
+        VBox priceVBox = new VBox(generatedpriceHBox,infoHBox);
         priceVBox.setSpacing(5);
 
         // set attributes for the button
-        b1 = new Button("List My Book");
+        listmybookButton = new Button("List My Book");
 
         // insert user information boxes into this VBox
-        VBox infoVBox = new VBox(instructionLabel, hbox1, hbox2, yearComboBox, categoryChoiceBox, conditionChoiceBox, hbox3, priceVBox, b1);
+        VBox infoVBox = new VBox(instructionLabel, booknameHBox, authorHBox, yearComboBox, categoryChoiceBox, conditionChoiceBox, priceHBox, priceVBox, listmybookButton);
         infoVBox.setSpacing(15);
         infoVBox.setPadding(new Insets(20,20,20,20));
         infoVBox.setStyle(
@@ -147,13 +133,13 @@ public class Seller_PostBookPane extends BorderPane {
         VBox mainVBox = new VBox(titleLabel,infoVBox);
         mainVBox.setPadding(new Insets(40,40,0,40));
         mainVBox.setSpacing(20);
-        mainVBox.setPrefWidth(width - navbarVBox.getWidth() - 40);
+        mainVBox.setPrefWidth(width - navigationControl.getWidth() - 40);
         mainVBox.setStyle(
                 "-fx-background-radius: 2em;" + "-fx-background-color: #FFFFFF;"
         );
 
         // insert an HBox with the Navigation pane and main page
-        HBox mainHBox = new HBox(navbarVBox,mainVBox);
+        HBox mainHBox = new HBox(navigationControl,mainVBox);
         mainHBox.setSpacing(20);
 
         // set center of BorderPane
@@ -167,48 +153,68 @@ public class Seller_PostBookPane extends BorderPane {
 
     }
 
-    public String getBookName() {
-        return tf1.getText();
+    public TextField getBooknameField() {
+        return booknameField;
     }
 
-    public String getAuthorName() {
-        return tf2.getText();
+    public void setBooknameField(TextField booknameField) {
+        this.booknameField = booknameField;
     }
 
-    public int getSelectedYear() {
-        try {
-            return Integer.parseInt(yearComboBox.getValue());
-        } catch (NumberFormatException e) {
-            System.out.println("User has not selected a year");
-            return -1;
-        }
+    public TextField getAuthorField() {
+        return authorField;
     }
 
-    public String getSelectedCategory() {
-        return categoryChoiceBox.getValue();
+    public void setAuthorField(TextField authorField) {
+        this.authorField = authorField;
     }
 
-    public String getSelectedCondition() {
-        return conditionChoiceBox.getValue();
+    public ComboBox<String> getYearComboBox() {
+        return yearComboBox;
     }
 
-    public double getOriginalPrice() {
-
-        try {
-
-            return Double.parseDouble(tf3.getText());
-
-        }catch(NumberFormatException e) {
-            System.out.println("User has not entered a price");
-            return -1.0;
-        }
+    public void setYearComboBox(ComboBox<String> yearComboBox) {
+        this.yearComboBox = yearComboBox;
     }
 
-    public Button getListBookButton() {
-        return b1;
+    public ChoiceBox<String> getCategoryChoiceBox() {
+        return categoryChoiceBox;
     }
 
-    public void setGeneratedPrice(double num) {
-        tf4.setText(Double.toString(num));
+    public void setCategoryChoiceBox(ChoiceBox<String> categoryChoiceBox) {
+        this.categoryChoiceBox = categoryChoiceBox;
     }
+
+    public ChoiceBox<String> getConditionChoiceBox() {
+        return conditionChoiceBox;
+    }
+
+    public void setConditionChoiceBox(ChoiceBox<String> conditionChoiceBox) {
+        this.conditionChoiceBox = conditionChoiceBox;
+    }
+
+    public TextField getPriceField() {
+        return priceField;
+    }
+
+    public void setPriceField(TextField priceField) {
+        this.priceField = priceField;
+    }
+
+    public TextField getGeneratedpriceField() {
+        return generatedpriceField;
+    }
+
+    public void setGeneratedpriceField(TextField generatedpriceField) {
+        this.generatedpriceField = generatedpriceField;
+    }
+
+    public Button getListmybookButton() {
+        return listmybookButton;
+    }
+
+    public void setListmybookButton(Button listmybookButton) {
+        this.listmybookButton = listmybookButton;
+    }
+
 }
