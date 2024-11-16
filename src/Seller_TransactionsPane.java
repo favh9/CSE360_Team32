@@ -83,7 +83,7 @@ public class Seller_TransactionsPane extends BorderPane {
 
         // set attributes for the header of the body
         // set attributes for the header label
-        Label headerLabel1 = new Label("Username");
+        Label headerLabel1 = new Label("Book Title");
         headerLabel1.setFont(Font.font(20));
         headerLabel1.setPrefWidth(390);
         headerLabel1.setAlignment(Pos.BASELINE_LEFT);

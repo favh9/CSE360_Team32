@@ -68,33 +68,21 @@ public class User_LoginControl extends Pane {
             } else if(a.getSource() == signinButton) {
                 signinButton.setStyle("-fx-background-radius: 5em; -fx-background-color: #ffa500;");
 
+                // find out if the user exists
                 if(!(DataBase.userExists(usernameTextField.getText(),passwordField.getText()))) {
 
                     displayIncorrectPasswordOrUsername();
-
-                } else if(DataBase.getUserType(usernameTextField.getText()) == null) {
-
-                    user = DataBase.getUserByUsername(usernameTextField.getText());
-                    NewUser_WelcomeControl newUser = new NewUser_WelcomeControl(user,width,height);
-                    Main.mainWindow.setScene(new Scene(newUser));
-
-                } else if(Objects.equals(DataBase.getUserType(usernameTextField.getText()), "seller")) {
-
-                    user = DataBase.getUserByUsername(usernameTextField.getText());
-                    Seller_PostBookControl seller = new Seller_PostBookControl(user,width,height);
-                    Main.mainWindow.setScene(new Scene(seller));
-
-                } else if(Objects.equals(DataBase.getUserType(usernameTextField.getText()), "buyer")) {
-
-                    user = DataBase.getUserByUsername(usernameTextField.getText());
-                    Buyer_ShopControl buyer = new Buyer_ShopControl(user,width,height);
-                    Main.mainWindow.setScene(new Scene(buyer));
 
                 } else if(Objects.equals(DataBase.getUserType(usernameTextField.getText()), "admin")) {
 
                     user = DataBase.getUserByUsername(usernameTextField.getText());
                     Admin_UsersControl admin = new Admin_UsersControl(user,width,height);
                     Main.mainWindow.setScene(new Scene(admin));
+
+                } else if(Objects.equals(DataBase.getUserType(usernameTextField.getText()), "new")) { // you are a new user
+                    user = DataBase.getUserByUsername(usernameTextField.getText());
+
+                } else { // you are a returning user
 
                 }
 
