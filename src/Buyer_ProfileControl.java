@@ -6,7 +6,6 @@ public class Buyer_ProfileControl extends Pane {
     private User user;
     private double width;
     private double height;
-    private Button button;
     private Buyer_ProfilePane pane;
 
     public Buyer_ProfileControl(User user, double width, double height) {
@@ -16,8 +15,6 @@ public class Buyer_ProfileControl extends Pane {
         this.height = height;
 
         pane = new Buyer_ProfilePane(user,width,height);
-
-        button = pane.getButton();
 
         this.getChildren().addAll(pane);
 

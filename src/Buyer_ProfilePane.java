@@ -18,7 +18,6 @@ public class Buyer_ProfilePane extends BorderPane {
     private TextField lastnameTextField;
     private TextField emailTextField;
     private TextField usernameTextField;
-    private final Button button;
 
     public Buyer_ProfilePane(User user, double width, double height) {
 
@@ -33,7 +32,7 @@ public class Buyer_ProfilePane extends BorderPane {
         headerHBox.setAlignment(Pos.BASELINE_LEFT);
 
         // set attributes for the instructions label
-        Label instructionLabel = new Label("Fill in the information below and click on the confirm button to save your changes.");
+        Label instructionLabel = new Label("Your account's information.");
         instructionLabel.setFont(Font.font("Arial", FontWeight.NORMAL,18));
 
         // set attributes for the first name label
@@ -44,6 +43,8 @@ public class Buyer_ProfilePane extends BorderPane {
         firstnameTextField = new TextField();
         firstnameTextField.setText(user.getFirstName());
         firstnameTextField.setPromptText("First Name");
+        firstnameTextField.setStyle("-fx-text-fill: #B0B0B0;");
+        firstnameTextField.setEditable(false);
         firstnameTextField.setFont(Font.font("Arial",FontWeight.NORMAL,16));
 
         // add the first name label and first name text field into this hbox
@@ -59,6 +60,8 @@ public class Buyer_ProfilePane extends BorderPane {
         lastnameTextField = new TextField();
         lastnameTextField.setText(user.getLastName());
         lastnameTextField.setPromptText("Last Name");
+        lastnameTextField.setStyle("-fx-text-fill: #B0B0B0;");
+        lastnameTextField.setEditable(false);
         lastnameTextField.setFont(Font.font("Arial",FontWeight.NORMAL,16));
 
         // add the first name label and first name text field into this hbox
@@ -100,19 +103,15 @@ public class Buyer_ProfilePane extends BorderPane {
         usernameTextfieldHBox.setAlignment(Pos.CENTER_RIGHT);
         usernameTextfieldHBox.setSpacing(10);
 
-        // set the attributes for the confirm button
-        button = new Button("Confirm");
-        button.setFont(Font.font("Arial",FontWeight.NORMAL,16));
-        button.setPrefSize(100,40);
-
         // add the grey box elements which includes the instructions label and all HBoxes
-        VBox greyVBox = new VBox(instructionLabel, firstnameTextfieldHBox, lastnameTextfieldHBox, emailTextFieldHBox, usernameTextfieldHBox, button);
+        VBox greyVBox = new VBox(instructionLabel, firstnameTextfieldHBox, lastnameTextfieldHBox, emailTextFieldHBox, usernameTextfieldHBox);
         // readjust the width of the HBoxes inside the greyVBox
         VBox.setMargin(firstnameTextfieldHBox, new Insets(0,350,0,0));
         VBox.setMargin(lastnameTextfieldHBox, new Insets(0,350,0,0));
         VBox.setMargin(emailTextFieldHBox, new Insets(0,350,0,0));
         VBox.setMargin(usernameTextfieldHBox, new Insets(0,350,0,0));
         greyVBox.setSpacing(20);
+        greyVBox.setPrefHeight(height-160);
         greyVBox.setPadding(new Insets(20,20,20,20));
         greyVBox.setStyle(
                 "-fx-background-radius: 2em;" +
@@ -139,41 +138,6 @@ public class Buyer_ProfilePane extends BorderPane {
         this.setBackground(Background.fill(Color.web("#4A1E2C"))); // darker maroon color
     }
 
-    public TextField getFirstnameTextField() {
-        return firstnameTextField;
-    }
-
-    public TextField getLastnameTextField() {
-        return lastnameTextField;
-    }
-
-    public TextField getEmailTextField() {
-        return emailTextField;
-    }
-
-    public TextField getUsernameTextField() {
-        return usernameTextField;
-    }
-
-    public Button getButton() {
-        return button;
-    }
-
-    public void setFirstnameTextField(TextField firstnameTextField) {
-        this.firstnameTextField = firstnameTextField;
-    }
-
-    public void setLastnameTextField(TextField lastnameTextField) {
-        this.lastnameTextField = lastnameTextField;
-    }
-
-    public void setEmailTextField(TextField emailTextField) {
-        this.emailTextField = emailTextField;
-    }
-
-    public void setUsernameTextField(TextField usernameTextField) {
-        this.usernameTextField = usernameTextField;
-    }
 }
 
 
