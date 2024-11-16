@@ -13,15 +13,17 @@ public class Seller_NavigationControl extends VBox {
     private final Button profileButton;
     private final NavButton sellButton;
     private final NavButton booksButton;
+    private final NavButton transButton;
     private final NavButton settButton;
     private final NavButton logoutButton;
+    private Seller_NavigationPane pane;
 
     public Seller_NavigationControl(User user, double width, double height) {
 
         this.width = width;
         this.height = height;
         this.user = user;
-        Seller_NavigationPane pane = new Seller_NavigationPane(user,height);
+        pane = new Seller_NavigationPane(user,height);
 
         profileButton = pane.getProfileButton();
         profileButton.setOnAction(new ButtonHandler());
@@ -31,6 +33,9 @@ public class Seller_NavigationControl extends VBox {
 
         booksButton = pane.getBooksButton();
         booksButton.setOnAction(new ButtonHandler());
+
+        transButton = pane.getTransButton();
+        transButton.setOnAction(new ButtonHandler());
 
         settButton = pane.getSettButton();
         settButton.setOnAction(new ButtonHandler());
@@ -61,6 +66,11 @@ public class Seller_NavigationControl extends VBox {
             if(a.getSource() == booksButton) {
                 Seller_MyBooksControl mybooks = new Seller_MyBooksControl(user,width, height);
                 Main.mainWindow.setScene(new Scene(mybooks));
+            }
+
+            if(a.getSource() == transButton) {
+                Seller_TransactionsControl trans = new Seller_TransactionsControl(user,width,height);
+                Main.mainWindow.setScene(new Scene(trans));
             }
 
             if(a.getSource() == settButton) {

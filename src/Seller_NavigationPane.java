@@ -15,6 +15,7 @@ public class Seller_NavigationPane extends VBox {
     private final Button button;
     private final NavButton sellButton;
     private final NavButton booksButton;
+    private final NavButton transButton;
     private final NavButton settButton;
     private final NavButton logoutButton;
 
@@ -44,16 +45,20 @@ public class Seller_NavigationPane extends VBox {
         button.setGraphic(new StackPane(circle, letter));  // Stack the circle and text
         button.setStyle("-fx-background-color: transparent; -fx-border-width: 0;");  // Remove default button background and border
 
-        sellButton = new NavButton(Main.sellIcon);
-        booksButton = new NavButton(Main.booksIcon);
-        settButton = new NavButton(Main.settingsIcon);
-        logoutButton = new NavButton(Main.logOutIcon);
+        double imageWidth = 50;
+        double imageHeight = 50;
+        sellButton = new NavButton(Main.sellIcon,imageWidth,imageHeight);
+        booksButton = new NavButton(Main.booksIcon,imageWidth,imageHeight);
+        transButton = new NavButton(Main.transIcon,imageWidth,imageHeight);
+        settButton = new NavButton(Main.settingsIcon,imageWidth,imageHeight);
+        logoutButton = new NavButton(Main.logOutIcon,imageWidth,imageHeight);
 
         // set attributes for the buttons' labels
         Label profileButtonText = new Label("Profile");
         Label sellButtonText = new Label("Sell");
         Label booksButtonText = new Label("My Books");
         booksButtonText.setAlignment(Pos.CENTER);
+        Label transButtonText = new Label("Transactions");
         Label settButtonText = new Label("Settings");
         Label logoutButtonText = new Label("Logout");
 
@@ -71,6 +76,10 @@ public class Seller_NavigationPane extends VBox {
         booksButtonTextVBox.setAlignment(Pos.CENTER);
         booksButtonTextVBox.setSpacing(-10);
 
+        VBox transButtonTextVBox = new VBox(transButton,transButtonText);
+        transButtonTextVBox.setAlignment(Pos.CENTER);
+        transButtonTextVBox.setSpacing(-10);
+
         VBox settButtonTextVBox = new VBox(settButton,settButtonText);
         settButtonTextVBox.setAlignment(Pos.CENTER);
 
@@ -79,7 +88,7 @@ public class Seller_NavigationPane extends VBox {
         logoutButtonTextVBox.setSpacing(-10);
 
         // set attributes for the navigation bar
-        VBox navBarVBox = new VBox(asuIcon,profileButtonTextVBox,sellButtonTextVBox,booksButtonTextVBox,settButtonTextVBox,logoutButtonTextVBox);
+        VBox navBarVBox = new VBox(asuIcon,profileButtonTextVBox,sellButtonTextVBox,booksButtonTextVBox,transButtonTextVBox,settButtonTextVBox,logoutButtonTextVBox);
         navBarVBox.setSpacing(3);
         navBarVBox.setPadding(new Insets(20,20,20,20));
         navBarVBox.setStyle(
@@ -101,6 +110,10 @@ public class Seller_NavigationPane extends VBox {
 
     public NavButton getBooksButton() {
         return booksButton;
+    }
+
+    public NavButton getTransButton() {
+        return transButton;
     }
 
     public NavButton getSettButton() {
