@@ -28,7 +28,7 @@ public class Buyer_SettingsPane extends BorderPane {
 
         // buttons to show
         changePasswordButton = new Button("Change Password");
-        paymentInfoButton = new Button("Add/Change Payment Info");
+        paymentInfoButton = new Button("Payment Info");
         changePasswordButton.setFont(Font.font(20));
         paymentInfoButton.setFont(Font.font(20));
         changePasswordButton.setStyle(
