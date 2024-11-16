@@ -11,9 +11,8 @@ import javafx.scene.text.Font;
 
 public class Buyer_SettingsPane extends BorderPane {
 
-
     private Button changePasswordButton;
-    private Button adjustpriceButton;
+    private Button paymentInfoButton;
 
     public Buyer_SettingsPane(User user, double width, double height) {
 
@@ -29,21 +28,21 @@ public class Buyer_SettingsPane extends BorderPane {
 
         // buttons to show
         changePasswordButton = new Button("Change Password");
-        adjustpriceButton = new Button("Delete Account");
+        paymentInfoButton = new Button("Add/Change Payment Info");
         changePasswordButton.setFont(Font.font(20));
-        adjustpriceButton.setFont(Font.font(20));
+        paymentInfoButton.setFont(Font.font(20));
         changePasswordButton.setStyle(
                 "-fx-background-radius: 3em;"
         );
-        adjustpriceButton.setStyle(
+        paymentInfoButton.setStyle(
                 "-fx-background-radius: 3em;"
         );
         changePasswordButton.setPrefSize(300,40);
-        adjustpriceButton.setPrefSize(300,40);
+        paymentInfoButton.setPrefSize(300,40);
 
 
         // store buttons in VBox
-        VBox buttonVBox = new VBox(changePasswordButton, adjustpriceButton);
+        VBox buttonVBox = new VBox(changePasswordButton, paymentInfoButton);
         buttonVBox.setSpacing(10);
         buttonVBox.setPadding(new Insets(100,0,0,0));
         buttonVBox.setAlignment(Pos.CENTER);
