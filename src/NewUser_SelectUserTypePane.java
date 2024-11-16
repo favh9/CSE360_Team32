@@ -22,12 +22,12 @@ public class NewUser_SelectUserTypePane extends BorderPane {
         // load custom font for title
         Font arima = Font.loadFont(getClass().getResourceAsStream("fonts/Arima-Bold.ttf"), 65);
 
-        Font titleFont = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 65);
+//        Font titleFont = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 45);
         Font bodyFont = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 20);
 
         // set attributes for the title label
-        Label titleLabel = new Label("Select Account Type");
-        titleLabel.setFont(titleFont);
+        Label titleLabel = new Label("Please select either...");
+        titleLabel.setFont(arima);
         titleLabel.setPadding(new Insets(0,0,0,0));
         titleLabel.setTextFill(Color.BLACK);
 

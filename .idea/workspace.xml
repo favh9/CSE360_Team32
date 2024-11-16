@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9f62c8b-130d-4e78-a527-6bbd541ffcde" name="Changes" comment="Add current project files">
-      <change beforePath="$PROJECT_DIR$/src/User_LoginPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/User_LoginPane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NewUser_WelcomePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/NewUser_WelcomePane.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
