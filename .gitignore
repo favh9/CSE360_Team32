@@ -19,5 +19,8 @@ bin/
 ### VS Code ###
 .vscode/
 
+### Visual Code ###
+*.jfm
+
 ### Mac OS ###
 .DS_Store
