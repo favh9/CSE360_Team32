@@ -51,12 +51,10 @@ public class Transaction {
         // i.e. 01:00:00 AM
         DateFormat dfTime = new SimpleDateFormat("hh:mm:ss aa");
         String dsTime = dfTime.format(date);
-        System.out.println(dsTime);
 
         // i.e. 01/01/2000 01:00 AM
-        DateFormat dfDateTime = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
+        DateFormat dfDateTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         String dsDateTime = dfDateTime.format(date);
-        System.out.println(dsDateTime);
 
         return dsDateTime;
     }
