@@ -37,12 +37,12 @@ public class NewUser_WelcomePane extends BorderPane {
 
         // set attributes for the body of the main page
         Text t1 = new Text();
-        t1.setText("Hello, " + user.getFirstName() + " " + user.getLastName() + ".\n");
+        t1.setText("Hello, " + user.getFirstName() + ".\n");
         Text t2 = new Text();
         t2.setText("""
-                Here you can choose to either buy or sell. Once you've chosen the account
+                Here you can choose to either buy or sell. Once you've chosen what
                 you'd like, please utilize the navigation bar on the left of this screen
-                for your convenience. Please click on continue to select your account type.
+                for your convenience. Please click continue to start.
 
                 Forks Up!""");
         t1.setFont(bodyFont);
