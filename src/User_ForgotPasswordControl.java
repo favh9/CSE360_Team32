@@ -10,8 +10,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-//nga baby man
-kf
+
 public class User_ForgotPasswordControl extends Pane {
 
     private final double width;
