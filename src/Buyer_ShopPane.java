@@ -18,7 +18,7 @@ public class Buyer_ShopPane extends BorderPane {
     private RadioButton rb1,rb2;
     private ToggleGroup toggleGroupPrices;
     private Button cartButton, resetfiltersButton, searchButton;
-    private GridPane gp;
+    private GridPane booksPane;
 
     public Buyer_ShopPane(User user, double width, double height) {
 
@@ -151,10 +151,15 @@ public class Buyer_ShopPane extends BorderPane {
         spHeaderHBox.setSpacing(20);
 
         // set attributes for the container inside the scrollpane
-        gp = new GridPane();
+        booksPane = new GridPane();
+        booksPane = new GridPane();
+        booksPane.setAlignment(Pos.TOP_CENTER);
+        booksPane.setHgap(10);
+        booksPane.setVgap(10);
+        booksPane.setPadding(new Insets(10,10,10,10));
 
         // set attributes for the scrollpane
-        ScrollPane sp = new ScrollPane(gp);
+        ScrollPane sp = new ScrollPane(booksPane);
         sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         sp.minViewportHeightProperty().set(350);
@@ -259,10 +264,6 @@ public class Buyer_ShopPane extends BorderPane {
         return searchButton;
     }
 
-    public GridPane getGp() {
-        return gp;
-    }
-
     public void setSearchField(TextField searchField) {
         this.searchField = searchField;
     }
@@ -311,10 +312,6 @@ public class Buyer_ShopPane extends BorderPane {
         this.toggleGroupPrices = toggleGroupPrices;
     }
 
-    public void setGp(GridPane gp) {
-        this.gp = gp;
-    }
-
     public void setSearchButton(Button searchButton) {
         this.searchButton = searchButton;
     }
@@ -333,5 +330,13 @@ public class Buyer_ShopPane extends BorderPane {
 
     public void setRb1(RadioButton rb1) {
         this.rb1 = rb1;
+    }
+
+    public GridPane getBooksPane() {
+        return booksPane;
+    }
+
+    public void setBooksPane(GridPane booksPane) {
+        this.booksPane = booksPane;
     }
 }
