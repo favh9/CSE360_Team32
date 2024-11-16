@@ -95,7 +95,7 @@ public class User_CreateAccountControl extends Pane {
                     "\nYour username is " + usernameTextField.getText() + ".");
             ImageView confirmImageView = new ImageView(Main.successIcon);
             confirmImageView.setFitHeight(40);
-            confirmImageView.setFitWidth(100);
+            confirmImageView.setFitWidth(40);
             acctCreatedAlert.setGraphic(confirmImageView);
             acctCreatedAlert.setOnCloseRequest(arg0 -> {
                 // TODO Auto-generated method stub

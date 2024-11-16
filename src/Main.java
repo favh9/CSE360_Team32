@@ -1,5 +1,3 @@
-
-
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -38,7 +36,7 @@ public class Main extends Application {
     public static Image searchIcon = new Image("https://cdn-icons-png.flaticon.com/512/61/61088.png");
     public static Image refreshIcon = new Image("https://static-00.iconduck.com/assets.00/gui-refresh-icon-2048x2048-xgbnerm5.png");
     public static Image asuIcon = new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTbPLkDfxyWiu0Qho5hOJdgOkseNLcxiscVg&s");
-    public static Image successIcon = new Image("https://mardizu.co.id/assets/asset_admin/img/illustration/success.png");
+    public static Image successIcon = new Image("https://static-00.iconduck.com/assets.00/checkmark-running-icon-2048x2048-8081bf4v.png");
     public static Image infoIcon = new Image("https://uxwing.com/wp-content/themes/uxwing/download/web-app-development/more-info-icon.png");
     public static Image booksIcon = new Image("https://cdn0.iconfinder.com/data/icons/carbon-mobile-browser-1/48/reading_list-512.png");
 
@@ -69,11 +67,7 @@ public class Main extends Application {
     public static void main(String[] args) {
         DataBase.createDataBase();
         DataBase.createUsersTable();
-//        DataBase.insertUser("admin","lastname","email","admin","admin");
-        DataBase.updateUserType("faisalb", "admin");
         launch(args);
-
-
     }
 
 }
