@@ -11,7 +11,7 @@ import javafx.scene.layout.Border;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 //nga baby man
-hello
+
 public class User_ForgotPasswordControl extends Pane {
 
     private final double width;
