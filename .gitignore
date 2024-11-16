@@ -20,6 +20,7 @@ bin/
 .vscode/
 
 ### Visual Code ###
+.vs/
 *.jfm
 
 ### Mac OS ###
