@@ -17,7 +17,7 @@ public class Seller_ProfileControl extends Pane {
 
         pane = new Seller_ProfilePane(user,width,height);
 
-        button = pane.getButton();
+//        button = pane.getButton();
 
         this.getChildren().addAll(pane);
 
