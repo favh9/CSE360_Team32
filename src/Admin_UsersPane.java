@@ -15,10 +15,9 @@ import javafx.scene.text.Text;
 
 public class Admin_UsersPane extends BorderPane {
 
-    private final Button b1;
-    private final Button b2;
-    private final VBox listVBox;
-    private final Text quantityText;
+    private Button refreshButton;
+    private VBox usersVBox;
+    private Text quantityText;
 
     public Admin_UsersPane(User user, double width, double height) {
 
@@ -55,24 +54,13 @@ public class Admin_UsersPane extends BorderPane {
         image1.setFitHeight(25);
 
         // set attributes for the button
-        b1 = new Button();
-        b1.setGraphic(image1);
-        b1.setBackground(Background.fill(Color.TRANSPARENT));
-        b1.setAlignment(Pos.CENTER);
-
-        // set attributes for button image
-        ImageView image2 = new ImageView(Main.delUserIcon);
-        image2.setFitHeight(30);
-        image2.setFitWidth(30);
-
-        // set attributes for button
-        b2 = new Button();
-        b2.setGraphic(image2);
-        b2.setBackground(Background.fill(Color.TRANSPARENT));
-        b2.setAlignment(Pos.CENTER);
+        refreshButton = new Button();
+        refreshButton.setGraphic(image1);
+        refreshButton.setBackground(Background.fill(Color.TRANSPARENT));
+        refreshButton.setAlignment(Pos.CENTER);
 
         // set attributes for the container of two buttons
-        HBox rightHeaderPaneHBox = new HBox(b1,b2);
+        HBox rightHeaderPaneHBox = new HBox(refreshButton);
         rightHeaderPaneHBox.setAlignment(Pos.CENTER_RIGHT);
 
         // set attributes for the header of the page
@@ -88,31 +76,25 @@ public class Admin_UsersPane extends BorderPane {
         headerLabel1.setAlignment(Pos.BASELINE_LEFT);
 
         // set attributes for the header label
-        Label headerLabel2 = new Label("Balance");
-        headerLabel2.setFont(Font.font(20));
-        headerLabel2.setPrefWidth(150);
-        headerLabel2.setAlignment(Pos.BASELINE_CENTER);
-
-        // set attributes for the header label
         Label headerLabel3 = new Label("Type");
         headerLabel3.setFont(Font.font(20));
         headerLabel3.setPrefWidth(150);
         headerLabel3.setAlignment(Pos.BASELINE_CENTER);
 
         // set attributes for the header of the body
-        HBox bodyheaderHBox = new HBox(headerLabel1,headerLabel2,headerLabel3);
+        HBox bodyheaderHBox = new HBox(headerLabel1,headerLabel3);
 
         // set attributes for the line that separates the header and the scrollpane
         Rectangle lineSeparator = new Rectangle();
-        lineSeparator.setWidth(690);
+        lineSeparator.setWidth(700);
         lineSeparator.setHeight(2);
         lineSeparator.setFill(Color.BLACK);
 
         // set attributes for the VBox that holds the lists of users
-        listVBox = new VBox();
+        usersVBox = new VBox();
 
         // set attributes for the scrollpane
-        ScrollPane sp = new ScrollPane(listVBox);
+        ScrollPane sp = new ScrollPane(usersVBox);
         sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         sp.minViewportHeightProperty().set(400);
@@ -144,57 +126,37 @@ public class Admin_UsersPane extends BorderPane {
 
     }
 
-    public Button getButton1() {
-        return b1;
-    }
-
     public void clearUsers() {
-        listVBox.getChildren().clear();
+        usersVBox.getChildren().clear();
         quantityText.setText("0");
     }
 
     // returns a container where a user's information is displayed
-    public void addUser(String username, String balance, String type) {
-        
-        NumberFormat nf = NumberFormat.getCurrencyInstance();
-        balance = (nf.format(Double.parseDouble(balance)));
+    public void addUser(String username,String usertype) {
 
-        Label usernameLabel = new Label(username);
-        Label balanceLabel = new Label(balance);
-        Label typeLabel = new Label(type);
+        // set attributes for the header label
+        Label headerLabel1 = new Label(username);
+        headerLabel1.setFont(Font.font(18));
+        headerLabel1.setPrefWidth(390);
+        headerLabel1.setAlignment(Pos.BASELINE_LEFT);
 
-        usernameLabel.setPrefWidth(390);
-        balanceLabel.setPrefWidth(150);
-        typeLabel.setPrefWidth(150);
+        // set attributes for the header label
+        Label headerLabel3 = new Label(usertype);
+        headerLabel3.setFont(Font.font(18));
+        headerLabel3.setPrefWidth(150);
+        headerLabel3.setAlignment(Pos.BASELINE_CENTER);
 
-        usernameLabel.setFont(Font.font("Arial",FontWeight.NORMAL,18));
-        typeLabel.setFont(Font.font("Arial",FontWeight.NORMAL,18));
-        balanceLabel.setFont(Font.font("Arial",FontWeight.NORMAL,18));
-        
-        usernameLabel.setAlignment(Pos.CENTER_LEFT);
-        balanceLabel.setAlignment(Pos.CENTER_RIGHT);
-        typeLabel.setAlignment(Pos.CENTER);
-
-        balanceLabel.setPadding(new Insets(0,40,0,0));
-
-        HBox usernameHBox = new HBox(usernameLabel);
-        HBox balanceHBox = new HBox(balanceLabel);
-        HBox typeHBox = new HBox(typeLabel);
-        usernameHBox.setAlignment(Pos.CENTER_LEFT);
-        balanceLabel.setAlignment(Pos.CENTER_RIGHT);
-        typeLabel.setAlignment(Pos.CENTER);
+        // set attributes for the header of the body
+        HBox bodyheaderHBox = new HBox(headerLabel1,headerLabel3);
 
         Rectangle lineSeparator = new Rectangle();
         lineSeparator.setWidth(690);
         lineSeparator.setHeight(1);
         lineSeparator.setFill(Color.GRAY);
-        
-        HBox hbox = new HBox(usernameHBox,balanceHBox,typeHBox);
-        hbox.setPadding(new Insets(5,0,5,0));
 
-        VBox vbox = new VBox(hbox,lineSeparator);
+        VBox vbox = new VBox(bodyheaderHBox,lineSeparator);
 
-        listVBox.getChildren().add(vbox);
+        usersVBox.getChildren().add(vbox);
         this.updateCount();
     }
 
@@ -203,6 +165,30 @@ public class Admin_UsersPane extends BorderPane {
         String str = quantityText.getText();
         int incr = Integer.parseInt(str) + 1;
         quantityText.setText(Integer.toString(incr));
-    }  
+    }
+
+    public Button getRefreshButton() {
+        return refreshButton;
+    }
+
+    public void setRefreshButton(Button refreshButton) {
+        this.refreshButton = refreshButton;
+    }
+
+    public VBox getUsersVBox() {
+        return usersVBox;
+    }
+
+    public void setUsersVBox(VBox usersVBox) {
+        this.usersVBox = usersVBox;
+    }
+
+    public Text getQuantityText() {
+        return quantityText;
+    }
+
+    public void setQuantityText(Text quantityText) {
+        this.quantityText = quantityText;
+    }
 
 }

@@ -12,14 +12,15 @@ import javafx.scene.layout.Pane;
 public class Admin_UsersControl extends Pane {
 
     private final Admin_UsersPane pane;
-    private final Button b1;
+    private final Button refreshButton;
 
     public Admin_UsersControl(User user, double width, double height) {
 
         pane = new Admin_UsersPane(user, width, height);
         displayUsers();
-        b1 = pane.getButton1();
-        b1.setOnAction(new ButtonHandler());
+
+        refreshButton = pane.getRefreshButton();
+        refreshButton.setOnAction(new ButtonHandler());
 
         this.getChildren().addAll(pane);
     }
@@ -28,7 +29,7 @@ public class Admin_UsersControl extends Pane {
 
         public void handle(ActionEvent a) {
 
-            if(a.getSource() == b1) {
+            if(a.getSource() == refreshButton) {
 
                 pane.clearUsers();
                 displayUsers();
@@ -39,7 +40,8 @@ public class Admin_UsersControl extends Pane {
     // displays the users in table
     public void displayUsers() {
 
-        String query = "SELECT username FROM Users";  // query to retrieve data from table
+        // Corrected query to retrieve both 'username' and 'user_type'
+        String query = "SELECT username, user_type FROM Users";  // Select both username and user_type columns
 
         // JDBC connection
         try (Connection connection = DriverManager.getConnection(DataBase.URL, DataBase.USER, DataBase.PASWWORD);
@@ -50,15 +52,17 @@ public class Admin_UsersControl extends Pane {
             while (resultSet.next()) {
                 // Get the data from the result set
                 String username = resultSet.getString("username");
+                String usertype = resultSet.getString("user_type");
 
-                // use the data
-                pane.addUser(username, "0", "admin");
+                // Use the data (assuming you have a method addUser to handle this)
+                pane.addUser(username, usertype);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
 
 
 }

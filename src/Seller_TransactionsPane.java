@@ -15,18 +15,16 @@ import javafx.scene.text.Text;
 
 public class Seller_TransactionsPane extends BorderPane {
 
-    private final Button b1;
-    private final Button b2;
-    private final VBox listVBox;
-    private final Text quantityText;
-    Seller_NavigationControl navigationControl;
+    private Button refreshButton;
+    private VBox transactionsVBox;
+    private Text transactionsAmountText;
 
     public Seller_TransactionsPane(User user, double width, double height) {
 
         Font titleFont = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 42);
         Font quantityFont = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 24);
 
-        navigationControl = new Seller_NavigationControl(user,width,height);
+        Seller_NavigationControl navigationControl = new Seller_NavigationControl(user, width, height);
 
         // set attributes for the Title Label
         Label titleLabel = new Label("Transactions");
@@ -37,11 +35,11 @@ public class Seller_TransactionsPane extends BorderPane {
         quantityLabel.setFont(quantityFont);
 
         // set attribute for the quantity label
-        quantityText = new Text("0");
-        quantityText.setFont(quantityFont);
+        transactionsAmountText = new Text("0");
+        transactionsAmountText.setFont(quantityFont);
 
         // set attributes for the HBox that holds the quantity and quantity label
-        HBox quantityHBox = new HBox(quantityText, quantityLabel);
+        HBox quantityHBox = new HBox(transactionsAmountText, quantityLabel);
         quantityHBox.setSpacing(20);
         quantityHBox.setAlignment(Pos.BASELINE_CENTER);
 
@@ -56,24 +54,13 @@ public class Seller_TransactionsPane extends BorderPane {
         image1.setFitHeight(25);
 
         // set attributes for the button
-        b1 = new Button();
-        b1.setGraphic(image1);
-        b1.setBackground(Background.fill(Color.TRANSPARENT));
-        b1.setAlignment(Pos.CENTER);
-
-        // set attributes for button image
-        ImageView image2 = new ImageView(Main.delUserIcon);
-        image2.setFitHeight(30);
-        image2.setFitWidth(30);
-
-        // set attributes for button
-        b2 = new Button();
-        b2.setGraphic(image2);
-        b2.setBackground(Background.fill(Color.TRANSPARENT));
-        b2.setAlignment(Pos.CENTER);
+        refreshButton = new Button();
+        refreshButton.setGraphic(image1);
+        refreshButton.setBackground(Background.fill(Color.TRANSPARENT));
+        refreshButton.setAlignment(Pos.CENTER);
 
         // set attributes for the container of two buttons
-        HBox rightHeaderPaneHBox = new HBox(b1,b2);
+        HBox rightHeaderPaneHBox = new HBox(refreshButton);
         rightHeaderPaneHBox.setAlignment(Pos.CENTER_RIGHT);
 
         // set attributes for the header of the page
@@ -81,39 +68,49 @@ public class Seller_TransactionsPane extends BorderPane {
         headerPane.setLeft(leftHeaderPaneHBox);
         headerPane.setRight(rightHeaderPaneHBox);
 
-        // set attributes for the header of the body
         // set attributes for the header label
         Label headerLabel1 = new Label("Book Title");
         headerLabel1.setFont(Font.font(20));
-        headerLabel1.setPrefWidth(390);
         headerLabel1.setAlignment(Pos.BASELINE_LEFT);
 
         // set attributes for the header label
         Label headerLabel2 = new Label("Timestamp");
         headerLabel2.setFont(Font.font(20));
-        headerLabel2.setPrefWidth(150);
         headerLabel2.setAlignment(Pos.BASELINE_CENTER);
 
         // set attributes for the header label
         Label headerLabel3 = new Label("Amount");
         headerLabel3.setFont(Font.font(20));
-        headerLabel3.setPrefWidth(150);
         headerLabel3.setAlignment(Pos.BASELINE_CENTER);
 
+        // set attributes for the header label
+        Label headerLabel4 = new Label("Sold To");
+        headerLabel4.setFont(Font.font(20));
+        headerLabel4.setAlignment(Pos.BASELINE_CENTER);
+
         // set attributes for the header of the body
-        HBox bodyheaderHBox = new HBox(headerLabel1,headerLabel2,headerLabel3);
+        GridPane bodyheaderPane = new GridPane();
+        for(int i = 0; i < 4; i++) {
+            ColumnConstraints columnConstraints = new ColumnConstraints();
+            columnConstraints.setPercentWidth(25);
+            bodyheaderPane.getColumnConstraints().add(columnConstraints);
+        }
+        bodyheaderPane.add(headerLabel1,0,0);
+        bodyheaderPane.add(headerLabel2,1,0);
+        bodyheaderPane.add(headerLabel3,2,0);
+        bodyheaderPane.add(headerLabel4,3,0);
 
         // set attributes for the line that separates the header and the scrollpane
         Rectangle lineSeparator = new Rectangle();
-        lineSeparator.setWidth(690);
+        lineSeparator.setWidth(700);
         lineSeparator.setHeight(2);
         lineSeparator.setFill(Color.BLACK);
 
         // set attributes for the VBox that holds the lists of users
-        listVBox = new VBox();
+        transactionsVBox = new VBox();
 
         // set attributes for the scrollpane
-        ScrollPane sp = new ScrollPane(listVBox);
+        ScrollPane sp = new ScrollPane(transactionsVBox);
         sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         sp.minViewportHeightProperty().set(400);
@@ -121,7 +118,7 @@ public class Seller_TransactionsPane extends BorderPane {
         sp.setStyle("-fx-background: white;");
 
         // set attributes for the users box that includes their header and scrollpane
-        VBox headerAndScrollPane = new VBox(bodyheaderHBox,lineSeparator,sp);
+        VBox headerAndScrollPane = new VBox(bodyheaderPane,lineSeparator,sp);
 
         // set attributes for the main VBox which excludes the navigation bar
         VBox mainVBox = new VBox(headerPane,headerAndScrollPane);
@@ -145,13 +142,9 @@ public class Seller_TransactionsPane extends BorderPane {
 
     }
 
-    public Button getButton1() {
-        return b1;
-    }
-
     public void clearTransactions() {
-        listVBox.getChildren().clear();
-        quantityText.setText("0");
+        transactionsVBox.getChildren().clear();
+        transactionsAmountText.setText("0");
     }
 
     // returns a container where a user's information is displayed
@@ -196,15 +189,46 @@ public class Seller_TransactionsPane extends BorderPane {
 
         VBox vbox = new VBox(hbox,lineSeparator);
 
-        listVBox.getChildren().add(vbox);
+        transactionsVBox.getChildren().add(vbox);
         this.updateCount();
     }
 
-    // modifies and updates the display amount text
+    // modifies and updates the display amount text by one
     public void updateCount() {
-        String str = quantityText.getText();
+        String str = transactionsAmountText.getText();
         int incr = Integer.parseInt(str) + 1;
-        quantityText.setText(Integer.toString(incr));
+        transactionsAmountText.setText(Integer.toString(incr));
+    }
+
+    // modifies and updates the display amount text by an amount
+    public void updateCount(int num) {
+        String str = transactionsAmountText.getText();
+        int incr = Integer.parseInt(str) + num;
+        transactionsAmountText.setText(Integer.toString(incr));
+    }
+
+    public Button getRefreshButton() {
+        return refreshButton;
+    }
+
+    public void setRefreshButton(Button refreshButton) {
+        this.refreshButton = refreshButton;
+    }
+
+    public VBox getTransactionsVBox() {
+        return transactionsVBox;
+    }
+
+    public void setTransactionsVBox(VBox transactionsVBox) {
+        this.transactionsVBox = transactionsVBox;
+    }
+
+    public Text getTransactionsAmountText() {
+        return transactionsAmountText;
+    }
+
+    public void setTransactionsAmountText(Text transactionsAmountText) {
+        this.transactionsAmountText = transactionsAmountText;
     }
 
 }
