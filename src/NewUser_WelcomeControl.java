@@ -31,7 +31,7 @@ public class NewUser_WelcomeControl extends Pane {
         @Override
         public void handle(ActionEvent actionEvent) {
 
-            NewUser_SelectUserTypeControl selectUser = new NewUser_SelectUserTypeControl(user,width,height);
+            User_SelectAccountControl selectUser = new User_SelectAccountControl(user,width,height);
             Main.mainWindow.setScene(new Scene(selectUser));
 
         }

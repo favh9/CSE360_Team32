@@ -4,22 +4,22 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 
-public class NewUser_SelectUserTypeControl extends Pane {
+public class User_SelectAccountControl extends Pane {
 
     private User user;
     private double width;
     private double height;
-    private NewUser_SelectUserTypePane pane;
+    private User_SelectAccountPane pane;
     private Button buyButton;
     private Button sellButton;
 
-    public NewUser_SelectUserTypeControl(User user, double width, double height) {
+    public User_SelectAccountControl(User user, double width, double height) {
 
         this.user = user;
         this.width = width;
         this.height = height;
 
-        pane = new NewUser_SelectUserTypePane(user, width, height);
+        pane = new User_SelectAccountPane(user, width, height);
 
         buyButton = pane.getBuyButton();
         buyButton.setOnAction(new ButtonHandler());

@@ -10,12 +10,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 
-public class NewUser_SelectUserTypePane extends BorderPane {
+public class User_SelectAccountPane extends BorderPane {
 
     private final Button b1;
     private final Button b2;
 
-    public NewUser_SelectUserTypePane(User user, double width, double height) {
+    public User_SelectAccountPane(User user, double width, double height) {
 
         NewUser_NavigationControl navBarVBox = new NewUser_NavigationControl(user,width,height);
 

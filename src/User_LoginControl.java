@@ -86,7 +86,7 @@ public class User_LoginControl extends Pane {
 
                 } else { // you are a returning user
                     user = DataBase.getUserByUsername(usernameTextField.getText());
-                    NewUser_SelectUserTypeControl returning_user = new NewUser_SelectUserTypeControl(user,width,height);
+                    User_SelectAccountControl returning_user = new User_SelectAccountControl(user,width,height);
                     Main.mainWindow.setScene(new Scene(returning_user));
                 }
 
