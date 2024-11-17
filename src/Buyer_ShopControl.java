@@ -1,10 +1,12 @@
+
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class Buyer_ShopControl extends Pane {
@@ -142,33 +144,12 @@ public class Buyer_ShopControl extends Pane {
 
             addtocartButton = new Button("add to cart");
             addtocartButton.textFillProperty().set(Color.web("#ffffff"));
-            // Set default style for the button (initial color is #4A1E2C)
+            addtocartButton.setStyle(
+                    "-fx-background-radius: 5em;" +
+                            "-fx-background-color: #ffc627;"
+            );
 
-            // Set default style for the button (light color #6E2A3D)
-            addtocartButton.setStyle("-fx-background-radius: 5em; -fx-background-color: #6E2A3D;");
-
-            // Change style when button is clicked (active state)
-            addtocartButton.setStyle("-fx-background-radius: 5em; -fx-background-color: #9C3A52;");
-
-            // Handle mouse enter (hover effect)
-            Button finalAddtocartButton1 = addtocartButton;
-            addtocartButton.setOnMouseEntered(e -> {
-                finalAddtocartButton1.setStyle("-fx-background-radius: 5em; -fx-background-color: #A74F65;");  // Hover color
-            });
-
-            // Handle mouse exit (hover effect removal)
-            Button finalAddtocartButton = addtocartButton;
-            addtocartButton.setOnMouseExited(e -> {
-                finalAddtocartButton.setStyle("-fx-background-radius: 5em; -fx-background-color: #6E2A3D;");  // Default color
-            });
-
-            // Handle mouse released (reset to default color)
-            Button finalAddtocartButton2 = addtocartButton;
-            addtocartButton.setOnMouseReleased(e -> {
-                finalAddtocartButton2.setStyle("-fx-background-radius: 5em; -fx-background-color: #6E2A3D;");  // Default color
-            });
-
-            addtocartButton.setOnAction(e-> System.out.println(finalBook.getTitle()));
+            addtocartButton.setOnAction(e-> new ButtonHandler());
 
             // Add book details to the VBox
             bookVBox = new VBox();
@@ -192,6 +173,14 @@ public class Buyer_ShopControl extends Pane {
 
             // Add VBox to the grid (placed in row i, column 0)
             booksPane.add(bp, i % 3, i / 3);  // Place items in x columns (i % x), rows increase by y (i / y)
+        }
+    }
+
+    private class ButtonHandler implements EventHandler<ActionEvent> {
+
+        @Override
+        public void handle(ActionEvent event) {
+
         }
     }
 }
