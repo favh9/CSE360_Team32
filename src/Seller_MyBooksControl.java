@@ -167,8 +167,6 @@ public class Seller_MyBooksControl extends Pane {
         BorderPane.setAlignment(removeButton, Pos.CENTER);
         BorderPane.setMargin(removeButton, new Insets(5));
 
-        System.out.println(booksPane.getColumnCount() + ", " + booksPane.getRowCount());
-
         // Add VBox to the grid (placed in column, row) dynamically
         booksPane.add(bp, booksPane.getChildren().size() % 3, booksPane.getChildren().size() / 3);
     }
