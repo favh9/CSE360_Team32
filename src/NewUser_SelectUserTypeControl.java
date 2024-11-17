@@ -35,19 +35,30 @@ public class NewUser_SelectUserTypeControl extends Pane {
         @Override
         public void handle(ActionEvent a) {
 
-            System.out.println("foo");
-
             if (a.getSource().equals(buyButton)) {
-                user.setUserType("buyer");
-                DataBase.updateUserType(user.getUsername(), "buyer");
-                Buyer_ShopControl buyer = new Buyer_ShopControl(user,width,height);
-                Main.mainWindow.setScene(new Scene(buyer));
+
+                if(user.getUserType().equals("new_user")) {
+                    user.setUserType("returning_user");
+                    DataBase.updateUserType(user.getUsername(), "returning_user");
+                    Buyer_ShopControl buyer = new Buyer_ShopControl(user, width, height);
+                    Main.mainWindow.setScene(new Scene(buyer));
+                } else {
+                    Buyer_ShopControl buyer = new Buyer_ShopControl(user, width, height);
+                    Main.mainWindow.setScene(new Scene(buyer));
+                }
 
             } else if (a.getSource().equals(sellButton)) {
-                user.setUserType("seller");
-                DataBase.updateUserType(user.getUsername(), "seller");
-                Seller_PostBookControl seller = new Seller_PostBookControl(user,width,height);
-                Main.mainWindow.setScene(new Scene(seller));
+
+                if(user.getUserType().equals("new_user")) {
+                    user.setUserType("returning_user");
+                    DataBase.updateUserType(user.getUsername(), "returning_user");
+                    Seller_PostBookControl seller = new Seller_PostBookControl(user, width, height);
+                    Main.mainWindow.setScene(new Scene(seller));
+                } else {
+                    Seller_PostBookControl seller = new Seller_PostBookControl(user, width, height);
+                    Main.mainWindow.setScene(new Scene(seller));
+                }
+
             }
         }
     }

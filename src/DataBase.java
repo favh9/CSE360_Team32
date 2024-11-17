@@ -34,7 +34,7 @@ public class DataBase {
 
     public static boolean updateUserType(String username, String usertype) {
 
-        String updateUserSQL = "UPDATE Users SET usertype = ? WHERE username = ?";
+        String updateUserSQL = "UPDATE Users SET user_type = ? WHERE username = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);
              PreparedStatement pstmt = conn.prepareStatement(updateUserSQL)) {
@@ -83,7 +83,8 @@ public class DataBase {
                 + "email VARCHAR(255) NOT NULL UNIQUE, "
                 + "username VARCHAR(255) NOT NULL UNIQUE, "
                 + "password VARCHAR(255) NOT NULL, "
-                + "usertype ENUM('buyer', 'seller', 'admin') DEFAULT NULL)";
+                + "user_type ENUM('super_admin','admin','returning_user','new_user') DEFAULT 'new_user', "
+                + "dob DATE)"; // Added date of birth column
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);
              Statement stmt = conn.createStatement()) {
@@ -91,10 +92,11 @@ public class DataBase {
             stmt.executeUpdate(createTableSQL);
             System.out.println("Table created successfully...");
         } catch (SQLException e) {
-            System.out.println("Table created.. SIKE!...");
+            System.out.println("Table creation failed...");
             e.printStackTrace();
         }
     }
+
 
     public static void createTransactionsTable() {
 
@@ -115,29 +117,33 @@ public class DataBase {
         }
     }
 
-    public static boolean insertUser(String firstname, String lastname, String email, String username, String pwd) {
+    public static boolean insertUser(String firstname, String lastname, String dob, String email, String username, String pwd) {
 
-        String insertUserSQL = "INSERT INTO Users (firstname, lastname, email, username, password) " +
-                               "VALUES (?, ?, ?, ?, ?)";
+        // Modify SQL query to include the 'dob' column
+        String insertUserSQL = "INSERT INTO Users (firstname, lastname, dob, email, username, password) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);
              PreparedStatement pstmt = conn.prepareStatement(insertUserSQL)) {
 
             pstmt.setString(1, firstname);
             pstmt.setString(2, lastname);
-            pstmt.setString(3, email);
-            pstmt.setString(4, username);
-            pstmt.setString(5, pwd);
+            pstmt.setString(3, dob);  // dob is 'YYYY-MM-DD' format
+            pstmt.setString(4, email);
+            pstmt.setString(5, username);
+            pstmt.setString(6, pwd);
 
             pstmt.executeUpdate();
             System.out.println("User inserted successfully: " + username);
         } catch (SQLException e) {
-            System.out.println("Invalid username or password: " + username);
+            System.out.println("Error inserting user: " + username);
+            e.printStackTrace();
             return false;
         }
 
         return true;
     }
+
 
     public static boolean userExists(String username, String pwd) {
 
@@ -170,7 +176,7 @@ public class DataBase {
     }
 
     public static User getUserByUsername(String username) {
-        String selectUserSQL = "SELECT firstname, lastname, email, username, password, usertype FROM Users WHERE username = ?";
+        String selectUserSQL = "SELECT firstname, lastname, dob, email, username, password, user_type FROM Users WHERE username = ?";
         User user = null;
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);
@@ -183,12 +189,13 @@ public class DataBase {
                     // Map the result set to a User object
                     String firstname = rs.getString("firstname");
                     String lastname = rs.getString("lastname");
+                    String dob = rs.getString("dob");
                     String email = rs.getString("email");
                     String password = rs.getString("password");
-                    String usertype = rs.getString("usertype");
+                    String usertype = rs.getString("user_type");
 
                     // Create a new User object from the database result
-                    user = new User(firstname, lastname, email, username, password, usertype);
+                    user = new User(firstname, lastname, dob, email, username, password, usertype);
                 }
             }
 
@@ -205,7 +212,7 @@ public class DataBase {
     }
 
     public static String getUserType(String username) {
-        String selectUserSQL = "SELECT usertype FROM Users WHERE username = ?";
+        String selectUserSQL = "SELECT user_type FROM Users WHERE username = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);
              PreparedStatement pstmt = conn.prepareStatement(selectUserSQL)) {
@@ -215,7 +222,7 @@ public class DataBase {
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     // User found with matching credentials
-                    String userType = rs.getString("usertype");  // Retrieve the user_type
+                    String userType = rs.getString("user_type");  // Retrieve the user_type
                     return userType;
                 } else {
                     System.out.println("Invalid username.");

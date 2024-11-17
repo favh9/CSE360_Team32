@@ -5,7 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9f62c8b-130d-4e78-a527-6bbd541ffcde" name="Changes" comment="Add current project files">
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataBase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NewUser_SelectUserTypeControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/NewUser_SelectUserTypeControl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/User_CreateAccountControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/User_CreateAccountControl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/User_LoginControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/User_LoginControl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,7 +147,7 @@
       <breakpoints>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/User_LoginControl.java</url>
-          <line>96</line>
+          <line>100</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>

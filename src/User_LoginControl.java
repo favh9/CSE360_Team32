@@ -73,17 +73,21 @@ public class User_LoginControl extends Pane {
 
                     displayIncorrectPasswordOrUsername();
 
-                } else if(Objects.equals(DataBase.getUserType(usernameTextField.getText()), "admin")) {
+                } else if(Objects.equals(DataBase.getUserType(usernameTextField.getText()), "super_admin")) {
 
                     user = DataBase.getUserByUsername(usernameTextField.getText());
                     Admin_UsersControl admin = new Admin_UsersControl(user,width,height);
                     Main.mainWindow.setScene(new Scene(admin));
 
-                } else if(Objects.equals(DataBase.getUserType(usernameTextField.getText()), "new")) { // you are a new user
+                } else if(Objects.equals(DataBase.getUserType(usernameTextField.getText()), "new_user")) { // you are a new user
                     user = DataBase.getUserByUsername(usernameTextField.getText());
+                    NewUser_WelcomeControl new_user = new NewUser_WelcomeControl(user,width,height);
+                    Main.mainWindow.setScene(new Scene(new_user));
 
                 } else { // you are a returning user
-
+                    user = DataBase.getUserByUsername(usernameTextField.getText());
+                    NewUser_SelectUserTypeControl returning_user = new NewUser_SelectUserTypeControl(user,width,height);
+                    Main.mainWindow.setScene(new Scene(returning_user));
                 }
 
             }
