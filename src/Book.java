@@ -14,6 +14,14 @@ public class Book {
         price = 0.0;
     }
 
+    public Book(String title, String author, String category, String condition, double price) {
+        this.title = title;
+        this.author = author;
+        this.category = category;
+        this.condition = condition;
+        this.price = price;
+    }
+
     public String getTitle() {
         return title;
     }

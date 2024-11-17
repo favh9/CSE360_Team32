@@ -10,6 +10,7 @@ import javafx.scene.text.Text;
 
 public class Buyer_ShopPane extends BorderPane {
 
+    private Text badgeCountText;
     private CheckBox naturalscienceCheckBox,computerscienceCheckBox,mathCheckBox,englishCheckBox,otherCheckBox,likenewCheckBox,moderatelyusedCheckBox,heavilyusedCheckBox;
     private RadioButton ascendingRadioButton,descendingRadioButton;
     private ToggleGroup toggleGroupPrices;
@@ -27,9 +28,46 @@ public class Buyer_ShopPane extends BorderPane {
         Label titleLabel = new Label("Shop");
         titleLabel.setFont(Font.font(42));
 
+        // Create a StackPane to hold both the cart image and the badge
+        StackPane stackPane = new StackPane();
+
+        // add the cart image
+        ImageView cartImage = new ImageView(Main.cartIcon);
+        cartImage.setFitHeight(45);
+        cartImage.setFitWidth(45);
+
+        // add the cart button
+        Button cartButton = new Button();
+        cartButton.setGraphic(cartImage);
+        cartButton.setBackground(Background.fill(Color.TRANSPARENT));
+
+        // add the button to the stack pane
+        stackPane.getChildren().add(cartButton);
+
+        // Create the badge circle to display the number of items
+        Circle badge = new Circle(12);
+        badge.setFill(Color.RED);
+
+        // Create the text to show the item count inside the badge
+        badgeCountText = new Text("0");
+        badgeCountText.setFill(Color.WHITE);
+        badgeCountText.setStyle("-fx-font-size: 12; -fx-font-weight: bold;");
+
+        // Set the elements in stack pane position
+        StackPane.setAlignment(badge, Pos.TOP_RIGHT); // This positions the badge at the top-right of the image
+        StackPane.setAlignment(badgeCountText, Pos.TOP_RIGHT);
+        badgeCountText.setTranslateX(-8);
+        badgeCountText.setTranslateY(4);
+
+        // Add the badge and the text to the StackPane
+        stackPane.getChildren().addAll(badge, badgeCountText);
+
+
         // set attributes for the header of the main page
-        HBox headerHBox = new HBox(titleLabel);
-        headerHBox.setAlignment(Pos.BASELINE_LEFT);
+        HBox headerHBox = new HBox(titleLabel, stackPane);
+        headerHBox.setAlignment(Pos.CENTER_LEFT);
+        headerHBox.setSpacing(530);
+        HBox.setMargin(stackPane, new Insets(5,0,0,0));
 
         // set attributes for instruction label
         Label instructionLabel1 = new Label("Please use the filters on the left and/or search bar to find your book.");
@@ -51,7 +89,7 @@ public class Buyer_ShopPane extends BorderPane {
 
         // set attributes for the VBox that holds these items
         VBox vbox1 = new VBox(categoryLabel,naturalscienceCheckBox,computerscienceCheckBox,mathCheckBox,englishCheckBox,otherCheckBox);
-        vbox1.setSpacing(2);
+        vbox1.setSpacing(5);
 
         // set attributes for the condition label
         Label conditionLabel = new Label("By Condition:");
@@ -66,7 +104,7 @@ public class Buyer_ShopPane extends BorderPane {
 
         // set attributes for the VBox that holds these items
         VBox vbox2 = new VBox(conditionLabel,likenewCheckBox,moderatelyusedCheckBox,heavilyusedCheckBox);
-        vbox2.setSpacing(2);
+        vbox2.setSpacing(5);
 
         // set attribute for label
         Label l1 = new Label("Prices");
@@ -80,7 +118,7 @@ public class Buyer_ShopPane extends BorderPane {
 
         // set attributes for VBox
         VBox vbox3 = new VBox(l1,ascendingRadioButton,descendingRadioButton);
-        vbox3.setSpacing(2);
+        vbox3.setSpacing(5);
 
         // set attributes for label
         Label resetLabel = new Label("Reset Filters");
@@ -90,7 +128,7 @@ public class Buyer_ShopPane extends BorderPane {
 
         // set attributes for VBox
         VBox vbox4 = new VBox(resetLabel,resetfiltersButton);
-        vbox4.setSpacing(2);
+        vbox4.setSpacing(5);
 
         // set atributes for the VBox that holds all Left side items
         VBox leftVBox = new VBox(vbox1,vbox2,vbox3,vbox4);
@@ -310,5 +348,15 @@ public class Buyer_ShopPane extends BorderPane {
 
     public void setSp(ScrollPane sp) {
         this.sp = sp;
+    }
+
+    public void clearBooks() {
+        booksPane.getChildren().clear();
+    }
+
+    public void updateBadgeCount() {
+
+        int incr = Integer.parseInt(badgeCountText.getText());
+        badgeCountText.setText(Integer.toString(++incr));
     }
 }
