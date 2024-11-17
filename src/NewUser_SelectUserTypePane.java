@@ -32,10 +32,10 @@ public class NewUser_SelectUserTypePane extends BorderPane {
         titleLabel.setTextFill(Color.BLACK);
 
         // set attributes for image width
-        double imageWidth = 280;
+        double imageWidth = 250;
 
         // set attributes for image height
-        double imageHeight = 300;
+        double imageHeight = 280;
 
         // set attributes for the header of the main page
         HBox headerHBox = new HBox(titleLabel);
