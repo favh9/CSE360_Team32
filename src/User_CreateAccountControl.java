@@ -129,6 +129,12 @@ public class User_CreateAccountControl extends Pane {
                 return true;
             if(lastnameTextField.getText().isEmpty())
                 return true;
+            if(yearComboBox.getValue().equals("YYYY"))
+                return true;
+            if(monthComboBox.getValue().equals("MM"))
+                return true;
+            if(dayComboBox.getValue().equals("DD"))
+                return true;
             if(emailTextField.getText().isEmpty())
                 return true;
             if(usernameTextField.getText().isEmpty())

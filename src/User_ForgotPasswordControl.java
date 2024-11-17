@@ -1,10 +1,7 @@
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Border;
@@ -15,12 +12,15 @@ public class User_ForgotPasswordControl extends Pane {
 
     private final double width;
     private final double height;
-    private final TextField emailTextField;
-    private final TextField usernameTextField;
-    private final PasswordField passwordPasswordfield;
-    private final PasswordField confirmpasswordPasswordfield;
-    private final Button confirmButton;
-    private final Button backButton;
+    private TextField emailTextField;
+    private TextField usernameTextField;
+    private ComboBox<String> yearComboBox;
+    private ComboBox<String> monthComboBox;
+    private ComboBox<String> dayComboBox;
+    private PasswordField passwordPasswordfield;
+    private PasswordField confirmpasswordPasswordfield;
+    private Button confirmButton;
+    private Button backButton;
 
     public User_ForgotPasswordControl(double width, double height) {
         this.width = width;
@@ -30,6 +30,12 @@ public class User_ForgotPasswordControl extends Pane {
         emailTextField = pane.getEmailTextField();
 
         usernameTextField = pane.getUsernameTextField();
+
+        yearComboBox = pane.getYearComboBox();
+
+        monthComboBox = pane.getMonthComboBox();
+
+        dayComboBox = pane.getDayComboBox();
 
         passwordPasswordfield = pane.getPasswordPasswordfield();
         passwordPasswordfield.setOnKeyReleased(new PasswordFieldHandler());
@@ -105,6 +111,12 @@ public class User_ForgotPasswordControl extends Pane {
                 return true;
             if(usernameTextField.getText().isEmpty())
                 return true;
+            if(yearComboBox.getValue().equals("YYYY"))
+                return true;
+            if(monthComboBox.getValue().equals("MM"))
+                return true;
+            if(dayComboBox.getValue().equals("DD"))
+                return true;
             if(passwordPasswordfield.getText().isEmpty())
                 return true;
             if(confirmpasswordPasswordfield.getText().isEmpty())
@@ -122,6 +134,12 @@ public class User_ForgotPasswordControl extends Pane {
                 missingData += "\temail\n";
             if(usernameTextField.getText().isEmpty())
                 missingData += "\tusername\n";
+            if(yearComboBox.getValue().equals("YYYY"))
+                missingData += "\tbirth year\n";
+            if(monthComboBox.getValue().equals("MM"))
+                missingData += "\tbirth month\n";
+            if(dayComboBox.getValue().equals("DD"))
+                missingData += "\tbirth day\n";
             if(passwordPasswordfield.getText().isEmpty())
                 missingData += "\tpassword\n";
             if(confirmpasswordPasswordfield.getText().isEmpty())

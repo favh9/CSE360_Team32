@@ -133,10 +133,8 @@ public class User_CreateAccountPane extends BorderPane {
         // set the default choice for days
         monthComboBox.setValue("MM");
 
-
-
         // create a HBox to store the label and text field
-        HBox  birthdateHBox = new HBox(birthdateLabel,yearComboBox,monthComboBox,dayComboBox);
+        HBox birthdateHBox = new HBox(birthdateLabel,yearComboBox,monthComboBox,dayComboBox);
         birthdateHBox.setAlignment(Pos.CENTER_RIGHT);
         birthdateHBox.setSpacing(10);
         
