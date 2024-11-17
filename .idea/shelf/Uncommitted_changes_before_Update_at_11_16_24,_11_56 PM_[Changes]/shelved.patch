@@ -1,0 +1,497 @@
+Index: lib_mac/javafx.properties
+===================================================================
+diff --git a/lib_mac/javafx.properties b/lib_mac/javafx.properties
+deleted file mode 100644
+--- a/lib_mac/javafx.properties	(revision 9ebc2adb89deedc900f368c30f59aa83885697bf)
++++ /dev/null	(revision 9ebc2adb89deedc900f368c30f59aa83885697bf)
+@@ -1,3 +0,0 @@
+-javafx.version=22.0.2
+-javafx.runtime.version=22.0.2+4
+-javafx.runtime.build=4
+Index: .idea/libraries/lib_mac.xml
+===================================================================
+diff --git a/.idea/libraries/lib_mac.xml b/.idea/libraries/lib_mac.xml
+deleted file mode 100644
+--- a/.idea/libraries/lib_mac.xml	(revision 9ebc2adb89deedc900f368c30f59aa83885697bf)
++++ /dev/null	(revision 9ebc2adb89deedc900f368c30f59aa83885697bf)
+@@ -1,13 +0,0 @@
+-<component name="libraryTable">
+-  <library name="lib_mac">
+-    <CLASSES>
+-      <root url="file://$PROJECT_DIR$/lib_mac" />
+-    </CLASSES>
+-    <JAVADOC />
+-    <NATIVE>
+-      <root url="file://$PROJECT_DIR$/lib_mac" />
+-    </NATIVE>
+-    <SOURCES />
+-    <jarDirectory url="file://$PROJECT_DIR$/lib_mac" recursive="false" />
+-  </library>
+-</component>
+\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_Checkout_at_11_16_2024_11_25_PM__Changes_.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_16_2024_11_25_PM__Changes_.xml b/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_16_2024_11_25_PM__Changes_.xml
+new file mode 100644
+--- /dev/null	(date 1731826467843)
++++ b/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_16_2024_11_25_PM__Changes_.xml	(date 1731826467843)
+@@ -0,0 +1,139 @@
++<changelist name="Uncommitted_changes_before_Checkout_at_11_16_2024_11_25_PM_[Changes]" date="1731824754676" recycled="true" deleted="true">
++  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_16_2024_11_25_PM_[Changes]/shelved.patch" />
++  <option name="DESCRIPTION" value="Uncommitted changes before Checkout at 11/16/2024 11:25 PM [Changes]" />
++  <binary>
++    <option name="BEFORE_PATH" value="lib_mac/libjfxwebkit.dylib" />
++    <option name="AFTER_PATH" />
++    <option name="SHELVED_PATH" />
++  </binary>
++  <binary>
++    <option name="BEFORE_PATH" value="lib_mac/libprism_es2.dylib" />
++    <option name="AFTER_PATH" />
++    <option name="SHELVED_PATH" />
++  </binary>
++  <binary>
++    <option name="BEFORE_PATH" value="lib_mac/javafx.swing.jar" />
++    <option name="AFTER_PATH" />
++    <option name="SHELVED_PATH" />
++  </binary>
++  <binary>
++    <option name="BEFORE_PATH" value="lib_mac/javafx.media.jar" />
++    <option name="AFTER_PATH" />
++    <option name="SHELVED_PATH" />
++  </binary>
++  <binary>
++    <option name="BEFORE_PATH" value="lib_mac/libfxplugins.dylib" />
++    <option name="AFTER_PATH" />
++    <option name="SHELVED_PATH" />
++  </binary>
++  <binary>
++    <option name="BEFORE_PATH" value="lib_mac/hamcrest-core-1.3.jar" />
++    <option name="AFTER_PATH" />
++    <option name="SHELVED_PATH" />
++  </binary>
++  <binary>
++    <option name="BEFORE_PATH" value="lib_mac/libjavafx_iio.dylib" />
++    <option name="AFTER_PATH" />
++    <option name="SHELVED_PATH" />
++  </binary>
++  <binary>
++    <option name="BEFORE_PATH" value="lib_mac/mysql-connector-j-9.1.0.jar" />
++    <option name="AFTER_PATH" />
++    <option name="SHELVED_PATH" />
++  </binary>
++  <binary>
++    <option name="BEFORE_PATH" value="lib_mac/javax.mail.jar" />
++    <option name="AFTER_PATH" />
++    <option name="SHELVED_PATH" />
++  </binary>
++  <binary>
++    <option name="BEFORE_PATH" value="lib_mac/javafx-swt.jar" />
++    <option name="AFTER_PATH" />
++    <option name="SHELVED_PATH" />
++  </binary>
++  <binary>
++    <option name="BEFORE_PATH" value="lib_mac/javafx.graphics.jar" />
++    <option name="AFTER_PATH" />
++    <option name="SHELVED_PATH" />
++  </binary>
++  <binary>
++    <option name="BEFORE_PATH" value="lib_mac/javafx.web.jar" />
++    <option name="AFTER_PATH" />
++    <option name="SHELVED_PATH" />
++  </binary>
++  <binary>
++    <option name="BEFORE_PATH" value="lib_mac/libgstreamer-lite.dylib" />
++    <option name="AFTER_PATH" />
++    <option name="SHELVED_PATH" />
++  </binary>
++  <binary>
++    <option name="BEFORE_PATH" value="lib_mac/libjavafx_font.dylib" />
++    <option name="AFTER_PATH" />
++    <option name="SHELVED_PATH" />
++  </binary>
++  <binary>
++    <option name="BEFORE_PATH" value="lib_windows.zip" />
++    <option name="AFTER_PATH" />
++    <option name="SHELVED_PATH" />
++  </binary>
++  <binary>
++    <option name="BEFORE_PATH" value="lib_mac/junit-4.13.2.jar" />
++    <option name="AFTER_PATH" />
++    <option name="SHELVED_PATH" />
++  </binary>
++  <binary>
++    <option name="BEFORE_PATH" value="lib_mac/javax.activation.jar" />
++    <option name="AFTER_PATH" />
++    <option name="SHELVED_PATH" />
++  </binary>
++  <binary>
++    <option name="BEFORE_PATH" value="lib_mac/libjfxmedia.dylib" />
++    <option name="AFTER_PATH" />
++    <option name="SHELVED_PATH" />
++  </binary>
++  <binary>
++    <option name="BEFORE_PATH" value="lib_mac/libjfxmedia_avf.dylib" />
++    <option name="AFTER_PATH" />
++    <option name="SHELVED_PATH" />
++  </binary>
++  <binary>
++    <option name="BEFORE_PATH" value="lib_mac/libglib-lite.dylib" />
++    <option name="AFTER_PATH" />
++    <option name="SHELVED_PATH" />
++  </binary>
++  <binary>
++    <option name="BEFORE_PATH" value="lib_mac/javafx.base.jar" />
++    <option name="AFTER_PATH" />
++    <option name="SHELVED_PATH" />
++  </binary>
++  <binary>
++    <option name="BEFORE_PATH" value="lib_mac/libprism_common.dylib" />
++    <option name="AFTER_PATH" />
++    <option name="SHELVED_PATH" />
++  </binary>
++  <binary>
++    <option name="BEFORE_PATH" value="lib_mac/libglass.dylib" />
++    <option name="AFTER_PATH" />
++    <option name="SHELVED_PATH" />
++  </binary>
++  <binary>
++    <option name="BEFORE_PATH" value="lib_mac/libprism_sw.dylib" />
++    <option name="AFTER_PATH" />
++    <option name="SHELVED_PATH" />
++  </binary>
++  <binary>
++    <option name="BEFORE_PATH" value="lib_mac/javafx.fxml.jar" />
++    <option name="AFTER_PATH" />
++    <option name="SHELVED_PATH" />
++  </binary>
++  <binary>
++    <option name="BEFORE_PATH" value="lib_mac/libdecora_sse.dylib" />
++    <option name="AFTER_PATH" />
++    <option name="SHELVED_PATH" />
++  </binary>
++  <binary>
++    <option name="BEFORE_PATH" value="lib_mac/javafx.controls.jar" />
++    <option name="AFTER_PATH" />
++    <option name="SHELVED_PATH" />
++  </binary>
++</changelist>
+\ No newline at end of file
+Index: src/DataBase.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import java.sql.*;\nimport java.util.concurrent.ConcurrentHashMap;\n\n// the database is yet to do the following\n// hash passwords,\n// store transactions,\n// store books,\n// prevent things like sql injection\npublic class DataBase {\n\n    // add url, user and password\n    protected static String URL = \"jdbc:mysql://70.176.17.178:3306/team32\";\n    protected static String USER = \"admin\";\n    protected static String PASWWORD = \"admin\";\n\n    // idea for tracking active users\n    protected static ConcurrentHashMap<Long,User> activeUsers = new ConcurrentHashMap<>();\n\n    public static void addUser(User user) {\n        activeUsers.put(user.getUserID(), user);\n    }\n\n    public static void removeUser(Long userID) {\n        activeUsers.remove(userID);\n    }\n\n    public boolean isUserActive(Long userID) {\n        return activeUsers.containsKey(userID);\n    }\n\n    public User getUser(Long userID) {\n        return activeUsers.get(userID);\n    }\n\n    public static boolean updateUserType(String username, String usertype) {\n\n        String updateUserSQL = \"UPDATE Users SET user_type = ? WHERE username = ?\";\n\n        try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);\n             PreparedStatement pstmt = conn.prepareStatement(updateUserSQL)) {\n\n            pstmt.setString(1, usertype);\n            pstmt.setString(2, username);\n\n            int rowsAffected = pstmt.executeUpdate();\n\n            if (rowsAffected > 0) {\n                System.out.println(\"User type updated successfully for username: \" + username);\n            } else {\n                System.out.println(\"User not found with username: \" + username);\n                return false;\n            }\n        } catch (SQLException e) {\n            System.out.println(\"Error updating user type for username: \" + username);\n            e.printStackTrace();\n            return false;\n        }\n\n        return true;\n    }\n\n    public static void createDataBase() {\n\n        try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);\n             Statement stmt = conn.createStatement()) {\n\n            // SQL command to create a new database\n            String sql = \"CREATE DATABASE IF NOT EXISTS team32\";\n            stmt.executeUpdate(sql);\n            System.out.println(\"Database created successfully...\");\n        } catch (SQLException e) {\n            System.out.println(\"Database boom!.. failure!...\");\n        }\n\n    }\n\n    public static void createUsersTable() {\n\n        String createTableSQL = \"CREATE TABLE IF NOT EXISTS Users (\"\n                + \"id INT AUTO_INCREMENT PRIMARY KEY, \"\n                + \"firstname VARCHAR(255) NOT NULL, \"\n                + \"lastname VARCHAR(255) NOT NULL, \"\n                + \"email VARCHAR(255) NOT NULL UNIQUE, \"\n                + \"username VARCHAR(255) NOT NULL UNIQUE, \"\n                + \"password VARCHAR(255) NOT NULL, \"\n                + \"user_type ENUM('super_admin','admin','returning_user','new_user') DEFAULT 'new_user', \"\n                + \"dob DATE)\"; // Added date of birth column\n\n        try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);\n             Statement stmt = conn.createStatement()) {\n\n            stmt.executeUpdate(createTableSQL);\n            System.out.println(\"Table created successfully...\");\n        } catch (SQLException e) {\n            System.out.println(\"Table creation failed...\");\n            e.printStackTrace();\n        }\n    }\n\n\n    public static void createTransactionsTable() {\n\n        String createTableSQL = \"CREATE TABLE IF NOT EXISTS Transactions (\"\n                + \"id INT AUTO_INCREMENT PRIMARY KEY, \"\n                + \"username VARCHAR(255) NOT NULL, \"\n                + \"timestmap VARCHAR(255) NOT NULL, \"\n                + \"amount VARCHAR(255) NOT NULL UNIQUE, \";\n\n        try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);\n             Statement stmt = conn.createStatement()) {\n\n            stmt.executeUpdate(createTableSQL);\n            System.out.println(\"Table created successfully...\");\n        } catch (SQLException e) {\n            System.out.println(\"Table created.. SIKE!...\");\n            e.printStackTrace();\n        }\n    }\n\n    public static boolean insertUser(String firstname, String lastname, String dob, String email, String username, String pwd) {\n\n        // Modify SQL query to include the 'dob' column\n        String insertUserSQL = \"INSERT INTO Users (firstname, lastname, dob, email, username, password) \" +\n                \"VALUES (?, ?, ?, ?, ?, ?)\";\n\n        try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);\n             PreparedStatement pstmt = conn.prepareStatement(insertUserSQL)) {\n\n            pstmt.setString(1, firstname);\n            pstmt.setString(2, lastname);\n            pstmt.setString(3, dob);  // dob is 'YYYY-MM-DD' format\n            pstmt.setString(4, email);\n            pstmt.setString(5, username);\n            pstmt.setString(6, pwd);\n\n            pstmt.executeUpdate();\n            System.out.println(\"User inserted successfully: \" + username);\n        } catch (SQLException e) {\n            System.out.println(\"Error inserting user: \" + username);\n            e.printStackTrace();\n            return false;\n        }\n\n        return true;\n    }\n\n\n    public static boolean userExists(String username, String pwd) {\n\n        String selectUserSQL = \"SELECT * FROM Users WHERE username = ? AND password = ?\";\n\n        try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);\n             PreparedStatement pstmt = conn.prepareStatement(selectUserSQL)) {\n\n            pstmt.setString(1, username);\n            pstmt.setString(2, pwd);\n\n            try (ResultSet rs = pstmt.executeQuery()) {\n                if (rs.next()) {\n                    // User found with matching credentials\n                    int id = rs.getInt(\"id\");\n                    String dbUsername = rs.getString(\"username\");\n\n                    System.out.println(\"User found: ID = \" + id + \", Username = \" + dbUsername);\n\n                } else {\n                    System.out.println(\"Invalid username or password.\");\n                    return false;\n                }\n            }\n        } catch (SQLException e) {\n            e.printStackTrace();\n        }\n\n        return true;\n    }\n\n    public static User getUserByUsername(String username) {\n        String selectUserSQL = \"SELECT firstname, lastname, dob, email, username, password, user_type FROM Users WHERE username = ?\";\n        User user = null;\n\n        try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);\n             PreparedStatement pstmt = conn.prepareStatement(selectUserSQL)) {\n\n            pstmt.setString(1, username);\n\n            try (ResultSet rs = pstmt.executeQuery()) {\n                if (rs.next()) {\n                    // Map the result set to a User object\n                    String firstname = rs.getString(\"firstname\");\n                    String lastname = rs.getString(\"lastname\");\n                    String dob = rs.getString(\"dob\");\n                    String email = rs.getString(\"email\");\n                    String password = rs.getString(\"password\");\n                    String usertype = rs.getString(\"user_type\");\n\n                    // Create a new User object from the database result\n                    user = new User(firstname, lastname, dob, email, username, password, usertype);\n                }\n            }\n\n            if (user != null) {\n                System.out.println(\"User retrieved successfully: \" + user.getUsername());\n            } else {\n                System.out.println(\"No user found with username: \" + username);\n            }\n        } catch (SQLException e) {\n            e.printStackTrace();\n        }\n\n        return user;\n    }\n\n    public static String getUserType(String username) {\n        String selectUserSQL = \"SELECT user_type FROM Users WHERE username = ?\";\n\n        try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);\n             PreparedStatement pstmt = conn.prepareStatement(selectUserSQL)) {\n\n            pstmt.setString(1, username);\n\n            try (ResultSet rs = pstmt.executeQuery()) {\n                if (rs.next()) {\n                    // User found with matching credentials\n                    String userType = rs.getString(\"user_type\");  // Retrieve the user_type\n                    return userType;\n                } else {\n                    System.out.println(\"Invalid username.\");\n                    return null;  // Return null if the user is not found\n                }\n            }\n        } catch (SQLException e) {\n            e.printStackTrace();\n            return null;  // Return null in case of an error\n        }\n    }\n\n\n\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/DataBase.java b/src/DataBase.java
+--- a/src/DataBase.java	(revision 9ebc2adb89deedc900f368c30f59aa83885697bf)
++++ b/src/DataBase.java	(date 1731826427338)
+@@ -1,3 +1,6 @@
++import com.sun.scenario.effect.impl.sw.java.JSWBlend_SRC_OUTPeer;
++import org.w3c.dom.ls.LSOutput;
++
+ import java.sql.*;
+ import java.util.concurrent.ConcurrentHashMap;
+ 
+@@ -13,6 +16,8 @@
+     protected static String USER = "admin";
+     protected static String PASWWORD = "admin";
+ 
++
++
+     // idea for tracking active users
+     protected static ConcurrentHashMap<Long,User> activeUsers = new ConcurrentHashMap<>();
+ 
+@@ -61,6 +66,8 @@
+ 
+     public static void createDataBase() {
+ 
++        System.out.println("gui");
++
+         try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);
+              Statement stmt = conn.createStatement()) {
+ 
+Index: CSE360_Team32.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<module type=\"JAVA_MODULE\" version=\"4\">\n  <component name=\"NewModuleRootManager\" inherit-compiler-output=\"true\">\n    <exclude-output />\n    <content url=\"file://$MODULE_DIR$\">\n      <sourceFolder url=\"file://$MODULE_DIR$/src\" isTestSource=\"false\" />\n    </content>\n    <orderEntry type=\"inheritedJdk\" />\n    <orderEntry type=\"sourceFolder\" forTests=\"false\" />\n    <orderEntry type=\"module-library\">\n      <library name=\"JUnit4\">\n        <CLASSES>\n          <root url=\"jar://$MODULE_DIR$/lib/junit-4.13.1.jar!/\" />\n          <root url=\"jar://$MODULE_DIR$/lib/hamcrest-core-1.3.jar!/\" />\n        </CLASSES>\n        <JAVADOC />\n        <SOURCES />\n      </library>\n    </orderEntry>\n    <orderEntry type=\"library\" name=\"lib_mac\" level=\"project\" />\n  </component>\n</module>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/CSE360_Team32.iml b/CSE360_Team32.iml
+--- a/CSE360_Team32.iml	(revision 9ebc2adb89deedc900f368c30f59aa83885697bf)
++++ b/CSE360_Team32.iml	(date 1731826427337)
+@@ -17,6 +17,6 @@
+         <SOURCES />
+       </library>
+     </orderEntry>
+-    <orderEntry type="library" name="lib_mac" level="project" />
++    <orderEntry type="library" name="lib_windows" level="project" />
+   </component>
+ </module>
+\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_Checkout_at_11_16_2024_11_25_PM_[Changes]/shelved.patch
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_16_2024_11_25_PM_[Changes]/shelved.patch b/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_16_2024_11_25_PM_[Changes]/shelved.patch
+new file mode 100644
+--- /dev/null	(date 1731826427336)
++++ b/.idea/shelf/Uncommitted_changes_before_Checkout_at_11_16_2024_11_25_PM_[Changes]/shelved.patch	(date 1731826427336)
+@@ -0,0 +1,229 @@
++Index: CSE360_Team32.iml
++IDEA additional info:
++Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
++<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<module type=\"JAVA_MODULE\" version=\"4\">\r\n  <component name=\"NewModuleRootManager\" inherit-compiler-output=\"true\">\r\n    <exclude-output />\r\n    <content url=\"file://$MODULE_DIR$\">\r\n      <sourceFolder url=\"file://$MODULE_DIR$/src\" isTestSource=\"false\" />\r\n    </content>\r\n    <orderEntry type=\"inheritedJdk\" />\r\n    <orderEntry type=\"sourceFolder\" forTests=\"false\" />\r\n    <orderEntry type=\"module-library\">\r\n      <library name=\"JUnit4\">\r\n        <CLASSES>\r\n          <root url=\"jar://$MODULE_DIR$/lib/junit-4.13.1.jar!/\" />\r\n          <root url=\"jar://$MODULE_DIR$/lib/hamcrest-core-1.3.jar!/\" />\r\n        </CLASSES>\r\n        <JAVADOC />\r\n        <SOURCES />\r\n      </library>\r\n    </orderEntry>\r\n    <orderEntry type=\"library\" name=\"lib_mac\" level=\"project\" />\r\n  </component>\r\n</module>
++Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
++<+>UTF-8
++===================================================================
++diff --git a/CSE360_Team32.iml b/CSE360_Team32.iml
++--- a/CSE360_Team32.iml	(revision f5295816faa8bb4e3a57a62de31a8a80937012fb)
+++++ b/CSE360_Team32.iml	(date 1731804610963)
++@@ -17,6 +17,6 @@
++         <SOURCES />
++       </library>
++     </orderEntry>
++-    <orderEntry type="library" name="lib_mac" level="project" />
+++    <orderEntry type="library" name="lib_windows" level="project" />
++   </component>
++ </module>
++\ No newline at end of file
++Index: lib_mac/javafx.properties
++===================================================================
++diff --git a/lib_mac/javafx.properties b/lib_mac/javafx.properties
++deleted file mode 100644
++--- a/lib_mac/javafx.properties	(revision f5295816faa8bb4e3a57a62de31a8a80937012fb)
+++++ /dev/null	(revision f5295816faa8bb4e3a57a62de31a8a80937012fb)
++@@ -1,3 +0,0 @@
++-javafx.version=22.0.2
++-javafx.runtime.version=22.0.2+4
++-javafx.runtime.build=4
++Index: .idea/libraries/lib_mac.xml
++===================================================================
++diff --git a/.idea/libraries/lib_mac.xml b/.idea/libraries/lib_mac.xml
++deleted file mode 100644
++--- a/.idea/libraries/lib_mac.xml	(revision f5295816faa8bb4e3a57a62de31a8a80937012fb)
+++++ /dev/null	(revision f5295816faa8bb4e3a57a62de31a8a80937012fb)
++@@ -1,13 +0,0 @@
++-<component name="libraryTable">
++-  <library name="lib_mac">
++-    <CLASSES>
++-      <root url="file://$PROJECT_DIR$/lib_mac" />
++-    </CLASSES>
++-    <JAVADOC />
++-    <NATIVE>
++-      <root url="file://$PROJECT_DIR$/lib_mac" />
++-    </NATIVE>
++-    <SOURCES />
++-    <jarDirectory url="file://$PROJECT_DIR$/lib_mac" recursive="false" />
++-  </library>
++-</component>
++\ No newline at end of file
++Index: .idea/workspace.xml
++IDEA additional info:
++Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
++<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"b9f62c8b-130d-4e78-a527-6bbd541ffcde\" name=\"Changes\" comment=\"Add current project files\">\r\n      <change beforePath=\"$PROJECT_DIR$/.gitignore\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.gitignore\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"ExportToHTMLSettings\">\r\n    <option name=\"OUTPUT_DIRECTORY\" value=\"$PROJECT_DIR$/exportToHTML\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"FILTER_BY_ACTION_IN_POPUP\" value=\"false\" />\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"main\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n    <option name=\"SHOW_RECENT_BRANCHES\" value=\"false\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;favh9&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;git@github.com:favh9/CSE360_Team32.git&quot;,\r\n    &quot;accountId&quot;: &quot;1c4815ac-6364-432c-95be-1db23a0aff0d&quot;\r\n  }\r\n}</component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 8\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2nuKDry68eWmLjKccOLNbOwkWxN\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\">\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n    <option name=\"showMembers\" value=\"true\" />\r\n    <option name=\"showVisibilityIcons\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,\r\n    &quot;Application.Main.executor&quot;: &quot;Run&quot;,\r\n    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,\r\n    &quot;Application.main.executor&quot;: &quot;Run&quot;,\r\n    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;true&quot;,\r\n    &quot;JUnit.TestMain.testSum.executor&quot;: &quot;Run&quot;,\r\n    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,\r\n    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,\r\n    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;phase3&quot;,\r\n    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;/Users/favh/Documents/IntelliJ-workspace/CSE360_Team32&quot;,\r\n    &quot;onboarding.tips.debug.path&quot;: &quot;/Users/favh/Documents/IntelliJ-workspace/CSE360/main/src/Main.java&quot;,\r\n    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,\r\n    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,\r\n    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,\r\n    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"$PROJECT_DIR$/lib\" />\r\n      <recent name=\"$PROJECT_DIR$/src/fonts\" />\r\n      <recent name=\"$PROJECT_DIR$/src\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"main\" type=\"Application\" factoryName=\"Application\">\r\n      <option name=\"ALTERNATIVE_JRE_PATH\" value=\"22\" />\r\n      <option name=\"ALTERNATIVE_JRE_PATH_ENABLED\" value=\"true\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"Main\" />\r\n      <module name=\"CSE360_Team32\" />\r\n      <option name=\"VM_PARAMETERS\" value=\"--module-path $PROJECT_DIR$/lib_mac --add-modules javafx.controls,javafx.fxml\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration default=\"true\" type=\"JetRunConfigurationType\">\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration default=\"true\" type=\"KotlinStandaloneScriptRunConfigurationType\">\r\n      <option name=\"filePath\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"b9f62c8b-130d-4e78-a527-6bbd541ffcde\" name=\"Changes\" comment=\"\" />\r\n      <created>1729817404417</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1729817404417</updated>\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <option name=\"ADD_EXTERNAL_FILES_SILENTLY\" value=\"true\" />\r\n    <MESSAGE value=\"Add current project files\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Add current project files\" />\r\n  </component>\r\n  <component name=\"XDebuggerManager\">\r\n    <breakpoint-manager>\r\n      <breakpoints>\r\n        <line-breakpoint type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/User_LoginControl.java</url>\r\n          <line>96</line>\r\n          <option name=\"timeStamp\" value=\"12\" />\r\n        </line-breakpoint>\r\n      </breakpoints>\r\n    </breakpoint-manager>\r\n  </component>\r\n  <component name=\"com.intellij.coverage.CoverageDataManagerImpl\">\r\n    <SUITE FILE_PATH=\"coverage/CSE360_Team32$TestMain_testSum.ic\" NAME=\"TestMain.testSum Coverage Results\" MODIFIED=\"1730003652914\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"idea\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"true\" />\r\n  </component>\r\n</project>
++Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
++<+>UTF-8
++===================================================================
++diff --git a/.idea/workspace.xml b/.idea/workspace.xml
++--- a/.idea/workspace.xml	(revision f5295816faa8bb4e3a57a62de31a8a80937012fb)
+++++ b/.idea/workspace.xml	(date 1731824476102)
++@@ -5,8 +5,37 @@
++   </component>
++   <component name="ChangeListManager">
++     <list default="true" id="b9f62c8b-130d-4e78-a527-6bbd541ffcde" name="Changes" comment="Add current project files">
++-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+++      <change beforePath="$PROJECT_DIR$/.idea/libraries/lib_mac.xml" beforeDir="false" />
++       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+++      <change beforePath="$PROJECT_DIR$/CSE360_Team32.iml" beforeDir="false" afterPath="$PROJECT_DIR$/CSE360_Team32.iml" afterDir="false" />
+++      <change beforePath="$PROJECT_DIR$/lib_mac/hamcrest-core-1.3.jar" beforeDir="false" />
+++      <change beforePath="$PROJECT_DIR$/lib_mac/javafx-swt.jar" beforeDir="false" />
+++      <change beforePath="$PROJECT_DIR$/lib_mac/javafx.base.jar" beforeDir="false" />
+++      <change beforePath="$PROJECT_DIR$/lib_mac/javafx.controls.jar" beforeDir="false" />
+++      <change beforePath="$PROJECT_DIR$/lib_mac/javafx.fxml.jar" beforeDir="false" />
+++      <change beforePath="$PROJECT_DIR$/lib_mac/javafx.graphics.jar" beforeDir="false" />
+++      <change beforePath="$PROJECT_DIR$/lib_mac/javafx.media.jar" beforeDir="false" />
+++      <change beforePath="$PROJECT_DIR$/lib_mac/javafx.properties" beforeDir="false" />
+++      <change beforePath="$PROJECT_DIR$/lib_mac/javafx.swing.jar" beforeDir="false" />
+++      <change beforePath="$PROJECT_DIR$/lib_mac/javafx.web.jar" beforeDir="false" />
+++      <change beforePath="$PROJECT_DIR$/lib_mac/javax.activation.jar" beforeDir="false" />
+++      <change beforePath="$PROJECT_DIR$/lib_mac/javax.mail.jar" beforeDir="false" />
+++      <change beforePath="$PROJECT_DIR$/lib_mac/junit-4.13.2.jar" beforeDir="false" />
+++      <change beforePath="$PROJECT_DIR$/lib_mac/libdecora_sse.dylib" beforeDir="false" />
+++      <change beforePath="$PROJECT_DIR$/lib_mac/libfxplugins.dylib" beforeDir="false" />
+++      <change beforePath="$PROJECT_DIR$/lib_mac/libglass.dylib" beforeDir="false" />
+++      <change beforePath="$PROJECT_DIR$/lib_mac/libglib-lite.dylib" beforeDir="false" />
+++      <change beforePath="$PROJECT_DIR$/lib_mac/libgstreamer-lite.dylib" beforeDir="false" />
+++      <change beforePath="$PROJECT_DIR$/lib_mac/libjavafx_font.dylib" beforeDir="false" />
+++      <change beforePath="$PROJECT_DIR$/lib_mac/libjavafx_iio.dylib" beforeDir="false" />
+++      <change beforePath="$PROJECT_DIR$/lib_mac/libjfxmedia.dylib" beforeDir="false" />
+++      <change beforePath="$PROJECT_DIR$/lib_mac/libjfxmedia_avf.dylib" beforeDir="false" />
+++      <change beforePath="$PROJECT_DIR$/lib_mac/libjfxwebkit.dylib" beforeDir="false" />
+++      <change beforePath="$PROJECT_DIR$/lib_mac/libprism_common.dylib" beforeDir="false" />
+++      <change beforePath="$PROJECT_DIR$/lib_mac/libprism_es2.dylib" beforeDir="false" />
+++      <change beforePath="$PROJECT_DIR$/lib_mac/libprism_sw.dylib" beforeDir="false" />
+++      <change beforePath="$PROJECT_DIR$/lib_mac/mysql-connector-j-9.1.0.jar" beforeDir="false" />
+++      <change beforePath="$PROJECT_DIR$/lib_windows.zip" beforeDir="false" />
++     </list>
++     <option name="SHOW_DIALOG" value="false" />
++     <option name="HIGHLIGHT_CONFLICTS" value="true" />
++@@ -41,9 +70,13 @@
++ }</component>
++   <component name="GithubPullRequestsUISettings">{
++   &quot;selectedUrlAndAccountId&quot;: {
++-    &quot;url&quot;: &quot;git@github.com:favh9/CSE360_Team32.git&quot;,
++-    &quot;accountId&quot;: &quot;1c4815ac-6364-432c-95be-1db23a0aff0d&quot;
+++    &quot;url&quot;: &quot;https://github.com/favh9/CSE360_Team32.git&quot;,
+++    &quot;accountId&quot;: &quot;804fb4bf-3226-4e11-b414-54848e33d182&quot;
++   }
+++}</component>
+++  <component name="KubernetesApiPersistence">{}</component>
+++  <component name="KubernetesApiProvider">{
+++  &quot;isMigrated&quot;: true
++ }</component>
++   <component name="ProjectColorInfo">{
++   &quot;associatedIndex&quot;: 8
++@@ -58,29 +91,36 @@
++     <option name="showMembers" value="true" />
++     <option name="showVisibilityIcons" value="true" />
++   </component>
++-  <component name="PropertiesComponent">{
++-  &quot;keyToString&quot;: {
++-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
++-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
++-    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
++-    &quot;Application.main.executor&quot;: &quot;Run&quot;,
++-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;true&quot;,
++-    &quot;JUnit.TestMain.testSum.executor&quot;: &quot;Run&quot;,
++-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
++-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
++-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
++-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
++-    &quot;git-widget-placeholder&quot;: &quot;phase3&quot;,
++-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
++-    &quot;last_opened_file_path&quot;: &quot;/Users/favh/Documents/IntelliJ-workspace/CSE360_Team32&quot;,
++-    &quot;onboarding.tips.debug.path&quot;: &quot;/Users/favh/Documents/IntelliJ-workspace/CSE360/main/src/Main.java&quot;,
++-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
++-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
++-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
++-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
+++  <component name="PropertiesComponent"><![CDATA[{
+++  "keyToString": {
+++    "ASKED_ADD_EXTERNAL_FILES": "true",
+++    "Application.Main.executor": "Run",
+++    "Application.Unnamed.executor": "Run",
+++    "Application.main.executor": "Run",
+++    "Downloaded.Files.Path.Enabled": "true",
+++    "JUnit.TestMain.testSum.executor": "Run",
+++    "Repository.Attach.Annotations": "false",
+++    "Repository.Attach.JavaDocs": "false",
+++    "Repository.Attach.Sources": "false",
+++    "RunOnceActivity.ShowReadmeOnStart": "true",
+++    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+++    "git-widget-placeholder": "phase3",
+++    "ignore.virus.scanning.warn.message": "true",
+++    "kotlin-language-version-configured": "true",
+++    "last_opened_file_path": "C:/Users/John Pletka/Downloads/openjfx-23.0.1_windows-x64_bin-sdk/javafx-sdk-23.0.1/lib",
+++    "node.js.detected.package.eslint": "true",
+++    "node.js.detected.package.tslint": "true",
+++    "node.js.selected.package.eslint": "(autodetect)",
+++    "node.js.selected.package.tslint": "(autodetect)",
+++    "nodejs_package_manager_path": "npm",
+++    "onboarding.tips.debug.path": "/Users/favh/Documents/IntelliJ-workspace/CSE360/main/src/Main.java",
+++    "project.structure.last.edited": "Libraries",
+++    "project.structure.proportion": "0.15",
+++    "project.structure.side.proportion": "0.2",
+++    "settings.editor.selected.configurable": "vcs.Git",
+++    "vue.rearranger.settings.migration": "true"
++   }
++-}</component>
+++}]]></component>
++   <component name="RecentsManager">
++     <key name="MoveFile.RECENT_KEYS">
++       <recent name="$PROJECT_DIR$/lib" />
++@@ -90,11 +130,21 @@
++   </component>
++   <component name="RunManager">
++     <configuration name="main" type="Application" factoryName="Application">
++-      <option name="ALTERNATIVE_JRE_PATH" value="22" />
+++      <option name="ALTERNATIVE_JRE_PATH" value="openjdk-23" />
++       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
++       <option name="MAIN_CLASS_NAME" value="Main" />
++       <module name="CSE360_Team32" />
++-      <option name="VM_PARAMETERS" value="--module-path $PROJECT_DIR$/lib_mac --add-modules javafx.controls,javafx.fxml" />
+++      <option name="VM_PARAMETERS" value="-Dprism.order=sw --module-path &quot;C:\Users\John Pletka\Downloads\openjfx-23.0.1_windows-x64_bin-sdk\javafx-sdk-23.0.1\lib&quot; --add-modules javafx.controls,javafx.fxml " />
+++      <extension name="net.ashald.envfile">
+++        <option name="IS_ENABLED" value="false" />
+++        <option name="IS_SUBST" value="false" />
+++        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+++        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+++        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+++        <ENTRIES>
+++          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+++        </ENTRIES>
+++      </extension>
++       <method v="2">
++         <option name="Make" enabled="true" />
++       </method>
++@@ -110,6 +160,14 @@
++         <option name="Make" enabled="true" />
++       </method>
++     </configuration>
+++  </component>
+++  <component name="SharedIndexes">
+++    <attachedChunks>
+++      <set>
+++        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
+++        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18034.62" />
+++      </set>
+++    </attachedChunks>
++   </component>
++   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
++   <component name="TaskManager">
++@@ -119,8 +177,15 @@
++       <option name="number" value="Default" />
++       <option name="presentableId" value="Default" />
++       <updated>1729817404417</updated>
+++      <workItem from="1731803490689" duration="765000" />
+++      <workItem from="1731804266307" duration="1466000" />
+++      <workItem from="1731805840570" duration="6030000" />
+++      <workItem from="1731824261589" duration="213000" />
++     </task>
++     <servers />
+++  </component>
+++  <component name="TypeScriptGeneratedFilesManager">
+++    <option name="version" value="3" />
++   </component>
++   <component name="Vcs.Log.Tabs.Properties">
++     <option name="TAB_STATES">
+Index: .idea/libraries/lib_windows.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/libraries/lib_windows.xml b/.idea/libraries/lib_windows.xml
+new file mode 100644
+--- /dev/null	(date 1731826427336)
++++ b/.idea/libraries/lib_windows.xml	(date 1731826427336)
+@@ -0,0 +1,12 @@
++<component name="libraryTable">
++  <library name="lib_windows">
++    <CLASSES>
++      <root url="file://$PROJECT_DIR$/lib_windows" />
++      <root url="file://$USER_HOME$/Downloads/openjfx-23.0.1_windows-x64_bin-sdk/javafx-sdk-23.0.1/lib" />
++    </CLASSES>
++    <JAVADOC />
++    <SOURCES />
++    <jarDirectory url="file://$PROJECT_DIR$/lib_windows" recursive="false" />
++    <jarDirectory url="file://$USER_HOME$/Downloads/openjfx-23.0.1_windows-x64_bin-sdk/javafx-sdk-23.0.1/lib" recursive="false" />
++  </library>
++</component>
+\ No newline at end of file
