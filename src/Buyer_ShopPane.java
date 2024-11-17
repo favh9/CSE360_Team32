@@ -74,26 +74,34 @@ public class Buyer_ShopPane extends BorderPane {
         Label instructionLabel1 = new Label("Please use the filters on the left and/or search bar to find your book.");
 
         // set attributes for category label
-        Label categoryLabel = new Label("Category");
+        Label categoryLabel = new Label("By Category:");
 
         // set attributes for category check boxes
         ch1 = new CheckBox("Natural Science");
+        ch1.setWrapText(true);
         ch2 = new CheckBox("Computer Science");
+        ch2.setWrapText(true);
         ch3 = new CheckBox("Math");
+        ch3.setWrapText(true);
         ch4 = new CheckBox("English");
+        ch4.setWrapText(true);
         ch5 = new CheckBox("Other");
+        ch5.setWrapText(true);
 
         // set attributes for the VBox that holds these items
         VBox vbox1 = new VBox(categoryLabel,ch1,ch2,ch3,ch4,ch5);
         vbox1.setSpacing(2);
 
         // set attributes for the condition label
-        Label conditionLabel = new Label("Condition");
+        Label conditionLabel = new Label("By Condition:");
 
         // set attributes for condition check boxes
         ch6 = new CheckBox("Used Like New");
+        ch6.setWrapText(true);
         ch7 = new CheckBox("Moderately Used");
+        ch7.setWrapText(true);
         ch8 = new CheckBox("Heavily Used");
+        ch8.setWrapText(true);
 
         // set attributes for the VBox that holds these items
         VBox vbox2 = new VBox(conditionLabel,ch6,ch7,ch8);
@@ -117,7 +125,7 @@ public class Buyer_ShopPane extends BorderPane {
         Label resetLabel = new Label("Reset Filters");
 
         // set attributes for button
-        resetfiltersButton = new Button("reset");
+        resetfiltersButton = new Button("clear");
 
         // set attributes for VBox
         VBox vbox4 = new VBox(resetLabel,resetfiltersButton);
@@ -152,40 +160,40 @@ public class Buyer_ShopPane extends BorderPane {
 
         // set attributes for the container inside the scrollpane
         booksPane = new GridPane();
-        booksPane = new GridPane();
-        booksPane.setAlignment(Pos.TOP_CENTER);
         booksPane.setHgap(10);
         booksPane.setVgap(10);
         booksPane.setPadding(new Insets(10,10,10,10));
+        booksPane.setStyle(
+                "-fx-background-color: #FFC627;" + "-fx-border-color: #FFC627;"//ffffff white //FFC627 asu yellow
+        );
 
         // set attributes for the scrollpane
         ScrollPane sp = new ScrollPane(booksPane);
         sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        sp.minViewportHeightProperty().set(350);
+        sp.minViewportHeightProperty().set(280);
         sp.minViewportWidthProperty().set(525);
-        sp.setStyle("-fx-background: white;");
+        sp.setStyle("-fx-background: #FFC627;" + "-fx-border-color: #FFC627;");
 
         // set attributes for the VBox that contains these items on the right
         VBox rightVBox = new VBox(spHeaderHBox,sp);
-        rightVBox.setSpacing(10);
 
-        // set attributes for the HBox where the right side displays the list of books
-        HBox hbox = new HBox(leftVBox,rightVBox);
-        hbox.setSpacing(20);
+        BorderPane hbox = new BorderPane();
+        hbox.setLeft(leftVBox);
+        hbox.setRight(rightVBox);
 
         // set attributes for the submain VBox
         VBox submainVBox = new VBox(instructionLabel1,hbox);
         submainVBox.setSpacing(20);
         submainVBox.setPadding(new Insets(10,10,10,10));
         submainVBox.setStyle(
-                "-fx-background-radius: 2em;" + "-fx-background-color: #ffffff;" //ffffff white //FFC627 asu yellow
+                "-fx-background-radius: 2em;" + "-fx-background-color: #FFC627;" //ffffff white //FFC627 asu yellow
         );
 
         // set attributes for the main VBox
         VBox mainVBox = new VBox(headerHBox,submainVBox);
         mainVBox.setSpacing(5);
-        mainVBox.setPadding(new Insets(40,40,0,40));
+        mainVBox.setPadding(new Insets(40,40,40,40));
         mainVBox.setPrefWidth(width - navBarVBox.getWidth() - 40);
         mainVBox.setStyle(
                 "-fx-background-radius: 2em;" + "-fx-background-color: #ffffff;"
