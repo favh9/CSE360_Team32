@@ -2,10 +2,7 @@
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
@@ -15,18 +12,23 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+import java.util.Calendar;
+
 // this class will provide the user interface 
 // for the create account page
 public class User_CreateAccountPane extends BorderPane {
 
-    private final TextField firstnameTextField;
-    private final TextField lastnameTextField;
-    private final TextField emailTextField;
-    private final TextField usernameTextField;
-    private final PasswordField passwordPasswordfield;
-    private final PasswordField confirmpasswordPasswordfield;
-    private final Button confirmButton;
-    private final Button backButton;
+    private TextField firstnameTextField;
+    private TextField lastnameTextField;
+    private ComboBox<String> yearComboBox;
+    private ComboBox<String> monthComboBox;
+    private ComboBox<String> dayComboBox;
+    private TextField emailTextField;
+    private TextField usernameTextField;
+    private PasswordField passwordPasswordfield;
+    private PasswordField confirmpasswordPasswordfield;
+    private Button confirmButton;
+    private Button backButton;
 
     // parameterized constructor
     public User_CreateAccountPane(double width, double height) {
@@ -83,6 +85,60 @@ public class User_CreateAccountPane extends BorderPane {
         HBox lastnameTextfieldHBox = new HBox(lastnameLabel, lastnameTextField);
         lastnameTextfieldHBox.setAlignment(Pos.CENTER_RIGHT);
         lastnameTextfieldHBox.setSpacing(10);
+
+        // add a label for security question - birth date
+        Label birthdateLabel = new Label("Date of Birth:");
+        birthdateLabel.setFont(Font.font("Arial",FontWeight.NORMAL,16));
+
+        // add a birth date field
+        // set attributes for the year box
+        yearComboBox = new ComboBox<>();
+        yearComboBox.setVisibleRowCount(10);
+
+        // get the current year
+        Calendar calendar = Calendar.getInstance();
+        int currentYear = calendar.get(Calendar.YEAR);
+
+        // fill the choice box with yeears from current to 1800?
+        for (int year = currentYear; year >= 1800; year--) {
+            yearComboBox.getItems().add(Integer.toString(year));
+        }
+
+        // set the default choice to current year
+        yearComboBox.setValue("YYYY");
+
+        // set attributes for the day box
+        dayComboBox = new ComboBox<>();
+        dayComboBox.setVisibleRowCount(10);
+
+        // fill the choice box with days
+        int maxDays = 31;
+        for (int day = 1; day <= maxDays; day++) {
+            dayComboBox.getItems().add(Integer.toString(day));
+        }
+
+        // set the default choice for days
+        dayComboBox.setValue("DD");
+
+        // set attributes for the day box
+        monthComboBox = new ComboBox<>();
+        monthComboBox.setVisibleRowCount(10);
+
+        // fill the choice box with days
+        int maxMonths = 12;
+        for (int month = 1; month <= maxMonths; month++) {
+            monthComboBox.getItems().add(Integer.toString(month));
+        }
+
+        // set the default choice for days
+        monthComboBox.setValue("MM");
+
+
+
+        // create a HBox to store the label and text field
+        HBox  birthdateHBox = new HBox(birthdateLabel,yearComboBox,monthComboBox,dayComboBox);
+        birthdateHBox.setAlignment(Pos.CENTER_RIGHT);
+        birthdateHBox.setSpacing(10);
         
         // set attributes for the email label
         Label emailLabel = new Label("E-mail:");
@@ -148,10 +204,11 @@ public class User_CreateAccountPane extends BorderPane {
         confirmButton.setPrefSize(100,40);
 
         // add the grey box elements which includes the instructions label and all HBoxes
-        VBox greyVBox = new VBox(instructionLabel, firstnameTextfieldHBox, lastnameTextfieldHBox, emailTextFieldHBox, usernameTextfieldHBox, passwordPasswordfieldHBox, confirmpasswordPasswordfieldHBox, confirmButton);
+        VBox greyVBox = new VBox(instructionLabel, firstnameTextfieldHBox, lastnameTextfieldHBox, birthdateHBox, emailTextFieldHBox, usernameTextfieldHBox, passwordPasswordfieldHBox, confirmpasswordPasswordfieldHBox, confirmButton);
             // readjust the width of the HBoxes inside the greyVBox
         VBox.setMargin(firstnameTextfieldHBox, new Insets(0,450,0,0));
         VBox.setMargin(lastnameTextfieldHBox, new Insets(0,450,0,0));
+        VBox.setMargin(birthdateHBox, new Insets(0,415,0,0));
         VBox.setMargin(emailTextFieldHBox, new Insets(0,450,0,0));
         VBox.setMargin(usernameTextfieldHBox, new Insets(0,450,0,0));
         VBox.setMargin(passwordPasswordfieldHBox, new Insets(0,450,0,0));
@@ -190,6 +247,18 @@ public class User_CreateAccountPane extends BorderPane {
         return lastnameTextField;
     }
 
+    public ComboBox<String> getYearComboBox() {
+        return yearComboBox;
+    }
+
+    public ComboBox<String> getDayComboBox() {
+        return dayComboBox;
+    }
+
+    public ComboBox<String> getMonthComboBox() {
+        return monthComboBox;
+    }
+
     public TextField getEmailTextField() {
         return emailTextField;
     }
@@ -213,4 +282,50 @@ public class User_CreateAccountPane extends BorderPane {
     public Button getBackButton() {
         return backButton;
     }
+
+    public void setFirstnameTextField(TextField firstnameTextField) {
+        this.firstnameTextField = firstnameTextField;
+    }
+
+    public void setLastnameTextField(TextField lastnameTextField) {
+        this.lastnameTextField = lastnameTextField;
+    }
+
+    public void setYearComboBox(ComboBox<String> yearComboBox) {
+        this.yearComboBox = yearComboBox;
+    }
+
+    public void setDayComboBox(ComboBox<String> dayComboBox) {
+        this.dayComboBox = dayComboBox;
+    }
+
+    public void setMonthComboBox(ComboBox<String> monthComboBox) {
+        this.monthComboBox = monthComboBox;
+    }
+
+    public void setEmailTextField(TextField emailTextField) {
+        this.emailTextField = emailTextField;
+    }
+
+    public void setUsernameTextField(TextField usernameTextField) {
+        this.usernameTextField = usernameTextField;
+    }
+
+    public void setPasswordPasswordfield(PasswordField passwordPasswordfield) {
+        this.passwordPasswordfield = passwordPasswordfield;
+    }
+
+    public void setConfirmpasswordPasswordfield(PasswordField confirmpasswordPasswordfield) {
+        this.confirmpasswordPasswordfield = confirmpasswordPasswordfield;
+    }
+
+    public void setConfirmButton(Button confirmButton) {
+        this.confirmButton = confirmButton;
+    }
+
+    public void setBackButton(Button backButton) {
+        this.backButton = backButton;
+    }
+
+
 }

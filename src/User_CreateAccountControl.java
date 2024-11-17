@@ -1,10 +1,7 @@
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Border;
@@ -15,15 +12,18 @@ public class User_CreateAccountControl extends Pane {
 
     public double width;
     public double height;
-    private final User_LoginControl login;
-    private final TextField firstnameTextField;
-    private final TextField lastnameTextField;
-    private final TextField emailTextField;
-    private final TextField usernameTextField;
-    private final PasswordField passwordPasswordfield;
-    private final PasswordField confirmpasswordPasswordfield;
-    private final Button confirmButton;
-    private final Button backButton;
+    private User_LoginControl login;
+    private TextField firstnameTextField;
+    private TextField lastnameTextField;
+    private ComboBox<String> yearComboBox;
+    private ComboBox<String> monthComboBox;
+    private ComboBox<String> dayComboBox;
+    private TextField emailTextField;
+    private TextField usernameTextField;
+    private PasswordField passwordPasswordfield;
+    private PasswordField confirmpasswordPasswordfield;
+    private Button confirmButton;
+    private Button backButton;
 
     public User_CreateAccountControl(double width, double height) {
 
@@ -37,6 +37,12 @@ public class User_CreateAccountControl extends Pane {
         firstnameTextField = pane.getFirstnameTextField();
 
         lastnameTextField = pane.getLastnameTextField();
+
+        yearComboBox = pane.getYearComboBox();
+
+        monthComboBox = pane.getMonthComboBox();
+
+        dayComboBox = pane.getDayComboBox();
 
         emailTextField = pane.getEmailTextField();
 
