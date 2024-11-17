@@ -2,7 +2,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-//hey
+
 // this class initiates the gui app, loading the login page as the initial view
 public class Main extends Application {
 
