@@ -8,6 +8,9 @@ import javafx.scene.layout.Border;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 public class User_CreateAccountControl extends Pane {
 
     public double width;
@@ -89,6 +92,10 @@ public class User_CreateAccountControl extends Pane {
         }
 
         public boolean validUser() {
+            DecimalFormat df = new DecimalFormat("00");
+
+            String birthdate = yearComboBox.getValue() + "-" + df.format(monthComboBox.getValue()) + "-" + df.format(dayComboBox.getValue());
+            System.out.println(birthdate);
             return DataBase.insertUser(firstnameTextField.getText(),lastnameTextField.getText(),emailTextField.getText(),usernameTextField.getText(),passwordPasswordfield.getText());
         }
 
@@ -96,9 +103,9 @@ public class User_CreateAccountControl extends Pane {
             Alert acctCreatedAlert = new Alert(Alert.AlertType.INFORMATION);
             acctCreatedAlert.setTitle("");
             acctCreatedAlert.setHeaderText("Congratulations!");
-            acctCreatedAlert.setContentText("Welcome " + firstnameTextField.getText() + " " + lastnameTextField.getText() +
-                    ",\nYour account was successfully created." +
-                    "\nYour username is " + usernameTextField.getText() + ".");
+            acctCreatedAlert.setContentText("Welcome " + firstnameTextField.getText() + ",\n"
+                    + "Your account was successfully created" + ".\n"
+                    + "Your username is " + usernameTextField.getText() + ".");
             ImageView confirmImageView = new ImageView(Main.successIcon);
             confirmImageView.setFitHeight(40);
             confirmImageView.setFitWidth(40);
