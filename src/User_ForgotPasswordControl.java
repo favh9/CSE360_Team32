@@ -8,6 +8,8 @@ import javafx.scene.layout.Border;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
+import java.text.DecimalFormat;
+
 public class User_ForgotPasswordControl extends Pane {
 
     private final double width;
@@ -66,12 +68,20 @@ public class User_ForgotPasswordControl extends Pane {
                 Main.mainWindow.setScene(new Scene(login,width,height));
 
             } else if (a.getSource() == confirmButton) {
+                // use this for the birth date
+                DecimalFormat df = new DecimalFormat("00");
+                String birthdate = yearComboBox.getValue() + "-" + df.format(Integer.parseInt(monthComboBox.getValue())) + "-" + df.format(Integer.parseInt(dayComboBox.getValue()));
 
                 if(emptyFields()) {
+
                     displayEmptyFields();
+
                 } else if(!passwordsMatch()){
+
                     displayPasswordsMatch();
+
                 } else {
+
                     Alert acctCreatedAlert = new Alert(Alert.AlertType.INFORMATION);
                     acctCreatedAlert.setTitle("");
                     acctCreatedAlert.setHeaderText("Congratulations!");

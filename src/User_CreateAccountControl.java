@@ -93,9 +93,7 @@ public class User_CreateAccountControl extends Pane {
 
         public boolean validUser() {
             DecimalFormat df = new DecimalFormat("00");
-
-            String birthdate = yearComboBox.getValue() + "-" + df.format(monthComboBox.getValue()) + "-" + df.format(dayComboBox.getValue());
-            System.out.println(birthdate);
+            String birthdate = yearComboBox.getValue() + "-" + df.format(Integer.parseInt(monthComboBox.getValue())) + "-" + df.format(Integer.parseInt(dayComboBox.getValue()));
             return DataBase.insertUser(firstnameTextField.getText(),lastnameTextField.getText(),emailTextField.getText(),usernameTextField.getText(),passwordPasswordfield.getText());
         }
 
