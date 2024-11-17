@@ -171,11 +171,13 @@ public class Buyer_ShopControl extends Pane {
         addToCartButton.setOnAction(e-> {
             addedToCart(book);
             pane.updateBadgeCount();
+            pane.setCartVisible(true);
             // check again
             if(true) {
                 pane.clearBooks();
                 populateBooks();
             } else {
+                pane.setCartVisible(false);
                 pane.noBooksFound();
             }
         });

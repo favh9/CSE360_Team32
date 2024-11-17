@@ -20,6 +20,7 @@ public class Buyer_ShopPane extends BorderPane {
     private ScrollPane sp;
     private GridPane booksPane;
     private Button cartButton;
+    private StackPane cartStackPane;
 
     public Buyer_ShopPane(User user, double width, double height) {
 
@@ -30,7 +31,8 @@ public class Buyer_ShopPane extends BorderPane {
         titleLabel.setFont(Font.font(42));
 
         // Create a StackPane to hold both the cart image and the badge
-        StackPane stackPane = new StackPane();
+        cartStackPane = new StackPane();
+        cartStackPane.setVisible(false);
 
         // add the cart image
         ImageView cartImage = new ImageView(Main.cartIcon);
@@ -43,7 +45,7 @@ public class Buyer_ShopPane extends BorderPane {
         cartButton.setBackground(Background.fill(Color.TRANSPARENT));
 
         // add the button to the stack pane
-        stackPane.getChildren().add(cartButton);
+        cartStackPane.getChildren().add(cartButton);
 
         // Create the badge circle to display the number of items
         Circle badge = new Circle(12);
@@ -61,14 +63,14 @@ public class Buyer_ShopPane extends BorderPane {
         badgeCountText.setTranslateY(4);
 
         // Add the badge and the text to the StackPane
-        stackPane.getChildren().addAll(badge, badgeCountText);
+        cartStackPane.getChildren().addAll(badge, badgeCountText);
 
 
         // set attributes for the header of the main page
-        HBox headerHBox = new HBox(titleLabel, stackPane);
+        HBox headerHBox = new HBox(titleLabel, cartStackPane);
         headerHBox.setAlignment(Pos.CENTER_LEFT);
         headerHBox.setSpacing(530);
-        HBox.setMargin(stackPane, new Insets(5,0,0,0));
+        HBox.setMargin(cartStackPane, new Insets(5,0,0,0));
 
         // set attributes for instruction label
         Label instructionLabel1 = new Label("Please use the filters on the left and/or search bar to find your book.");
@@ -375,5 +377,9 @@ public class Buyer_ShopPane extends BorderPane {
 
     public void setCartButton(Button cartButton) {
         this.cartButton = cartButton;
+    }
+
+    public void setCartVisible(Boolean b) {
+        cartStackPane.setVisible(b);
     }
 }
