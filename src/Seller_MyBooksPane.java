@@ -50,7 +50,7 @@ public class Seller_MyBooksPane extends BorderPane {
 
         // set attributes for the VBox that holds these items
         VBox vbox1 = new VBox(categoryLabel,naturalscienceCheckBox,computerscienceCheckBox,mathCheckBox,englishCheckBox,otherCheckBox);
-        vbox1.setSpacing(2);
+        vbox1.setSpacing(5);
 
         // set attributes for the condition label
         Label conditionLabel = new Label("By Condition:");
@@ -65,7 +65,7 @@ public class Seller_MyBooksPane extends BorderPane {
 
         // set attributes for the VBox that holds these items
         VBox vbox2 = new VBox(conditionLabel,likenewCheckBox,moderatelyusedCheckBox,heavilyusedCheckBox);
-        vbox2.setSpacing(2);
+        vbox2.setSpacing(5);
 
         // set attribute for label
         Label l1 = new Label("Prices");
@@ -89,7 +89,7 @@ public class Seller_MyBooksPane extends BorderPane {
 
         // set attributes for VBox
         VBox vbox4 = new VBox(resetLabel,resetfiltersButton);
-        vbox4.setSpacing(2);
+        vbox4.setSpacing(5);
 
         // set atributes for the VBox that holds all Left side items
         VBox leftVBox = new VBox(vbox1,vbox2,vbox3,vbox4);
@@ -102,7 +102,7 @@ public class Seller_MyBooksPane extends BorderPane {
 
         // set attributes for text field
         searchField = new TextField();
-        searchField.setPrefWidth(310);
+        searchField.setPrefWidth(475);
         searchField.setPrefHeight(20);
         searchField.setPromptText("Enter a title or author to search...");
 
@@ -115,7 +115,7 @@ public class Seller_MyBooksPane extends BorderPane {
         searchbarHBox.setSpacing(10);
 
         // set attributes for the HBox
-        HBox spHeaderHBox = new HBox(spTitle,searchbarHBox);
+        HBox spHeaderHBox = new HBox(searchbarHBox);
         spHeaderHBox.setSpacing(20);
 
         // set attributes for the container inside the scrollpane

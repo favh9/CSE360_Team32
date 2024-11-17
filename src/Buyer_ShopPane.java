@@ -10,14 +10,13 @@ import javafx.scene.text.Text;
 
 public class Buyer_ShopPane extends BorderPane {
 
-    private TextField searchField;
-    private Label cartCountLabel;
-    private int cartCount;
-    private CheckBox ch1,ch2,ch3,ch4,ch5;
-    private CheckBox ch6,ch7,ch8;
-    private RadioButton rb1,rb2;
+    private CheckBox naturalscienceCheckBox,computerscienceCheckBox,mathCheckBox,englishCheckBox,otherCheckBox,likenewCheckBox,moderatelyusedCheckBox,heavilyusedCheckBox;
+    private RadioButton ascendingRadioButton,descendingRadioButton;
     private ToggleGroup toggleGroupPrices;
-    private Button cartButton, resetfiltersButton, searchButton;
+    private Button resetfiltersButton;
+    private TextField searchField;
+    private Button searchButton;
+    private ScrollPane sp;
     private GridPane booksPane;
 
     public Buyer_ShopPane(User user, double width, double height) {
@@ -28,47 +27,9 @@ public class Buyer_ShopPane extends BorderPane {
         Label titleLabel = new Label("Shop");
         titleLabel.setFont(Font.font(42));
 
-        // Create a StackPane to hold both the cart image and the badge
-        StackPane stackPane = new StackPane();
-
-        // add the cart image
-        ImageView cartImage = new ImageView(Main.cartIcon);
-        cartImage.setFitHeight(45);
-        cartImage.setFitWidth(45);
-
-        // add the cart button
-        cartButton = new Button();
-        cartButton.setGraphic(cartImage);
-        cartButton.setBackground(Background.fill(Color.TRANSPARENT));
-
-        // add the button to the stack pane
-        stackPane.getChildren().add(cartButton);
-
-        // Create the badge circle to display the number of items
-        Circle badge = new Circle(12);
-        badge.setFill(Color.RED);
-
-        // Create the text to show the item count inside the badge
-        cartCount = 0;
-        cartCountLabel = new Label(Integer.toString(cartCount));
-        Text badgeText = new Text(cartCountLabel.getText());
-        badgeText.setFill(Color.WHITE);
-        badgeText.setStyle("-fx-font-size: 12; -fx-font-weight: bold;");
-
-        // Set the elements in stack pane position
-        StackPane.setAlignment(badge, Pos.TOP_RIGHT); // This positions the badge at the top-right of the image
-        StackPane.setAlignment(badgeText, Pos.TOP_RIGHT);
-        badgeText.setTranslateX(-8);
-        badgeText.setTranslateY(4);
-
-        // Add the badge and the text to the StackPane
-        stackPane.getChildren().addAll(badge, badgeText);
-
         // set attributes for the header of the main page
-        HBox headerHBox = new HBox(titleLabel, stackPane);
-        headerHBox.setAlignment(Pos.CENTER_LEFT);
-        headerHBox.setSpacing(530);
-        HBox.setMargin(stackPane, new Insets(5,0,0,0));
+        HBox headerHBox = new HBox(titleLabel);
+        headerHBox.setAlignment(Pos.BASELINE_LEFT);
 
         // set attributes for instruction label
         Label instructionLabel1 = new Label("Please use the filters on the left and/or search bar to find your book.");
@@ -77,48 +38,48 @@ public class Buyer_ShopPane extends BorderPane {
         Label categoryLabel = new Label("By Category:");
 
         // set attributes for category check boxes
-        ch1 = new CheckBox("Natural Science");
-        ch1.setWrapText(true);
-        ch2 = new CheckBox("Computer Science");
-        ch2.setWrapText(true);
-        ch3 = new CheckBox("Math");
-        ch3.setWrapText(true);
-        ch4 = new CheckBox("English");
-        ch4.setWrapText(true);
-        ch5 = new CheckBox("Other");
-        ch5.setWrapText(true);
+        naturalscienceCheckBox = new CheckBox("Natural Science");
+        naturalscienceCheckBox.setWrapText(true);
+        computerscienceCheckBox = new CheckBox("Computer Science");
+        computerscienceCheckBox.setWrapText(true);
+        mathCheckBox = new CheckBox("Math");
+        mathCheckBox.setWrapText(true);
+        englishCheckBox = new CheckBox("English");
+        englishCheckBox.setWrapText(true);
+        otherCheckBox = new CheckBox("Other");
+        otherCheckBox.setWrapText(true);
 
         // set attributes for the VBox that holds these items
-        VBox vbox1 = new VBox(categoryLabel,ch1,ch2,ch3,ch4,ch5);
+        VBox vbox1 = new VBox(categoryLabel,naturalscienceCheckBox,computerscienceCheckBox,mathCheckBox,englishCheckBox,otherCheckBox);
         vbox1.setSpacing(2);
 
         // set attributes for the condition label
         Label conditionLabel = new Label("By Condition:");
 
         // set attributes for condition check boxes
-        ch6 = new CheckBox("Used Like New");
-        ch6.setWrapText(true);
-        ch7 = new CheckBox("Moderately Used");
-        ch7.setWrapText(true);
-        ch8 = new CheckBox("Heavily Used");
-        ch8.setWrapText(true);
+        likenewCheckBox = new CheckBox("Used Like New");
+        likenewCheckBox.setWrapText(true);
+        moderatelyusedCheckBox = new CheckBox("Moderately Used");
+        moderatelyusedCheckBox.setWrapText(true);
+        heavilyusedCheckBox = new CheckBox("Heavily Used");
+        heavilyusedCheckBox.setWrapText(true);
 
         // set attributes for the VBox that holds these items
-        VBox vbox2 = new VBox(conditionLabel,ch6,ch7,ch8);
+        VBox vbox2 = new VBox(conditionLabel,likenewCheckBox,moderatelyusedCheckBox,heavilyusedCheckBox);
         vbox2.setSpacing(2);
 
         // set attribute for label
         Label l1 = new Label("Prices");
 
         // set attributes for toggle buttons
-        rb1 = new RadioButton("Ascending");
-        rb2 = new RadioButton("Descending");
+        ascendingRadioButton = new RadioButton("Ascending");
+        descendingRadioButton = new RadioButton("Descending");
 
         toggleGroupPrices = new ToggleGroup();
-        toggleGroupPrices.getToggles().addAll(rb1,rb2);
+        toggleGroupPrices.getToggles().addAll(ascendingRadioButton,descendingRadioButton);
 
         // set attributes for VBox
-        VBox vbox3 = new VBox(l1,rb1,rb2);
+        VBox vbox3 = new VBox(l1,ascendingRadioButton,descendingRadioButton);
         vbox3.setSpacing(2);
 
         // set attributes for label
@@ -168,7 +129,7 @@ public class Buyer_ShopPane extends BorderPane {
         );
 
         // set attributes for the scrollpane
-        ScrollPane sp = new ScrollPane(booksPane);
+        sp = new ScrollPane(booksPane);
         sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         sp.minViewportHeightProperty().set(280);
@@ -212,139 +173,142 @@ public class Buyer_ShopPane extends BorderPane {
 
     }
 
-    public TextField getSearchField() {
-        return searchField;
-    }
-
-    public Label getCartCountLabel() {
-        return cartCountLabel;
-    }
-
-    public int getCartCount() {
-        return cartCount;
-    }
-
-    public CheckBox getCh1() {
-        return ch1;
-    }
-
-    public CheckBox getCh2() {
-        return ch2;
-    }
-
-    public CheckBox getCh3() {
-        return ch3;
-    }
-
-    public CheckBox getCh4() {
-        return ch4;
-    }
-
-    public CheckBox getCh5() {
-        return ch5;
-    }
-
-    public CheckBox getCh6() {
-        return ch6;
-    }
-
-    public CheckBox getCh7() {
-        return ch7;
-    }
-
-    public CheckBox getCh8() {
-        return ch8;
-    }
-
-    public ToggleGroup getToggleGroupPrices() {
-        return toggleGroupPrices;
-    }
-
-    public Button getCartButton() {
-        return cartButton;
-    }
-
-    public Button getResetfiltersButton() {
-        return resetfiltersButton;
-    }
-
-    public Button getSearchButton() {
-        return searchButton;
-    }
-
-    public void setSearchField(TextField searchField) {
-        this.searchField = searchField;
-    }
-
-    public void setCartCountLabel(Label cartCountLabel) {
-        this.cartCountLabel = cartCountLabel;
-    }
-
-    public void setCartCount(int cartCount) {
-        this.cartCount = cartCount;
-    }
-
-    public void setCh1(CheckBox ch1) {
-        this.ch1 = ch1;
-    }
-
-    public void setCh2(CheckBox ch2) {
-        this.ch2 = ch2;
-    }
-
-    public void setCh3(CheckBox ch3) {
-        this.ch3 = ch3;
-    }
-
-    public void setCh4(CheckBox ch4) {
-        this.ch4 = ch4;
-    }
-
-    public void setCh5(CheckBox ch5) {
-        this.ch5 = ch5;
-    }
-
-    public void setCh6(CheckBox ch6) {
-        this.ch6 = ch6;
-    }
-
-    public void setCh7(CheckBox ch7) {
-        this.ch7 = ch7;
-    }
-
-    public void setCh8(CheckBox ch8) {
-        this.ch8 = ch8;
-    }
-
-    public void setToggleGroupPrices(ToggleGroup toggleGroupPrices) {
-        this.toggleGroupPrices = toggleGroupPrices;
-    }
-
-    public void setSearchButton(Button searchButton) {
-        this.searchButton = searchButton;
-    }
-
-    public void setResetfiltersButton(Button resetfiltersButton) {
-        this.resetfiltersButton = resetfiltersButton;
-    }
-
-    public void setCartButton(Button cartButton) {
-        this.cartButton = cartButton;
-    }
-
-    public void setRb2(RadioButton rb2) {
-        this.rb2 = rb2;
-    }
-
-    public void setRb1(RadioButton rb1) {
-        this.rb1 = rb1;
-    }
-
     public GridPane getBooksPane() {
         return booksPane;
     }
 
     public void setBooksPane(GridPane booksPane) {
         this.booksPane = booksPane;
+    }
+
+    public void noBooksFound() {
+
+        BorderPane bp = new BorderPane();
+        Label noBooksFoundLabel = new Label("No Books Found");
+        noBooksFoundLabel.setFont(Font.font(48));
+        bp.setCenter(noBooksFoundLabel);
+        bp.setPadding(new Insets(100));
+        sp.setContent(bp);
+
+    }
+
+    public CheckBox getNaturalscienceCheckBox() {
+        return naturalscienceCheckBox;
+    }
+
+    public void setNaturalscienceCheckBox(CheckBox naturalscienceCheckBox) {
+        this.naturalscienceCheckBox = naturalscienceCheckBox;
+    }
+
+    public CheckBox getComputerscienceCheckBox() {
+        return computerscienceCheckBox;
+    }
+
+    public void setComputerscienceCheckBox(CheckBox computerscienceCheckBox) {
+        this.computerscienceCheckBox = computerscienceCheckBox;
+    }
+
+    public CheckBox getMathCheckBox() {
+        return mathCheckBox;
+    }
+
+    public void setMathCheckBox(CheckBox mathCheckBox) {
+        this.mathCheckBox = mathCheckBox;
+    }
+
+    public CheckBox getEnglishCheckBox() {
+        return englishCheckBox;
+    }
+
+    public void setEnglishCheckBox(CheckBox englishCheckBox) {
+        this.englishCheckBox = englishCheckBox;
+    }
+
+    public CheckBox getOtherCheckBox() {
+        return otherCheckBox;
+    }
+
+    public void setOtherCheckBox(CheckBox otherCheckBox) {
+        this.otherCheckBox = otherCheckBox;
+    }
+
+    public CheckBox getLikenewCheckBox() {
+        return likenewCheckBox;
+    }
+
+    public void setLikenewCheckBox(CheckBox likenewCheckBox) {
+        this.likenewCheckBox = likenewCheckBox;
+    }
+
+    public CheckBox getModeratelyusedCheckBox() {
+        return moderatelyusedCheckBox;
+    }
+
+    public void setModeratelyusedCheckBox(CheckBox moderatelyusedCheckBox) {
+        this.moderatelyusedCheckBox = moderatelyusedCheckBox;
+    }
+
+    public CheckBox getHeavilyusedCheckBox() {
+        return heavilyusedCheckBox;
+    }
+
+    public void setHeavilyusedCheckBox(CheckBox heavilyusedCheckBox) {
+        this.heavilyusedCheckBox = heavilyusedCheckBox;
+    }
+
+    public RadioButton getAscendingRadioButton() {
+        return ascendingRadioButton;
+    }
+
+    public void setAscendingRadioButton(RadioButton ascendingRadioButton) {
+        this.ascendingRadioButton = ascendingRadioButton;
+    }
+
+    public RadioButton getDescendingRadioButton() {
+        return descendingRadioButton;
+    }
+
+    public void setDescendingRadioButton(RadioButton descendingRadioButton) {
+        this.descendingRadioButton = descendingRadioButton;
+    }
+
+    public ToggleGroup getToggleGroupPrices() {
+        return toggleGroupPrices;
+    }
+
+    public void setToggleGroupPrices(ToggleGroup toggleGroupPrices) {
+        this.toggleGroupPrices = toggleGroupPrices;
+    }
+
+    public Button getResetfiltersButton() {
+        return resetfiltersButton;
+    }
+
+    public void setResetfiltersButton(Button resetfiltersButton) {
+        this.resetfiltersButton = resetfiltersButton;
+    }
+
+    public TextField getSearchField() {
+        return searchField;
+    }
+
+    public void setSearchField(TextField searchField) {
+        this.searchField = searchField;
+    }
+
+    public Button getSearchButton() {
+        return searchButton;
+    }
+
+    public void setSearchButton(Button searchButton) {
+        this.searchButton = searchButton;
+    }
+
+    public ScrollPane getSp() {
+        return sp;
+    }
+
+    public void setSp(ScrollPane sp) {
+        this.sp = sp;
     }
 }
