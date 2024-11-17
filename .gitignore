@@ -3,6 +3,7 @@ out/
 production
 !**/src/main/**/out/
 !**/src/test/**/out/
+lib_windows
 
 ### Eclipse ###
 .apt_generated

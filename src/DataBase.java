@@ -61,6 +61,8 @@ public class DataBase {
 
     public static void createDataBase() {
 
+        System.out.println("freedom");
+
         try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);
              Statement stmt = conn.createStatement()) {
 
