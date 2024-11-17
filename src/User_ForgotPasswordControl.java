@@ -68,7 +68,7 @@ public class User_ForgotPasswordControl extends Pane {
                 Main.mainWindow.setScene(new Scene(login,width,height));
 
             } else if (a.getSource() == confirmButton) {
-                // use this for the birth date
+                // use this for the birthdate
                 DecimalFormat df = new DecimalFormat("00");
                 String birthdate = yearComboBox.getValue() + "-" + df.format(Integer.parseInt(monthComboBox.getValue())) + "-" + df.format(Integer.parseInt(dayComboBox.getValue()));
 
