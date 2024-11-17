@@ -150,6 +150,12 @@ public class User_CreateAccountControl extends Pane {
                 missingData += "\tfirst name\n";
             if(lastnameTextField.getText().isEmpty())
                 missingData += "\tlast name\n";
+            if(yearComboBox.getValue().equals("YYYY"))
+                missingData += "\tbirth year\n";
+            if(monthComboBox.getValue().equals("MM"))
+                missingData += "\tbirth month\n";
+            if(dayComboBox.getValue().equals("DD"))
+                missingData += "\tbirth day\n";
             if(emailTextField.getText().isEmpty())
                 missingData += "\te-mail\n";
             if(usernameTextField.getText().isEmpty())
