@@ -5,16 +5,17 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 public class Seller_MyBooksPane extends BorderPane {
 
-    private CheckBox ch1,ch2,ch3,ch4,ch5,ch6,ch7,ch8;
-    private RadioButton rb1,rb2;
+    private CheckBox naturalscienceCheckBox,computerscienceCheckBox,mathCheckBox,englishCheckBox,otherCheckBox,likenewCheckBox,moderatelyusedCheckBox,heavilyusedCheckBox;
+    private RadioButton ascendingRadioButton,descendingRadioButton;
     private ToggleGroup toggleGroupPrices;
     private Button resetfiltersButton;
     private TextField searchField;
     private Button searchButton;
-
+    private ScrollPane sp;
     private GridPane booksPane;
 
     public Seller_MyBooksPane(User user, double width, double height) {
@@ -33,50 +34,58 @@ public class Seller_MyBooksPane extends BorderPane {
         Label instructionLabel1 = new Label("Please use the filters on the left and/or search bar to find your book.");
 
         // set attributes for category label
-        Label categoryLabel = new Label("Category");
+        Label categoryLabel = new Label("By Category:");
 
         // set attributes for category check boxes
-        ch1 = new CheckBox("Natural Science");
-        ch2 = new CheckBox("Computer Science");
-        ch3 = new CheckBox("Math");
-        ch4 = new CheckBox("English");
-        ch5 = new CheckBox("Other");
+        naturalscienceCheckBox = new CheckBox("Natural Science");
+        naturalscienceCheckBox.setWrapText(true);
+        computerscienceCheckBox = new CheckBox("Computer Science");
+        computerscienceCheckBox.setWrapText(true);
+        mathCheckBox = new CheckBox("Math");
+        mathCheckBox.setWrapText(true);
+        englishCheckBox = new CheckBox("English");
+        englishCheckBox.setWrapText(true);
+        otherCheckBox = new CheckBox("Other");
+        otherCheckBox.setWrapText(true);
 
         // set attributes for the VBox that holds these items
-        VBox vbox1 = new VBox(categoryLabel,ch1,ch2,ch3,ch4,ch5);
+        VBox vbox1 = new VBox(categoryLabel,naturalscienceCheckBox,computerscienceCheckBox,mathCheckBox,englishCheckBox,otherCheckBox);
         vbox1.setSpacing(2);
 
         // set attributes for the condition label
-        Label conditionLabel = new Label("Condition");
+        Label conditionLabel = new Label("By Condition:");
 
         // set attributes for condition check boxes
-        ch6 = new CheckBox("Used Like New");
-        ch7 = new CheckBox("Moderately Used");
-        ch8 = new CheckBox("Heavily Used");
+        likenewCheckBox = new CheckBox("Used Like New");
+        likenewCheckBox.setWrapText(true);
+        moderatelyusedCheckBox = new CheckBox("Moderately Used");
+        moderatelyusedCheckBox.setWrapText(true);
+        heavilyusedCheckBox = new CheckBox("Heavily Used");
+        heavilyusedCheckBox.setWrapText(true);
 
         // set attributes for the VBox that holds these items
-        VBox vbox2 = new VBox(conditionLabel,ch6,ch7,ch8);
+        VBox vbox2 = new VBox(conditionLabel,likenewCheckBox,moderatelyusedCheckBox,heavilyusedCheckBox);
         vbox2.setSpacing(2);
 
         // set attribute for label
         Label l1 = new Label("Prices");
 
         // set attributes for toggle buttons
-        rb1 = new RadioButton("Ascending");
-        rb2 = new RadioButton("Descending");
+        ascendingRadioButton = new RadioButton("Ascending");
+        descendingRadioButton = new RadioButton("Descending");
 
         toggleGroupPrices = new ToggleGroup();
-        toggleGroupPrices.getToggles().addAll(rb1,rb2);
+        toggleGroupPrices.getToggles().addAll(ascendingRadioButton,descendingRadioButton);
 
         // set attributes for VBox
-        VBox vbox3 = new VBox(l1,rb1,rb2);
+        VBox vbox3 = new VBox(l1,ascendingRadioButton,descendingRadioButton);
         vbox3.setSpacing(2);
 
         // set attributes for label
         Label resetLabel = new Label("Reset Filters");
 
         // set attributes for button
-        resetfiltersButton = new Button("reset");
+        resetfiltersButton = new Button("clear");
 
         // set attributes for VBox
         VBox vbox4 = new VBox(resetLabel,resetfiltersButton);
@@ -86,9 +95,14 @@ public class Seller_MyBooksPane extends BorderPane {
         VBox leftVBox = new VBox(vbox1,vbox2,vbox3,vbox4);
         leftVBox.setSpacing(10);
 
+        // set attributes for the title of the scrollpane
+        Label spTitle = new Label("Available Books");
+        spTitle.setFont(Font.font(20));
+        spTitle.setPrefHeight(20);
+
         // set attributes for text field
         searchField = new TextField();
-        searchField.setPrefWidth(400);
+        searchField.setPrefWidth(310);
         searchField.setPrefHeight(20);
         searchField.setPromptText("Enter a title or author to search...");
 
@@ -100,35 +114,46 @@ public class Seller_MyBooksPane extends BorderPane {
         HBox searchbarHBox = new HBox(searchField, searchButton);
         searchbarHBox.setSpacing(10);
 
-        // set attributes for the VBox that holds the lists of users
+        // set attributes for the HBox
+        HBox spHeaderHBox = new HBox(spTitle,searchbarHBox);
+        spHeaderHBox.setSpacing(20);
+
+        // set attributes for the container inside the scrollpane
         booksPane = new GridPane();
-        booksPane.setAlignment(Pos.TOP_CENTER);
         booksPane.setHgap(10);
         booksPane.setVgap(10);
         booksPane.setPadding(new Insets(10,10,10,10));
+        booksPane.setStyle(
+                "-fx-background-color: #FFC627;" + "-fx-border-color: #FFC627;"//ffffff white //FFC627 asu yellow
+        );
 
         // set attributes for the scrollpane
-        ScrollPane sp = new ScrollPane(booksPane);
+        sp = new ScrollPane(booksPane);
         sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        sp.minViewportHeightProperty().set(400);
-        sp.minViewportWidthProperty().set(460);
-        sp.setPrefWidth(460);
-        sp.setPrefHeight(400);
-        sp.setStyle("-fx-background: white;");
+        sp.minViewportHeightProperty().set(280);
+        sp.minViewportWidthProperty().set(525);
+        sp.setStyle("-fx-background: #FFC627;" + "-fx-border-color: #FFC627;");
 
-        VBox rightVBox = new VBox(searchbarHBox,sp);
-        rightVBox.setSpacing(10);
+        // set attributes for the VBox that contains these items on the right
+        VBox rightVBox = new VBox(spHeaderHBox,sp);
 
-        BorderPane mainBorderPane = new BorderPane();
-        mainBorderPane.setLeft(leftVBox);
-        mainBorderPane.setRight(rightVBox);
-//        HBox mainHBox = new HBox(leftVBox,rightVBox);
-//        mainHBox.setSpacing(15);
+        BorderPane hbox = new BorderPane();
+        hbox.setLeft(leftVBox);
+        hbox.setRight(rightVBox);
+
+        // set attributes for the submain VBox
+        VBox submainVBox = new VBox(instructionLabel1,hbox);
+        submainVBox.setSpacing(20);
+        submainVBox.setPadding(new Insets(10,10,10,10));
+        submainVBox.setStyle(
+                "-fx-background-radius: 2em;" + "-fx-background-color: #FFC627;" //ffffff white //FFC627 asu yellow
+        );
 
         // set attributes for the main VBox
-        VBox mainVBox = new VBox(headerHBox,mainBorderPane);
-        mainVBox.setPadding(new Insets(40,40,0,40));
+        VBox mainVBox = new VBox(headerHBox,submainVBox);
+        mainVBox.setSpacing(5);
+        mainVBox.setPadding(new Insets(40,40,40,40));
         mainVBox.setPrefWidth(width - navBarVBox.getWidth() - 40);
         mainVBox.setStyle(
                 "-fx-background-radius: 2em;" + "-fx-background-color: #ffffff;"
@@ -153,5 +178,136 @@ public class Seller_MyBooksPane extends BorderPane {
 
     public void setBooksPane(GridPane booksPane) {
         this.booksPane = booksPane;
+    }
+
+    public void noBooksFound() {
+
+        BorderPane bp = new BorderPane();
+        Label noBooksFoundLabel = new Label("No Books Found");
+        noBooksFoundLabel.setFont(Font.font(48));
+        bp.setCenter(noBooksFoundLabel);
+        bp.setPadding(new Insets(100));
+        sp.setContent(bp);
+
+    }
+
+    public CheckBox getNaturalscienceCheckBox() {
+        return naturalscienceCheckBox;
+    }
+
+    public void setNaturalscienceCheckBox(CheckBox naturalscienceCheckBox) {
+        this.naturalscienceCheckBox = naturalscienceCheckBox;
+    }
+
+    public CheckBox getComputerscienceCheckBox() {
+        return computerscienceCheckBox;
+    }
+
+    public void setComputerscienceCheckBox(CheckBox computerscienceCheckBox) {
+        this.computerscienceCheckBox = computerscienceCheckBox;
+    }
+
+    public CheckBox getMathCheckBox() {
+        return mathCheckBox;
+    }
+
+    public void setMathCheckBox(CheckBox mathCheckBox) {
+        this.mathCheckBox = mathCheckBox;
+    }
+
+    public CheckBox getEnglishCheckBox() {
+        return englishCheckBox;
+    }
+
+    public void setEnglishCheckBox(CheckBox englishCheckBox) {
+        this.englishCheckBox = englishCheckBox;
+    }
+
+    public CheckBox getOtherCheckBox() {
+        return otherCheckBox;
+    }
+
+    public void setOtherCheckBox(CheckBox otherCheckBox) {
+        this.otherCheckBox = otherCheckBox;
+    }
+
+    public CheckBox getLikenewCheckBox() {
+        return likenewCheckBox;
+    }
+
+    public void setLikenewCheckBox(CheckBox likenewCheckBox) {
+        this.likenewCheckBox = likenewCheckBox;
+    }
+
+    public CheckBox getModeratelyusedCheckBox() {
+        return moderatelyusedCheckBox;
+    }
+
+    public void setModeratelyusedCheckBox(CheckBox moderatelyusedCheckBox) {
+        this.moderatelyusedCheckBox = moderatelyusedCheckBox;
+    }
+
+    public CheckBox getHeavilyusedCheckBox() {
+        return heavilyusedCheckBox;
+    }
+
+    public void setHeavilyusedCheckBox(CheckBox heavilyusedCheckBox) {
+        this.heavilyusedCheckBox = heavilyusedCheckBox;
+    }
+
+    public RadioButton getAscendingRadioButton() {
+        return ascendingRadioButton;
+    }
+
+    public void setAscendingRadioButton(RadioButton ascendingRadioButton) {
+        this.ascendingRadioButton = ascendingRadioButton;
+    }
+
+    public RadioButton getDescendingRadioButton() {
+        return descendingRadioButton;
+    }
+
+    public void setDescendingRadioButton(RadioButton descendingRadioButton) {
+        this.descendingRadioButton = descendingRadioButton;
+    }
+
+    public ToggleGroup getToggleGroupPrices() {
+        return toggleGroupPrices;
+    }
+
+    public void setToggleGroupPrices(ToggleGroup toggleGroupPrices) {
+        this.toggleGroupPrices = toggleGroupPrices;
+    }
+
+    public Button getResetfiltersButton() {
+        return resetfiltersButton;
+    }
+
+    public void setResetfiltersButton(Button resetfiltersButton) {
+        this.resetfiltersButton = resetfiltersButton;
+    }
+
+    public TextField getSearchField() {
+        return searchField;
+    }
+
+    public void setSearchField(TextField searchField) {
+        this.searchField = searchField;
+    }
+
+    public Button getSearchButton() {
+        return searchButton;
+    }
+
+    public void setSearchButton(Button searchButton) {
+        this.searchButton = searchButton;
+    }
+
+    public ScrollPane getSp() {
+        return sp;
+    }
+
+    public void setSp(ScrollPane sp) {
+        this.sp = sp;
     }
 }
