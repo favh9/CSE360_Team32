@@ -19,6 +19,7 @@ public class Buyer_ShopPane extends BorderPane {
     private Button searchButton;
     private ScrollPane sp;
     private GridPane booksPane;
+    private Button cartButton;
 
     public Buyer_ShopPane(User user, double width, double height) {
 
@@ -37,7 +38,7 @@ public class Buyer_ShopPane extends BorderPane {
         cartImage.setFitWidth(45);
 
         // add the cart button
-        Button cartButton = new Button();
+        cartButton = new Button();
         cartButton.setGraphic(cartImage);
         cartButton.setBackground(Background.fill(Color.TRANSPARENT));
 
@@ -358,5 +359,21 @@ public class Buyer_ShopPane extends BorderPane {
 
         int incr = Integer.parseInt(badgeCountText.getText());
         badgeCountText.setText(Integer.toString(++incr));
+    }
+
+    public Text getBadgeCountText() {
+        return badgeCountText;
+    }
+
+    public void setBadgeCountText(Text badgeCountText) {
+        this.badgeCountText = badgeCountText;
+    }
+
+    public Button getCartButton() {
+        return cartButton;
+    }
+
+    public void setCartButton(Button cartButton) {
+        this.cartButton = cartButton;
     }
 }

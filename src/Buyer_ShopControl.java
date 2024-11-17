@@ -2,6 +2,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -12,6 +13,8 @@ import javafx.scene.text.Text;
 public class Buyer_ShopControl extends Pane {
 
     private User user;
+    private double width;
+    private double height;
     private Buyer_ShopPane pane;
     private GridPane booksPane;
     private CheckBox naturalscienceCheckBox,computerscienceCheckBox,mathCheckBox,englishCheckBox,otherCheckBox,likenewCheckBox,moderatelyusedCheckBox,heavilyusedCheckBox;
@@ -20,10 +23,13 @@ public class Buyer_ShopControl extends Pane {
     private Button resetfiltersButton;
     private TextField searchField;
     private Button searchButton;
+    private Button cartButton;
 
     public Buyer_ShopControl(User user, double width, double height) {
 
         this.user = user;
+        this.width = width;
+        this.height = height;
 
         pane = new Buyer_ShopPane(user, width,height);
 
@@ -58,6 +64,10 @@ public class Buyer_ShopControl extends Pane {
         searchButton = pane.getSearchButton();
         // register search button with button handler for events
         searchButton.setOnAction(new ButtonHandler());
+
+        // cart button
+        cartButton = pane.getCartButton();
+        cartButton.setOnAction(new ButtonHandler());
 
         // books pane is the grid inside the scrollpane
         booksPane = pane.getBooksPane();
@@ -186,7 +196,15 @@ public class Buyer_ShopControl extends Pane {
     private class ButtonHandler implements EventHandler<ActionEvent> {
 
         @Override
-        public void handle(ActionEvent event) {
+        public void handle(ActionEvent e) {
+
+            // take the user to the cart page
+            if(e.getSource().equals(cartButton)) {
+
+                Buyer_CartControl cart = new Buyer_CartControl(user,width,height);
+                Main.mainWindow.setScene(new Scene(cart));
+
+            }
 
         }
     }
