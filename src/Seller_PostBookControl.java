@@ -44,11 +44,28 @@ public class Seller_PostBookControl extends Pane {
 
                 if(pane.confirmPost()) {
 
+                    insertBook();
                     pane.displayBookPosted();
 
                 }
 
             }
+        }
+
+        // once the user confirms to post their book
+        // use this method to insert the book into the database
+        public void insertBook() {
+
+            Book book =  new Book();
+            book.setTitle("");
+            book.setAuthor("");
+            book.setCategory("");
+            book.setCondition("");
+            book.setPrice(0);
+
+            // call database to insert book
+            // DataBase.insertBook(user,...);
+
         }
     }
 }
