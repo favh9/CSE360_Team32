@@ -86,9 +86,15 @@ public class User_ForgotPasswordControl extends Pane {
 
                 // Format the birthdate using the selected year, month, and day
                 DecimalFormat df = new DecimalFormat("00");
-                String birthdate = pane.getYear() + "-"
-                        + df.format(Integer.parseInt(pane.getMonth()))
-                        + "-" + df.format(Integer.parseInt(pane.getDay()));
+                String birthdate = "";
+
+                try {
+                    birthdate = pane.getYear() + "-"
+                            + df.format(Integer.parseInt(pane.getMonth()))
+                            + "-" + df.format(Integer.parseInt(pane.getDay()));
+                } catch (NumberFormatException e) {
+                    pane.displayEmptyFields();
+                }
 
                 // Initialize default values for user details
                 User user;
@@ -123,9 +129,11 @@ public class User_ForgotPasswordControl extends Pane {
 
                     pane.displayPasswordResetFailed();
 
+
                 } else {
                     // If all validations pass, display success message
                     pane.displayPasswordReset();
+
                 }
             }
         }

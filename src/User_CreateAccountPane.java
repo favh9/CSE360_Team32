@@ -13,7 +13,7 @@ import javafx.scene.text.FontWeight;
 import java.text.DecimalFormat;
 import java.util.Calendar;
 
-// this class will provide the user interface 
+// this class will provide the user interface
 // for the create account page
 public class User_CreateAccountPane extends BorderPane {
 
@@ -141,7 +141,7 @@ public class User_CreateAccountPane extends BorderPane {
         HBox birthdateHBox = new HBox(birthdateLabel,yearComboBox,monthComboBox,dayComboBox);
         birthdateHBox.setAlignment(Pos.CENTER_RIGHT);
         birthdateHBox.setSpacing(10);
-        
+
         // set attributes for the email label
         Label emailLabel = new Label("E-mail:");
         emailLabel.setFont(Font.font("Arial",FontWeight.NORMAL,16));
@@ -155,7 +155,7 @@ public class User_CreateAccountPane extends BorderPane {
         HBox emailTextFieldHBox = new HBox(emailLabel, emailTextField);
         emailTextFieldHBox.setAlignment(Pos.CENTER_RIGHT);
         emailTextFieldHBox.setSpacing(10);
-        
+
         // set attributes for the username label
         Label usernameLabel = new Label("Username:");
         usernameLabel.setFont(Font.font("Arial",FontWeight.NORMAL,16));
@@ -235,30 +235,10 @@ public class User_CreateAccountPane extends BorderPane {
         // set attributes for the Border Pane
         this.setCenter(whiteVBox);
         BorderPane.setMargin(whiteVBox, new Insets(20,20,20,20));
-        
+
         this.setPrefSize(width, height);;
         this.setBackground(Background.fill(Color.web("#4A1E2C"))); // darker maroon color
-        
-    }
 
-    public TextField getFirstnameTextField() {
-        return firstnameTextField;
-    }
-
-    public TextField getLastnameTextField() {
-        return lastnameTextField;
-    }
-
-    public ComboBox<String> getYearComboBox() {
-        return yearComboBox;
-    }
-
-    public ComboBox<String> getDayComboBox() {
-        return dayComboBox;
-    }
-
-    public ComboBox<String> getMonthComboBox() {
-        return monthComboBox;
     }
 
     public TextField getEmailTextField() {
@@ -283,50 +263,6 @@ public class User_CreateAccountPane extends BorderPane {
 
     public Button getBackButton() {
         return backButton;
-    }
-
-    public void setFirstnameTextField(TextField firstnameTextField) {
-        this.firstnameTextField = firstnameTextField;
-    }
-
-    public void setLastnameTextField(TextField lastnameTextField) {
-        this.lastnameTextField = lastnameTextField;
-    }
-
-    public void setYearComboBox(ComboBox<String> yearComboBox) {
-        this.yearComboBox = yearComboBox;
-    }
-
-    public void setDayComboBox(ComboBox<String> dayComboBox) {
-        this.dayComboBox = dayComboBox;
-    }
-
-    public void setMonthComboBox(ComboBox<String> monthComboBox) {
-        this.monthComboBox = monthComboBox;
-    }
-
-    public void setEmailTextField(TextField emailTextField) {
-        this.emailTextField = emailTextField;
-    }
-
-    public void setUsernameTextField(TextField usernameTextField) {
-        this.usernameTextField = usernameTextField;
-    }
-
-    public void setPasswordPasswordfield(PasswordField passwordPasswordfield) {
-        this.passwordPasswordfield = passwordPasswordfield;
-    }
-
-    public void setConfirmpasswordPasswordfield(PasswordField confirmpasswordPasswordfield) {
-        this.confirmpasswordPasswordfield = confirmpasswordPasswordfield;
-    }
-
-    public void setConfirmButton(Button confirmButton) {
-        this.confirmButton = confirmButton;
-    }
-
-    public void setBackButton(Button backButton) {
-        this.backButton = backButton;
     }
 
     public boolean isValidUser() {
@@ -403,41 +339,45 @@ public class User_CreateAccountPane extends BorderPane {
 
     public void displayEmptyFields() {
 
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        String missingData = "Please enter the following fields to create your account:\n";
+        String title = "Warning";
+        String msg = "Please enter the following fields to create your account:\n";
 
         if(firstnameTextField.getText().isEmpty())
-            missingData += "\tfirst name\n";
+            msg += "\tfirst name\n";
         if(lastnameTextField.getText().isEmpty())
-            missingData += "\tlast name\n";
+            msg += "\tlast name\n";
         if(yearComboBox.getValue().equals("YYYY"))
-            missingData += "\tbirth year\n";
+            msg += "\tbirth year\n";
         if(monthComboBox.getValue().equals("MM"))
-            missingData += "\tbirth month\n";
+            msg += "\tbirth month\n";
         if(dayComboBox.getValue().equals("DD"))
-            missingData += "\tbirth day\n";
+            msg += "\tbirth day\n";
         if(emailTextField.getText().isEmpty())
-            missingData += "\te-mail\n";
+            msg += "\te-mail\n";
         if(usernameTextField.getText().isEmpty())
-            missingData += "\tusername\n";
+            msg += "\tusername\n";
         if(passwordPasswordfield.getText().isEmpty())
-            missingData += "\tpassword\n";
+            msg += "\tpassword\n";
         if(confirmpasswordPasswordfield.getText().isEmpty())
-            missingData += "\tconfirm password\n";
+            msg += "\tconfirm password\n";
 
-        alert.setTitle("Warning");
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
         alert.setHeaderText(null);
-        alert.setContentText(missingData);
+        alert.setContentText(msg);
         alert.show();
 
     }
 
     public void displayInvalidUser() {
+
+        String title = "Warning";
+        String msg = "Please choose a different email and/or username\n";
         Alert alert = new Alert(Alert.AlertType.WARNING);
 
-        alert.setTitle("Warning");
+        alert.setTitle(title);
         alert.setHeaderText(null);
-        alert.setContentText("Please choose a different email and/or username\n");
+        alert.setContentText(msg);
         alert.show();
     }
 

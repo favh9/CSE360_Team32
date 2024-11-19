@@ -23,8 +23,8 @@ public class User_ForgotPasswordPane extends BorderPane {
     private ComboBox<String> yearComboBox;
     private ComboBox<String> monthComboBox;
     private ComboBox<String> dayComboBox;
-    private PasswordField passwordPasswordfield;
-    private PasswordField confirmpasswordPasswordfield;
+    private PasswordField passwordField;
+    private PasswordField confirmPasswordField;
     private Button confirmButton;
     private Button backButton;
     private double width;
@@ -101,21 +101,21 @@ public class User_ForgotPasswordPane extends BorderPane {
         for (int year = currentYear; year >= 1800; year--) {
             yearComboBox.getItems().add(Integer.toString(year));
         }
-        yearComboBox.setValue("YYYY"); // Default value
+        yearComboBox.setPromptText("YYYY"); // Default value
 
         monthComboBox = new ComboBox<>();
         monthComboBox.setVisibleRowCount(10);
         for (int month = 1; month <= 12; month++) {
             monthComboBox.getItems().add(Integer.toString(month));
         }
-        monthComboBox.setValue("MM"); // Default value
+        monthComboBox.setPromptText("MM"); // Default value
 
         dayComboBox = new ComboBox<>();
         dayComboBox.setVisibleRowCount(10);
         for (int day = 1; day <= 31; day++) {
             dayComboBox.getItems().add(Integer.toString(day));
         }
-        dayComboBox.setValue("DD"); // Default value
+        dayComboBox.setPromptText("DD"); // Default value
 
         HBox birthdateHBox = new HBox(birthdateLabel, yearComboBox, monthComboBox, dayComboBox);
         birthdateHBox.setAlignment(Pos.CENTER_RIGHT);
@@ -124,21 +124,21 @@ public class User_ForgotPasswordPane extends BorderPane {
         // --- Password and Confirm Password Fields ---
         Label passwordLabel = new Label("New Password:");
         passwordLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
-        passwordPasswordfield = new PasswordField();
-        passwordPasswordfield.setPromptText("New Password");
-        passwordPasswordfield.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
+        passwordField = new PasswordField();
+        passwordField.setPromptText("New Password");
+        passwordField.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
 
-        HBox passwordPasswordfieldHBox = new HBox(passwordLabel, passwordPasswordfield);
+        HBox passwordPasswordfieldHBox = new HBox(passwordLabel, passwordField);
         passwordPasswordfieldHBox.setAlignment(Pos.CENTER_RIGHT);
         passwordPasswordfieldHBox.setSpacing(10);
 
         Label confirmpasswordLabel = new Label("Confirm Password:");
         confirmpasswordLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
-        confirmpasswordPasswordfield = new PasswordField();
-        confirmpasswordPasswordfield.setPromptText("Confirm Password");
-        confirmpasswordPasswordfield.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
+        confirmPasswordField = new PasswordField();
+        confirmPasswordField.setPromptText("Confirm Password");
+        confirmPasswordField.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
 
-        HBox confirmpasswordPasswordfieldHBox = new HBox(confirmpasswordLabel, confirmpasswordPasswordfield);
+        HBox confirmpasswordPasswordfieldHBox = new HBox(confirmpasswordLabel, confirmPasswordField);
         confirmpasswordPasswordfieldHBox.setAlignment(Pos.CENTER_RIGHT);
         confirmpasswordPasswordfieldHBox.setSpacing(10);
 
@@ -150,6 +150,13 @@ public class User_ForgotPasswordPane extends BorderPane {
         // --- Main Layout ---
         // Create the VBox to hold all form elements
         VBox greyVBox = new VBox(instructionLabel, emailTextFieldHBox, usernameTextfieldHBox, birthdateHBox, passwordPasswordfieldHBox, confirmpasswordPasswordfieldHBox, confirmButton);
+        VBox.setMargin(emailTextFieldHBox, new Insets(0,450,0,0));
+        VBox.setMargin(usernameTextfieldHBox, new Insets(0,450,0,0));
+        VBox.setMargin(birthdateHBox, new Insets(0,415,0,0));
+        VBox.setMargin(passwordPasswordfieldHBox, new Insets(0,450,0,0));
+        VBox.setMargin(confirmpasswordPasswordfieldHBox, new Insets(0,450,0,0));
+        VBox.setMargin(confirmButton, new Insets(0,0,0,250));
+
         greyVBox.setSpacing(20);
         greyVBox.setPadding(new Insets(20, 20, 20, 20));
         greyVBox.setStyle("-fx-background-radius: 2em; -fx-background-color: #D9D9D9;");
@@ -191,11 +198,11 @@ public class User_ForgotPasswordPane extends BorderPane {
     }
 
     public PasswordField getPasswordPasswordfield() {
-        return passwordPasswordfield;
+        return passwordField;
     }
 
     public PasswordField getConfirmpasswordPasswordfield() {
-        return confirmpasswordPasswordfield;
+        return confirmPasswordField;
     }
 
     public Button getBackButton() {
@@ -214,11 +221,11 @@ public class User_ForgotPasswordPane extends BorderPane {
     public boolean emptyFields() {
         return emailTextField.getText().isEmpty() ||
                 usernameTextField.getText().isEmpty() ||
-                yearComboBox.getValue().equals("YYYY") ||
-                monthComboBox.getValue().equals("MM") ||
-                dayComboBox.getValue().equals("DD") ||
-                passwordPasswordfield.getText().isEmpty() ||
-                confirmpasswordPasswordfield.getText().isEmpty();
+                yearComboBox.getValue().isEmpty() ||
+                monthComboBox.getValue().isEmpty() ||
+                dayComboBox.getValue().isEmpty() ||
+                passwordField.getText().isEmpty() ||
+                confirmPasswordField.getText().isEmpty();
     }
 
     /**
@@ -227,20 +234,25 @@ public class User_ForgotPasswordPane extends BorderPane {
      * @return true if passwords match, false otherwise.
      */
     public boolean passwordsMatch() {
-        return passwordPasswordfield.getText().equals(confirmpasswordPasswordfield.getText());
+        return passwordField.getText().equals(confirmPasswordField.getText());
     }
 
     /**
      * Validates if the passwords match and sets the border color to red if they do not match.
      */
     public void passwordFlag() {
-        if (passwordPasswordfield.getText().equals(confirmpasswordPasswordfield.getText())) {
-            passwordPasswordfield.setBorder(Border.stroke(Color.TRANSPARENT));
-            confirmpasswordPasswordfield.setBorder(Border.stroke(Color.TRANSPARENT));
+        if (passwordField.getText().equals(confirmPasswordField.getText())) {
+            passwordField.setBorder(Border.stroke(Color.TRANSPARENT));
+            confirmPasswordField.setBorder(Border.stroke(Color.TRANSPARENT));
         } else {
-            passwordPasswordfield.setBorder(Border.stroke(Color.RED));
-            confirmpasswordPasswordfield.setBorder(Border.stroke(Color.RED));
+            passwordField.setBorder(Border.stroke(Color.RED));
+            confirmPasswordField.setBorder(Border.stroke(Color.RED));
         }
+    }
+
+    public void clearPasswordFields() {
+        passwordField.clear();
+        confirmPasswordField.clear();
     }
 
     /**
@@ -259,20 +271,32 @@ public class User_ForgotPasswordPane extends BorderPane {
         alert.show();
     }
 
+    private void showAlertAndExit(Alert.AlertType alertType, String title, String headerText, String contentText) {
+        Alert alert = new Alert(alertType);
+        alert.setOnCloseRequest(e->{
+            User_LoginControl login = new User_LoginControl(width,height);
+            Main.mainWindow.setScene(new Scene(login));
+        });
+        alert.setTitle(title);
+        alert.setHeaderText(headerText); // Can be null
+        alert.setContentText(contentText);
+        alert.show();
+    }
+
     // Display error messages in different scenarios
 
     /**
      * Displays an alert when the password reset fails.
      */
     public void displayPasswordResetFailed() {
-        showAlert(Alert.AlertType.WARNING, "Password Reset Failed", null, "Your new password was not saved, please re-enter current password.");
+        showAlert(Alert.AlertType.WARNING, "Password Reset Failed", null, "Your new password was not saved, please verify your information is correct.");
     }
 
     /**
      * Displays an alert when the password is successfully reset.
      */
     public void displayPasswordReset() {
-        showAlert(Alert.AlertType.INFORMATION, "Password Reset Success", null, "Your new password has been saved.");
+        showAlertAndExit(Alert.AlertType.INFORMATION, "Password Reset Success", null, "Your new password has been saved.");
     }
 
     /**
@@ -286,7 +310,7 @@ public class User_ForgotPasswordPane extends BorderPane {
      * Displays an alert when the user is not found.
      */
     public void displayUserNotFound() {
-        showAlert(Alert.AlertType.WARNING, "Warning", null, "No such User");
+        showAlert(Alert.AlertType.WARNING, "Warning", null, "Error: Username not found, please verify your information.");
     }
 
     /**
@@ -297,11 +321,11 @@ public class User_ForgotPasswordPane extends BorderPane {
 
         if (emailTextField.getText().isEmpty()) msg.append("\temail\n");
         if (usernameTextField.getText().isEmpty()) msg.append("\tusername\n");
-        if (yearComboBox.getValue().equals("YYYY")) msg.append("\tbirth year\n");
-        if (monthComboBox.getValue().equals("MM")) msg.append("\tbirth month\n");
-        if (dayComboBox.getValue().equals("DD")) msg.append("\tbirth day\n");
-        if (passwordPasswordfield.getText().isEmpty()) msg.append("\tpassword\n");
-        if (confirmpasswordPasswordfield.getText().isEmpty()) msg.append("\tconfirm password\n");
+        if (yearComboBox.getValue().isEmpty()) msg.append("\tbirth year\n");
+        if (monthComboBox.getValue().isEmpty()) msg.append("\tbirth month\n");
+        if (dayComboBox.getValue().isEmpty()) msg.append("\tbirth day\n");
+        if (passwordField.getText().isEmpty()) msg.append("\tpassword\n");
+        if (confirmPasswordField.getText().isEmpty()) msg.append("\tconfirm password\n");
 
         showAlert(Alert.AlertType.WARNING, "Warning", null, msg.toString());
     }
