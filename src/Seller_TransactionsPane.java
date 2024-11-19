@@ -1,4 +1,6 @@
 import java.text.NumberFormat;
+
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -70,35 +72,40 @@ public class Seller_TransactionsPane extends BorderPane {
 
         // set attributes for the header label
         Label headerLabel1 = new Label("Book Title");
+        headerLabel1.setPrefWidth(200);
+        headerLabel1.setWrapText(true);
         headerLabel1.setFont(Font.font(20));
-        headerLabel1.setAlignment(Pos.BASELINE_LEFT);
+        headerLabel1.setAlignment(Pos.BASELINE_CENTER);
 
         // set attributes for the header label
         Label headerLabel2 = new Label("Timestamp");
+        headerLabel2.setPrefWidth(200);
+        headerLabel2.setWrapText(false);
         headerLabel2.setFont(Font.font(20));
         headerLabel2.setAlignment(Pos.BASELINE_CENTER);
 
         // set attributes for the header label
         Label headerLabel3 = new Label("Amount");
+        headerLabel3.setPrefWidth(150);
+        headerLabel3.setWrapText(false);
         headerLabel3.setFont(Font.font(20));
         headerLabel3.setAlignment(Pos.BASELINE_CENTER);
 
         // set attributes for the header label
         Label headerLabel4 = new Label("Sold To");
+        headerLabel4.setPrefWidth(150);
+        headerLabel4.setWrapText(true);
         headerLabel4.setFont(Font.font(20));
         headerLabel4.setAlignment(Pos.BASELINE_CENTER);
 
+        // FOR DEBUGGING maybe?
+        headerLabel1.setBorder(Border.stroke(Color.BLACK));
+        headerLabel2.setBorder(Border.stroke(Color.BLACK));
+        headerLabel3.setBorder(Border.stroke(Color.BLACK));
+        headerLabel4.setBorder(Border.stroke(Color.BLACK));
+
         // set attributes for the header of the body
-        GridPane bodyheaderPane = new GridPane();
-        for(int i = 0; i < 4; i++) {
-            ColumnConstraints columnConstraints = new ColumnConstraints();
-            columnConstraints.setPercentWidth(25);
-            bodyheaderPane.getColumnConstraints().add(columnConstraints);
-        }
-        bodyheaderPane.add(headerLabel1,0,0);
-        bodyheaderPane.add(headerLabel2,1,0);
-        bodyheaderPane.add(headerLabel3,2,0);
-        bodyheaderPane.add(headerLabel4,3,0);
+        HBox bodyheaderPane = new HBox(headerLabel1,headerLabel2,headerLabel3,headerLabel4);
 
         // set attributes for the line that separates the header and the scrollpane
         Rectangle lineSeparator = new Rectangle();
@@ -211,24 +218,73 @@ public class Seller_TransactionsPane extends BorderPane {
         return refreshButton;
     }
 
-    public void setRefreshButton(Button refreshButton) {
-        this.refreshButton = refreshButton;
+    public void addAllTransactionsToPane() {
+
+        int testAmountOfBooks = 20;
+
+        for(int i = 0; i < testAmountOfBooks; i++){
+            addTransactionToPane(new Transaction());
+            updateCount();
+        }
+
     }
 
-    public VBox getTransactionsVBox() {
-        return transactionsVBox;
-    }
+    public void addTransactionToPane(Transaction transaction) {
 
-    public void setTransactionsVBox(VBox transactionsVBox) {
-        this.transactionsVBox = transactionsVBox;
-    }
+        // set attributes for the header label
+        Label title = new Label("Theory to the universe of things in my world");
+        title.setPrefWidth(200);
+        title.setWrapText(true);
+        title.setFont(Font.font(20));
+        title.setAlignment(Pos.BASELINE_LEFT);
+        title.setPadding(new Insets(5));
 
-    public Text getTransactionsAmountText() {
-        return transactionsAmountText;
-    }
+        VBox titleBox = new VBox(title);
+        titleBox.setAlignment(Pos.CENTER);
 
-    public void setTransactionsAmountText(Text transactionsAmountText) {
-        this.transactionsAmountText = transactionsAmountText;
-    }
+        // set attributes for the header label
+        Label timestamp = new Label(transaction.getTimestamp());
+        timestamp.setPrefWidth(200);
+        timestamp.setWrapText(false);
+        timestamp.setFont(Font.font(20));
+        timestamp.setAlignment(Pos.BASELINE_CENTER);
+        timestamp.setPadding(new Insets(5));
 
+        VBox timestampBox = new VBox(timestamp);
+        timestampBox.setAlignment(Pos.CENTER);
+
+        // set attributes for the header label
+        Label amount = new Label("$" + transaction.getAmount());
+        amount.setPrefWidth(150);
+        amount.setWrapText(false);
+        amount.setFont(Font.font(20));
+        amount.setAlignment(Pos.BASELINE_CENTER);
+        amount.setPadding(new Insets(5));
+
+        VBox amountBox = new VBox(amount);
+        amountBox.setAlignment(Pos.CENTER);
+
+        // set attributes for the header label
+        Label soldto = new Label("SparkyandHisFriends");
+        soldto.setPrefWidth(150);
+        soldto.setWrapText(true);
+        soldto.setFont(Font.font(20));
+        soldto.setAlignment(Pos.BASELINE_CENTER);
+        soldto.setPadding(new Insets(5));
+
+        VBox soldToBox = new VBox(soldto);
+        soldToBox.setAlignment(Pos.CENTER);
+
+        HBox transactionHBox = new HBox(titleBox,timestampBox,amountBox,soldToBox);
+
+        // set attributes for the line that separates the header and the scrollpane
+        Rectangle lineSeparator = new Rectangle();
+        lineSeparator.setWidth(700);
+        lineSeparator.setHeight(1);
+        lineSeparator.setFill(Color.BLACK);
+
+        transactionsVBox.getChildren().add(transactionHBox);
+        transactionsVBox.getChildren().add(lineSeparator);
+
+    }
 }
