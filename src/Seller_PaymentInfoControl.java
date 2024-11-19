@@ -13,6 +13,15 @@ public class Seller_PaymentInfoControl extends Pane {
     private Button confirmButton;
     private Seller_PaymentInfoPane pane;
 
+    /**
+     * Constructor to initialize the payment information control.
+     * This pane allows us to control input payment details such as card number, expiration date, and CVC.
+     * It also sets the size and layout of the pane based on the provided parameters.
+     *
+     * @param user The user whose payment information will be displayed in the pane. This may include their details.
+     * @param width The width of the pane. This defines the horizontal size of the pane.
+     * @param height The height of the pane. This defines the vertical size of the pane.
+     */
     public Seller_PaymentInfoControl(User user, double width, double height) {
 
         this.user = user;
