@@ -90,16 +90,16 @@ public class Buyer_ShopControl extends Pane {
     public void populateBooks() {
 
         // i.e. for books in User.books, add a book
-        Book book1 = new Book("The Great Gatsby", "F. Scott Fitzgerald", "Classic", "New", 12.99);
-        Book book2 = new Book("To Kill a Mockingbird", "Harper Lee", "Fiction", "Used", 8.49);
-        Book book3 = new Book("1984", "George Orwell", "Dystopian", "Good", 6.99);
-        Book book4 = new Book("The Catcher in the Rye", "J.D. Salinger", "Classic", "Like New", 10.50);
-        Book book5 = new Book("The Hobbit", "J.R.R. Tolkien", "Fantasy", "New", 14.99);
-        Book book6 = new Book("Moby-Dick", "Herman Melville", "Adventure", "Acceptable", 5.50);
-        Book book7 = new Book("Pride and Prejudice", "Jane Austen", "Romance", "Used", 7.99);
-        Book book8 = new Book("The Lord of the Rings", "J.R.R. Tolkien", "Fantasy", "New", 20.00);
-        Book book9 = new Book("Brave New World", "Aldous Huxley", "Science Fiction", "Good", 9.99);
-        Book book10 = new Book("War and Peace", "Leo Tolstoy", "Historical Fiction", "Like New", 15.00);
+        Book book1 = new Book("The Great Gatsby", "F. Scott Fitzgerald", "Classic", "New",2, 12.99);
+        Book book2 = new Book("To Kill a Mockingbird", "Harper Lee", "Fiction", "Used",2, 8.49);
+        Book book3 = new Book("1984", "George Orwell", "Dystopian", "Good",3, 6.99);
+        Book book4 = new Book("The Catcher in the Rye", "J.D. Salinger", "Classic", "Like New",3, 10.50);
+        Book book5 = new Book("The Hobbit", "J.R.R. Tolkien", "Fantasy", "New",1, 14.99);
+        Book book6 = new Book("Moby-Dick", "Herman Melville", "Adventure", "Acceptable",2, 5.50);
+        Book book7 = new Book("Pride and Prejudice", "Jane Austen", "Romance", "Used",4, 7.99);
+        Book book8 = new Book("The Lord of the Rings", "J.R.R. Tolkien", "Fantasy", "New",5, 20.00);
+        Book book9 = new Book("Brave New World", "Aldous Huxley", "Science Fiction", "Good",3, 9.99);
+        Book book10 = new Book("War and Peace", "Leo Tolstoy", "Historical Fiction", "Like New",2, 15.00);
 
         addBook(book1);
         addBook(book2);
