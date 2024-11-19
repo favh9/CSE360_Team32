@@ -11,6 +11,7 @@ public class User_LoginControl extends Pane {
     public double width;
     public double height;
     private User user;
+    private User_LoginPane pane;
     private final TextField usernameTextField;
     private final PasswordField passwordField;
     private final Button signinButton;
@@ -24,7 +25,7 @@ public class User_LoginControl extends Pane {
 
         user = new User();
 
-        User_LoginPane pane = new User_LoginPane(width,height);
+        pane = new User_LoginPane(width,height);
 
         usernameTextField = pane.getUsernameTextField();
         passwordField = pane.getPasswordField();
@@ -71,7 +72,7 @@ public class User_LoginControl extends Pane {
                 // find out if the user exists
                 if(!(DataBase.userExists(usernameTextField.getText(),passwordField.getText()))) {
 
-                    displayIncorrectPasswordOrUsername();
+                    pane.displayIncorrectPasswordOrUsername();
 
                 } else if(Objects.equals(DataBase.getUserType(usernameTextField.getText()), "super_admin")) {
 
@@ -91,17 +92,6 @@ public class User_LoginControl extends Pane {
                 }
 
             }
-
-        }
-
-        public void displayIncorrectPasswordOrUsername() {
-
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-
-            alert.setTitle("Warning");
-            alert.setHeaderText(null);
-            alert.setContentText("Please verify your username or re-enter your password\n");
-            alert.show();
 
         }
 

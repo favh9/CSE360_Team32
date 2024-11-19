@@ -157,5 +157,15 @@ class User_LoginPane extends BorderPane {
         return forgotpasswordHyperlink;
     }
 
+    public void displayIncorrectPasswordOrUsername() {
+
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+
+        alert.setTitle("Warning");
+        alert.setHeaderText(null);
+        alert.setContentText("Please verify your username or re-enter your password\n");
+        alert.show();
+
+    }
 
 }
