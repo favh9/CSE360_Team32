@@ -13,7 +13,6 @@ public class Buyer_ShopControl extends Pane {
     private double height;
     private Buyer_ShopPane pane;
     private ToggleButton ascButton, descButton;
-    private ToggleGroup toggleGroupPrices;
     private Button resetfiltersButton;
     private TextField searchField;
     private Button searchButton;
@@ -42,6 +41,7 @@ public class Buyer_ShopControl extends Pane {
 
         // search field text field from user input
         searchField = pane.getSearchField();
+        searchField.textProperty().addListener(new SearchFieldListener());
 
         // search button when search field is filled
         searchButton = pane.getSearchButton();
@@ -77,8 +77,9 @@ public class Buyer_ShopControl extends Pane {
 
             } else if (e.getSource().equals(searchButton)) {
 
-
-
+                String searchString = pane.getSearchField().getText();
+                // populate books containing either the book title
+                // or author
 
             } else if (e.getSource().equals(resetfiltersButton)) {
 
@@ -86,7 +87,7 @@ public class Buyer_ShopControl extends Pane {
                 pane.clearConditionButtons();
                 pane.clearRadioButtons();
 
-                pane.populateBooks();
+                pane.populateBooks(); // might not fixing
 
             }
 
@@ -109,6 +110,14 @@ public class Buyer_ShopControl extends Pane {
                 // populate the books in ascending order
                 // ......
             }
+
+        }
+    }
+
+    private class SearchFieldListener implements ChangeListener<String> {
+
+        @Override
+        public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
 
         }
     }
