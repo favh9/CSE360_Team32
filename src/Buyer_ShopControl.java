@@ -2,15 +2,9 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.stage.Popup;
-import javafx.stage.Window;
 
 public class Buyer_ShopControl extends Pane {
 
@@ -61,7 +55,7 @@ public class Buyer_ShopControl extends Pane {
         // make a condition that queries the database for the
         // seller's books
         // if the seller has no books to display or not
-        if(true) {
+        if(pane.hasBooks()) {
             pane.populateBooks();
         } else {
             pane.noBooksFound();
@@ -69,8 +63,6 @@ public class Buyer_ShopControl extends Pane {
 
         this.getChildren().addAll(pane);
     }
-
-
 
     private class ButtonHandler implements EventHandler<ActionEvent> {
 
@@ -84,6 +76,7 @@ public class Buyer_ShopControl extends Pane {
                 Main.mainWindow.setScene(new Scene(cart));
 
             } else if (e.getSource().equals(searchButton)) {
+
 
 
 

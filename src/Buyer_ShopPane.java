@@ -239,7 +239,7 @@ public class Buyer_ShopPane extends BorderPane {
     }
 
     public void setCartVisible(boolean b) {
-        sp.setVisible(b);
+        cartStackPane.setVisible(b);
     }
 
     public void clearCategoryButtons() {
@@ -342,6 +342,7 @@ public class Buyer_ShopPane extends BorderPane {
 
         addToCartButton = new Button("Add to Cart");
         addToCartButton.setOnAction(e-> {
+            System.out.println(book.getTitle());
             addedToCart(book);
             updateBadgeCount();
             setCartVisible(true);
