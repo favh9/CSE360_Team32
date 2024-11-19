@@ -11,76 +11,78 @@ import javafx.scene.text.Font;
 
 public class Seller_SettingsPane extends BorderPane {
 
+    // Declare buttons for settings actions
     private Button changePasswordButton;
     private Button addPaymentInfoButton;
 
+    /**
+     * Constructor to set up the Seller Settings Pane.
+     * @param user User object containing user details.
+     * @param width The width of the settings pane.
+     * @param height The height of the settings pane.
+     */
     public Seller_SettingsPane(User user, double width, double height) {
 
-        Seller_NavigationControl navBarVBox = new Seller_NavigationControl(user,width,height);
+        // Create and initialize the navigation control (sidebar or navigation bar)
+        Seller_NavigationControl navBarVBox = new Seller_NavigationControl(user, width, height);
 
-        // set attributes for the Title Label
+        // Initialize and set properties for the title label
         Label titleLabel = new Label("Settings");
-        titleLabel.setFont(Font.font(42));
+        titleLabel.setFont(Font.font(42)); // Set the font size for the title
 
-        // set attributes for the header of the main page
+        // Create and set up the header with the title label
         HBox headerHBox = new HBox(titleLabel);
-        headerHBox.setAlignment(Pos.BASELINE_LEFT);
+        headerHBox.setAlignment(Pos.BASELINE_LEFT); // Align the title to the left
 
-        // buttons to show
+        // Initialize the action buttons
         changePasswordButton = new Button("Change Password");
         addPaymentInfoButton = new Button("Add Payment Info");
+
+        // Style the buttons
         changePasswordButton.setFont(Font.font(20));
         addPaymentInfoButton.setFont(Font.font(20));
-        changePasswordButton.setStyle(
-                "-fx-background-radius: 3em;"
-        );
-        addPaymentInfoButton.setStyle(
-                "-fx-background-radius: 3em;"
-        );
-        changePasswordButton.setPrefSize(300,40);
-        addPaymentInfoButton.setPrefSize(300,40);
 
+        // Add rounded corners to buttons
+        changePasswordButton.setStyle("-fx-background-radius: 3em;");
+        addPaymentInfoButton.setStyle("-fx-background-radius: 3em;");
 
-        // store buttons in VBox
+        // Set preferred button sizes
+        changePasswordButton.setPrefSize(300, 40);
+        addPaymentInfoButton.setPrefSize(300, 40);
+
+        // Store the buttons in a VBox container with spacing and padding
         VBox buttonVBox = new VBox(changePasswordButton, addPaymentInfoButton);
-        buttonVBox.setSpacing(10);
-        buttonVBox.setPadding(new Insets(100,0,0,0));
-        buttonVBox.setAlignment(Pos.CENTER);
+        buttonVBox.setSpacing(10); // Set space between buttons
+        buttonVBox.setPadding(new Insets(100, 0, 0, 0)); // Add padding to top
+        buttonVBox.setAlignment(Pos.CENTER); // Center align buttons
 
-        // set attributes for the main VBox
+        // Create a main VBox to hold header and buttons
         VBox mainVBox = new VBox(headerHBox, buttonVBox);
-        mainVBox.setPadding(new Insets(40,40,0,40));
-        mainVBox.setPrefWidth(width - navBarVBox.getWidth() - 40);
-        mainVBox.setStyle(
-                "-fx-background-radius: 2em;" + "-fx-background-color: #ffffff;"
-        );
+        mainVBox.setPadding(new Insets(40, 40, 0, 40)); // Add padding around the content
+        mainVBox.setPrefWidth(width - navBarVBox.getWidth() - 40); // Adjust the width based on navBar
+        mainVBox.setStyle("-fx-background-radius: 2em; -fx-background-color: #ffffff;"); // Style background of the main VBox
 
-        // set attributes for the container that holds the navigation bar and the main VBox
-        HBox navBarAndMainHBox = new HBox(navBarVBox,mainVBox);
-        navBarAndMainHBox.setSpacing(20);
+        // Create a container to hold both the navigation bar and the main VBox
+        HBox navBarAndMainHBox = new HBox(navBarVBox, mainVBox);
+        navBarAndMainHBox.setSpacing(20); // Set spacing between navigation bar and main content
 
+        // Set the container as the center of the BorderPane
         this.setCenter(navBarAndMainHBox);
-        BorderPane.setMargin(navBarAndMainHBox, new Insets(20,20,20,20));
+        BorderPane.setMargin(navBarAndMainHBox, new Insets(20, 20, 20, 20)); // Add margin around the center
 
-        // these are by default what we use for the scene
-        this.setPrefSize(width, height);;
-        this.setBackground(Background.fill(Color.web("#4A1E2C"))); // darker maroon color
-
+        // Set the preferred size of the settings pane and apply background color
+        this.setPrefSize(width, height);
+        this.setBackground(Background.fill(Color.web("#4A1E2C"))); // Apply a maroon background color
     }
+
+    // Getter and setter methods for the buttons (in case they need to be accessed or modified later)
 
     public Button getChangePasswordButton() {
         return changePasswordButton;
-    }
-
-    public void setChangePasswordButton(Button changePasswordButton) {
-        this.changePasswordButton = changePasswordButton;
     }
 
     public Button getAddPaymentInfoButton() {
         return addPaymentInfoButton;
     }
 
-    public void setAddPaymentInfoButton(Button addPaymentInfoButton) {
-        this.addPaymentInfoButton = addPaymentInfoButton;
-    }
 }

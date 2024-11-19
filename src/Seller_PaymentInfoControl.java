@@ -10,6 +10,7 @@ public class Seller_PaymentInfoControl extends Pane {
     private double width;
     private double height;
     private Button backButton;
+    private Button confirmButton;
     private Seller_PaymentInfoPane pane;
 
     public Seller_PaymentInfoControl(User user, double width, double height) {
@@ -22,6 +23,9 @@ public class Seller_PaymentInfoControl extends Pane {
 
         backButton = pane.getBackButton();
         backButton.setOnAction(new ButtonHandler());
+
+        confirmButton = pane.getConfirmButton();
+        confirmButton.setOnAction(new ButtonHandler());
 
         this.getChildren().add(pane);
 
@@ -36,6 +40,17 @@ public class Seller_PaymentInfoControl extends Pane {
 
                 Seller_SettingsControl settings = new Seller_SettingsControl(user, width, height);
                 Main.mainWindow.setScene(new Scene(settings));
+
+            } else if (a.getSource() == confirmButton) {
+
+                if(pane.emptyFields()) {
+                    pane.displayEmptyFields();
+                } else if(!pane.isCardValid()) {
+                    pane.displayInValidCard();
+                } else {
+                    pane.displayPaymentUpdated();
+                }
+
 
             }
 
