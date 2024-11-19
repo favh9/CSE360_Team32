@@ -89,6 +89,7 @@ public class Buyer_ShopControl extends Pane {
     // displays the books found from the seller
     public void populateBooks() {
 
+
         // i.e. for books in User.books, add a book
         Book book1 = new Book("The Great Gatsby", "F. Scott Fitzgerald", "Classic", "New",2, 12.99);
         Book book2 = new Book("To Kill a Mockingbird", "Harper Lee", "Fiction", "Used",2, 8.49);
