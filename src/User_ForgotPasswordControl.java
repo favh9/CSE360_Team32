@@ -71,16 +71,41 @@ public class User_ForgotPasswordControl extends Pane {
                 // use this for the birthdate
                 DecimalFormat df = new DecimalFormat("00");
                 String birthdate = yearComboBox.getValue() + "-" + df.format(Integer.parseInt(monthComboBox.getValue())) + "-" + df.format(Integer.parseInt(dayComboBox.getValue()));
+                User user = null;
+                String email ="1";
+                String DOB = "1";
+                boolean UserExists = true;
+                try {
+                    user = DataBase.getUserByUsername(usernameTextField.getText());
+                    email = user.getEmail();
+                    DOB = user.getDob();
+
+                } catch (Exception e) {
+
+                    UserExists =false;
+                }
 
                 if(emptyFields()) {
 
                     displayEmptyFields();
 
-                } else if(!passwordsMatch()){
+                } else if(!UserExists) {
+
+                    displayUserNotFound();
+
+                } else if(!passwordsMatch()) {
 
                     displayPasswordsMatch();
 
+                } else if (  (email.compareToIgnoreCase(emailTextField.getText()) != 0) || (DOB.compareTo(birthdate) != 0)) {
+
+                    displayIncorrectInfo();
+
+
+
                 } else {
+
+
 
                     Alert acctCreatedAlert = new Alert(Alert.AlertType.INFORMATION);
                     acctCreatedAlert.setTitle("");
@@ -112,6 +137,24 @@ public class User_ForgotPasswordControl extends Pane {
             alert.setTitle("Warning");
             alert.setHeaderText(null);
             alert.setContentText("Please verify or re-enter your password\n");
+            alert.show();
+        }
+
+        public void displayIncorrectInfo() {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+
+            alert.setTitle("Warning");
+            alert.setHeaderText(null);
+            alert.setContentText("Wrong Account Info\n");
+            alert.show();
+        }
+
+        public void displayUserNotFound() {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+
+            alert.setTitle("Warning");
+            alert.setHeaderText(null);
+            alert.setContentText("No such User\n");
             alert.show();
         }
 
