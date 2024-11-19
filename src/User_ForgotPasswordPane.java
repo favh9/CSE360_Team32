@@ -12,10 +12,10 @@ import javafx.scene.text.FontWeight;
 
 import java.util.Calendar;
 
-// this class will provide the user interface
-// for the create account page
+// This class provides the user interface for the Forgot Password page in the application.
 public class User_ForgotPasswordPane extends BorderPane {
 
+    // Declare UI components
     private TextField emailTextField;
     private TextField usernameTextField;
     private ComboBox<String> yearComboBox;
@@ -28,182 +28,161 @@ public class User_ForgotPasswordPane extends BorderPane {
     private double width;
     private double height;
 
-    // parameterized constructor
+    // Parameterized constructor to initialize the Forgot Password interface
     public User_ForgotPasswordPane(double width, double height) {
 
         this.width = width;
         this.height = height;
 
-        // set attributes for the image to be used for the back button
+        // --- Back Button Setup ---
+        // Set the image for the back button
         ImageView backImageView = new ImageView(Main.backIcon);
         backImageView.setFitWidth(40);
         backImageView.setFitHeight(40);
 
-        // set attributes for the back button and add the back icon
+        // Create and configure the back button
         backButton = new Button();
         backButton.setGraphic(backImageView);
-        backButton.setBackground(null);
+        backButton.setBackground(null); // No background for the button
 
-        // set attributes for the create account label
+        // --- Forgot Password Label ---
+        // Create the label for the page title ("Forgot Password")
         Label forgotPasswordLabel = new Label("Forgot Password");
-        forgotPasswordLabel.setFont(Font.font("Arial",FontWeight.NORMAL,36));
+        forgotPasswordLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 36));
         forgotPasswordLabel.setTextFill(Color.BLACK);
         forgotPasswordLabel.setPrefHeight(40);
 
-        // add the back button and create account label to this HBox
+        // Place the back button and forgot password label into an HBox
         HBox backbuttonForgotpasswordLabelHBox = new HBox(backButton, forgotPasswordLabel);
         backbuttonForgotpasswordLabelHBox.setAlignment(Pos.CENTER_LEFT);
         backbuttonForgotpasswordLabelHBox.setSpacing(20);
 
-        // set attributes for the instructions label
+        // --- Instruction Label ---
+        // Create an instruction label to guide the user
         Label instructionLabel = new Label("Fill in the information below and click on the confirm button to reset your password.");
-        instructionLabel.setFont(Font.font("Arial",FontWeight.NORMAL,18));
+        instructionLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 18));
 
-        // set attributes for the email label
+        // --- Email Field Setup ---
+        // Label and text field for email input
         Label emailLabel = new Label("E-mail:");
-        emailLabel.setFont(Font.font("Arial",FontWeight.NORMAL,16));
-
-        // set attributes for the email text field
+        emailLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
         emailTextField = new TextField();
         emailTextField.setPromptText("E-mail");
-        emailTextField.setFont(Font.font("Arial",FontWeight.NORMAL,16));
+        emailTextField.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
 
-        // add the email label and email text field into this hbox
+        // Combine email label and text field into an HBox for alignment
         HBox emailTextFieldHBox = new HBox(emailLabel, emailTextField);
         emailTextFieldHBox.setAlignment(Pos.CENTER_RIGHT);
         emailTextFieldHBox.setSpacing(10);
 
-        // set attributes for the username label
+        // --- Username Field Setup ---
+        // Label and text field for username input
         Label usernameLabel = new Label("Username:");
-        usernameLabel.setFont(Font.font("Arial",FontWeight.NORMAL,16));
-
-        // set attributes for the username text field
+        usernameLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
         usernameTextField = new TextField();
         usernameTextField.setPromptText("Username");
-        usernameTextField.setFont(Font.font("Arial",FontWeight.NORMAL,16));
+        usernameTextField.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
 
-        // add the username label and username text field into this hbox
+        // Combine username label and text field into an HBox for alignment
         HBox usernameTextfieldHBox = new HBox(usernameLabel, usernameTextField);
         usernameTextfieldHBox.setAlignment(Pos.CENTER_RIGHT);
         usernameTextfieldHBox.setSpacing(10);
 
-        // add a label for security question - birth date
+        // --- Birth Date Field Setup ---
+        // Label and combo boxes for selecting birth date (year, month, day)
         Label birthdateLabel = new Label("Date of Birth:");
-        birthdateLabel.setFont(Font.font("Arial",FontWeight.NORMAL,16));
+        birthdateLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
 
-        // add a birth date field
-        // set attributes for the year box
+        // Year combo box setup
         yearComboBox = new ComboBox<>();
         yearComboBox.setVisibleRowCount(10);
-
-        // get the current year
-        Calendar calendar = Calendar.getInstance();
-        int currentYear = calendar.get(Calendar.YEAR);
-
-        // fill the choice box with yeears from current to 1800?
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         for (int year = currentYear; year >= 1800; year--) {
             yearComboBox.getItems().add(Integer.toString(year));
         }
+        yearComboBox.setValue("YYYY"); // Default to "YYYY"
 
-        // set the default choice to current year
-        yearComboBox.setValue("YYYY");
-
-        // set attributes for the day box
-        dayComboBox = new ComboBox<>();
-        dayComboBox.setVisibleRowCount(10);
-
-        // fill the choice box with days
-        int maxDays = 31;
-        for (int day = 1; day <= maxDays; day++) {
-            dayComboBox.getItems().add(Integer.toString(day));
-        }
-
-        // set the default choice for days
-        dayComboBox.setValue("DD");
-
-        // set attributes for the day box
+        // Month combo box setup
         monthComboBox = new ComboBox<>();
         monthComboBox.setVisibleRowCount(10);
-
-        // fill the choice box with days
-        int maxMonths = 12;
-        for (int month = 1; month <= maxMonths; month++) {
+        for (int month = 1; month <= 12; month++) {
             monthComboBox.getItems().add(Integer.toString(month));
         }
+        monthComboBox.setValue("MM"); // Default to "MM"
 
-        // set the default choice for days
-        monthComboBox.setValue("MM");
+        // Day combo box setup
+        dayComboBox = new ComboBox<>();
+        dayComboBox.setVisibleRowCount(10);
+        for (int day = 1; day <= 31; day++) {
+            dayComboBox.getItems().add(Integer.toString(day));
+        }
+        dayComboBox.setValue("DD"); // Default to "DD"
 
-        // create a HBox to store the label and text field
-        HBox birthdateHBox = new HBox(birthdateLabel,yearComboBox,monthComboBox,dayComboBox);
+        // Combine birthdate label and combo boxes into an HBox for alignment
+        HBox birthdateHBox = new HBox(birthdateLabel, yearComboBox, monthComboBox, dayComboBox);
         birthdateHBox.setAlignment(Pos.CENTER_RIGHT);
         birthdateHBox.setSpacing(10);
 
-        // set attributes for the password label
+        // --- Password and Confirm Password Fields ---
+        // Label and password field for new password
         Label passwordLabel = new Label("New Password:");
-        passwordLabel.setFont(Font.font("Arial",FontWeight.NORMAL,16));
-
-        // set attributes for the password password field
+        passwordLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
         passwordPasswordfield = new PasswordField();
         passwordPasswordfield.setPromptText("New Password");
-        passwordPasswordfield.setFont(Font.font("Arial",FontWeight.NORMAL,16));
+        passwordPasswordfield.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
 
-        // add the password label and password password field into this hbox
+        // Combine password label and field into an HBox
         HBox passwordPasswordfieldHBox = new HBox(passwordLabel, passwordPasswordfield);
         passwordPasswordfieldHBox.setAlignment(Pos.CENTER_RIGHT);
         passwordPasswordfieldHBox.setSpacing(10);
 
-        // set attributes for the confirm password label
+        // Label and password field for confirm password
         Label confirmpasswordLabel = new Label("Confirm Password:");
-        confirmpasswordLabel.setFont(Font.font("Arial",FontWeight.NORMAL,16));
-
-        // set attributes for the password password field
+        confirmpasswordLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
         confirmpasswordPasswordfield = new PasswordField();
         confirmpasswordPasswordfield.setPromptText("Confirm Password");
-        confirmpasswordPasswordfield.setFont(Font.font("Arial",FontWeight.NORMAL,16));
+        confirmpasswordPasswordfield.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
 
-        // add the password label and password password field into this hbox
+        // Combine confirm password label and field into an HBox
         HBox confirmpasswordPasswordfieldHBox = new HBox(confirmpasswordLabel, confirmpasswordPasswordfield);
         confirmpasswordPasswordfieldHBox.setAlignment(Pos.CENTER_RIGHT);
         confirmpasswordPasswordfieldHBox.setSpacing(10);
 
-        // set the attributes for the confirm button
+        // --- Confirm Button ---
+        // Create the confirm button to submit the form
         confirmButton = new Button("Confirm");
-        confirmButton.setFont(Font.font("Arial",FontWeight.NORMAL,16));
-        confirmButton.setPrefSize(100,40);
+        confirmButton.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
+        confirmButton.setPrefSize(100, 40);
 
-        // add the grey box elements which includes the instructions label and all HBoxes
+        // --- Main Layout ---
+        // Create a grey VBox to hold the form elements
         VBox greyVBox = new VBox(instructionLabel, emailTextFieldHBox, usernameTextfieldHBox, birthdateHBox, passwordPasswordfieldHBox, confirmpasswordPasswordfieldHBox, confirmButton);
-        // readjust the width of the HBoxes inside the greyVBox
-        VBox.setMargin(emailTextFieldHBox, new Insets(0,450,0,0));
-        VBox.setMargin(usernameTextfieldHBox, new Insets(0,450,0,0));
-        VBox.setMargin(birthdateHBox, new Insets(0,415,0,0));
-        VBox.setMargin(passwordPasswordfieldHBox, new Insets(0,450,0,0));
-        VBox.setMargin(confirmpasswordPasswordfieldHBox, new Insets(0,450,0,0));
-        VBox.setMargin(confirmButton, new Insets(0,0,0,400));
-        greyVBox.setSpacing(20);
-        greyVBox.setPadding(new Insets(20,20,20,20));
-        greyVBox.setStyle(
-                "-fx-background-radius: 2em;" +
-                        "-fx-background-color: #D9D9D9;"
-        );
 
-        // the white VBox is our main box
+        // Adjust margins of each HBox inside the grey VBox for proper alignment
+        VBox.setMargin(emailTextFieldHBox, new Insets(0, 450, 0, 0));
+        VBox.setMargin(usernameTextfieldHBox, new Insets(0, 450, 0, 0));
+        VBox.setMargin(birthdateHBox, new Insets(0, 415, 0, 0));
+        VBox.setMargin(passwordPasswordfieldHBox, new Insets(0, 450, 0, 0));
+        VBox.setMargin(confirmpasswordPasswordfieldHBox, new Insets(0, 450, 0, 0));
+        VBox.setMargin(confirmButton, new Insets(0, 0, 0, 250));
+
+        greyVBox.setSpacing(20);
+        greyVBox.setPadding(new Insets(20, 20, 20, 20));
+        greyVBox.setStyle("-fx-background-radius: 2em; -fx-background-color: #D9D9D9;");
+
+        // Create a white VBox to hold the grey VBox and back button
         VBox whiteVBox = new VBox(backbuttonForgotpasswordLabelHBox, greyVBox);
         whiteVBox.setSpacing(10);
-        whiteVBox.setPadding(new Insets(40,40,40,40));
-        whiteVBox.setStyle(
-                "-fx-background-radius: 2em;" +
-                        "-fx-background-color: #ffffff;"
-        );
+        whiteVBox.setPadding(new Insets(40, 40, 40, 40));
+        whiteVBox.setStyle("-fx-background-radius: 2em; -fx-background-color: #ffffff;");
 
-        // set attributes for the Border Pane
+        // Set the main layout for the BorderPane
         this.setCenter(whiteVBox);
-        BorderPane.setMargin(whiteVBox, new Insets(20,20,20,20));
+        BorderPane.setMargin(whiteVBox, new Insets(20, 20, 20, 20));
 
-        this.setPrefSize(width, height);;
-        this.setBackground(Background.fill(Color.web("#4A1E2C"))); // darker maroon colors
-
+        // Set the preferred size and background color for the BorderPane
+        this.setPrefSize(width, height);
+        this.setBackground(Background.fill(Color.web("#4A1E2C"))); // Darker maroon background color
     }
 
     public String getEmail() {
@@ -256,10 +235,7 @@ public class User_ForgotPasswordPane extends BorderPane {
             return true;
         if(passwordPasswordfield.getText().isEmpty())
             return true;
-        if(confirmpasswordPasswordfield.getText().isEmpty())
-            return true;
-
-        return false;
+        return confirmpasswordPasswordfield.getText().isEmpty();
     }
 
     public boolean passwordsMatch() {
@@ -291,79 +267,70 @@ public class User_ForgotPasswordPane extends BorderPane {
 
     }
 
-    public void displayAccountCreated() {
-
-        Alert acctCreatedAlert = new Alert(Alert.AlertType.INFORMATION);
-        acctCreatedAlert.setTitle("");
-        acctCreatedAlert.setHeaderText("Congratulations!");
-        acctCreatedAlert.setContentText("Welcome " + usernameTextField.getText() +
-                ",\nYour account was successfully reset.");
-
-        ImageView confirmImageView = new ImageView(Main.successIcon);
-        confirmImageView.setFitHeight(40);
-        confirmImageView.setFitWidth(40);
-        acctCreatedAlert.setGraphic(confirmImageView);
-
-        // this will ensure upon closing the login page appears
-        acctCreatedAlert.setOnCloseRequest(arg0 -> {
-            // TODO Auto-generated method stub
-            User_LoginControl login = new User_LoginControl(width,height);
-            Main.mainWindow.setScene(new Scene(login,width,height));
-        });
-        acctCreatedAlert.show();
+    // Method to display an alert when password reset fails
+    public void displayPasswordResetFailed() {
+        String title = "Password Reset Failed";
+        String msg = "Your new password was not saved, please re-enter current password.";
+        // Use the helper method to display the alert
+        showAlert(Alert.AlertType.WARNING, title, null, msg);
     }
 
-    public void displayPasswordsMatch() {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-
-        alert.setTitle("Warning");
-        alert.setHeaderText(null);
-        alert.setContentText("Please verify or re-enter your password\n");
-        alert.show();
+    // Method to display an alert when password reset is successful
+    public void displayPasswordReset() {
+        String title = "Password Reset Success";
+        String msg = "Your new password has been saved.";
+        // Use the helper method to display the alert
+        showAlert(Alert.AlertType.INFORMATION, title, null, msg);
     }
 
-    public void displayIncorrectInfo() {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-
-        alert.setTitle("Warning");
-        alert.setHeaderText(null);
-        alert.setContentText("Wrong Account Info\n");
-        alert.show();
+    // Method to display an alert when passwords do not match
+    public void displayPasswordsNotMatch() {
+        String title = "Warning";
+        String msg = "Password mismatch error: verify please entered password\n";
+        // Use the helper method to display the alert
+        showAlert(Alert.AlertType.WARNING, title, null, msg);
     }
 
+    // Method to display an alert when the user is not found
     public void displayUserNotFound() {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-
-        alert.setTitle("Warning");
-        alert.setHeaderText(null);
-        alert.setContentText("No such User\n");
-        alert.show();
+        String title = "Warning";
+        String msg = "No such User\n";
+        // Use the helper method to display the alert
+        showAlert(Alert.AlertType.WARNING, title, null, msg);
     }
 
+    // Method to display an alert when there are empty fields
     public void displayEmptyFields() {
+        String title = "Warning";
+        String msg = "Please enter the following fields to create your account:\n";
 
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        String missingData = "Please enter the following fields to create your account:\n";
+        // Append the missing fields to the message
+        if (emailTextField.getText().isEmpty())
+            msg += "\temail\n";
+        if (usernameTextField.getText().isEmpty())
+            msg += "\tusername\n";
+        if (yearComboBox.getValue().equals("YYYY"))
+            msg += "\tbirth year\n";
+        if (monthComboBox.getValue().equals("MM"))
+            msg += "\tbirth month\n";
+        if (dayComboBox.getValue().equals("DD"))
+            msg += "\tbirth day\n";
+        if (passwordPasswordfield.getText().isEmpty())
+            msg += "\tpassword\n";
+        if (confirmpasswordPasswordfield.getText().isEmpty())
+            msg += "\tconfirm password\n";
 
-        if(emailTextField.getText().isEmpty())
-            missingData += "\temail\n";
-        if(usernameTextField.getText().isEmpty())
-            missingData += "\tusername\n";
-        if(yearComboBox.getValue().equals("YYYY"))
-            missingData += "\tbirth year\n";
-        if(monthComboBox.getValue().equals("MM"))
-            missingData += "\tbirth month\n";
-        if(dayComboBox.getValue().equals("DD"))
-            missingData += "\tbirth day\n";
-        if(passwordPasswordfield.getText().isEmpty())
-            missingData += "\tpassword\n";
-        if(confirmpasswordPasswordfield.getText().isEmpty())
-            missingData += "\tconfirm password\n";
-
-        alert.setTitle("Warning");
-        alert.setHeaderText(null);
-        alert.setContentText(missingData);
-        alert.show();
-
+        // Use the helper method to display the alert
+        showAlert(Alert.AlertType.WARNING, title, null, msg);
     }
+
+    // Helper method to show alerts
+    private void showAlert(Alert.AlertType alertType, String title, String headerText, String contentText) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText); // Can be null
+        alert.setContentText(contentText);
+        alert.show();
+    }
+
 }

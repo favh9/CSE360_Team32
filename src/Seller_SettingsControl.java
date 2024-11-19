@@ -38,7 +38,8 @@ public class Seller_SettingsControl extends Pane {
 
             if(a.getSource() == changePasswordButton) {
 
-
+                Seller_ForgotPasswordControl forgotpassword = new Seller_ForgotPasswordControl(user,width,height);
+                Main.mainWindow.setScene(new Scene(forgotpassword));
 
             } else if(a.getSource() == addPaymentInfoButton) {
 

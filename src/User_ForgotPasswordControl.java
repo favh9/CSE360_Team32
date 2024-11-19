@@ -12,8 +12,8 @@ public class User_ForgotPasswordControl extends Pane {
     private final double width;
     private final double height;
     private User_ForgotPasswordPane pane;
-    private PasswordField passwordPasswordfield;
-    private PasswordField confirmpasswordPasswordfield;
+    private PasswordField passwordField;
+    private PasswordField confirmPasswordField;
     private Button confirmButton;
     private Button backButton;
 
@@ -24,11 +24,11 @@ public class User_ForgotPasswordControl extends Pane {
 
         pane = new User_ForgotPasswordPane(width,height);
 
-        passwordPasswordfield = pane.getPasswordPasswordfield();
-        passwordPasswordfield.setOnKeyReleased(new PasswordFieldHandler());
+        passwordField = pane.getPasswordPasswordfield();
+        passwordField.setOnKeyReleased(new PasswordFieldHandler());
 
-        confirmpasswordPasswordfield = pane.getConfirmpasswordPasswordfield();
-        confirmpasswordPasswordfield.setOnKeyReleased(new PasswordFieldHandler());
+        confirmPasswordField = pane.getConfirmpasswordPasswordfield();
+        confirmPasswordField.setOnKeyReleased(new PasswordFieldHandler());
 
         confirmButton = pane.getConfirmButton();
         confirmButton.setOnAction(new ButtonHandler());
@@ -85,15 +85,15 @@ public class User_ForgotPasswordControl extends Pane {
 
                 } else if(!pane.passwordsMatch()) {
 
-                    pane.displayPasswordsMatch();
+                    pane.displayPasswordsNotMatch();
 
                 } else if (  (email.compareToIgnoreCase(pane.getEmail()) != 0) || (DOB.compareTo(birthdate) != 0)) {
 
-                    pane.displayIncorrectInfo();
+                    pane.displayPasswordResetFailed();
 
                 } else {
 
-                    pane.displayAccountCreated();
+                    pane.displayPasswordReset();
 
                 }
             }
@@ -106,7 +106,7 @@ public class User_ForgotPasswordControl extends Pane {
         @Override
         public void handle(KeyEvent keyEvent) {
 
-            if(keyEvent.getSource() == passwordPasswordfield) {
+            if(keyEvent.getSource() == passwordField) {
 
                 // sleep the thread to find a password mismatch
                 try {
@@ -118,7 +118,7 @@ public class User_ForgotPasswordControl extends Pane {
 
                 pane.passwordFlag();
 
-            } else if(keyEvent.getSource() == confirmpasswordPasswordfield) {
+            } else if(keyEvent.getSource() == confirmPasswordField) {
 
                 pane.confirmPasswordFlag();
 
