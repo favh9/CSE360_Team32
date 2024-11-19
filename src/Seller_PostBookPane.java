@@ -1,4 +1,5 @@
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -23,8 +24,15 @@ public class Seller_PostBookPane extends BorderPane {
     private TextField priceField;
     private TextField generatedpriceField;
     private Button listmybookButton;
+    private User user;
+    private double width;
+    private double height;
 
     public Seller_PostBookPane(User user, double width, double height) {
+
+        this.user = user;
+        this.width = width;
+        this.height = height;
 
         Font titleFont = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 42);
         Font instructionFont = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 16);
@@ -52,9 +60,6 @@ public class Seller_PostBookPane extends BorderPane {
         authorField.setPrefWidth(400);
         HBox authorHBox = new HBox(authorField);
 
-        // set attributes for label
-        Label yearLabel = new Label("Year:");
-
         // set attributes for the box
         yearComboBox = new ComboBox<>();
         yearComboBox.setVisibleRowCount(10);
@@ -69,9 +74,7 @@ public class Seller_PostBookPane extends BorderPane {
         }
 
         // set the default choice to current year
-        yearComboBox.setValue("Select Year");
-
-        VBox yearVBox = new VBox(yearLabel,yearComboBox);
+        yearComboBox.setValue("Published Year");
 
         // set attributes for choice box
         categoryChoiceBox = new ChoiceBox<>();
@@ -153,68 +156,138 @@ public class Seller_PostBookPane extends BorderPane {
 
     }
 
-    public TextField getBooknameField() {
-        return booknameField;
-    }
-
-    public void setBooknameField(TextField booknameField) {
-        this.booknameField = booknameField;
-    }
-
-    public TextField getAuthorField() {
-        return authorField;
-    }
-
-    public void setAuthorField(TextField authorField) {
-        this.authorField = authorField;
-    }
-
-    public ComboBox<String> getYearComboBox() {
-        return yearComboBox;
-    }
-
-    public void setYearComboBox(ComboBox<String> yearComboBox) {
-        this.yearComboBox = yearComboBox;
-    }
-
-    public ChoiceBox<String> getCategoryChoiceBox() {
-        return categoryChoiceBox;
-    }
-
-    public void setCategoryChoiceBox(ChoiceBox<String> categoryChoiceBox) {
-        this.categoryChoiceBox = categoryChoiceBox;
-    }
-
-    public ChoiceBox<String> getConditionChoiceBox() {
-        return conditionChoiceBox;
-    }
-
-    public void setConditionChoiceBox(ChoiceBox<String> conditionChoiceBox) {
-        this.conditionChoiceBox = conditionChoiceBox;
-    }
-
-    public TextField getPriceField() {
-        return priceField;
-    }
-
-    public void setPriceField(TextField priceField) {
-        this.priceField = priceField;
-    }
-
-    public TextField getGeneratedpriceField() {
-        return generatedpriceField;
-    }
-
-    public void setGeneratedpriceField(TextField generatedpriceField) {
-        this.generatedpriceField = generatedpriceField;
-    }
-
     public Button getListmybookButton() {
         return listmybookButton;
     }
 
-    public void setListmybookButton(Button listmybookButton) {
-        this.listmybookButton = listmybookButton;
+    public boolean emptyFields() {
+
+        if(booknameField.getText().isEmpty()) {
+            return true;
+        } else if (authorField.getText().isEmpty()) {
+            return true;
+        } else if(yearComboBox.getValue().equals("Published Year")) {
+            return true;
+        } else if (categoryChoiceBox.getValue().equals("Select Category")) {
+            return true;
+        } else if (conditionChoiceBox.getValue().equals("Select Condition")) {
+            return true;
+        } else return priceField.getText().isEmpty();
+    }
+
+    public void displayEmptyFields() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        String missingData = "Please check the following fields:\n";
+
+        if(booknameField.getText().isEmpty())
+            missingData += "\tBook Name\n";
+        if(authorField.getText().isEmpty())
+            missingData += "\tAuthor\n";
+        if(yearComboBox.getValue().equals("Published Year"))
+            missingData += "\tPublished Year\n";
+        if(categoryChoiceBox.getValue().equals("Select Category"))
+            missingData += "\tCategory\n";
+        if(conditionChoiceBox.getValue().equals("Select Condition"))
+            missingData += "\tCondition\n";
+        if(priceField.getText().isEmpty())
+            missingData += "\tPrice\n";
+
+        alert.setTitle("Warning");
+        alert.setHeaderText(null);
+        alert.setContentText(missingData);
+        alert.show();
+    }
+
+    public boolean isPriceValid() {
+
+        double price;
+
+        try {
+
+            price = Double.parseDouble(priceField.getText());
+
+            if(price <= 0) {
+                return false;
+            }
+
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid price");
+            return false;
+        }
+
+        return true;
+    }
+
+    public void displayInvalidPrice() {
+
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        String msg = "You have entered an invalid price, please input an amount greater than 0.";
+        alert.setTitle("Warning");
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+        alert.show();
+
+    }
+
+    public void displayBookPosted() {
+
+        Alert acctCreatedAlert = new Alert(Alert.AlertType.INFORMATION);
+        acctCreatedAlert.setTitle("");
+        acctCreatedAlert.setHeaderText("Congratulations!");
+        acctCreatedAlert.setContentText("You have posted your book successfully!");
+
+        ImageView confirmImageView = new ImageView(Main.successIcon);
+        confirmImageView.setFitHeight(40);
+        confirmImageView.setFitWidth(40);
+
+        acctCreatedAlert.setGraphic(confirmImageView);
+
+        // closing pop up behavior
+        acctCreatedAlert.setOnCloseRequest(arg0 -> {
+            // TODO Auto-generated method stub
+            Seller_PostBookControl seller = new Seller_PostBookControl(user, width, height);
+            Main.mainWindow.setScene(new Scene(seller));
+        });
+
+        acctCreatedAlert.show();
+    }
+
+    public void computeGeneratedPrice() {
+
+        double generatedPrice;
+
+        if(isPriceValid()) {
+
+            generatedPrice = 10 + Double.parseDouble(priceField.getText());
+            generatedpriceField.setText("$"+ generatedPrice);
+
+        }
+
+    }
+
+    public boolean confirmPost() {
+
+        boolean confirmed = false;
+
+        // Create the alert dialog
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        String msg = "You are about to post this book for sale." +
+                "\nPlease confirm whether you would like to continue.";
+        alert.setTitle("Confirm Post");
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+
+        // Show the alert and wait for the user response
+        ButtonType result = alert.showAndWait().orElse(ButtonType.CANCEL);
+
+        // Update the confirmed variable based on the user's choice
+        if (result == ButtonType.OK) {
+            confirmed = true; // User clicked "Confirm"
+        } else if (result == ButtonType.CANCEL) {
+            confirmed = false; // User clicked "Cancel"
+        }
+
+        return confirmed;
     }
 
 }
