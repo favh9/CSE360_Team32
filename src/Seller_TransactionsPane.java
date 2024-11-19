@@ -3,9 +3,7 @@ import java.text.NumberFormat;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -264,6 +262,24 @@ public class Seller_TransactionsPane extends BorderPane {
         VBox amountBox = new VBox(amount);
         amountBox.setAlignment(Pos.CENTER);
 
+        Hyperlink soldtoLink = new Hyperlink();
+        soldtoLink.setText("The Amazing Gatsby");
+        soldtoLink.setWrapText(true);
+        soldtoLink.setPrefWidth(150);
+        soldtoLink.setFont(Font.font(20));
+        soldtoLink.setAlignment(Pos.BASELINE_CENTER);
+        soldtoLink.setPadding(new Insets(5));
+
+        soldtoLink.setOnAction(e->{
+
+            Alert review = new Alert(Alert.AlertType.INFORMATION);
+            review.setTitle(null);
+            review.setHeaderText(null);
+            review.setContentText("This is the buyer's review");
+            review.show();
+
+        });
+
         // set attributes for the header label
         Label soldto = new Label("SparkyandHisFriends");
         soldto.setPrefWidth(150);
@@ -272,7 +288,7 @@ public class Seller_TransactionsPane extends BorderPane {
         soldto.setAlignment(Pos.BASELINE_CENTER);
         soldto.setPadding(new Insets(5));
 
-        VBox soldToBox = new VBox(soldto);
+        VBox soldToBox = new VBox(soldtoLink);
         soldToBox.setAlignment(Pos.CENTER);
 
         HBox transactionHBox = new HBox(titleBox,timestampBox,amountBox,soldToBox);
