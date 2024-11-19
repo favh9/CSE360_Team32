@@ -83,7 +83,7 @@ public class Seller_TransactionsPane extends BorderPane {
         headerLabel2.setAlignment(Pos.BASELINE_CENTER);
 
         // set attributes for the header label
-        Label headerLabel3 = new Label("Amount");
+        Label headerLabel3 = new Label("Profit");
         headerLabel3.setPrefWidth(150);
         headerLabel3.setWrapText(false);
         headerLabel3.setFont(Font.font(20));
