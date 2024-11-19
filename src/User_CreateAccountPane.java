@@ -2,16 +2,15 @@
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+import java.text.DecimalFormat;
 import java.util.Calendar;
 
 // this class will provide the user interface 
@@ -29,9 +28,14 @@ public class User_CreateAccountPane extends BorderPane {
     private PasswordField confirmpasswordPasswordfield;
     private Button confirmButton;
     private Button backButton;
+    private double width;
+    private double height;
 
     // parameterized constructor
     public User_CreateAccountPane(double width, double height) {
+
+        this.width = width;
+        this.height = height;
 
         // set attributes for the image to be used for the back button
         ImageView backImageView = new ImageView(Main.backIcon);
@@ -325,5 +329,142 @@ public class User_CreateAccountPane extends BorderPane {
         this.backButton = backButton;
     }
 
+    public boolean isValidUser() {
+        DecimalFormat df = new DecimalFormat("00");
+        String birthdate = yearComboBox.getValue() + "-" + df.format(Integer.parseInt(monthComboBox.getValue())) + "-" + df.format(Integer.parseInt(dayComboBox.getValue()));
+        return DataBase.insertUser(firstnameTextField.getText(),lastnameTextField.getText(),birthdate, emailTextField.getText(),usernameTextField.getText(),passwordPasswordfield.getText());
+    }
+
+    public boolean passwordsMatch() {
+        return passwordPasswordfield.getText().compareTo(confirmpasswordPasswordfield.getText()) == 0;
+    }
+
+    public boolean emptyFields() {
+
+        if(firstnameTextField.getText().isEmpty())
+            return true;
+        if(lastnameTextField.getText().isEmpty())
+            return true;
+        if(yearComboBox.getValue().equals("YYYY"))
+            return true;
+        if(monthComboBox.getValue().equals("MM"))
+            return true;
+        if(dayComboBox.getValue().equals("DD"))
+            return true;
+        if(emailTextField.getText().isEmpty())
+            return true;
+        if(usernameTextField.getText().isEmpty())
+            return true;
+        if(passwordPasswordfield.getText().isEmpty())
+            return true;
+        if(confirmpasswordPasswordfield.getText().isEmpty())
+            return true;
+
+        return false;
+    }
+
+    public void displayInvalidEmail() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+
+        alert.setTitle("Warning");
+        alert.setHeaderText(null);
+        alert.setContentText("Please verify or re-enter your e-mail\n");
+        alert.show();
+    }
+
+    public void displaySuccess() {
+
+        Alert acctCreatedAlert = new Alert(Alert.AlertType.INFORMATION);
+        acctCreatedAlert.setTitle("");
+        acctCreatedAlert.setHeaderText("Congratulations!");
+        acctCreatedAlert.setContentText("Welcome " + firstnameTextField.getText() + ",\n"
+                + "Your account was successfully created" + ".\n"
+                + "Your username is " + usernameTextField.getText() + ".");
+
+        ImageView confirmImageView = new ImageView(Main.successIcon);
+        confirmImageView.setFitHeight(40);
+        confirmImageView.setFitWidth(40);
+        acctCreatedAlert.setGraphic(confirmImageView);
+        acctCreatedAlert.setOnCloseRequest(arg0 -> {
+            User_LoginControl login = new User_LoginControl(width,height);
+            Main.mainWindow.setScene(new Scene(login));
+        });
+        acctCreatedAlert.show();
+    }
+
+    public void displayPasswordsNotMatch() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+
+        alert.setTitle("Warning");
+        alert.setHeaderText(null);
+        alert.setContentText("Please verify or re-enter your password\n");
+        alert.show();
+    }
+
+    public void displayEmptyFields() {
+
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        String missingData = "Please enter the following fields to create your account:\n";
+
+        if(firstnameTextField.getText().isEmpty())
+            missingData += "\tfirst name\n";
+        if(lastnameTextField.getText().isEmpty())
+            missingData += "\tlast name\n";
+        if(yearComboBox.getValue().equals("YYYY"))
+            missingData += "\tbirth year\n";
+        if(monthComboBox.getValue().equals("MM"))
+            missingData += "\tbirth month\n";
+        if(dayComboBox.getValue().equals("DD"))
+            missingData += "\tbirth day\n";
+        if(emailTextField.getText().isEmpty())
+            missingData += "\te-mail\n";
+        if(usernameTextField.getText().isEmpty())
+            missingData += "\tusername\n";
+        if(passwordPasswordfield.getText().isEmpty())
+            missingData += "\tpassword\n";
+        if(confirmpasswordPasswordfield.getText().isEmpty())
+            missingData += "\tconfirm password\n";
+
+        alert.setTitle("Warning");
+        alert.setHeaderText(null);
+        alert.setContentText(missingData);
+        alert.show();
+
+    }
+
+    public void displayInvalidUser() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+
+        alert.setTitle("Warning");
+        alert.setHeaderText(null);
+        alert.setContentText("Please choose a different email and/or username\n");
+        alert.show();
+    }
+
+    public void passwordFlag() {
+
+        if (confirmpasswordPasswordfield.getText().isEmpty())
+            return;
+        if (passwordPasswordfield.getText().compareTo(confirmpasswordPasswordfield.getText()) != 0) {
+            passwordPasswordfield.setBorder(Border.stroke(Color.RED));
+            confirmpasswordPasswordfield.setBorder(Border.stroke(Color.RED));
+        } else {
+            passwordPasswordfield.setBorder(Border.stroke(Color.TRANSPARENT));
+            confirmpasswordPasswordfield.setBorder(Border.stroke(Color.TRANSPARENT));
+        }
+
+    }
+
+    public void confirmpasswordFlag() {
+
+        if(passwordPasswordfield.getText().compareTo(confirmpasswordPasswordfield.getText()) != 0) {
+            passwordPasswordfield.setBorder(Border.stroke(Color.RED));
+            confirmpasswordPasswordfield.setBorder(Border.stroke(Color.RED));
+        } else {
+            passwordPasswordfield.setBorder(Border.stroke(Color.TRANSPARENT));
+            confirmpasswordPasswordfield.setBorder(Border.stroke(Color.TRANSPARENT));
+        }
+
+    }
 
 }
