@@ -2,11 +2,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 
 import java.text.DecimalFormat;
 
@@ -14,30 +11,18 @@ public class User_ForgotPasswordControl extends Pane {
 
     private final double width;
     private final double height;
-    private TextField emailTextField;
-    private TextField usernameTextField;
-    private ComboBox<String> yearComboBox;
-    private ComboBox<String> monthComboBox;
-    private ComboBox<String> dayComboBox;
+    private User_ForgotPasswordPane pane;
     private PasswordField passwordPasswordfield;
     private PasswordField confirmpasswordPasswordfield;
     private Button confirmButton;
     private Button backButton;
 
     public User_ForgotPasswordControl(double width, double height) {
+
         this.width = width;
         this.height = height;
-        User_ForgotPasswordPane pane = new User_ForgotPasswordPane(width,height);
 
-        emailTextField = pane.getEmailTextField();
-
-        usernameTextField = pane.getUsernameTextField();
-
-        yearComboBox = pane.getYearComboBox();
-
-        monthComboBox = pane.getMonthComboBox();
-
-        dayComboBox = pane.getDayComboBox();
+        pane = new User_ForgotPasswordPane(width,height);
 
         passwordPasswordfield = pane.getPasswordPasswordfield();
         passwordPasswordfield.setOnKeyReleased(new PasswordFieldHandler());
@@ -64,19 +49,24 @@ public class User_ForgotPasswordControl extends Pane {
 
         @Override
         public void handle(ActionEvent a) {
+
             if(a.getSource() == backButton) {
+
                 Main.mainWindow.setScene(new Scene(login,width,height));
 
             } else if (a.getSource() == confirmButton) {
+
                 // use this for the birthdate
                 DecimalFormat df = new DecimalFormat("00");
-                String birthdate = yearComboBox.getValue() + "-" + df.format(Integer.parseInt(monthComboBox.getValue())) + "-" + df.format(Integer.parseInt(dayComboBox.getValue()));
-                User user = null;
+                String birthdate = pane.getYear() + "-"
+                        + df.format(Integer.parseInt(pane.getMonth()))
+                        + "-" + df.format(Integer.parseInt(pane.getDay()));
+                User user;
                 String email ="1";
                 String DOB = "1";
                 boolean UserExists = true;
                 try {
-                    user = DataBase.getUserByUsername(usernameTextField.getText());
+                    user = DataBase.getUserByUsername(pane.getUsername());
                     email = user.getEmail();
                     DOB = user.getDob();
 
@@ -85,124 +75,28 @@ public class User_ForgotPasswordControl extends Pane {
                     UserExists =false;
                 }
 
-                if(emptyFields()) {
+                if(pane.emptyFields()) {
 
-                    displayEmptyFields();
+                    pane.displayEmptyFields();
 
                 } else if(!UserExists) {
 
-                    displayUserNotFound();
+                    pane.displayUserNotFound();
 
-                } else if(!passwordsMatch()) {
+                } else if(!pane.passwordsMatch()) {
 
-                    displayPasswordsMatch();
+                    pane.displayPasswordsMatch();
 
-                } else if (  (email.compareToIgnoreCase(emailTextField.getText()) != 0) || (DOB.compareTo(birthdate) != 0)) {
+                } else if (  (email.compareToIgnoreCase(pane.getEmail()) != 0) || (DOB.compareTo(birthdate) != 0)) {
 
-                    displayIncorrectInfo();
-
-
+                    pane.displayIncorrectInfo();
 
                 } else {
 
+                    pane.displayAccountCreated();
 
-
-                    Alert acctCreatedAlert = new Alert(Alert.AlertType.INFORMATION);
-                    acctCreatedAlert.setTitle("");
-                    acctCreatedAlert.setHeaderText("Congratulations!");
-                    acctCreatedAlert.setContentText("Welcome " + usernameTextField.getText() +
-                            ",\nYour account was successfully reset.");
-                    ImageView confirmImageView = new ImageView(Main.successIcon);
-                    confirmImageView.setFitHeight(40);
-                    confirmImageView.setFitWidth(100);
-                    acctCreatedAlert.setGraphic(confirmImageView);
-                    // this will ensure upon closing the login page appears
-                    acctCreatedAlert.setOnCloseRequest(arg0 -> {
-                        // TODO Auto-generated method stub
-                        login = new User_LoginControl(width,height);
-                        Main.mainWindow.setScene(new Scene(login,width,height));
-                    });
-                    acctCreatedAlert.show();
                 }
             }
-        }
-
-        public boolean passwordsMatch() {
-            return passwordPasswordfield.getText().compareTo(confirmpasswordPasswordfield.getText()) == 0;
-        }
-
-        public void displayPasswordsMatch() {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-
-            alert.setTitle("Warning");
-            alert.setHeaderText(null);
-            alert.setContentText("Please verify or re-enter your password\n");
-            alert.show();
-        }
-
-        public void displayIncorrectInfo() {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-
-            alert.setTitle("Warning");
-            alert.setHeaderText(null);
-            alert.setContentText("Wrong Account Info\n");
-            alert.show();
-        }
-
-        public void displayUserNotFound() {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-
-            alert.setTitle("Warning");
-            alert.setHeaderText(null);
-            alert.setContentText("No such User\n");
-            alert.show();
-        }
-
-        public boolean emptyFields() {
-
-            if(emailTextField.getText().isEmpty())
-                return true;
-            if(usernameTextField.getText().isEmpty())
-                return true;
-            if(yearComboBox.getValue().equals("YYYY"))
-                return true;
-            if(monthComboBox.getValue().equals("MM"))
-                return true;
-            if(dayComboBox.getValue().equals("DD"))
-                return true;
-            if(passwordPasswordfield.getText().isEmpty())
-                return true;
-            if(confirmpasswordPasswordfield.getText().isEmpty())
-                return true;
-
-            return false;
-        }
-
-        public void displayEmptyFields() {
-
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            String missingData = "Please enter the following fields to create your account:\n";
-
-            if(emailTextField.getText().isEmpty())
-                missingData += "\temail\n";
-            if(usernameTextField.getText().isEmpty())
-                missingData += "\tusername\n";
-            if(yearComboBox.getValue().equals("YYYY"))
-                missingData += "\tbirth year\n";
-            if(monthComboBox.getValue().equals("MM"))
-                missingData += "\tbirth month\n";
-            if(dayComboBox.getValue().equals("DD"))
-                missingData += "\tbirth day\n";
-            if(passwordPasswordfield.getText().isEmpty())
-                missingData += "\tpassword\n";
-            if(confirmpasswordPasswordfield.getText().isEmpty())
-                missingData += "\tconfirm password\n";
-
-            alert.setTitle("Warning");
-            alert.setHeaderText(null);
-            alert.setContentText(missingData);
-            alert.show();
-
         }
 
     }
@@ -222,25 +116,11 @@ public class User_ForgotPasswordControl extends Pane {
                     e1.printStackTrace();
                 }
 
-                if (confirmpasswordPasswordfield.getText().isEmpty())
-                    return;
-                if (passwordPasswordfield.getText().compareTo(confirmpasswordPasswordfield.getText()) != 0) {
-                    passwordPasswordfield.setBorder(Border.stroke(Color.RED));
-                    confirmpasswordPasswordfield.setBorder(Border.stroke(Color.RED));
-                } else {
-                    passwordPasswordfield.setBorder(Border.stroke(Color.TRANSPARENT));
-                    confirmpasswordPasswordfield.setBorder(Border.stroke(Color.TRANSPARENT));
-                }
+                pane.passwordFlag();
 
             } else if(keyEvent.getSource() == confirmpasswordPasswordfield) {
 
-                if(passwordPasswordfield.getText().compareTo(confirmpasswordPasswordfield.getText()) != 0) {
-                    passwordPasswordfield.setBorder(Border.stroke(Color.RED));
-                    confirmpasswordPasswordfield.setBorder(Border.stroke(Color.RED));
-                } else {
-                    passwordPasswordfield.setBorder(Border.stroke(Color.TRANSPARENT));
-                    confirmpasswordPasswordfield.setBorder(Border.stroke(Color.TRANSPARENT));
-                }
+                pane.confirmPasswordFlag();
 
             }
         }
