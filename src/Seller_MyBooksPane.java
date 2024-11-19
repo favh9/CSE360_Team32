@@ -172,127 +172,12 @@ public class Seller_MyBooksPane extends BorderPane {
 
     }
 
-    public GridPane getBooksPane() {
-        return booksPane;
-    }
-
-    public void setBooksPane(GridPane booksPane) {
-        this.booksPane = booksPane;
-    }
-
-    public void noBooksFound() {
-
-        BorderPane bp = new BorderPane();
-        Label noBooksFoundLabel = new Label("No Books Found");
-        noBooksFoundLabel.setFont(Font.font(48));
-        bp.setCenter(noBooksFoundLabel);
-        bp.setPadding(new Insets(100));
-        sp.setContent(bp);
-
-    }
-
-    public CheckBox getNaturalscienceCheckBox() {
-        return naturalscienceCheckBox;
-    }
-
-    public void setNaturalscienceCheckBox(CheckBox naturalscienceCheckBox) {
-        this.naturalscienceCheckBox = naturalscienceCheckBox;
-    }
-
-    public CheckBox getComputerscienceCheckBox() {
-        return computerscienceCheckBox;
-    }
-
-    public void setComputerscienceCheckBox(CheckBox computerscienceCheckBox) {
-        this.computerscienceCheckBox = computerscienceCheckBox;
-    }
-
-    public CheckBox getMathCheckBox() {
-        return mathCheckBox;
-    }
-
-    public void setMathCheckBox(CheckBox mathCheckBox) {
-        this.mathCheckBox = mathCheckBox;
-    }
-
-    public CheckBox getEnglishCheckBox() {
-        return englishCheckBox;
-    }
-
-    public void setEnglishCheckBox(CheckBox englishCheckBox) {
-        this.englishCheckBox = englishCheckBox;
-    }
-
-    public CheckBox getOtherCheckBox() {
-        return otherCheckBox;
-    }
-
-    public void setOtherCheckBox(CheckBox otherCheckBox) {
-        this.otherCheckBox = otherCheckBox;
-    }
-
-    public CheckBox getLikenewCheckBox() {
-        return likenewCheckBox;
-    }
-
-    public void setLikenewCheckBox(CheckBox likenewCheckBox) {
-        this.likenewCheckBox = likenewCheckBox;
-    }
-
-    public CheckBox getModeratelyusedCheckBox() {
-        return moderatelyusedCheckBox;
-    }
-
-    public void setModeratelyusedCheckBox(CheckBox moderatelyusedCheckBox) {
-        this.moderatelyusedCheckBox = moderatelyusedCheckBox;
-    }
-
-    public CheckBox getHeavilyusedCheckBox() {
-        return heavilyusedCheckBox;
-    }
-
-    public void setHeavilyusedCheckBox(CheckBox heavilyusedCheckBox) {
-        this.heavilyusedCheckBox = heavilyusedCheckBox;
-    }
-
-    public RadioButton getAscendingRadioButton() {
-        return ascendingRadioButton;
-    }
-
-    public void setAscendingRadioButton(RadioButton ascendingRadioButton) {
-        this.ascendingRadioButton = ascendingRadioButton;
-    }
-
-    public RadioButton getDescendingRadioButton() {
-        return descendingRadioButton;
-    }
-
-    public void setDescendingRadioButton(RadioButton descendingRadioButton) {
-        this.descendingRadioButton = descendingRadioButton;
-    }
-
-    public ToggleGroup getToggleGroupPrices() {
-        return toggleGroupPrices;
-    }
-
-    public void setToggleGroupPrices(ToggleGroup toggleGroupPrices) {
-        this.toggleGroupPrices = toggleGroupPrices;
-    }
-
     public Button getResetfiltersButton() {
         return resetfiltersButton;
     }
 
-    public void setResetfiltersButton(Button resetfiltersButton) {
-        this.resetfiltersButton = resetfiltersButton;
-    }
-
     public TextField getSearchField() {
         return searchField;
-    }
-
-    public void setSearchField(TextField searchField) {
-        this.searchField = searchField;
     }
 
     public Button getSearchButton() {
@@ -303,11 +188,120 @@ public class Seller_MyBooksPane extends BorderPane {
         this.searchButton = searchButton;
     }
 
-    public ScrollPane getSp() {
-        return sp;
+    // query the database,
+    // and display all of the books
+    // displays the books found from the seller
+    public void displayAllBooks() {
+
+        // i.e. for books in User.books, add a book
+        addBook(new Book());
+        addBook(new Book());
+        addBook(new Book());
+        addBook(new Book());
+        addBook(new Book());
+        addBook(new Book());
+        addBook(new Book());
+        addBook(new Book());
+        addBook(new Book());
+
     }
 
-    public void setSp(ScrollPane sp) {
-        this.sp = sp;
+    // query the database to find books belonging to the user
+    public boolean hasBooks() {
+
+        return false;
+    }
+
+    // query the database for the user's books
+    // if the book exists,
+    // remove it and return true
+    public boolean bookRemoved(Book book) {
+
+        return false;
+    }
+
+    // add a book to the book pane
+    public void addBook(Book book) {
+
+        Text titleText, authorText, categoryText, conditionText, quantityText, priceText;
+        Label quantityLabel;
+        int textWrapWidth;
+        VBox bookVBox;
+        BorderPane bp;
+        Button removeButton;
+
+        // Create VBox for each book and add it to the grid
+        textWrapWidth = 142;
+
+        // set the GUI book information
+        titleText = new Text(book.getTitle());
+        titleText.setWrappingWidth(textWrapWidth);
+
+        authorText = new Text("by " + book.getAuthor());
+        authorText.setWrappingWidth(textWrapWidth);
+
+        categoryText = new Text(book.getCategory());
+        categoryText.setWrappingWidth(textWrapWidth);
+
+        conditionText = new Text(book.getCondition());
+        conditionText.setWrappingWidth(textWrapWidth);
+
+        quantityLabel = new Label("Quantity: ");
+        quantityText = new Text(Integer.toString(book.getQuantity()));
+        quantityText.setWrappingWidth(textWrapWidth - quantityLabel.getWidth());
+
+        HBox quantityHBox = new HBox(quantityLabel,quantityText);
+
+        priceText = new Text("$" + book.getPrice());
+        priceText.setWrappingWidth(textWrapWidth);
+
+        // Add book GUI to the VBox
+        bookVBox = new VBox();
+        bookVBox.setSpacing(5);
+        bookVBox.getChildren().add(titleText);
+        bookVBox.getChildren().add(authorText);
+        bookVBox.getChildren().add(categoryText);
+        bookVBox.getChildren().add(conditionText);
+        bookVBox.getChildren().add(quantityText);
+        bookVBox.getChildren().add(priceText);
+
+        // this remove button, has a book attached to it
+        // if the user clicks it, the book quantity should be checked
+        // and adjusted accordingly
+        removeButton = new Button("Remove");
+        removeButton.setOnAction(e-> {
+            bookRemoved(book);
+            // check again
+            if(true) {
+                displayAllBooks();
+            } else {
+                displayNoBooksFound();
+            }
+        });
+
+        // create the pane for the book GUI
+        bp = new BorderPane();
+        bp.setTop(bookVBox);
+        bp.setBottom(removeButton);
+        bp.setStyle("-fx-background-color: white; " +"-fx-background-radius: 4px;" + "-fx-padding: 10px;");
+
+        // adjust the nodes' alignment
+        BorderPane.setAlignment(bookVBox, Pos.CENTER);
+        BorderPane.setAlignment(removeButton, Pos.CENTER);
+        BorderPane.setMargin(removeButton, new Insets(5));
+
+        // Add VBox to the grid (placed in column, row) dynamically
+        booksPane.add(bp, booksPane.getChildren().size() % 3, booksPane.getChildren().size() / 3);
+    }
+
+    public void displayNoBooksFound() {
+
+        BorderPane bp = new BorderPane();
+        Label noBooksFoundLabel = new Label("No Books Found");
+        noBooksFoundLabel.setFont(Font.font(48));
+        bp.setCenter(noBooksFoundLabel);
+        bp.setPadding(new Insets(100));
+        sp.setContent(bp);
+
     }
 }

@@ -9,16 +9,8 @@ public class Seller_PostBookControl extends Pane {
 
     public double width;
     public double height;
-    private Seller_PostBookPane pane;
+    private final Seller_PostBookPane pane;
     private User user;
-    private TextField booknameField;
-    private TextField authorField;
-    private ComboBox<String> yearComboBox;
-    private ChoiceBox<String> categoryChoiceBox;
-    private ChoiceBox<String> conditionChoiceBox;
-    private TextField priceField;
-    private TextField generatedpriceField;
-    private Button listmybookButton;
 
     public Seller_PostBookControl(User user, double width, double height) {
 
@@ -27,14 +19,7 @@ public class Seller_PostBookControl extends Pane {
         this.user = user;
 
         pane = new Seller_PostBookPane(user,width,height);
-        booknameField = pane.getBooknameField();
-        authorField = pane.getAuthorField();
-        yearComboBox = pane.getYearComboBox();
-        categoryChoiceBox = pane.getCategoryChoiceBox();
-        conditionChoiceBox = pane.getConditionChoiceBox();
-        priceField = pane.getPriceField();
-        generatedpriceField = pane.getGeneratedpriceField();
-        listmybookButton = pane.getListmybookButton();
+        Button listmybookButton = pane.getListmybookButton();
         listmybookButton.setOnAction(new ButtonHandler());
 
         this.getChildren().addAll(pane);
@@ -44,68 +29,43 @@ public class Seller_PostBookControl extends Pane {
 
         @Override
         public void handle(ActionEvent actionEvent) {
-            if(emptyFields()) {
-                System.out.println(user.getFirstName());
-                displayEmptyFields();
+
+            if(pane.emptyFields()) {
+
+                pane.displayEmptyFields();
+
+            } else if (!(pane.isPriceValid())) {
+
+                pane.displayInvalidPrice();
+
             } else {
-                // insert book??
+
+                pane.computeGeneratedPrice();
+
+                if(pane.confirmPost()) {
+
+                    insertBook();
+                    pane.displayBookPosted();
+
+                }
+
             }
         }
 
-        public boolean emptyFields() {
+        // once the user confirms to post their book
+        // use this method to insert the book into the database
+        public void insertBook() {
 
-            if(booknameField.getText().isEmpty()) {
-                return true;
-            } else if (authorField.getText().isEmpty()) {
-                return true;
-            } else if(yearComboBox.getValue().equals("Select Year")) {
-                return true;
-            } else if (categoryChoiceBox.getValue().equals("Select Category")) {
-                return true;
-            } else if (conditionChoiceBox.getValue().equals("Select Condition")) {
-                return true;
-            } else return priceField.getText().isEmpty();
-        }
+            Book book =  new Book();
+            book.setTitle("");
+            book.setAuthor("");
+            book.setCategory("");
+            book.setCondition("");
+            book.setPrice(0);
 
-        public void displayEmptyFields() {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            String missingData = "Please check the following fields:\n";
+            // call database to insert book
+            // DataBase.insertBook(user,...);
 
-            if(booknameField.getText().isEmpty())
-                missingData += "\tBook Name\n";
-            if(authorField.getText().isEmpty())
-                missingData += "\tAuthor\n";
-            if(yearComboBox.getValue().equals("Select Year"))
-                missingData += "\tYear\n";
-            if(categoryChoiceBox.getValue().equals("Select Category"))
-                missingData += "\tCategory\n";
-            if(conditionChoiceBox.getValue().equals("Select Condition"))
-                missingData += "\tCondition\n";
-            if(priceField.getText().isEmpty())
-                missingData += "\tPrice\n";
-
-            alert.setTitle("Warning");
-            alert.setHeaderText(null);
-            alert.setContentText(missingData);
-            alert.show();
-        }
-
-        public void displayBookPosted() {
-
-            Alert acctCreatedAlert = new Alert(Alert.AlertType.INFORMATION);
-            acctCreatedAlert.setTitle("");
-            acctCreatedAlert.setHeaderText("Congratulations!");
-            acctCreatedAlert.setContentText("You have posted your book successfully!");
-            ImageView confirmImageView = new ImageView(Main.successIcon);
-            confirmImageView.setFitHeight(40);
-            confirmImageView.setFitWidth(100);
-            acctCreatedAlert.setGraphic(confirmImageView);
-            acctCreatedAlert.setOnCloseRequest(arg0 -> {
-                // TODO Auto-generated method stub
-                Seller_PostBookControl seller = new Seller_PostBookControl(user, width, height);
-                Main.mainWindow.setScene(new Scene(seller));
-            });
-            acctCreatedAlert.show();
         }
     }
 }
