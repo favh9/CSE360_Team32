@@ -16,6 +16,10 @@ public class Seller_SettingsControl extends Pane {
 
     public Seller_SettingsControl(User user, double width, double height) {
 
+        this.user = user;
+        this.width = width;
+        this.height = height;
+
         pane = new Seller_SettingsPane(user,width, height);
 
         changePasswordButton = pane.getChangePasswordButton();

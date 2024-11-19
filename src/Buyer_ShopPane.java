@@ -214,12 +214,200 @@ public class Buyer_ShopPane extends BorderPane {
 
     }
 
-    public GridPane getBooksPane() {
-        return booksPane;
+    public TextField getSearchField() {
+        return searchField;
     }
 
-    public void setBooksPane(GridPane booksPane) {
-        this.booksPane = booksPane;
+    public Button getSearchButton() {
+        return searchButton;
+    }
+
+    public Button getCartButton() {
+        return cartButton;
+    }
+
+    public RadioButton getAscendingRadioButton() {
+        return ascendingRadioButton;
+    }
+
+    public RadioButton getDescendingRadioButton() {
+        return descendingRadioButton;
+    }
+
+    public Button getResetfiltersButton() {
+        return resetfiltersButton;
+    }
+
+    public void setCartVisible(boolean b) {
+        sp.setVisible(b);
+    }
+
+    public void clearCategoryButtons() {
+
+        naturalscienceCheckBox.setSelected(false);
+        computerscienceCheckBox.setSelected(false);
+        mathCheckBox.setSelected(false);
+        englishCheckBox.setSelected(false);
+        otherCheckBox.setSelected(false);
+
+    }
+
+    public void clearConditionButtons() {
+
+        likenewCheckBox.setSelected(false);
+        moderatelyusedCheckBox.setSelected(false);
+        heavilyusedCheckBox.setSelected(false);
+
+    }
+
+    public void clearRadioButtons() {
+
+        ascendingRadioButton.setSelected(false);
+        descendingRadioButton.setSelected(false);
+
+    }
+
+    public void updateBadgeCount() {
+
+        int incr = Integer.parseInt(badgeCountText.getText());
+        badgeCountText.setText(Integer.toString(++incr));
+
+    }
+
+    public void clearBooksPane() {
+        booksPane.getChildren().clear();
+    }
+
+    public void addBook(Book book) {
+
+        Text titleText, authorText, categoryText, conditionText, priceText;
+        int textWrapWidth;
+        VBox bookVBox;
+        BorderPane bp;
+        Button addToCartButton;
+
+        // Create VBox for each book and add it to the grid
+        textWrapWidth = 142;
+
+        book.setTitle(book.getTitle());
+        book.setAuthor(book.getAuthor());
+        book.setCategory(book.getCategory());
+        book.setCondition(book.getCondition());
+        book.setPrice(book.getPrice());
+
+        titleText = new Text(book.getTitle());
+        titleText.setWrappingWidth(textWrapWidth);
+
+        authorText = new Text("by " + book.getAuthor());
+        authorText.setWrappingWidth(textWrapWidth);
+
+        categoryText = new Text(book.getCategory());
+        categoryText.setWrappingWidth(textWrapWidth);
+
+        conditionText = new Text(book.getCondition());
+        conditionText.setWrappingWidth(textWrapWidth);
+
+        Hyperlink seller = new Hyperlink();
+        seller.setWrapText(true);
+        seller.setPadding(new Insets(0,0,0,-2));
+
+        // find whose book this is
+        // look for it in the database
+        // set the text of the hyperlink to the seller's username
+        seller.setText("username");
+
+        seller.setOnAction(e-> {
+            Alert popUpReview = new Alert(Alert.AlertType.INFORMATION);
+            String title = "Seller's Review";
+            String headerTitle = "This displays the seller's review";
+            String msg = "This displays the top three reviews";
+            popUpReview.setTitle(title);
+            popUpReview.setHeaderText(headerTitle);
+            popUpReview.setContentText(msg);
+            popUpReview.show();
+        });
+
+        priceText = new Text("$" + book.getPrice());
+        priceText.setWrappingWidth(textWrapWidth);
+
+        // Add book details to the VBox
+        bookVBox = new VBox();
+        bookVBox.setSpacing(5);
+        bookVBox.getChildren().add(titleText);
+        bookVBox.getChildren().add(authorText);
+        bookVBox.getChildren().add(categoryText);
+        bookVBox.getChildren().add(conditionText);
+        bookVBox.getChildren().add(seller);
+        bookVBox.getChildren().add(priceText);
+
+        addToCartButton = new Button("Add to Cart");
+        addToCartButton.setOnAction(e-> {
+            addedToCart(book);
+            updateBadgeCount();
+            setCartVisible(true);
+            // check again
+            if(!hasBooks()) {
+                clearBooksPane();
+                populateBooks();
+            } else {
+                setCartVisible(false);
+                noBooksFound();
+            }
+        });
+
+        bp = new BorderPane();
+        bp.setTop(bookVBox);
+        bp.setBottom(addToCartButton);
+        bp.setStyle("-fx-background-color: white; " +"-fx-background-radius: 4px;" + "-fx-padding: 10px;");
+
+        BorderPane.setAlignment(bookVBox, Pos.CENTER);
+        BorderPane.setAlignment(addToCartButton, Pos.CENTER);
+        BorderPane.setMargin(addToCartButton, new Insets(5));
+
+        // Add VBox to the grid (placed in column, row) dynamically
+        booksPane.add(bp, booksPane.getChildren().size() % 3, booksPane.getChildren().size() / 3);
+    }
+
+    // query the database,
+    // and display all of the books
+    // displays the books found from the seller
+    public void populateBooks() {
+
+        // i.e. for books in User.books, add a book
+        Book book1 = new Book("The Great Gatsby", "F. Scott Fitzgerald", "Classic", "New",2, 12.99);
+        Book book2 = new Book("To Kill a Mockingbird", "Harper Lee", "Fiction", "Used",2, 8.49);
+        Book book3 = new Book("1984", "George Orwell", "Dystopian", "Good",3, 6.99);
+        Book book4 = new Book("The Catcher in the Rye", "J.D. Salinger", "Classic", "Like New",3, 10.50);
+        Book book5 = new Book("The Hobbit", "J.R.R. Tolkien", "Fantasy", "New",1, 14.99);
+        Book book6 = new Book("Moby-Dick", "Herman Melville", "Adventure", "Acceptable",2, 5.50);
+        Book book7 = new Book("Pride and Prejudice", "Jane Austen", "Romance", "Used",4, 7.99);
+        Book book8 = new Book("The Lord of the Rings", "J.R.R. Tolkien", "Fantasy", "New",5, 20.00);
+        Book book9 = new Book("Brave New World", "Aldous Huxley", "Science Fiction", "Good",3, 9.99);
+        Book book10 = new Book("War and Peace", "Leo Tolstoy", "Historical Fiction", "Like New",2, 15.00);
+
+        addBook(book1);
+        addBook(book2);
+        addBook(book3);
+        addBook(book4);
+        addBook(book5);
+        addBook(book6);
+        addBook(book7);
+        addBook(book8);
+        addBook(book9);
+        addBook(book10);
+    }
+
+    // query the database to find books belonging to the user
+    public boolean hasBooks() {
+
+        return false;
+    }
+
+    // using the database,
+    // insert a book into the cart's user table
+    public boolean addedToCart(Book book) {
+
+        return false;
     }
 
     public void noBooksFound() {
@@ -231,155 +419,5 @@ public class Buyer_ShopPane extends BorderPane {
         bp.setPadding(new Insets(100));
         sp.setContent(bp);
 
-    }
-
-    public CheckBox getNaturalscienceCheckBox() {
-        return naturalscienceCheckBox;
-    }
-
-    public void setNaturalscienceCheckBox(CheckBox naturalscienceCheckBox) {
-        this.naturalscienceCheckBox = naturalscienceCheckBox;
-    }
-
-    public CheckBox getComputerscienceCheckBox() {
-        return computerscienceCheckBox;
-    }
-
-    public void setComputerscienceCheckBox(CheckBox computerscienceCheckBox) {
-        this.computerscienceCheckBox = computerscienceCheckBox;
-    }
-
-    public CheckBox getMathCheckBox() {
-        return mathCheckBox;
-    }
-
-    public void setMathCheckBox(CheckBox mathCheckBox) {
-        this.mathCheckBox = mathCheckBox;
-    }
-
-    public CheckBox getEnglishCheckBox() {
-        return englishCheckBox;
-    }
-
-    public void setEnglishCheckBox(CheckBox englishCheckBox) {
-        this.englishCheckBox = englishCheckBox;
-    }
-
-    public CheckBox getOtherCheckBox() {
-        return otherCheckBox;
-    }
-
-    public void setOtherCheckBox(CheckBox otherCheckBox) {
-        this.otherCheckBox = otherCheckBox;
-    }
-
-    public CheckBox getLikenewCheckBox() {
-        return likenewCheckBox;
-    }
-
-    public void setLikenewCheckBox(CheckBox likenewCheckBox) {
-        this.likenewCheckBox = likenewCheckBox;
-    }
-
-    public CheckBox getModeratelyusedCheckBox() {
-        return moderatelyusedCheckBox;
-    }
-
-    public void setModeratelyusedCheckBox(CheckBox moderatelyusedCheckBox) {
-        this.moderatelyusedCheckBox = moderatelyusedCheckBox;
-    }
-
-    public CheckBox getHeavilyusedCheckBox() {
-        return heavilyusedCheckBox;
-    }
-
-    public void setHeavilyusedCheckBox(CheckBox heavilyusedCheckBox) {
-        this.heavilyusedCheckBox = heavilyusedCheckBox;
-    }
-
-    public RadioButton getAscendingRadioButton() {
-        return ascendingRadioButton;
-    }
-
-    public void setAscendingRadioButton(RadioButton ascendingRadioButton) {
-        this.ascendingRadioButton = ascendingRadioButton;
-    }
-
-    public RadioButton getDescendingRadioButton() {
-        return descendingRadioButton;
-    }
-
-    public void setDescendingRadioButton(RadioButton descendingRadioButton) {
-        this.descendingRadioButton = descendingRadioButton;
-    }
-
-    public ToggleGroup getToggleGroupPrices() {
-        return toggleGroupPrices;
-    }
-
-    public void setToggleGroupPrices(ToggleGroup toggleGroupPrices) {
-        this.toggleGroupPrices = toggleGroupPrices;
-    }
-
-    public Button getResetfiltersButton() {
-        return resetfiltersButton;
-    }
-
-    public void setResetfiltersButton(Button resetfiltersButton) {
-        this.resetfiltersButton = resetfiltersButton;
-    }
-
-    public TextField getSearchField() {
-        return searchField;
-    }
-
-    public void setSearchField(TextField searchField) {
-        this.searchField = searchField;
-    }
-
-    public Button getSearchButton() {
-        return searchButton;
-    }
-
-    public void setSearchButton(Button searchButton) {
-        this.searchButton = searchButton;
-    }
-
-    public ScrollPane getSp() {
-        return sp;
-    }
-
-    public void setSp(ScrollPane sp) {
-        this.sp = sp;
-    }
-
-    public void clearBooks() {
-        booksPane.getChildren().clear();
-    }
-
-    public void updateBadgeCount() {
-
-        int incr = Integer.parseInt(badgeCountText.getText());
-        badgeCountText.setText(Integer.toString(++incr));
-    }
-
-    public Text getBadgeCountText() {
-        return badgeCountText;
-    }
-
-    public void setBadgeCountText(Text badgeCountText) {
-        this.badgeCountText = badgeCountText;
-    }
-
-    public Button getCartButton() {
-        return cartButton;
-    }
-
-    public void setCartButton(Button cartButton) {
-        this.cartButton = cartButton;
-    }
-
-    public void setCartVisible(Boolean b) {
-        cartStackPane.setVisible(b);
     }
 }
