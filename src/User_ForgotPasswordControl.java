@@ -97,7 +97,7 @@ public class User_ForgotPasswordControl extends Pane {
                 }
 
                 // Initialize default values for user details
-                User user;
+                User user = DataBase.getUserByUsername(pane.getUsername());
                 String email = "1";
                 String DOB = "1";
                 boolean userExists = true;
@@ -133,6 +133,8 @@ public class User_ForgotPasswordControl extends Pane {
                 } else {
                     // If all validations pass, display success message
                     pane.displayPasswordReset();
+
+                    DataBase.updatePassword(user.getUserID(), pane.getPasswordPasswordfield().getText());
 
                 }
             }
