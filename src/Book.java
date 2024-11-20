@@ -6,7 +6,7 @@ public class Book {
     private String author;
     private String category;
     private String condition;
-    private Date publishedYear;
+    private int publishedYear;
     //private int quantity;
     private int id;
     private double price;
@@ -17,12 +17,12 @@ public class Book {
         author = "";
         category = "";
         condition = "";
-        publishedYear = new Date(2000);
+        publishedYear = 0;
         price = 0.0;
     }
 
     public Book(String title, String author, String category, String condition, double price,
-                Date publishedYear , int id) {
+                int publishedYear , int id) {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -52,7 +52,7 @@ public class Book {
 //        this.quantity = quantity;
 //    }
 
-    public void setPublishedYear(Date publishedYear) {
+    public void setPublishedYear(int publishedYear) {
         this.publishedYear = publishedYear;
     }
 
@@ -74,7 +74,7 @@ public class Book {
 //        return quantity;
 //    }
 
-    public Date getPublishedYear(){return this.publishedYear;}
+    public int getPublishedYear(){return this.publishedYear;}
 
     public double getPrice() {return this.price;}
 

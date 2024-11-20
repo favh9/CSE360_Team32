@@ -417,21 +417,22 @@ public class DataBase {
     }
 
 
-    public static boolean listBook(String bookName, Date publishDate, String authorName, String category, String conditionn,
+    public static boolean listBook(int UserID, String bookName, int publishYear, String authorName, String category, String conditionn,
                                    double price) {
-        String insertQuery = "INSERT INTO Listings (Bookname, UserID, PublishDate, AuthorName, Category, Conditionn, Price) " +
-                "VALUES (?, 1, ?, ?, ?, ?, ?)";
+        String insertQuery = "INSERT INTO Listings (Bookname, UserID, PublishYear, AuthorName, Category, Conditionn, Price) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DriverManager.getConnection(URL, USER,PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(insertQuery)) {
 
             // Set parameters for the prepared statement
             stmt.setString(1, bookName);
-            stmt.setDate(2, publishDate);
-            stmt.setString(3, authorName);
-            stmt.setString(4, category);
-            stmt.setString(5, conditionn);
-            stmt.setDouble(6, price);
+            stmt.setInt(2, UserID);
+            stmt.setInt(3, publishYear);
+            stmt.setString(4, authorName);
+            stmt.setString(5, category);
+            stmt.setString(6, conditionn);
+            stmt.setDouble(7, price);
             //stmt.setString(7, "N");
 
             // Execute the insert operation
@@ -592,7 +593,7 @@ public class DataBase {
     }
 
     public static Book getBookFromListing(int listingID) {
-        String query = "SELECT Bookname, AuthorName, Category, Conditionn, PublishedDate, Price, ListingID FROM Listings WHERE ListingID = ?";
+        String query = "SELECT Bookname, AuthorName, Category, Conditionn, PublishedYear, Price, ListingID FROM Listings WHERE ListingID = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -605,7 +606,7 @@ public class DataBase {
                 String author = rs.getString("AuthorName");
                 String category = rs.getString("Category");
                 String condition = rs.getString("Conditionn");
-                Date year = rs.getDate("PublishedDate");
+                int year = rs.getInt("PublishedYear");
                 double price = rs.getDouble("Price");
                 int id = rs.getInt("ListingID");
 

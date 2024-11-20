@@ -58,15 +58,7 @@ public class Seller_PostBookControl extends Pane {
         // use this method to insert the book into the database
         public void insertBook() {
 
-            Date year = new Date(Integer.parseInt(pane.getPublishedYear()));
-            Book book =  new Book();
-            book.setTitle(pane.getBookTitle());
-            book.setAuthor(pane.getAuthor());
-            book.setCategory(pane.getCategory());
-            book.setCondition(pane.getCondition());
-            book.setPublishedYear(year);
-            book.setPrice(pane.getPrice());
-            DataBase.listBook(pane.getBookTitle(),year, pane.getAuthor(), pane.getCategory(),pane.getCondition(),pane.getPrice());
+            DataBase.listBook(user.getUserID(), pane.getBookTitle(), Integer.parseInt(pane.getPublishedYear()), pane.getAuthor(), pane.getCategory(),pane.getCondition(),pane.getPrice());
 
             // call database to insert book
             // DataBase.insertBook(user,...);
