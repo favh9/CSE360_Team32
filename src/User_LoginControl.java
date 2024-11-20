@@ -94,7 +94,7 @@ public class User_LoginControl extends Pane {
                 signinButton.setStyle("-fx-background-radius: 5em; -fx-background-color: #ffa500;");
 
                 // Check if the user exists with the entered username and password
-                if (!(DataBase.userExists(usernameTextField.getText(), passwordField.getText()))) {
+                if (!(DataBase.userExists(usernameTextField.getText(), DataBase.hashPassword(passwordField.getText())))) {
                     // If the user does not exist, display an error message
                     pane.displayIncorrectPasswordOrUsername();
 

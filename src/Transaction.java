@@ -1,39 +1,24 @@
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 public class Transaction {
 
-    private Long transactionID;
-    private Long buyerID;
-    private Long sellerID;
-    private Calendar calendar;
-    private Date date;
-    private Book book;
-    private String timestamp;
-    private double amount;
-    private String soldToUsername;
-    private String transactionType;
-
+    public Long transactionID;
+    public Long buyerID;
+    public Long sellerID;
+    public Date date;
+    public Book book;
+    public double amount;
     public Transaction() {
 
         transactionID = Long.getLong("");
         buyerID = Long.getLong("");
         sellerID = Long.getLong("");
-        calendar = Calendar.getInstance();
-        date = calendar.getTime(); // i.e. Thu Nov 07 01:25:10 MST 2024
+        date  = new Date(2024 - 1900, 11 - 1, 19, 14, 30, 0);  // November 19, 2024, 14:30:00
 
         book = new Book();
-        timestamp = getTimestamp();
         amount = 0.0;
-        soldToUsername = "";
-
-        transactionType = "";
-
-//        int month = calendar.get(Calendar.MONTH);
-//        int day = calendar.get(Calendar.DAY_OF_MONTH);
-//        int year = calendar.get(Calendar.YEAR);
     }
 
     public Long getTransactionID() {
@@ -60,13 +45,6 @@ public class Transaction {
         this.sellerID = sellerID;
     }
 
-    public Calendar getCalendar() {
-        return calendar;
-    }
-
-    public void setCalendar(Calendar calendar) {
-        this.calendar = calendar;
-    }
 
     public Date getDate() {
         return date;
@@ -84,9 +62,7 @@ public class Transaction {
         this.book = book;
     }
 
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
-    }
+
 
     public double getAmount() {
         return amount;
@@ -94,22 +70,6 @@ public class Transaction {
 
     public void setAmount(double amount) {
         this.amount = amount;
-    }
-
-    public String getSoldToUsername() {
-        return soldToUsername;
-    }
-
-    public void setSoldToUsername(String soldToUsername) {
-        this.soldToUsername = soldToUsername;
-    }
-
-    public String getTransactionType() {
-        return transactionType;
-    }
-
-    public void setTransactionType(String transactionType) {
-        this.transactionType = transactionType;
     }
 
     // prints the date and time

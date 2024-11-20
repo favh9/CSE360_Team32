@@ -44,7 +44,7 @@ public class Admin_UsersControl extends Pane {
         String query = "SELECT username, user_type FROM Users";  // Select both username and user_type columns
 
         // JDBC connection
-        try (Connection connection = DriverManager.getConnection(DataBase.URL, DataBase.USER, DataBase.PASWWORD);
+        try (Connection connection = DriverManager.getConnection(DataBase.URL, DataBase.USER, DataBase.PASSWORD);
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
 

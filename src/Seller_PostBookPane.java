@@ -290,4 +290,27 @@ public class Seller_PostBookPane extends BorderPane {
         return confirmed;
     }
 
+    public String getBookTitle() {
+        return booknameField.getText();
+    }
+
+    public String getAuthor() {
+        return authorField.getText();
+    }
+
+    public String getPublishedYear() {
+        return yearComboBox.getValue();
+    }
+
+    public String getCategory() {
+        return categoryChoiceBox.getValue();
+    }
+
+    public String getCondition() {
+        return conditionChoiceBox.getValue();
+    }
+
+    public double getPrice() {
+        return Double.parseDouble(priceField.getText());
+    }
 }
