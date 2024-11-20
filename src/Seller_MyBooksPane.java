@@ -246,11 +246,11 @@ public class Seller_MyBooksPane extends BorderPane {
         conditionText = new Text(book.getCondition());
         conditionText.setWrappingWidth(textWrapWidth);
 
-        quantityLabel = new Label("Quantity: ");
-        quantityText = new Text(Integer.toString(book.getQuantity()));
-        quantityText.setWrappingWidth(textWrapWidth - quantityLabel.getWidth());
-
-        HBox quantityHBox = new HBox(quantityLabel,quantityText);
+//        quantityLabel = new Label("Quantity: ");
+//        quantityText = new Text(Integer.toString(book.getQuantity()));
+//        quantityText.setWrappingWidth(textWrapWidth - quantityLabel.getWidth());
+//
+//        HBox quantityHBox = new HBox(quantityLabel,quantityText);
 
         priceText = new Text("$" + book.getPrice());
         priceText.setWrappingWidth(textWrapWidth);
@@ -262,7 +262,7 @@ public class Seller_MyBooksPane extends BorderPane {
         bookVBox.getChildren().add(authorText);
         bookVBox.getChildren().add(categoryText);
         bookVBox.getChildren().add(conditionText);
-        bookVBox.getChildren().add(quantityText);
+//        bookVBox.getChildren().add(quantityText);
         bookVBox.getChildren().add(priceText);
 
         // this remove button, has a book attached to it

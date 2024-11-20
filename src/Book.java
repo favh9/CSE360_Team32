@@ -1,27 +1,34 @@
+import java.sql.Date;
+
 public class Book {
 
     private String title;
     private String author;
     private String category;
     private String condition;
-    private int quantity;
+    private Date publishedYear;
+    //private int quantity;
+    private int id;
     private double price;
 
     public Book() {
+        id = 0;
         title = "";
         author = "";
         category = "";
         condition = "";
-        quantity = 0;
+        publishedYear = new Date(2000);
         price = 0.0;
     }
 
-    public Book(String title, String author, String category, String condition, int quantity, double price) {
+    public Book(String title, String author, String category, String condition, double price,
+                Date publishedYear , int id) {
+        this.id = id;
         this.title = title;
         this.author = author;
         this.category = category;
         this.condition = condition;
-        this.quantity = quantity;
+        this.publishedYear = publishedYear;
         this.price = price;
     }
 
@@ -41,36 +48,34 @@ public class Book {
         this.condition = condition;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+//    public void setQuantity(int quantity) {
+//        this.quantity = quantity;
+//    }
+
+    public void setPublishedYear(Date publishedYear) {
+        this.publishedYear = publishedYear;
     }
 
     public void setPrice(double price) {
         this.price = price;
     }
 
-    public String getTitle() {
-        return title;
-    }
+    public String getTitle() {return this.title;}
 
-    public String getAuthor() {
-        return author;
-    }
+    public int getID() {return this.id;}
 
-    public String getCategory() {
-        return category;
-    }
+    public String getAuthor() {return this.author;}
 
-    public String getCondition() {
-        return condition;
-    }
+    public String getCategory() {return this.category;}
 
-    public int getQuantity() {
-        return quantity;
-    }
+    public String getCondition() {return this.condition;}
 
-    public double getPrice() {
-        return price;
-    }
+//    public int getQuantity() {
+//        return quantity;
+//    }
+
+    public Date getPublishedYear(){return this.publishedYear;}
+
+    public double getPrice() {return this.price;}
 
 }

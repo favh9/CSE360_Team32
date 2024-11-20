@@ -5,6 +5,8 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
+import java.sql.Date;
+
 public class Seller_PostBookControl extends Pane {
 
     public double width;
@@ -56,12 +58,15 @@ public class Seller_PostBookControl extends Pane {
         // use this method to insert the book into the database
         public void insertBook() {
 
+            Date year = new Date(Integer.parseInt(pane.getPublishedYear()));
             Book book =  new Book();
-            book.setTitle("");
-            book.setAuthor("");
-            book.setCategory("");
-            book.setCondition("");
-            book.setPrice(0);
+            book.setTitle(pane.getBookTitle());
+            book.setAuthor(pane.getAuthor());
+            book.setCategory(pane.getCategory());
+            book.setCondition(pane.getCondition());
+            book.setPublishedYear(year);
+            book.setPrice(pane.getPrice());
+            DataBase.listBook(pane.getBookTitle(),year, pane.getAuthor(), pane.getCategory(),pane.getCondition(),pane.getPrice());
 
             // call database to insert book
             // DataBase.insertBook(user,...);
