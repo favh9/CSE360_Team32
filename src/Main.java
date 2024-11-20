@@ -66,11 +66,6 @@ public class Main extends Application {
 
     public static void main(String[] args) {
 
-        DataBase.createDataBase();
-        DataBase.createUsersTable();
-        DataBase.createPaymentInfoTable();
-        DataBase.updateUserType("admin","super_admin");
-
         launch(args);
     }
 

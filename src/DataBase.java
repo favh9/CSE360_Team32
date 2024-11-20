@@ -98,7 +98,7 @@ public class DataBase {
                 + "FOREIGN KEY (userID) REFERENCES Users(id) ON DELETE CASCADE"
                 + ")";
 
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              Statement stmt = conn.createStatement()) {
 
             stmt.executeUpdate(createTableSQL);
@@ -115,7 +115,7 @@ public class DataBase {
                 "VALUES (?, ?, ?, ?, ?) " +
                 "ON DUPLICATE KEY UPDATE nameOnCard = ?, cardNumber = ?, expirationDate = ?, cvc = ?";
 
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement pstmt = conn.prepareStatement(insertPaymentSQL)) {
 
             // Set parameters for the insert statement
@@ -443,7 +443,7 @@ public class DataBase {
         String insertQuery = "INSERT INTO Listings (Bookname, UserID, PublishDate, AuthorName, Category, Conditionn, Price) " +
                 "VALUES (?, 1, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = DriverManager.getConnection(URL, USER,PASWWORD);
+        try (Connection conn = DriverManager.getConnection(URL, USER,PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(insertQuery)) {
 
             // Set parameters for the prepared statement
@@ -521,7 +521,7 @@ public class DataBase {
         String selectPaymentSQL = "SELECT nameOnCard, cardNumber, expirationDate, cvc FROM PaymentInfo WHERE userID = ?";
         PaymentInfo paymentInfo = null;
 
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement pstmt = conn.prepareStatement(selectPaymentSQL)) {
 
             pstmt.setLong(1, userID);

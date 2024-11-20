@@ -6,9 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b9f62c8b-130d-4e78-a527-6bbd541ffcde" name="Changes" comment="Add current project files">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Seller_ProfileControl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Seller_ProfileControl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Seller_ProfilePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Seller_ProfilePane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Seller_TransactionsPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Seller_TransactionsPane.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +26,7 @@
     <option name="FILTER_BY_ACTION_IN_POPUP" value="false" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="KAN-52-Implement-Control-for-Forgot-Password" />
+        <entry key="$PROJECT_DIR$" value="phase3" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
