@@ -87,6 +87,65 @@ public class DataBase {
         }
     }
 
+    public static void createPaymentInfoTable() {
+        String createTableSQL = "CREATE TABLE IF NOT EXISTS PaymentInfo ("
+                + "id INT AUTO_INCREMENT PRIMARY KEY, "
+                + "userID INT NOT NULL, "
+                + "nameOnCard VARCHAR(100) NOT NULL, "
+                + "cardNumber CHAR(16) NOT NULL, "
+                + "expirationDate CHAR(7) NOT NULL, "
+                + "cvc CHAR(3) NOT NULL, "
+                + "FOREIGN KEY (userID) REFERENCES Users(id) ON DELETE CASCADE"
+                + ")";
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);
+             Statement stmt = conn.createStatement()) {
+
+            stmt.executeUpdate(createTableSQL);
+            System.out.println("PaymentInfo table created successfully...");
+        } catch (SQLException e) {
+            System.out.println("PaymentInfo table creation failed...");
+            e.printStackTrace();
+        }
+    }
+
+    public static boolean savePaymentInfo(Long userID, String nameOnCard, String cardNumber, String expirationDate, String cvc) {
+        // SQL query to insert or update payment information
+        String insertPaymentSQL = "INSERT INTO PaymentInfo (userID, nameOnCard, cardNumber, expirationDate, cvc) " +
+                "VALUES (?, ?, ?, ?, ?) " +
+                "ON DUPLICATE KEY UPDATE nameOnCard = ?, cardNumber = ?, expirationDate = ?, cvc = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);
+             PreparedStatement pstmt = conn.prepareStatement(insertPaymentSQL)) {
+
+            // Set parameters for the insert statement
+            pstmt.setLong(1, userID);
+            pstmt.setString(2, nameOnCard);
+            pstmt.setString(3, cardNumber);
+            pstmt.setString(4, expirationDate);
+            pstmt.setString(5, cvc);
+
+            // Set parameters for the update part of the query
+            pstmt.setString(6, nameOnCard);
+            pstmt.setString(7, cardNumber);
+            pstmt.setString(8, expirationDate);
+            pstmt.setString(9, cvc);
+
+            // Execute the query
+            pstmt.executeUpdate();
+
+            System.out.println("Payment info saved successfully for user ID: " + userID);
+            return true;
+
+        } catch (SQLException e) {
+            // Log the error if the query fails
+            System.out.println("Error saving payment info for user ID: " + userID);
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
     public static boolean insertUser(String firstname, String lastname, String dob, String email, String username, String pwd) {
 
         // Modify SQL query to include the 'dob' column
@@ -318,7 +377,7 @@ public class DataBase {
     }
 
     public static User getUserByUsername(String username) {
-        String selectUserSQL = "SELECT firstname, lastname, dob, email, username, password, user_type FROM Users WHERE username = ?";
+        String selectUserSQL = "SELECT id, firstname, lastname, dob, email, username, password, user_type FROM Users WHERE username = ?";
         User user = null;
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -329,6 +388,7 @@ public class DataBase {
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     // Map the result set to a User object
+                    Long userID = rs.getLong("id");
                     String firstname = rs.getString("firstname");
                     String lastname = rs.getString("lastname");
                     String dob = rs.getString("dob");
@@ -337,7 +397,7 @@ public class DataBase {
                     String usertype = rs.getString("user_type");
 
                     // Create a new User object from the database result
-                    user = new User(firstname, lastname, dob, email, username, password, usertype);
+                    user = new User(userID, firstname, lastname, dob, email, username, password, usertype);
                 }
             }
 
@@ -377,12 +437,13 @@ public class DataBase {
         }
     }
 
+
     public static boolean listBook(String bookName, Date publishDate, String authorName, String category, String conditionn,
                                    double price) {
         String insertQuery = "INSERT INTO Listings (Bookname, UserID, PublishDate, AuthorName, Category, Conditionn, Price) " +
                 "VALUES (?, 1, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = DriverManager.getConnection(URL, USER,PASSWORD);
+        try (Connection conn = DriverManager.getConnection(URL, USER,PASWWORD);
              PreparedStatement stmt = conn.prepareStatement(insertQuery)) {
 
             // Set parameters for the prepared statement
@@ -454,6 +515,34 @@ public class DataBase {
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("Error: SHA-256 algorithm not found.", e);
         }
+    }
+  
+  public static PaymentInfo getPaymentInfo(Long userID) {
+        String selectPaymentSQL = "SELECT nameOnCard, cardNumber, expirationDate, cvc FROM PaymentInfo WHERE userID = ?";
+        PaymentInfo paymentInfo = null;
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASWWORD);
+             PreparedStatement pstmt = conn.prepareStatement(selectPaymentSQL)) {
+
+            pstmt.setLong(1, userID);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    String nameOnCard = rs.getString("nameOnCard");
+                    String cardNumber = rs.getString("cardNumber");
+                    String expirationDate = rs.getString("expirationDate");
+                    String cvc = rs.getString("cvc");
+
+                    paymentInfo = new PaymentInfo(nameOnCard, cardNumber, expirationDate, cvc);
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error retrieving payment info for user ID: " + userID);
+            e.printStackTrace();
+        }
+
+        return paymentInfo;
     }
 
     public static boolean addToCart(int userID, int bookID) {

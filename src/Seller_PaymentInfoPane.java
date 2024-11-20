@@ -272,6 +272,43 @@ public class Seller_PaymentInfoPane extends BorderPane {
         displayAlert(Alert.AlertType.INFORMATION, title, msg); // Call helper method to display success alert
     }
 
+    // Getter for nameOnCardField
+    public TextField getNameOnCardField() {
+        return nameOnCardField;
+    }
+
+    // Getter for cardnumberField
+    public TextField getCardNumberField() {
+        return cardnumberField;
+    }
+
+    // Getter for expDateField
+    public TextField getExpDateField() {
+        return expDateField;
+    }
+
+    // Getter for cvcField
+    public TextField getCvcField() {
+        return cvcField;
+    }
+
+    public void setNameOnCardField(String name) {
+        nameOnCardField.setText(name);
+    }
+
+    public void setCardNumberField(String cardNumber) {
+        cardnumberField.setText(cardNumber);
+    }
+
+    public void setExpDateField(String expDate) {
+        expDateField.setText(expDate);
+    }
+
+    public void setCvcField(String cvc) {
+        cvcField.setText(cvc);
+    }
+
+
 
 }
 
