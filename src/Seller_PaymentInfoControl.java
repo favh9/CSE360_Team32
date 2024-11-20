@@ -18,8 +18,8 @@ public class Seller_PaymentInfoControl extends Pane {
      * This pane allows us to control input payment details such as card number, expiration date, and CVC.
      * It also sets the size and layout of the pane based on the provided parameters.
      *
-     * @param user The user whose payment information will be displayed in the pane. This may include their details.
-     * @param width The width of the pane. This defines the horizontal size of the pane.
+     * @param user   The user whose payment information will be displayed in the pane. This may include their details.
+     * @param width  The width of the pane. This defines the horizontal size of the pane.
      * @param height The height of the pane. This defines the vertical size of the pane.
      */
     public Seller_PaymentInfoControl(User user, double width, double height) {
@@ -30,6 +30,13 @@ public class Seller_PaymentInfoControl extends Pane {
 
         pane = new Seller_PaymentInfoPane(user, width, height);
 
+        PaymentInfo paymentInfo = DataBase.getPaymentInfo(user.getUserID());
+        if (paymentInfo != null) {
+            pane.setNameOnCardField(paymentInfo.getNameOnCard());
+            pane.setCardNumberField(paymentInfo.getCardNumber());
+            pane.setExpDateField(paymentInfo.getExpirationDate());
+            pane.setCvcField(paymentInfo.getCvc());
+        }
         backButton = pane.getBackButton();
         backButton.setOnAction(new ButtonHandler());
 
@@ -46,23 +53,38 @@ public class Seller_PaymentInfoControl extends Pane {
         public void handle(ActionEvent a) {
 
             if (a.getSource() == backButton) {
-
+                // Navigate back to the Seller Settings page
                 Seller_SettingsControl settings = new Seller_SettingsControl(user, width, height);
                 Main.mainWindow.setScene(new Scene(settings));
 
             } else if (a.getSource() == confirmButton) {
 
-                if(pane.emptyFields()) {
+                if (pane.emptyFields()) {
+                    // Display a warning if any fields are empty
                     pane.displayEmptyFields();
-                } else if(!pane.isCardValid()) {
+
+                } else if (!pane.isCardValid()) {
+                    // Display a warning if the card details are invalid
                     pane.displayInValidCard();
+
                 } else {
-                    pane.displayPaymentUpdated();
+                    // Attempt to save the payment info to the database
+                    boolean success = DataBase.savePaymentInfo(
+                            user.getUserID(),
+                            pane.getNameOnCardField().getText(),
+                            pane.getCardNumberField().getText(),
+                            pane.getExpDateField().getText(),
+                            pane.getCvcField().getText()
+                    );
+
+                    if (success) {
+                        pane.displayPaymentUpdated();
+                    } else {
+                        // Show failure alert if saving to the database failed
+                        pane.displayInValidCard();
+                    }
                 }
-
-
             }
-
         }
     }
 }
