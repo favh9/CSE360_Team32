@@ -18,27 +18,6 @@ public class DataBase {
     protected static String USER = "admin";
     protected static String PASSWORD = "admin";
 
-    // idea for tracking active users
-    protected static ConcurrentHashMap<Integer,User> activeUsers = new ConcurrentHashMap<>();
-
-    public static void addUser(User user) {
-        activeUsers.put(user.getUserID(), user);
-    }
-
-    public static void removeUser(int userID) {
-        activeUsers.remove(userID);
-    }
-
-    public boolean isUserActive(int userID) {
-        return activeUsers.containsKey(userID);
-    }
-
-    public User getUser(int userID) {
-        return activeUsers.get(userID);
-    }
-
-
-
     public static boolean updateUserType(String username, String usertype) {
 
         String updateUserSQL = "UPDATE Users SET user_type = ? WHERE username = ?";
