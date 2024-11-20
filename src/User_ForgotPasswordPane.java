@@ -221,9 +221,9 @@ public class User_ForgotPasswordPane extends BorderPane {
     public boolean emptyFields() {
         return emailTextField.getText().isEmpty() ||
                 usernameTextField.getText().isEmpty() ||
-                yearComboBox.getValue().isEmpty() ||
-                monthComboBox.getValue().isEmpty() ||
-                dayComboBox.getValue().isEmpty() ||
+                yearComboBox.getValue() ==  null ||
+                monthComboBox.getValue() == null ||
+                dayComboBox.getValue() == null ||
                 passwordField.getText().isEmpty() ||
                 confirmPasswordField.getText().isEmpty();
     }
@@ -321,9 +321,9 @@ public class User_ForgotPasswordPane extends BorderPane {
 
         if (emailTextField.getText().isEmpty()) msg.append("\temail\n");
         if (usernameTextField.getText().isEmpty()) msg.append("\tusername\n");
-        if (yearComboBox.getValue().isEmpty()) msg.append("\tbirth year\n");
-        if (monthComboBox.getValue().isEmpty()) msg.append("\tbirth month\n");
-        if (dayComboBox.getValue().isEmpty()) msg.append("\tbirth day\n");
+        if (yearComboBox.getValue() == null) msg.append("\tbirth year\n");
+        if (monthComboBox.getValue() == null) msg.append("\tbirth month\n");
+        if (dayComboBox.getValue() == null) msg.append("\tbirth day\n");
         if (passwordField.getText().isEmpty()) msg.append("\tpassword\n");
         if (confirmPasswordField.getText().isEmpty()) msg.append("\tconfirm password\n");
 
