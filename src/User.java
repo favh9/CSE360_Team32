@@ -2,7 +2,7 @@ import java.io.Serializable;
 
 public class User implements Serializable {
 
-    private Long userID;
+    private int userID;
     private String firstName;
     private String lastName;
     private String dob;
@@ -13,7 +13,7 @@ public class User implements Serializable {
 
     public User() {
 
-        userID = Long.getLong("");
+        userID = 0;
         firstName = "";
         lastName = "";
         dob = "";
@@ -35,7 +35,7 @@ public class User implements Serializable {
 
     }
 
-    public User(Long userID, String firstName, String lastName, String dob, String email, String username, String password, String userType) {
+    public User(int userID, String firstName, String lastName, String dob, String email, String username, String password, String userType) {
 
         this.userID = userID;
         this.firstName = firstName;
@@ -47,7 +47,7 @@ public class User implements Serializable {
         this.userType = userType;
     }
 
-    public Long getUserID() {
+    public int getUserID() {
         return userID;
     }
 
@@ -79,7 +79,7 @@ public class User implements Serializable {
         return userType;
     }
 
-    public void setUserID(Long id) {
+    public void setUserID(int id) {
         userID = id;
     }
 

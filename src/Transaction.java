@@ -4,44 +4,44 @@ import java.util.Date;
 
 public class Transaction {
 
-    public Long transactionID;
-    public Long buyerID;
-    public Long sellerID;
+    public int transactionID;
+    public int buyerID;
+    public int sellerID;
     public Date date;
     public Book book;
     public double amount;
     public Transaction() {
 
-        transactionID = Long.getLong("");
-        buyerID = Long.getLong("");
-        sellerID = Long.getLong("");
+        transactionID = 0;
+        buyerID = 0;
+        sellerID = 0;
         date  = new Date(2024 - 1900, 11 - 1, 19, 14, 30, 0);  // November 19, 2024, 14:30:00
 
         book = new Book();
         amount = 0.0;
     }
 
-    public Long getTransactionID() {
+    public int getTransactionID() {
         return transactionID;
     }
 
-    public void setTransactionID(Long transactionID) {
+    public void setTransactionID(int transactionID) {
         this.transactionID = transactionID;
     }
 
-    public Long getBuyerID() {
+    public int getBuyerID() {
         return buyerID;
     }
 
-    public void setBuyerID(Long buyerID) {
+    public void setBuyerID(int buyerID) {
         this.buyerID = buyerID;
     }
 
-    public Long getSellerID() {
+    public int getSellerID() {
         return sellerID;
     }
 
-    public void setSellerID(Long sellerID) {
+    public void setSellerID(int sellerID) {
         this.sellerID = sellerID;
     }
 

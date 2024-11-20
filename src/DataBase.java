@@ -19,21 +19,21 @@ public class DataBase {
     protected static String PASSWORD = "admin";
 
     // idea for tracking active users
-    protected static ConcurrentHashMap<Long,User> activeUsers = new ConcurrentHashMap<>();
+    protected static ConcurrentHashMap<Integer,User> activeUsers = new ConcurrentHashMap<>();
 
     public static void addUser(User user) {
         activeUsers.put(user.getUserID(), user);
     }
 
-    public static void removeUser(Long userID) {
+    public static void removeUser(int userID) {
         activeUsers.remove(userID);
     }
 
-    public boolean isUserActive(Long userID) {
+    public boolean isUserActive(int userID) {
         return activeUsers.containsKey(userID);
     }
 
-    public User getUser(Long userID) {
+    public User getUser(int userID) {
         return activeUsers.get(userID);
     }
 
@@ -109,7 +109,7 @@ public class DataBase {
         }
     }
 
-    public static boolean savePaymentInfo(Long userID, String nameOnCard, String cardNumber, String expirationDate, String cvc) {
+    public static boolean savePaymentInfo(int userID, String nameOnCard, String cardNumber, String expirationDate, String cvc) {
         // SQL query to insert or update payment information
         String insertPaymentSQL = "INSERT INTO PaymentInfo (userID, nameOnCard, cardNumber, expirationDate, cvc) " +
                 "VALUES (?, ?, ?, ?, ?) " +
@@ -119,7 +119,7 @@ public class DataBase {
              PreparedStatement pstmt = conn.prepareStatement(insertPaymentSQL)) {
 
             // Set parameters for the insert statement
-            pstmt.setLong(1, userID);
+            pstmt.setInt(1, userID);
             pstmt.setString(2, nameOnCard);
             pstmt.setString(3, cardNumber);
             pstmt.setString(4, expirationDate);
@@ -278,17 +278,17 @@ public class DataBase {
         }
     }
 
-    public static User getUserFromDB(Long userID) {
+    public static User getUserFromDB(int userID) {
         String query = "SELECT id, firstname, lastname, dob, email, username, password, userType FROM Users WHERE id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setLong(1, userID);
+            stmt.setInt(1, userID);
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                Long id = rs.getLong("id");
+                int id = rs.getInt("id");
                 String firstName = rs.getString("firstname");
                 String lastName = rs.getString("lastname");
                 String dob = rs.getString("dob");
@@ -326,7 +326,7 @@ public class DataBase {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                Long id = rs.getLong("id");
+                int id = rs.getInt("id");
                 String firstName = rs.getString("firstname");
                 String lastName = rs.getString("lastname");
                 String dob = rs.getString("dob");
@@ -388,7 +388,7 @@ public class DataBase {
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     // Map the result set to a User object
-                    Long userID = rs.getLong("id");
+                    int userID = rs.getInt("id");
                     String firstname = rs.getString("firstname");
                     String lastname = rs.getString("lastname");
                     String dob = rs.getString("dob");
@@ -517,14 +517,14 @@ public class DataBase {
         }
     }
   
-  public static PaymentInfo getPaymentInfo(Long userID) {
+  public static PaymentInfo getPaymentInfo(int userID) {
         String selectPaymentSQL = "SELECT nameOnCard, cardNumber, expirationDate, cvc FROM PaymentInfo WHERE userID = ?";
         PaymentInfo paymentInfo = null;
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement pstmt = conn.prepareStatement(selectPaymentSQL)) {
 
-            pstmt.setLong(1, userID);
+            pstmt.setInt(1, userID);
 
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
@@ -843,9 +843,9 @@ public class DataBase {
 
     public static Transaction getTransactionFromResultSet(ResultSet rs) throws SQLException {
         // Retrieve the data from the ResultSet
-        Long transactionID = rs.getLong("transactionID");
-        Long buyerID = rs.getLong("buyerID");
-        Long sellerID = rs.getLong("sellerID");
+        int transactionID = rs.getInt("transactionID");
+        int buyerID = rs.getInt("buyerID");
+        int sellerID = rs.getInt("sellerID");
         int bookID = rs.getInt("bookID");
         double amount = rs.getDouble("amount");
 
@@ -866,21 +866,21 @@ public class DataBase {
     }
 
 
-    public static void updateTransaction(Long buyerID, Long sellerID, int bookID, double amount) {
+    public static void updateTransaction(int buyerID, int sellerID, int bookID, double amount) {
         String query = "UPDATE Transactions SET buyerID = ?, sellerID = ?, bookID = ?, amount = ? WHERE transactionID = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             // Since transactionID is auto-generated, we don't need to pass it as an argument
-            stmt.setLong(1, buyerID);
-            stmt.setLong(2, sellerID);
+            stmt.setInt(1, buyerID);
+            stmt.setInt(2, sellerID);
             stmt.setInt(3, bookID);
             stmt.setDouble(4, amount);
 
             // You'll need to fetch the transactionID from somewhere to update it, e.g., passing it as a parameter or querying it.
             // Let's assume we want to update the transaction with the provided buyerID and sellerID as primary identifiers
-            stmt.setLong(5, buyerID);  // Here, you may adjust logic based on how transactionID is to be identified.
+            stmt.setInt(5, buyerID);  // Here, you may adjust logic based on how transactionID is to be identified.
 
             // Execute the update
             stmt.executeUpdate();
@@ -891,22 +891,20 @@ public class DataBase {
     }
 
 
-    public static List<Transaction> returnTransactions(Long userID) {
+    public static List<Transaction> returnTransactions(int userID) {
         List<Transaction> transactions = new ArrayList<>();
         String query = "SELECT * FROM Transactions";
 
-        if (userID != null) {
-            query += " WHERE buyerID = ? OR sellerID = ?";
-        }
+//        if (userID != null) {
+//            query += " WHERE buyerID = ? OR sellerID = ?";
+//        }
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            // Set the parameters if userID is provided
-            if (userID != null) {
-                stmt.setLong(1, userID);
-                stmt.setLong(2, userID);
-            }
+//            // Set the parameters if userID is provided
+                stmt.setInt(1, userID);
+                stmt.setInt(2, userID);
 
             ResultSet rs = stmt.executeQuery();
 
