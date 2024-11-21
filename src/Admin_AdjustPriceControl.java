@@ -56,6 +56,10 @@ public class Admin_AdjustPriceControl extends Pane {
                     // Display a warning if any fields are empty
                     pane.displayEmptyFields();
 
+                } if (pane.notValid()){
+
+                    pane.displayNotValid();
+
                 } else {
                     DataBase.setMarkdown(1, Admin_AdjustPricePane.getUsedLikeNewFee() / 100);
                     DataBase.setMarkdown(2, Admin_AdjustPricePane.getModeratelyUsedFee() / 100);
