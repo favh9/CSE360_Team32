@@ -24,12 +24,10 @@ public class Buyer_OrdersPane extends BorderPane {
         Font titleFont = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 42);
         Font quantityFont = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 24);
 
-        Buyer_NavigationControl navigationControl = new Buyer_NavigationControl(user, width, height);
-
-
+        Seller_NavigationControl navigationControl = new Seller_NavigationControl(user, width, height);
 
         // set attributes for the Title Label
-        Label titleLabel = new Label("Transactions");
+        Label titleLabel = new Label("Orders");
         titleLabel.setFont(titleFont);
 
         // set attributes for the quantity label
@@ -78,21 +76,21 @@ public class Buyer_OrdersPane extends BorderPane {
         headerLabel1.setAlignment(Pos.BASELINE_CENTER);
 
         // set attributes for the header label
-        Label headerLabel2 = new Label("Timestamp");
+        Label headerLabel2 = new Label("Ordered on");
         headerLabel2.setPrefWidth(200);
         headerLabel2.setWrapText(false);
         headerLabel2.setFont(Font.font(20));
         headerLabel2.setAlignment(Pos.BASELINE_CENTER);
 
         // set attributes for the header label
-        Label headerLabel3 = new Label("Profit");
+        Label headerLabel3 = new Label("Amount");
         headerLabel3.setPrefWidth(150);
         headerLabel3.setWrapText(false);
         headerLabel3.setFont(Font.font(20));
         headerLabel3.setAlignment(Pos.BASELINE_CENTER);
 
         // set attributes for the header label
-        Label headerLabel4 = new Label("Sold To");
+        Label headerLabel4 = new Label("Rate Seller");
         headerLabel4.setPrefWidth(150);
         headerLabel4.setWrapText(true);
         headerLabel4.setFont(Font.font(20));
@@ -154,52 +152,6 @@ public class Buyer_OrdersPane extends BorderPane {
         transactionsAmountText.setText("0");
     }
 
-    // returns a container where a user's information is displayed
-    // modify it to match the transaction box
-    public void addUser(String username, String balance, String type) {
-
-        NumberFormat nf = NumberFormat.getCurrencyInstance();
-        balance = (nf.format(Double.parseDouble(balance)));
-
-        Label usernameLabel = new Label(username);
-        Label balanceLabel = new Label(balance);
-        Label typeLabel = new Label(type);
-
-        usernameLabel.setPrefWidth(390);
-        balanceLabel.setPrefWidth(150);
-        typeLabel.setPrefWidth(150);
-
-        usernameLabel.setFont(Font.font("Arial",FontWeight.NORMAL,18));
-        typeLabel.setFont(Font.font("Arial",FontWeight.NORMAL,18));
-        balanceLabel.setFont(Font.font("Arial",FontWeight.NORMAL,18));
-
-        usernameLabel.setAlignment(Pos.CENTER_LEFT);
-        balanceLabel.setAlignment(Pos.CENTER_RIGHT);
-        typeLabel.setAlignment(Pos.CENTER);
-
-        balanceLabel.setPadding(new Insets(0,40,0,0));
-
-        HBox usernameHBox = new HBox(usernameLabel);
-        HBox balanceHBox = new HBox(balanceLabel);
-        HBox typeHBox = new HBox(typeLabel);
-        usernameHBox.setAlignment(Pos.CENTER_LEFT);
-        balanceLabel.setAlignment(Pos.CENTER_RIGHT);
-        typeLabel.setAlignment(Pos.CENTER);
-
-        Rectangle lineSeparator = new Rectangle();
-        lineSeparator.setWidth(690);
-        lineSeparator.setHeight(1);
-        lineSeparator.setFill(Color.GRAY);
-
-        HBox hbox = new HBox(usernameHBox,balanceHBox,typeHBox);
-        hbox.setPadding(new Insets(5,0,5,0));
-
-        VBox vbox = new VBox(hbox,lineSeparator);
-
-        transactionsVBox.getChildren().add(vbox);
-        this.updateCount();
-    }
-
     // modifies and updates the display amount text by one
     public void updateCount() {
         String str = transactionsAmountText.getText();
@@ -218,18 +170,18 @@ public class Buyer_OrdersPane extends BorderPane {
         return refreshButton;
     }
 
-    public void addAllTransactionsToPane() {
+    public void addAllOrdersToPane() {
 
         int testAmountOfBooks = 20;
 
         for(int i = 0; i < testAmountOfBooks; i++){
-            addTransactionToPane(new Transaction());
+            addOrderToPane(new Transaction());
             updateCount();
         }
 
     }
 
-    public void addTransactionToPane(Transaction transaction) {
+    public void addOrderToPane(Transaction transaction) {
 
         // set attributes for the header label
         Label title = new Label("Theory to the universe of things in my world");
@@ -264,33 +216,20 @@ public class Buyer_OrdersPane extends BorderPane {
         VBox amountBox = new VBox(amount);
         amountBox.setAlignment(Pos.CENTER);
 
-        Hyperlink soldtoLink = new Hyperlink();
-        soldtoLink.setText("The Amazing Gatsby");
-        soldtoLink.setWrapText(true);
-        soldtoLink.setPrefWidth(150);
-        soldtoLink.setFont(Font.font(20));
-        soldtoLink.setAlignment(Pos.BASELINE_CENTER);
-        soldtoLink.setPadding(new Insets(5));
+        ComboBox<String> comboBox = new ComboBox<>();
+        comboBox.setPromptText("Rate");
+        comboBox.getItems().addAll("1","2","3","4","5");
 
-        soldtoLink.setOnAction(e->{
-
-            Alert review = new Alert(Alert.AlertType.INFORMATION);
-            review.setTitle(null);
-            review.setHeaderText(null);
-            review.setContentText("This is the buyer's review");
-            review.show();
-
+        // Add a listener to disable editing when a value is selected
+        comboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (!comboBox.getValue().isEmpty()) {
+                comboBox.setDisable(true);
+            }
         });
 
-        // set attributes for the header label
-        Label soldto = new Label("SparkyandHisFriends");
-        soldto.setPrefWidth(150);
-        soldto.setWrapText(true);
-        soldto.setFont(Font.font(20));
-        soldto.setAlignment(Pos.BASELINE_CENTER);
-        soldto.setPadding(new Insets(5));
-
-        VBox soldToBox = new VBox(soldtoLink);
+        VBox soldToBox = new VBox(comboBox);
+        soldToBox.setPadding(new Insets(5));
+        soldToBox.setPrefWidth(150);
         soldToBox.setAlignment(Pos.CENTER);
 
         HBox transactionHBox = new HBox(titleBox,timestampBox,amountBox,soldToBox);
@@ -305,4 +244,5 @@ public class Buyer_OrdersPane extends BorderPane {
         transactionsVBox.getChildren().add(lineSeparator);
 
     }
+
 }
