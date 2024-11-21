@@ -125,7 +125,6 @@ public class DataBase {
         }
     }
 
-
     public static boolean insertUser(String firstname, String lastname, String dob, String email, String username, String pwd) {
 
         // Modify SQL query to include the 'dob' column
@@ -417,9 +416,7 @@ public class DataBase {
         }
     }
 
-
-    public static boolean listBook(int UserID, String bookName, int publishYear, String authorName, String category, String conditionn,
-                                   double price) {
+    public static boolean listBook(int UserID, String bookName, int publishYear, String authorName, String category, String conditionn, double price) {
         String insertQuery = "INSERT INTO Listings (Bookname, UserID, PublishYear, AuthorName, Category, Conditionn, Price) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
@@ -497,8 +494,8 @@ public class DataBase {
             throw new RuntimeException("Error: SHA-256 algorithm not found.", e);
         }
     }
-  
-  public static PaymentInfo getPaymentInfo(int userID) {
+
+    public static PaymentInfo getPaymentInfo(int userID) {
         String selectPaymentSQL = "SELECT nameOnCard, cardNumber, expirationDate, cvc FROM PaymentInfo WHERE userID = ?";
         PaymentInfo paymentInfo = null;
 
@@ -648,7 +645,7 @@ public class DataBase {
     public static List<Book> myListedBooks(int userID) {
         List<Book> books = new ArrayList<>();
         // Query to get all ListingIDs where Sold = 'N' and the userID matches the seller
-        String query = "SELECT ListingID FROM Listings WHERE Sold = 'N' AND SellerID = ?";
+        String query = "SELECT ListingID FROM Listings WHERE Sold = 'N' AND userID = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -672,9 +669,8 @@ public class DataBase {
         return books; // Return the list of books
     }
 
-    public static List<Book> searchBooksByFilter(String searchInput, String[] conditions, String[] categories) {
+    public static List<Book> searchBooksByFilter(String searchInput, String[] conditions, String[] categories, int order) {
         // Initialize a list to hold the resulting Book objects
-
         List<Book> books = new ArrayList<>();
 
         // Initialize the query builder with the Sold condition
@@ -703,6 +699,13 @@ public class DataBase {
         // Combine all filters with AND and add to the query
         if (!filters.isEmpty()) {
             query.append(" AND ").append(String.join(" AND ", filters));
+        }
+
+        // Add the ORDER BY clause based on the 'order' parameter
+        if (order == 1) {
+            query.append(" ORDER BY Price ASC");  // Ascending order
+        } else if (order == 2) {
+            query.append(" ORDER BY Price DESC"); // Descending order
         }
 
         // Now execute the query to fetch the ListingIDs that match the filters
@@ -735,7 +738,8 @@ public class DataBase {
 
                 // Get the Book object using the listingID
                 Book book = getBookFromListing(listingID);
-                System.out.println(listingID + " " + book.getTitle());;
+                System.out.println(listingID + " " + book.getTitle()); // For debugging
+
                 // If the book is not null, add it to the list
                 if (book != null) {
                     books.add(book);
@@ -743,10 +747,97 @@ public class DataBase {
             }
 
         } catch (SQLException e) {
-            System.out.println("Error retrieving  in search Books: " + e.getMessage());
+            System.out.println("Error retrieving books in searchBooks: " + e.getMessage());
         }
 
         // Return the list of books that match the filters
+        return books;
+    }
+
+    public static List<Book> getMyBooksByFilter(int userID, String searchInput, String[] conditions, String[] categories, int order) {
+        // Initialize a list to hold the resulting Book objects
+        List<Book> books = new ArrayList<>();
+
+        // Initialize the query builder with the Sold condition and the userID condition (to get books from that specific user)
+        StringBuilder query = new StringBuilder("SELECT ListingID FROM Listings WHERE Sold = 'N' AND userID = ?");
+
+        // Initialize a list to hold the filters
+        List<String> filters = new ArrayList<>();
+
+        // Add the search filter if searchInput is provided (search in Bookname or AuthorName)
+        if (searchInput != null && !searchInput.trim().isEmpty()) {
+            filters.add("(Bookname LIKE ? OR AuthorName LIKE ?)");
+        }
+
+        // Add the condition filter if conditions are provided
+        if (conditions != null && conditions.length > 0) {
+            String conditionQuery = "Conditionn IN (" + String.join(",", Collections.nCopies(conditions.length, "?")) + ")";
+            filters.add(conditionQuery);
+        }
+
+        // Add any additional categories filter here as needed
+        if (categories != null && categories.length > 0) {
+            String categoryQuery = "Category IN (" + String.join(",", Collections.nCopies(categories.length, "?")) + ")";
+            filters.add(categoryQuery);
+        }
+
+        // Combine all filters with AND and add to the query
+        if (!filters.isEmpty()) {
+            query.append(" AND ").append(String.join(" AND ", filters));
+        }
+
+        // Add the ORDER BY clause based on the 'order' parameter
+        if (order == 1) {
+            query.append(" ORDER BY Price ASC");  // Ascending order
+        } else if (order == 2) {
+            query.append(" ORDER BY Price DESC"); // Descending order
+        }
+
+        // Now execute the query to fetch the ListingIDs that match the filters
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(query.toString())) {
+
+            // Set the parameters for the query
+            int paramIndex = 1;
+            stmt.setInt(paramIndex++, userID); // Set the userID to filter by the seller (or owner)
+
+            if (searchInput != null && !searchInput.trim().isEmpty()) {
+                stmt.setString(paramIndex++, "%" + searchInput + "%");
+                stmt.setString(paramIndex++, "%" + searchInput + "%");
+            }
+            if (conditions != null) {
+                for (String condition : conditions) {
+                    stmt.setString(paramIndex++, condition);
+                }
+            }
+            if (categories != null) {
+                for (String category : categories) {
+                    stmt.setString(paramIndex++, category);
+                }
+            }
+
+            // Execute the query and process the results
+            ResultSet rs = stmt.executeQuery();
+
+            // For each ListingID in the result set, get the corresponding Book object
+            while (rs.next()) {
+                int listingID = rs.getInt("ListingID");
+
+                // Get the Book object using the listingID
+                Book book = getBookFromListing(listingID);
+                System.out.println(listingID + " " + book.getTitle()); // For debugging
+
+                // If the book is not null, add it to the list
+                if (book != null) {
+                    books.add(book);
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error retrieving books in searchMyBooks: " + e.getMessage());
+        }
+
+        // Return the list of books that match the filters and belong to the specified user
         return books;
     }
 
@@ -894,7 +985,6 @@ public class DataBase {
         return transaction;
     }
 
-
     public static void insertTransaction(int buyerID, int sellerID, int bookID, double amount) {
         // Insert query for the Transactions table
         String insertQuery = "INSERT INTO Transactions (buyerID, sellerID, bookID, amount) VALUES (?, ?, ?, ?)";
@@ -947,8 +1037,6 @@ public class DataBase {
         }
     }
 
-
-
     public static List<Transaction> returnTransactions(int userID) {
         List<Transaction> transactions = new ArrayList<>();
         String query = "SELECT * FROM Transactions";
@@ -961,8 +1049,8 @@ public class DataBase {
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
 //            // Set the parameters if userID is provided
-                stmt.setInt(1, userID);
-                stmt.setInt(2, userID);
+            stmt.setInt(1, userID);
+            stmt.setInt(2, userID);
 
             ResultSet rs = stmt.executeQuery();
 
@@ -977,6 +1065,88 @@ public class DataBase {
         }
 
         return transactions;
+    }
+
+    public static double getMarkdown(int condition) {
+        // Initialize a variable to hold the discount value
+        double markdown = 0.0;
+
+        // Query to fetch the markdown based on condition
+        String query = "SELECT Like_New, Moderately_Used, Heavily_Used FROM ConditionDiscount WHERE condition_id = 1"; // Assume the condition_id is used to identify a single row
+
+        // Validate condition input
+        if (condition < 1 || condition > 3) {
+            System.out.println("Invalid condition value. Please provide 1, 2, or 3.");
+            return markdown;
+        }
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            ResultSet rs = stmt.executeQuery(); // Execute query to fetch the markdown values
+
+            if (rs.next()) {
+                // Based on condition, return the corresponding markdown value
+                switch (condition) {
+                    case 1:
+                        markdown = rs.getDouble("Like_New");
+                        break;
+                    case 2:
+                        markdown = rs.getDouble("Moderately_Used");
+                        break;
+                    case 3:
+                        markdown = rs.getDouble("Heavily_Used");
+                        break;
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error retrieving markdown: " + e.getMessage());
+        }
+
+        return markdown; // Return the markdown value based on condition
+    }
+
+    public static void setMarkdown(int condition, double conditionDiscount) {
+        // Query to update the markdown value based on condition
+        String query = "UPDATE ConditionDiscount SET ";
+
+        // Determine which column to update based on the condition value
+        switch (condition) {
+            case 1:
+                query += "Like_New = ?";
+                break;
+            case 2:
+                query += "Moderately_Used = ?";
+                break;
+            case 3:
+                query += "Heavily_Used = ?";
+                break;
+            default:
+                System.out.println("Invalid condition value. Please provide 1, 2, or 3.");
+                return;
+        }
+
+        // Execute the update query to set the new markdown value
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            // Set the new discount value
+            stmt.setDouble(1, conditionDiscount);
+
+            // Execute the update query
+            int rowsAffected = stmt.executeUpdate();
+
+            // If no rows were affected, the condition was invalid or not found
+            if (rowsAffected > 0) {
+                System.out.println("Successfully updated the markdown value.");
+            } else {
+                System.out.println("No rows were updated. The condition may not exist.");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error updating markdown: " + e.getMessage());
+        }
     }
 
 }
