@@ -1167,5 +1167,28 @@ public class DataBase {
         }
     }
 
+    public static int getNumSold(String category) {
+        String query = "SELECT COUNT(*) AS numSold FROM Listings WHERE Sold = 'Y' AND Category = ?";
+        int numSold = 0;
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            // Set the category parameter
+            stmt.setString(1, category);
+
+            // Execute the query and retrieve the result
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                numSold = rs.getInt("numSold"); // Get the count from the result set
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error retrieving number of sold items: " + e.getMessage());
+        }
+
+        return numSold; // Return the count of sold listings in the specified category
+    }
 }
 
