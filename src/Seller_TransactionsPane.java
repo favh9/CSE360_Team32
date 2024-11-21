@@ -152,52 +152,6 @@ public class Seller_TransactionsPane extends BorderPane {
         transactionsAmountText.setText("0");
     }
 
-    // returns a container where a user's information is displayed
-    // modify it to match the transaction box
-    public void addUser(String username, String balance, String type) {
-
-        NumberFormat nf = NumberFormat.getCurrencyInstance();
-        balance = (nf.format(Double.parseDouble(balance)));
-
-        Label usernameLabel = new Label(username);
-        Label balanceLabel = new Label(balance);
-        Label typeLabel = new Label(type);
-
-        usernameLabel.setPrefWidth(390);
-        balanceLabel.setPrefWidth(150);
-        typeLabel.setPrefWidth(150);
-
-        usernameLabel.setFont(Font.font("Arial",FontWeight.NORMAL,18));
-        typeLabel.setFont(Font.font("Arial",FontWeight.NORMAL,18));
-        balanceLabel.setFont(Font.font("Arial",FontWeight.NORMAL,18));
-
-        usernameLabel.setAlignment(Pos.CENTER_LEFT);
-        balanceLabel.setAlignment(Pos.CENTER_RIGHT);
-        typeLabel.setAlignment(Pos.CENTER);
-
-        balanceLabel.setPadding(new Insets(0,40,0,0));
-
-        HBox usernameHBox = new HBox(usernameLabel);
-        HBox balanceHBox = new HBox(balanceLabel);
-        HBox typeHBox = new HBox(typeLabel);
-        usernameHBox.setAlignment(Pos.CENTER_LEFT);
-        balanceLabel.setAlignment(Pos.CENTER_RIGHT);
-        typeLabel.setAlignment(Pos.CENTER);
-
-        Rectangle lineSeparator = new Rectangle();
-        lineSeparator.setWidth(690);
-        lineSeparator.setHeight(1);
-        lineSeparator.setFill(Color.GRAY);
-
-        HBox hbox = new HBox(usernameHBox,balanceHBox,typeHBox);
-        hbox.setPadding(new Insets(5,0,5,0));
-
-        VBox vbox = new VBox(hbox,lineSeparator);
-
-        transactionsVBox.getChildren().add(vbox);
-        this.updateCount();
-    }
-
     // modifies and updates the display amount text by one
     public void updateCount() {
         String str = transactionsAmountText.getText();
