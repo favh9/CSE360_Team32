@@ -1,5 +1,8 @@
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -35,6 +38,38 @@ public class Seller_MyBooksControl extends Pane {
         // register search button with button handler for events
         searchButton.setOnAction(new ButtonHandler());
 
+        // categories
+        naturalscienceCheckBox = pane.getNaturalscienceCheckBox();
+        computerscienceCheckBox = pane.getComputerscienceCheckBox();
+        mathCheckBox = pane.getMathCheckBox();
+        englishCheckBox = pane.getEnglishCheckBox();
+        otherCheckBox = pane.getOtherCheckBox();
+
+        // listeners
+        naturalscienceCheckBox.selectedProperty().addListener(new NaturalScienceCheckBoxListener());
+        computerscienceCheckBox.selectedProperty().addListener(new computerScienceCheckBoxListener());
+        mathCheckBox.selectedProperty().addListener(new matchCheckBoxListener());
+        englishCheckBox.selectedProperty().addListener(new englishCheckBoxListener());
+        otherCheckBox.selectedProperty().addListener(new otherCheckBoxListener());
+
+
+        // conditions
+        likenewCheckBox = pane.getLikenewCheckBox();
+        moderatelyusedCheckBox = pane.getModeratelyusedCheckBox();
+        heavilyusedCheckBox = pane.getHeavilyusedCheckBox();
+
+        // listeners
+        likenewCheckBox.selectedProperty().addListener(new likeNewCheckBoxListener());
+        moderatelyusedCheckBox.selectedProperty().addListener(new moderatelyUsedCheckBoxListener());
+        heavilyusedCheckBox.selectedProperty().addListener(new heavilyUsedCheckBoxListener());
+
+        // ascending or descending
+        ascendingRadioButton = pane.getAscendingRadioButton();
+        descendingRadioButton = pane.getDescendingRadioButton();
+
+        ascendingRadioButton.setOnAction(new ButtonHandler());
+        descendingRadioButton.setOnAction(new ButtonHandler());
+
         // make a condition that queries the database for the
         // seller's books
         // if the seller has no books to display or not
@@ -57,7 +92,128 @@ public class Seller_MyBooksControl extends Pane {
     private class ButtonHandler implements EventHandler<ActionEvent> {
 
         @Override
-        public void handle(ActionEvent event) {
+        public void handle(ActionEvent a) {
+
+
+            // radio buttons are tied to a toggle button
+            if(toggleGroupPrices.getSelectedToggle().equals(ascendingRadioButton)) {
+
+            } else if(toggleGroupPrices.getSelectedToggle().equals(descendingRadioButton)){
+
+            } else if(a.getSource().equals(resetfiltersButton)) {
+
+            }
+        }
+    }
+
+    private class NaturalScienceCheckBoxListener implements ChangeListener<Boolean> {
+
+        @Override
+        public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
+
+            if(observableValue.getValue()) {
+                // true value
+            } else {
+                // false value
+            }
+
+        }
+    }
+
+    private class computerScienceCheckBoxListener implements ChangeListener<Boolean> {
+
+        @Override
+        public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
+
+            if(observableValue.getValue()) {
+                // true value
+            } else {
+                // false value
+            }
+
+        }
+    }
+
+    private class matchCheckBoxListener implements ChangeListener<Boolean> {
+
+        @Override
+        public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
+
+            if(observableValue.getValue()) {
+                // true value
+            } else {
+                // false value
+            }
+
+        }
+    }
+
+    private class englishCheckBoxListener implements ChangeListener<Boolean> {
+
+        @Override
+        public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
+
+            if(observableValue.getValue()) {
+                // true value
+            } else {
+                // false value
+            }
+
+        }
+    }
+
+    private class otherCheckBoxListener implements ChangeListener<Boolean> {
+
+        @Override
+        public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
+
+            if(observableValue.getValue()) {
+                // true value
+            } else {
+                // false value
+            }
+
+        }
+    }
+
+    private class likeNewCheckBoxListener implements ChangeListener<Boolean> {
+
+        @Override
+        public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
+
+            if(observableValue.getValue()) {
+                // true value
+            } else {
+                // false value
+            }
+
+        }
+    }
+
+    private class moderatelyUsedCheckBoxListener implements ChangeListener<Boolean> {
+
+        @Override
+        public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
+
+            if(observableValue.getValue()) {
+                // true value
+            } else {
+                // false value
+            }
+
+        }
+    }
+
+    private class heavilyUsedCheckBoxListener implements ChangeListener<Boolean> {
+
+        @Override
+        public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
+
+            if(observableValue.getValue()) {
+                // true value
+            } else {
+                // false value
+            }
 
         }
     }
