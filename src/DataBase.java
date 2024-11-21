@@ -66,6 +66,24 @@ public class DataBase {
         }
     }
 
+    public static boolean verifyPassword(int userID, String currentPassword) {
+        String verifySQL = "SELECT password FROM Users WHERE id = ?";
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement pstmt = conn.prepareStatement(verifySQL)) {
+            pstmt.setInt(1, userID);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    String storedPassword = rs.getString("password");
+                    return storedPassword.equals(hashPassword(currentPassword)); // Compare hashed password
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
     public static void createPaymentInfoTable() {
         String createTableSQL = "CREATE TABLE IF NOT EXISTS PaymentInfo ("
                 + "id INT AUTO_INCREMENT PRIMARY KEY, "

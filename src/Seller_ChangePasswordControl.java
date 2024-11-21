@@ -6,22 +6,22 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
-public class Seller_ForgotPasswordControl extends Pane {
+public class Seller_ChangePasswordControl extends Pane {
 
     private User user;
     private double width;
     private double height;
     private Button backButton, confirmButton;
     private PasswordField currentPasswordField, newPasswordField, confirmNewPasswordField;
-    private Seller_ForgotPasswordPane pane;
+    private Seller_ChangePasswordPane pane;
 
-    public Seller_ForgotPasswordControl(User user, double width, double height) {
+    public Seller_ChangePasswordControl(User user, double width, double height) {
 
         this.user = user;
         this.width = width;
         this.height = height;
 
-        pane = new Seller_ForgotPasswordPane(user, width, height);
+        pane = new Seller_ChangePasswordPane(user, width, height);
 
         backButton = pane.getBackButton();
         backButton.setOnAction(new ButtonHandler());
@@ -49,19 +49,29 @@ public class Seller_ForgotPasswordControl extends Pane {
                 Seller_SettingsControl settings = new Seller_SettingsControl(user, width, height);
                 Main.mainWindow.setScene(new Scene(settings));
 
-            } else if(a.getSource().equals(confirmButton)) {
-
-                if(pane.emptyFields()) {
-                    pane.displayEmptyFields();
-                } else if(!pane.passwordsMatch()) {
-                    pane.displayPasswordsNotMatch();
-                } else {
-                    pane.displayPasswordReset();
-                    pane.clearFields();
-                    // pane.displayPasswordResetFailed();
+            } else {
+                // Verify the current password
+                if (!DataBase.verifyPassword(user.getUserID(), pane.getCurrentPasswordField().getText())) {
+                    pane.displayPasswordResetFailed(); // Alert: Current password is incorrect
+                    return;
                 }
 
+                // Ensure the new password is not the same as the current password
+                if (pane.getCurrentPasswordField().getText().equals(pane.getPasswordField().getText())) {
+                    pane.displayPasswordsNotMatch(); // Alert: New password matches the old one
+                    return;
+                }
+
+                // Update the password in the database
+                boolean success = DataBase.updatePassword(user.getUserID(), pane.getPasswordField().getText());
+                if (success) {
+                    pane.displayPasswordReset(); // Alert: Password reset success
+                    pane.clearFields(); // Clear fields
+                } else {
+                    pane.displayPasswordResetFailed(); // Alert: Password reset failed
+                }
             }
+
 
         }
     }
@@ -81,6 +91,7 @@ public class Seller_ForgotPasswordControl extends Pane {
                     e1.printStackTrace();
                 }
 
+                pane.passwordFlag();
                 pane.passwordFlag();
 
             } else if(keyEvent.getSource() == confirmNewPasswordField) {
