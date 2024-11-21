@@ -75,7 +75,7 @@ public class Main extends Application {
         System.out.println(randomRating);
         DataBase.addReview(3, randomRating);
         System.out.println(DataBase.getReview(3));
-        DataBase.searchBooksByFilter(null, testConditions, testCategory, 2);
+        DataBase.searchBooksByFilter(null, testConditions, testCategory, 1);
         launch(args);
 
     }
