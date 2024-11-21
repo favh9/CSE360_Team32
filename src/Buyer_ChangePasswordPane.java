@@ -1,16 +1,14 @@
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import java.util.Calendar;
 
-// This class provides the user interface for the 'Forgot Password' page.
-public class Seller_ForgotPasswordPane extends BorderPane {
+// This class provides the user interface for the 'Change Password' page.
+public class Buyer_ChangePasswordPane extends BorderPane {
 
     // Declare UI components (fields and buttons)
     private PasswordField currentPasswordField;
@@ -22,12 +20,12 @@ public class Seller_ForgotPasswordPane extends BorderPane {
     private double height;
 
     /**
-     * Constructor to initialize the Forgot Password pane.
+     * Constructor to initialize the Change Password pane.
      * @param user The user object containing the user's details.
      * @param width The width of the pane.
      * @param height The height of the pane.
      */
-    public Seller_ForgotPasswordPane(User user, double width, double height) {
+    public Buyer_ChangePasswordPane(User user, double width, double height) {
 
         // Store pane dimensions
         this.width = width;
@@ -45,16 +43,16 @@ public class Seller_ForgotPasswordPane extends BorderPane {
         backButton.setBackground(null);
 
         // --- Header Setup ---
-        // Create a label for the 'Forgot Password' title
-        Label forgotPasswordLabel = new Label("Forgot Password");
-        forgotPasswordLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 36));
-        forgotPasswordLabel.setTextFill(Color.BLACK);
-        forgotPasswordLabel.setPrefHeight(40);
+        // Create a label for the 'Change Password' title
+        Label changePasswordLabel = new Label("Change Password");
+        changePasswordLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 36));
+        changePasswordLabel.setTextFill(Color.BLACK);
+        changePasswordLabel.setPrefHeight(40);
 
         // Create a container (HBox) for the back button and the label
-        HBox backbuttonForgotpasswordLabelHBox = new HBox(backButton, forgotPasswordLabel);
-        backbuttonForgotpasswordLabelHBox.setAlignment(Pos.CENTER_LEFT);
-        backbuttonForgotpasswordLabelHBox.setSpacing(20);
+        HBox backbuttonChangePasswordLabelHBox = new HBox(backButton, changePasswordLabel);
+        backbuttonChangePasswordLabelHBox.setAlignment(Pos.CENTER_LEFT);
+        backbuttonChangePasswordLabelHBox.setSpacing(20);
 
         // --- Instructions Label ---
         Label instructionLabel = new Label("Fill in the information below and click on the confirm button to reset your password.");
@@ -114,7 +112,7 @@ public class Seller_ForgotPasswordPane extends BorderPane {
         greyVBox.setStyle("-fx-background-radius: 2em; -fx-background-color: #D9D9D9;");
 
         // --- White Box Container Setup ---
-        VBox whiteVBox = new VBox(backbuttonForgotpasswordLabelHBox, greyVBox);
+        VBox whiteVBox = new VBox(backbuttonChangePasswordLabelHBox, greyVBox);
         whiteVBox.setSpacing(10);
         whiteVBox.setPadding(new Insets(40, 40, 40, 40));
         whiteVBox.setStyle("-fx-background-radius: 2em; -fx-background-color: #ffffff;");
@@ -144,6 +142,11 @@ public class Seller_ForgotPasswordPane extends BorderPane {
     public PasswordField getConfirmPasswordField() {
         return confirmPasswordField;
     }
+
+    public PasswordField getCurrentPasswordField() {
+        return currentPasswordField;
+    }
+
 
     // --- Helper Methods for Validation ---
     // Check if any of the fields are empty

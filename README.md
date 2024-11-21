@@ -38,6 +38,7 @@
 
 <p>In Run Configurations, add the following: <br>
     --module-path [INSERT PATH TO JAVAFX LIB FOLDER] --add-modules javafx.controls,javafx.fxml
+Wills magic windows path for the bold and brash "C:\Users\John Pletka\Downloads\openjfx-23.0.1_windows-x64_bin-sdk\javafx-sdk-23.0.1\lib"
 </p>
 </body>
 
