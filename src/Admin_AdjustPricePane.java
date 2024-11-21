@@ -109,7 +109,7 @@ public class Admin_AdjustPricePane extends BorderPane {
 
         // Main VBox that holds the header and grey VBox
         VBox mainVBox = new VBox(headerHBox, greyVBox);
-        mainVBox.setPadding(new Insets(40, 40, 0, 40));
+        mainVBox.setPadding(new Insets(40, 40, 40, 40));
         mainVBox.setSpacing(10);
         mainVBox.setStyle("-fx-background-radius: 2em; -fx-background-color: #ffffff;");
 
@@ -134,6 +134,10 @@ public class Admin_AdjustPricePane extends BorderPane {
     // Method to check if any of the fields are empty
     public boolean emptyFields() {
         return usedLikeNewTextField.getText().isEmpty() || moderatelyUsedTextField.getText().isEmpty() || heavilyUsedTextField.getText().isEmpty();
+    }
+
+    public boolean notValid() {
+        return (Double.parseDouble(usedLikeNewTextField.getText()) > 100) || (Double.parseDouble(moderatelyUsedTextField.getText()) > 100) || (Double.parseDouble(heavilyUsedTextField.getText()) > 100);
     }
 
     public static double getUsedLikeNewFee() {
@@ -170,6 +174,13 @@ public class Admin_AdjustPricePane extends BorderPane {
             msg += "\tExp date\n";
 
         // Call the helper method to display the warning alert
+        displayAlert(Alert.AlertType.WARNING, title, msg);
+    }
+
+    public void displayNotValid() {
+        String title = "Warning";
+        String msg = "Your Fees can't be more than a 100%\n";
+
         displayAlert(Alert.AlertType.WARNING, title, msg);
     }
 

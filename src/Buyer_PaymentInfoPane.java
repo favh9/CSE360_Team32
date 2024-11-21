@@ -144,7 +144,7 @@ public class Buyer_PaymentInfoPane extends BorderPane {
 
         // Main VBox that holds the header and grey VBox
         VBox mainVBox = new VBox(headerHBox, greyVBox);
-        mainVBox.setPadding(new Insets(40, 40, 0, 40));
+        mainVBox.setPadding(new Insets(40, 40, 40, 40));
         mainVBox.setSpacing(10);
         mainVBox.setStyle("-fx-background-radius: 2em; -fx-background-color: #ffffff;");
 

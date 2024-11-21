@@ -1,3 +1,5 @@
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 
@@ -6,6 +8,7 @@ public class Buyer_ProfileControl extends Pane {
     private User user;
     private double width;
     private double height;
+    private Button confirmButton;
     private Buyer_ProfilePane pane;
 
     public Buyer_ProfileControl(User user, double width, double height) {
@@ -16,7 +19,7 @@ public class Buyer_ProfileControl extends Pane {
 
         pane = new Buyer_ProfilePane(user,width,height);
 
-        Button confirmButton = pane.getConfirmButton();
+        confirmButton = pane.getConfirmButton();
         confirmButton.setOnAction(e -> {
             // Fetch updated data from the fields
             String firstName = pane.getFirstNameTextField().getText();
