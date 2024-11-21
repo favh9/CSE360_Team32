@@ -1,9 +1,9 @@
 import java.text.NumberFormat;
+
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -17,14 +17,14 @@ public class Admin_UsersPane extends BorderPane {
 
     private Button refreshButton;
     private VBox usersVBox;
-    private Text quantityText;
+    private Text usersAmountText;
 
     public Admin_UsersPane(User user, double width, double height) {
 
         Font titleFont = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 42);
         Font quantityFont = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 24);
 
-        Admin_NavigationControl navBarVBox = new Admin_NavigationControl(user,width,height);
+        Admin_NavigationControl navigationControl = new Admin_NavigationControl(user, width, height);
 
         // set attributes for the Title Label
         Label titleLabel = new Label("Users");
@@ -35,11 +35,11 @@ public class Admin_UsersPane extends BorderPane {
         quantityLabel.setFont(quantityFont);
 
         // set attribute for the quantity label
-        quantityText = new Text("0");
-        quantityText.setFont(quantityFont);
+        usersAmountText = new Text("0");
+        usersAmountText.setFont(quantityFont);
 
         // set attributes for the HBox that holds the quantity and quantity label
-        HBox quantityHBox = new HBox(quantityText, quantityLabel);
+        HBox quantityHBox = new HBox(usersAmountText, quantityLabel);
         quantityHBox.setSpacing(20);
         quantityHBox.setAlignment(Pos.BASELINE_CENTER);
 
@@ -68,21 +68,26 @@ public class Admin_UsersPane extends BorderPane {
         headerPane.setLeft(leftHeaderPaneHBox);
         headerPane.setRight(rightHeaderPaneHBox);
 
-        // set attributes for the header of the body
         // set attributes for the header label
-        Label headerLabel1 = new Label("Username");
+        Label headerLabel1 = new Label("User ID");
+        headerLabel1.setPrefWidth(500);
+        headerLabel1.setWrapText(true);
         headerLabel1.setFont(Font.font(20));
-        headerLabel1.setPrefWidth(390);
-        headerLabel1.setAlignment(Pos.BASELINE_LEFT);
+        headerLabel1.setAlignment(Pos.BASELINE_CENTER);
 
         // set attributes for the header label
-        Label headerLabel3 = new Label("Type");
-        headerLabel3.setFont(Font.font(20));
-        headerLabel3.setPrefWidth(150);
-        headerLabel3.setAlignment(Pos.BASELINE_CENTER);
+        Label headerLabel2 = new Label("User Type");
+        headerLabel2.setPrefWidth(200);
+        headerLabel2.setWrapText(false);
+        headerLabel2.setFont(Font.font(20));
+        headerLabel2.setAlignment(Pos.BASELINE_CENTER);
+
+        // FOR DEBUGGING maybe?
+        headerLabel1.setBorder(Border.stroke(Color.BLACK));
+        headerLabel2.setBorder(Border.stroke(Color.BLACK));
 
         // set attributes for the header of the body
-        HBox bodyheaderHBox = new HBox(headerLabel1,headerLabel3);
+        HBox bodyheaderPane = new HBox(headerLabel1,headerLabel2);
 
         // set attributes for the line that separates the header and the scrollpane
         Rectangle lineSeparator = new Rectangle();
@@ -102,19 +107,19 @@ public class Admin_UsersPane extends BorderPane {
         sp.setStyle("-fx-background: white;");
 
         // set attributes for the users box that includes their header and scrollpane
-        VBox headerAndScrollPane = new VBox(bodyheaderHBox,lineSeparator,sp);
+        VBox headerAndScrollPane = new VBox(bodyheaderPane,lineSeparator,sp);
 
         // set attributes for the main VBox which excludes the navigation bar
         VBox mainVBox = new VBox(headerPane,headerAndScrollPane);
         mainVBox.setPadding(new Insets(40,40,0,40));
         mainVBox.setSpacing(10);
-        mainVBox.setPrefWidth(width - navBarVBox.getWidth() - 40);
+        mainVBox.setPrefWidth(width - navigationControl.getWidth() - 40);
         mainVBox.setStyle(
                 "-fx-background-radius: 2em;" + "-fx-background-color: #ffffff;"
         );
 
         // set attributes for the container that holds the navigation bar and page
-        HBox navBarAndMainHBox = new HBox(navBarVBox,mainVBox);
+        HBox navBarAndMainHBox = new HBox(navigationControl,mainVBox);
         navBarAndMainHBox.setSpacing(20);
 
         this.setCenter(navBarAndMainHBox);
@@ -126,69 +131,76 @@ public class Admin_UsersPane extends BorderPane {
 
     }
 
-    public void clearUsers() {
+    public void clearTransactions() {
         usersVBox.getChildren().clear();
-        quantityText.setText("0");
+        usersAmountText.setText("0");
     }
 
-    // returns a container where a user's information is displayed
-    public void addUser(String username,String usertype) {
-
-        // set attributes for the header label
-        Label headerLabel1 = new Label(username);
-        headerLabel1.setFont(Font.font(18));
-        headerLabel1.setPrefWidth(390);
-        headerLabel1.setAlignment(Pos.BASELINE_LEFT);
-
-        // set attributes for the header label
-        Label headerLabel3 = new Label(usertype);
-        headerLabel3.setFont(Font.font(18));
-        headerLabel3.setPrefWidth(150);
-        headerLabel3.setAlignment(Pos.BASELINE_CENTER);
-
-        // set attributes for the header of the body
-        HBox bodyheaderHBox = new HBox(headerLabel1,headerLabel3);
-
-        Rectangle lineSeparator = new Rectangle();
-        lineSeparator.setWidth(690);
-        lineSeparator.setHeight(1);
-        lineSeparator.setFill(Color.GRAY);
-
-        VBox vbox = new VBox(bodyheaderHBox,lineSeparator);
-
-        usersVBox.getChildren().add(vbox);
-        this.updateCount();
-    }
-
-    // modifies and updates the display amount text
+    // modifies and updates the display amount text by one
     public void updateCount() {
-        String str = quantityText.getText();
+        String str = usersAmountText.getText();
         int incr = Integer.parseInt(str) + 1;
-        quantityText.setText(Integer.toString(incr));
+        usersAmountText.setText(Integer.toString(incr));
+    }
+
+    // modifies and updates the display amount text by an amount
+    public void updateCount(int num) {
+        String str = usersAmountText.getText();
+        int incr = Integer.parseInt(str) + num;
+        usersAmountText.setText(Integer.toString(incr));
     }
 
     public Button getRefreshButton() {
         return refreshButton;
     }
 
-    public void setRefreshButton(Button refreshButton) {
-        this.refreshButton = refreshButton;
+    public void addAllUsersToPane() {
+
+
+
     }
 
-    public VBox getUsersVBox() {
-        return usersVBox;
+    public void clearUsers() {
+        usersVBox.getChildren().clear();
     }
 
-    public void setUsersVBox(VBox usersVBox) {
-        this.usersVBox = usersVBox;
-    }
+    public void addUserToPane(int id, String usertype) {
 
-    public Text getQuantityText() {
-        return quantityText;
-    }
+        updateCount();
 
-    public void setQuantityText(Text quantityText) {
-        this.quantityText = quantityText;
+        // set attributes for the header label
+        Label sellerLabel = new Label(Integer.toString(id));
+        sellerLabel.setPrefWidth(500);
+        sellerLabel.setWrapText(true);
+        sellerLabel.setFont(Font.font(20));
+        sellerLabel.setAlignment(Pos.BASELINE_LEFT);
+        sellerLabel.setPadding(new Insets(5));
+
+        VBox sellerVBox = new VBox(sellerLabel);
+        sellerVBox.setAlignment(Pos.CENTER);
+
+        // set attributes for the header label
+        Label buyerLabel = new Label(usertype);
+        buyerLabel.setPrefWidth(200);
+        buyerLabel.setWrapText(true);
+        buyerLabel.setFont(Font.font(20));
+        buyerLabel.setAlignment(Pos.BASELINE_LEFT);
+        buyerLabel.setPadding(new Insets(5));
+
+        VBox buyerVBox = new VBox(buyerLabel);
+        sellerVBox.setAlignment(Pos.CENTER);
+
+        HBox transactionHBox = new HBox(sellerVBox,buyerVBox);
+
+        // set attributes for the line that separates the header and the scrollpane
+        Rectangle lineSeparator = new Rectangle();
+        lineSeparator.setWidth(700);
+        lineSeparator.setHeight(1);
+        lineSeparator.setFill(Color.BLACK);
+
+        usersVBox.getChildren().add(transactionHBox);
+        usersVBox.getChildren().add(lineSeparator);
+
     }
 
 }

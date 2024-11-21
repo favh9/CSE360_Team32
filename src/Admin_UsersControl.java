@@ -9,6 +9,8 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 
+import javax.xml.crypto.Data;
+
 public class Admin_UsersControl extends Pane {
 
     private final Admin_UsersPane pane;
@@ -41,7 +43,7 @@ public class Admin_UsersControl extends Pane {
     public void displayUsers() {
 
         // Corrected query to retrieve both 'username' and 'user_type'
-        String query = "SELECT username, user_type FROM Users";  // Select both username and user_type columns
+        String query = "SELECT id, user_type FROM Users";  // Select both username and user_type columns
 
         // JDBC connection
         try (Connection connection = DriverManager.getConnection(DataBase.URL, DataBase.USER, DataBase.PASSWORD);
@@ -51,11 +53,11 @@ public class Admin_UsersControl extends Pane {
             // Iterate through the ResultSet and process the data
             while (resultSet.next()) {
                 // Get the data from the result set
-                String username = resultSet.getString("username");
+                int id = resultSet.getInt("id");
                 String usertype = resultSet.getString("user_type");
 
                 // Use the data (assuming you have a method addUser to handle this)
-                pane.addUser(username, usertype);
+                pane.addUserToPane(id,usertype);
             }
 
         } catch (SQLException e) {
