@@ -44,8 +44,11 @@ public class Seller_MyBooksControl extends Pane {
         //          addBook(book);
         // }
 
-//        pane.displayAllBooks();
-        pane.displayNoBooksFound();
+        if(pane.hasBooks()) {
+            pane.displayAllBooks();
+        } else {
+            pane.displayNoBooksFound();
+        }
 
         this.getChildren().addAll(pane);
     }

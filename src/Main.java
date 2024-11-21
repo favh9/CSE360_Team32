@@ -52,7 +52,7 @@ public class Main extends Application {
 
         // create stage
         mainWindow = new Stage();
-        
+
         // assign scene to stage
         mainWindow.setScene(scene1);
 
@@ -61,7 +61,7 @@ public class Main extends Application {
 
         // show default/primary stage 
         mainWindow.show();
-        
+
     }
 
     public static void main(String[] args) {
