@@ -48,11 +48,11 @@ public class Admin_StatisticsPane extends BorderPane {
         // set attributes for the pie chart
         ObservableList<PieChart.Data> pieChartData =
                 FXCollections.observableArrayList(
-                        new PieChart.Data("Natural Science",3),
-                        new PieChart.Data("Computer Science",10),
-                        new PieChart.Data("Math",2),
-                        new PieChart.Data("English",5),
-                        new PieChart.Data("Other",5)
+                        new PieChart.Data("Natural Science",DataBase.getNumSold("Natural Science")),
+                        new PieChart.Data("Computer Science",DataBase.getNumSold("Computer Science")),
+                        new PieChart.Data("Math",DataBase.getNumSold("Math")),
+                        new PieChart.Data("English",DataBase.getNumSold("English")),
+                        new PieChart.Data("Other",DataBase.getNumSold("Other"))
                 );
         final PieChart chart = new PieChart(pieChartData);
         chart.setTitle("Top selling categories");
