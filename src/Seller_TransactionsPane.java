@@ -90,7 +90,7 @@ public class Seller_TransactionsPane extends BorderPane {
         headerLabel3.setAlignment(Pos.BASELINE_CENTER);
 
         // set attributes for the header label
-        Label headerLabel4 = new Label("Sold To");
+        Label headerLabel4 = new Label("Rate Seller");
         headerLabel4.setPrefWidth(150);
         headerLabel4.setWrapText(true);
         headerLabel4.setFont(Font.font(20));
@@ -262,33 +262,20 @@ public class Seller_TransactionsPane extends BorderPane {
         VBox amountBox = new VBox(amount);
         amountBox.setAlignment(Pos.CENTER);
 
-        Hyperlink soldtoLink = new Hyperlink();
-        soldtoLink.setText("The Amazing Gatsby");
-        soldtoLink.setWrapText(true);
-        soldtoLink.setPrefWidth(150);
-        soldtoLink.setFont(Font.font(20));
-        soldtoLink.setAlignment(Pos.BASELINE_CENTER);
-        soldtoLink.setPadding(new Insets(5));
+        ComboBox<String> comboBox = new ComboBox<>();
+        comboBox.setPromptText("Rate");
+        comboBox.getItems().addAll("1","2","3","4","5");
 
-        soldtoLink.setOnAction(e->{
-
-            Alert review = new Alert(Alert.AlertType.INFORMATION);
-            review.setTitle(null);
-            review.setHeaderText(null);
-            review.setContentText("This is the buyer's review");
-            review.show();
-
+        // Add a listener to disable editing when a value is selected
+        comboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (!comboBox.getValue().isEmpty()) {
+                comboBox.setDisable(true);
+            }
         });
 
-        // set attributes for the header label
-        Label soldto = new Label("SparkyandHisFriends");
-        soldto.setPrefWidth(150);
-        soldto.setWrapText(true);
-        soldto.setFont(Font.font(20));
-        soldto.setAlignment(Pos.BASELINE_CENTER);
-        soldto.setPadding(new Insets(5));
-
-        VBox soldToBox = new VBox(soldtoLink);
+        VBox soldToBox = new VBox(comboBox);
+        soldToBox.setPadding(new Insets(5));
+        soldToBox.setPrefWidth(150);
         soldToBox.setAlignment(Pos.CENTER);
 
         HBox transactionHBox = new HBox(titleBox,timestampBox,amountBox,soldToBox);

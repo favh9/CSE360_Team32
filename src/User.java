@@ -9,6 +9,7 @@ public class User implements Serializable {
     private String email;
     private String username;
     private transient String password;
+    private int rating; // needs constructor
     private String userType;
 
     public User() {
