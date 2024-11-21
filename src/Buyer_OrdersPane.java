@@ -24,7 +24,7 @@ public class Buyer_OrdersPane extends BorderPane {
         Font titleFont = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 42);
         Font quantityFont = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 24);
 
-        Seller_NavigationControl navigationControl = new Seller_NavigationControl(user, width, height);
+        Buyer_NavigationControl navigationControl = new Buyer_NavigationControl(user, width, height);
 
         // set attributes for the Title Label
         Label titleLabel = new Label("Orders");
