@@ -56,6 +56,7 @@ public class Admin_ChangePasswordControl extends Pane {
                 } else if(!pane.passwordsMatch()) {
                     pane.displayPasswordsNotMatch();
                 } else {
+                    DataBase.updatePassword(user.getUserID(), pane.getPasswordField().getText());
                     pane.displayPasswordReset();
                     pane.clearFields();
                     // pane.displayPasswordResetFailed();
