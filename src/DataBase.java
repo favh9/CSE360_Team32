@@ -645,7 +645,7 @@ public class DataBase {
         return books; // Return the list of books
     }
 
-    public static List<Book> myBooks(int userID) {
+    public static List<Book> myListedBooks(int userID) {
         List<Book> books = new ArrayList<>();
         // Query to get all ListingIDs where Sold = 'N' and the userID matches the seller
         String query = "SELECT ListingID FROM Listings WHERE Sold = 'N' AND SellerID = ?";
