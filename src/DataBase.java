@@ -1233,7 +1233,7 @@ public class DataBase {
     public static double getReview(int userID) {
         double rating = 0.0;
 
-        String query = "SELECT Rating FROM Users WHERE UserID = ?";
+        String query = "SELECT Rating FROM Users WHERE id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -1252,6 +1252,94 @@ public class DataBase {
         // Format the rating to 2 decimal places
         DecimalFormat df = new DecimalFormat("#.##");
         return Double.parseDouble(df.format(rating));
+    }
+
+    public static boolean isSeller(int userID) {
+        String query = "SELECT is_seller FROM Users WHERE id = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, userID);  // Set the userID parameter
+
+            ResultSet rs = stmt.executeQuery();  // Execute the query
+
+            if (rs.next()) {
+                // Check if the value of is_seller is 'Y'
+                return rs.getString("is_seller").equals("Y");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error checking seller status: " + e.getMessage());
+        }
+
+        return false;  // Return false if no user was found or if is_seller is not 'Y'
+    }
+
+    public static boolean isBuyer(int userID) {
+        String query = "SELECT is_buyer FROM Users WHERE id = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, userID);  // Set the userID parameter
+
+            ResultSet rs = stmt.executeQuery();  // Execute the query
+
+            if (rs.next()) {
+                // Check if the value of is_buyer is 'Y'
+                return rs.getString("is_buyer").equals("Y");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error checking buyer status: " + e.getMessage());
+        }
+
+        return false;  // Return false if no user was found or if is_buyer is not 'Y'
+    }
+
+    public static void makeSeller(int userID) {
+        String query = "UPDATE Users SET is_seller = 'Y' WHERE id = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, userID);  // Set the userID parameter
+
+            // Execute the update query
+            int rowsUpdated = stmt.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                System.out.println("User with ID " + userID + " is now a seller.");
+            } else {
+                System.out.println("User with ID " + userID + " not found or already marked as seller.");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error making user a seller: " + e.getMessage());
+        }
+    }
+
+    public static void makeBuyer(int userID) {
+        String query = "UPDATE Users SET is_buyer = 'Y' WHERE id = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, userID);  // Set the userID parameter
+
+            // Execute the update query
+            int rowsUpdated = stmt.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                System.out.println("User with ID " + userID + " is now a buyer.");
+            } else {
+                System.out.println("User with ID " + userID + " not found or already marked as buyer.");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error making user a buyer: " + e.getMessage());
+        }
     }
 
 
