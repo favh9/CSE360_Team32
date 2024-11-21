@@ -17,9 +17,9 @@ public class Admin_AdjustPricePane extends BorderPane {
 
     // UI Components
     private Button backButton;
-    private TextField usedLikeNewTextField;
-    private TextField moderatelyUsedTextField;
-    private TextField heavilyUsedTextField;
+    private static TextField usedLikeNewTextField;
+    private static TextField moderatelyUsedTextField;
+    private static TextField heavilyUsedTextField;
     private Button confirmButton;
 
     /**
@@ -134,6 +134,16 @@ public class Admin_AdjustPricePane extends BorderPane {
     // Method to check if any of the fields are empty
     public boolean emptyFields() {
         return usedLikeNewTextField.getText().isEmpty() || moderatelyUsedTextField.getText().isEmpty() || heavilyUsedTextField.getText().isEmpty();
+    }
+
+    public static double getUsedLikeNewFee() {
+        return Double.parseDouble(usedLikeNewTextField.getText());
+    }
+    public static double getModeratelyUsedFee() {
+        return Double.parseDouble(moderatelyUsedTextField.getText());
+    }
+    public static double getHeavilyUsedFee() {
+        return Double.parseDouble(heavilyUsedTextField.getText());
     }
 
     // Helper method to display alerts
