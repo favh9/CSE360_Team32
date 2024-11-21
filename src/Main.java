@@ -69,7 +69,7 @@ public class Main extends Application {
         String[] testConditions = new String[0]; // An empty array with no elements
         String[] testCategory = new String[0]; // An empty array with no elements
 
-        DataBase.searchBooksByFilter(null, testConditions, testCategory);
+        DataBase.searchBooksByFilter(null, testConditions, testCategory, 2);
         launch(args);
 
     }
