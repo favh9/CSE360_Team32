@@ -1072,8 +1072,8 @@ public class DataBase {
         double markdown = 0.0;
 
         // Query to fetch the markdown based on condition
-        String query = "SELECT Like_New, Moderately_Used, Heavily_Used FROM ConditionDiscount WHERE condition_id = 1"; // Assume the condition_id is used to identify a single row
-
+        String query = "SELECT Like_New, Moderately_Used, Heavily_Used FROM ConditionDiscount"; // Assume the condition_id is used to identify a single row
+      
         // Validate condition input
         if (condition < 1 || condition > 3) {
             System.out.println("Invalid condition value. Please provide 1, 2, or 3.");
@@ -1150,3 +1150,4 @@ public class DataBase {
     }
 
 }
+
