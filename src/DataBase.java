@@ -1,6 +1,7 @@
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -1190,5 +1191,69 @@ public class DataBase {
 
         return numSold; // Return the count of sold listings in the specified category
     }
+
+    public static void addReview(int userID, double newRating) {
+        String query = "SELECT rating, numReviews FROM Users WHERE id = ?";
+        String updateQuery = "UPDATE Users SET rating = ?, numReviews = ? WHERE id = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement selectStmt = conn.prepareStatement(query);
+             PreparedStatement updateStmt = conn.prepareStatement(updateQuery)) {
+
+            // Get the current rating and numReviews for the user
+            selectStmt.setInt(1, userID);
+            ResultSet rs = selectStmt.executeQuery();
+
+            if (rs.next()) {
+                double currentRating = rs.getDouble("rating");
+                int currentNumReviews = rs.getInt("numReviews");
+
+                // Calculate the new rating
+                double totalRating = (currentRating * currentNumReviews) + newRating;
+                int newNumReviews = currentNumReviews + 1;
+                double updatedRating = totalRating / newNumReviews;
+
+                // Update the rating and numReviews in the database
+                updateStmt.setDouble(1, updatedRating);
+                updateStmt.setInt(2, newNumReviews);
+                updateStmt.setInt(3, userID);
+                updateStmt.executeUpdate();
+
+                System.out.println("Updated user rating to: " + updatedRating + " with total reviews: " + newNumReviews);
+            } else {
+                System.out.println("User not found with UserID: " + userID);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error updating user review: " + e.getMessage());
+        }
+    }
+
+
+    public static double getReview(int userID) {
+        double rating = 0.0;
+
+        String query = "SELECT Rating FROM Users WHERE UserID = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, userID);
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                rating = rs.getDouble("Rating");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error retrieving rating for UserID " + userID + ": " + e.getMessage());
+        }
+
+        // Format the rating to 2 decimal places
+        DecimalFormat df = new DecimalFormat("#.##");
+        return Double.parseDouble(df.format(rating));
+    }
+
+
 }
 
