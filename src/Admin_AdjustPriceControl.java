@@ -57,6 +57,9 @@ public class Admin_AdjustPriceControl extends Pane {
                     pane.displayEmptyFields();
 
                 } else {
+                    DataBase.setMarkdown(1, Admin_AdjustPricePane.getUsedLikeNewFee() / 100);
+                    DataBase.setMarkdown(2, Admin_AdjustPricePane.getModeratelyUsedFee() / 100);
+                    DataBase.setMarkdown(3, Admin_AdjustPricePane.getHeavilyUsedFee() / 100);
                     pane.displayAdjustmentPricesUpdated();
                 }
             }

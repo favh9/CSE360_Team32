@@ -512,7 +512,7 @@ public class DataBase {
             throw new RuntimeException("Error: SHA-256 algorithm not found.", e);
         }
     }
-  
+
     public static PaymentInfo getPaymentInfo(int userID) {
         String selectPaymentSQL = "SELECT nameOnCard, cardNumber, expirationDate, cvc FROM PaymentInfo WHERE userID = ?";
         PaymentInfo paymentInfo = null;
@@ -1067,8 +1067,8 @@ public class DataBase {
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
 //            // Set the parameters if userID is provided
-                stmt.setInt(1, userID);
-                stmt.setInt(2, userID);
+            stmt.setInt(1, userID);
+            stmt.setInt(2, userID);
 
             ResultSet rs = stmt.executeQuery();
 
@@ -1090,8 +1090,8 @@ public class DataBase {
         double markdown = 0.0;
 
         // Query to fetch the markdown based on condition
-        String query = "SELECT Like_New, Moderately_Used, Heavily_Used FROM ConditionDiscount WHERE condition_id = 1"; // Assume the condition_id is used to identify a single row
-
+        String query = "SELECT Like_New, Moderately_Used, Heavily_Used FROM ConditionDiscount"; // Assume the condition_id is used to identify a single row
+      
         // Validate condition input
         if (condition < 1 || condition > 3) {
             System.out.println("Invalid condition value. Please provide 1, 2, or 3.");
@@ -1168,3 +1168,4 @@ public class DataBase {
     }
 
 }
+

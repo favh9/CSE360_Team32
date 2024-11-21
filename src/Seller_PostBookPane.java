@@ -11,6 +11,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+
+import java.text.DecimalFormat;
 import java.util.Calendar;
 
 public class Seller_PostBookPane extends BorderPane {
@@ -252,27 +254,42 @@ public class Seller_PostBookPane extends BorderPane {
         acctCreatedAlert.show();
     }
 
-    public void computeGeneratedPrice() {
 
+
+
+
+
+    public double computeGeneratedPrice() {
+        int type = 0;
         double generatedPrice;
+
+        if(getCondition().compareTo("Like New") == 0) { type = 1; }
+        else if(getCondition().compareTo("Moderately Used") == 0) { type = 2; }
+        else if(getCondition().compareTo("Heavily Used") == 0) { type = 3; }
 
         if(isPriceValid()) {
 
-            generatedPrice = 10 + Double.parseDouble(priceField.getText());
+            generatedPrice = Double.parseDouble(priceField.getText()) - (Double.parseDouble(priceField.getText()) * DataBase.getMarkdown(type));
             generatedpriceField.setText("$"+ generatedPrice);
-
+            return generatedPrice;
         }
-
+        return 0;
     }
+
+    DecimalFormat df = new DecimalFormat("#.##");
 
     public boolean confirmPost() {
 
         boolean confirmed = false;
+        double fee = 0.20;
 
         // Create the alert dialog
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         String msg = "You are about to post this book for sale." +
+                "\nYou will be charged $" + df.format(computeGeneratedPrice() * fee) +
+                "\nYoue total profit is $" + df.format(computeGeneratedPrice() - (computeGeneratedPrice() * fee)) +
                 "\nPlease confirm whether you would like to continue.";
+
         alert.setTitle("Confirm Post");
         alert.setHeaderText(null);
         alert.setContentText(msg);
@@ -289,6 +306,7 @@ public class Seller_PostBookPane extends BorderPane {
 
         return confirmed;
     }
+
 
     public String getBookTitle() {
         return booknameField.getText();

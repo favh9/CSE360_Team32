@@ -17,8 +17,11 @@ public class Seller_MyBooksPane extends BorderPane {
     private Button searchButton;
     private ScrollPane sp;
     private GridPane booksPane;
+    private User user;
 
     public Seller_MyBooksPane(User user, double width, double height) {
+
+        this.user = user;
 
         Seller_NavigationControl navBarVBox = new Seller_NavigationControl(user,width,height);
 
@@ -194,37 +197,33 @@ public class Seller_MyBooksPane extends BorderPane {
     public void displayAllBooks() {
 
         // i.e. for books in User.books, add a book
-        addBook(new Book());
-        addBook(new Book());
-        addBook(new Book());
-        addBook(new Book());
-        addBook(new Book());
-        addBook(new Book());
-        addBook(new Book());
-        addBook(new Book());
-        addBook(new Book());
+        for (Book book : DataBase.myListedBooks(user.getUserID())) {
+            addBook(book);
+            System.out.println(book.getAuthor());
+        }
 
     }
 
     // query the database to find books belonging to the user
     public boolean hasBooks() {
 
-        return false;
+        return !(DataBase.myListedBooks(user.getUserID()).isEmpty());
     }
 
     // query the database for the user's books
     // if the book exists,
     // remove it and return true
-    public boolean bookRemoved(Book book) {
+    public void removeBook(Book book) {
 
-        return false;
+        DataBase.deleteListing(book.getID());
+
     }
 
     // add a book to the book pane
     public void addBook(Book book) {
 
-        Text titleText, authorText, categoryText, conditionText, quantityText, priceText;
-        Label quantityLabel;
+        Text titleText, authorText, categoryText, conditionText,/* quantityText,*/ priceText;
+        //Label quantityLabel;
         int textWrapWidth;
         VBox bookVBox;
         BorderPane bp;
@@ -270,9 +269,10 @@ public class Seller_MyBooksPane extends BorderPane {
         // and adjusted accordingly
         removeButton = new Button("Remove");
         removeButton.setOnAction(e-> {
-            bookRemoved(book);
+            removeBook(book);
             // check again
-            if(true) {
+            if(hasBooks()) {
+                clearBooks();
                 displayAllBooks();
             } else {
                 displayNoBooksFound();
@@ -292,6 +292,7 @@ public class Seller_MyBooksPane extends BorderPane {
 
         // Add VBox to the grid (placed in column, row) dynamically
         booksPane.add(bp, booksPane.getChildren().size() % 3, booksPane.getChildren().size() / 3);
+        sp.setContent(booksPane);
     }
 
     public void displayNoBooksFound() {
@@ -303,5 +304,9 @@ public class Seller_MyBooksPane extends BorderPane {
         bp.setPadding(new Insets(100));
         sp.setContent(bp);
 
+    }
+
+    public void clearBooks() {
+        booksPane.getChildren().clear();
     }
 }
