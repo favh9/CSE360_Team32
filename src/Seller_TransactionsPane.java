@@ -90,7 +90,7 @@ public class Seller_TransactionsPane extends BorderPane {
         headerLabel3.setAlignment(Pos.BASELINE_CENTER);
 
         // set attributes for the header label
-        Label headerLabel4 = new Label("Rate Seller");
+        Label headerLabel4 = new Label("Rate Buyer");
         headerLabel4.setPrefWidth(150);
         headerLabel4.setWrapText(true);
         headerLabel4.setFont(Font.font(20));
