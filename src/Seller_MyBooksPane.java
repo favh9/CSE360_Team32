@@ -349,8 +349,8 @@ public class Seller_MyBooksPane extends BorderPane {
         System.out.println(i);
         int ii = 0;
         if (i > 0) {
-            for (String cate : tempCategories) {
-                categories[ii] =  cate;
+            while (ii < i) {
+                categories[ii] =  tempCategories[ii];
                 ii++;
             }
         }
@@ -363,8 +363,8 @@ public class Seller_MyBooksPane extends BorderPane {
         int jj = 0;
 
         if (j > 0) {
-            for (String cond : tempConditions) {
-                conditions[jj] = cond;
+            while (jj < j) {
+                conditions[jj] = tempConditions[jj];
                 jj++;
             }
         }
