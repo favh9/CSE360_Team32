@@ -67,6 +67,28 @@ public class DataBase {
         }
     }
 
+    public static boolean updateUserProfile(int userID, String firstName, String lastName, String email, String username) {
+        String query = "UPDATE Users SET firstname = ?, lastname = ?, email = ?, username = ? WHERE id = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, firstName);
+            stmt.setString(2, lastName);
+            stmt.setString(3, email);
+            stmt.setString(4, username);
+            stmt.setInt(5, userID);
+
+            int rowsUpdated = stmt.executeUpdate();
+            return rowsUpdated > 0;
+
+        } catch (SQLException e) {
+            System.out.println("Error updating user profile: " + e.getMessage());
+            return false;
+        }
+    }
+
+
     public static boolean verifyPassword(int userID, String currentPassword) {
         String verifySQL = "SELECT password FROM Users WHERE id = ?";
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);

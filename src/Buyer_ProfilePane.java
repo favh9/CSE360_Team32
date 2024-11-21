@@ -18,10 +18,17 @@ public class Buyer_ProfilePane extends BorderPane {
     private TextField lastnameTextField;
     private TextField emailTextField;
     private TextField usernameTextField;
+    private Button confirmButton;
 
     public Buyer_ProfilePane(User user, double width, double height) {
 
         Buyer_NavigationControl navBarVBox = new Buyer_NavigationControl(user,width,height);
+
+        //confirm button :)
+        confirmButton = new Button("Confirm");
+        confirmButton.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
+        confirmButton.setPrefHeight(35);
+        confirmButton.setPrefWidth(150);
 
         // set attributes for the Title Label
         Label titleLabel = new Label("Profile");
@@ -43,8 +50,8 @@ public class Buyer_ProfilePane extends BorderPane {
         firstnameTextField = new TextField();
         firstnameTextField.setText(user.getFirstName());
         firstnameTextField.setPromptText("First Name");
-        firstnameTextField.setStyle("-fx-text-fill: #B0B0B0;");
-        firstnameTextField.setEditable(false);
+        firstnameTextField.setStyle("-fx-text-fill: #000000;");
+        firstnameTextField.setEditable(true);
         firstnameTextField.setFont(Font.font("Arial",FontWeight.NORMAL,16));
 
         // add the first name label and first name text field into this hbox
@@ -60,8 +67,8 @@ public class Buyer_ProfilePane extends BorderPane {
         lastnameTextField = new TextField();
         lastnameTextField.setText(user.getLastName());
         lastnameTextField.setPromptText("Last Name");
-        lastnameTextField.setStyle("-fx-text-fill: #B0B0B0;");
-        lastnameTextField.setEditable(false);
+        lastnameTextField.setStyle("-fx-text-fill: #000000;");
+        lastnameTextField.setEditable(true);
         lastnameTextField.setFont(Font.font("Arial",FontWeight.NORMAL,16));
 
         // add the first name label and first name text field into this hbox
@@ -77,8 +84,8 @@ public class Buyer_ProfilePane extends BorderPane {
         emailTextField = new TextField();
         emailTextField.setText(user.getEmail());
         emailTextField.setPromptText("E-mail");
-        emailTextField.setStyle("-fx-text-fill: #B0B0B0;");
-        emailTextField.setEditable(false);
+        emailTextField.setStyle("-fx-text-fill: #000000;");
+        emailTextField.setEditable(true);
         emailTextField.setFont(Font.font("Arial",FontWeight.NORMAL,16));
 
         // add the email label and email text field into this hbox
@@ -94,7 +101,7 @@ public class Buyer_ProfilePane extends BorderPane {
         usernameTextField = new TextField();
         usernameTextField.setText(user.getUsername());
         usernameTextField.setPromptText("Username");
-        usernameTextField.setStyle("-fx-text-fill: #B0B0B0;");
+        usernameTextField.setStyle("-fx-text-fill: #000000;");
         usernameTextField.setEditable(false);
         usernameTextField.setFont(Font.font("Arial",FontWeight.NORMAL,16));
 
@@ -103,13 +110,15 @@ public class Buyer_ProfilePane extends BorderPane {
         usernameTextfieldHBox.setAlignment(Pos.CENTER_RIGHT);
         usernameTextfieldHBox.setSpacing(10);
 
+
         // add the grey box elements which includes the instructions label and all HBoxes
-        VBox greyVBox = new VBox(instructionLabel, firstnameTextfieldHBox, lastnameTextfieldHBox, emailTextFieldHBox, usernameTextfieldHBox);
+        VBox greyVBox = new VBox(instructionLabel, firstnameTextfieldHBox, lastnameTextfieldHBox, emailTextFieldHBox, usernameTextfieldHBox, confirmButton);
         // readjust the width of the HBoxes inside the greyVBox
         VBox.setMargin(firstnameTextfieldHBox, new Insets(0,350,0,0));
         VBox.setMargin(lastnameTextfieldHBox, new Insets(0,350,0,0));
         VBox.setMargin(emailTextFieldHBox, new Insets(0,350,0,0));
         VBox.setMargin(usernameTextfieldHBox, new Insets(0,350,0,0));
+        VBox.setMargin(confirmButton, new Insets(20, 0, 0, 200)); // Position the button in the VBox
         greyVBox.setSpacing(20);
         greyVBox.setPrefHeight(height-160);
         greyVBox.setPadding(new Insets(20,20,20,20));
@@ -136,8 +145,18 @@ public class Buyer_ProfilePane extends BorderPane {
         // these are by default what we use for the scene
         this.setPrefSize(width, height);;
         this.setBackground(Background.fill(Color.web("#4A1E2C"))); // darker maroon color
+
     }
 
+    public Button getConfirmButton() { return confirmButton; }
+
+    public TextField getFirstNameTextField() { return firstnameTextField; }
+
+    public TextField getLastNameTextField() { return lastnameTextField; }
+
+    public TextField getEmailTextField() { return emailTextField; }
+
+    public TextField getUsernameTextField() { return usernameTextField; }
 }
 
 
