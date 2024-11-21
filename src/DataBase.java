@@ -125,7 +125,6 @@ public class DataBase {
         }
     }
 
-
     public static boolean insertUser(String firstname, String lastname, String dob, String email, String username, String pwd) {
 
         // Modify SQL query to include the 'dob' column
@@ -417,9 +416,7 @@ public class DataBase {
         }
     }
 
-
-    public static boolean listBook(int UserID, String bookName, int publishYear, String authorName, String category, String conditionn,
-                                   double price) {
+    public static boolean listBook(int UserID, String bookName, int publishYear, String authorName, String category, String conditionn, double price) {
         String insertQuery = "INSERT INTO Listings (Bookname, UserID, PublishYear, AuthorName, Category, Conditionn, Price) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
@@ -498,7 +495,7 @@ public class DataBase {
         }
     }
   
-  public static PaymentInfo getPaymentInfo(int userID) {
+    public static PaymentInfo getPaymentInfo(int userID) {
         String selectPaymentSQL = "SELECT nameOnCard, cardNumber, expirationDate, cvc FROM PaymentInfo WHERE userID = ?";
         PaymentInfo paymentInfo = null;
 
@@ -894,7 +891,6 @@ public class DataBase {
         return transaction;
     }
 
-
     public static void insertTransaction(int buyerID, int sellerID, int bookID, double amount) {
         // Insert query for the Transactions table
         String insertQuery = "INSERT INTO Transactions (buyerID, sellerID, bookID, amount) VALUES (?, ?, ?, ?)";
@@ -947,8 +943,6 @@ public class DataBase {
         }
     }
 
-
-
     public static List<Transaction> returnTransactions(int userID) {
         List<Transaction> transactions = new ArrayList<>();
         String query = "SELECT * FROM Transactions";
@@ -977,6 +971,88 @@ public class DataBase {
         }
 
         return transactions;
+    }
+
+    public static double getMarkdown(int condition) {
+        // Initialize a variable to hold the discount value
+        double markdown = 0.0;
+
+        // Query to fetch the markdown based on condition
+        String query = "SELECT Like_New, Moderately_Used, Heavily_Used FROM ConditionDiscount WHERE condition_id = 1"; // Assume the condition_id is used to identify a single row
+
+        // Validate condition input
+        if (condition < 1 || condition > 3) {
+            System.out.println("Invalid condition value. Please provide 1, 2, or 3.");
+            return markdown;
+        }
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            ResultSet rs = stmt.executeQuery(); // Execute query to fetch the markdown values
+
+            if (rs.next()) {
+                // Based on condition, return the corresponding markdown value
+                switch (condition) {
+                    case 1:
+                        markdown = rs.getDouble("Like_New");
+                        break;
+                    case 2:
+                        markdown = rs.getDouble("Moderately_Used");
+                        break;
+                    case 3:
+                        markdown = rs.getDouble("Heavily_Used");
+                        break;
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error retrieving markdown: " + e.getMessage());
+        }
+
+        return markdown; // Return the markdown value based on condition
+    }
+
+    public static void setMarkdown(int condition, double conditionDiscount) {
+        // Query to update the markdown value based on condition
+        String query = "UPDATE ConditionDiscount SET ";
+
+        // Determine which column to update based on the condition value
+        switch (condition) {
+            case 1:
+                query += "Like_New = ?";
+                break;
+            case 2:
+                query += "Moderately_Used = ?";
+                break;
+            case 3:
+                query += "Heavily_Used = ?";
+                break;
+            default:
+                System.out.println("Invalid condition value. Please provide 1, 2, or 3.");
+                return;
+        }
+
+        // Execute the update query to set the new markdown value
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            // Set the new discount value
+            stmt.setDouble(1, conditionDiscount);
+
+            // Execute the update query
+            int rowsAffected = stmt.executeUpdate();
+
+            // If no rows were affected, the condition was invalid or not found
+            if (rowsAffected > 0) {
+                System.out.println("Successfully updated the markdown value.");
+            } else {
+                System.out.println("No rows were updated. The condition may not exist.");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error updating markdown: " + e.getMessage());
+        }
     }
 
 }
