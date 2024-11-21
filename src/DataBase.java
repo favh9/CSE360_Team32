@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.Collections;
 
 // the database is yet to do the following
 // hash passwords,
@@ -593,7 +594,7 @@ public class DataBase {
     }
 
     public static Book getBookFromListing(int listingID) {
-        String query = "SELECT Bookname, AuthorName, Category, Conditionn, PublishedYear, Price, ListingID FROM Listings WHERE ListingID = ?";
+        String query = "SELECT Bookname, AuthorName, Category, Conditionn, PublishYear, Price, ListingID FROM Listings WHERE ListingID = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -606,7 +607,7 @@ public class DataBase {
                 String author = rs.getString("AuthorName");
                 String category = rs.getString("Category");
                 String condition = rs.getString("Conditionn");
-                int year = rs.getInt("PublishedYear");
+                int year = rs.getInt("PublishYear");
                 double price = rs.getDouble("Price");
                 int id = rs.getInt("ListingID");
 
@@ -622,7 +623,7 @@ public class DataBase {
 
     public static List<Book> getAllBooks() {
         List<Book> books = new ArrayList<>();
-        String query = "SELECT ListingID FROM Listings"; // Query to get all ListingIDs from Listings table
+        String query = "SELECT ListingID FROM Listings WHERE Sold = 'N'"; // Query to get all ListingIDs from Listings table
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -644,38 +645,86 @@ public class DataBase {
         return books; // Return the list of books
     }
 
+    public static List<Book> myBooks(int userID) {
+        List<Book> books = new ArrayList<>();
+        // Query to get all ListingIDs where Sold = 'N' and the userID matches the seller
+        String query = "SELECT ListingID FROM Listings WHERE Sold = 'N' AND SellerID = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, userID);  // Set the userID in the query
+
+            ResultSet rs = stmt.executeQuery(); // Execute query to get all ListingIDs for unsold books by the user
+
+            while (rs.next()) {
+                int listingID = rs.getInt("ListingID");
+                Book book = getBookFromListing(listingID); // Convert ListingID to Book object
+                if (book != null) {
+                    books.add(book); // Add the Book object to the list
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error retrieving books for userID " + userID + ": " + e.getMessage());
+        }
+
+        return books; // Return the list of books
+    }
+
     public static List<Book> searchBooksByFilter(String searchInput, String[] conditions, String[] categories) {
         // Initialize a list to hold the resulting Book objects
+
         List<Book> books = new ArrayList<>();
 
-        // Initialize the query builder
-        StringBuilder query = new StringBuilder("SELECT ListingID FROM Listings WHERE ");
+        // Initialize the query builder with the Sold condition
+        StringBuilder query = new StringBuilder("SELECT ListingID FROM Listings WHERE Sold = 'N'");
 
-        // Build the filter conditions based on the searchInput
-        String[] filters = new String[3]; // We will have three conditions: searchInput, conditions, and categories
-        int filterIndex = 0;
+        // Initialize a list to hold the filters
+        List<String> filters = new ArrayList<>();
 
-        // Check if searchInput is provided (search in Bookname or Authorname)
+        // Add the search filter if searchInput is provided (search in Bookname or AuthorName)
         if (searchInput != null && !searchInput.trim().isEmpty()) {
-            filters[filterIndex++] = "(Bookname LIKE '%" + searchInput + "%' OR AuthorName LIKE '%" + searchInput + "%')";
+            filters.add("(Bookname LIKE ? OR AuthorName LIKE ?)");
         }
 
-        // Add the category filter if categories are provided
+        // Add the condition filter if conditions are provided
         if (conditions != null && conditions.length > 0) {
-            String conditionQuery = "Conditionn IN ('" + String.join("','", conditions) + "')";
-            filters[filterIndex++] = conditionQuery;
+            String conditionQuery = "Conditionn IN (" + String.join(",", Collections.nCopies(conditions.length, "?")) + ")";
+            filters.add(conditionQuery);
         }
 
+        // Add any additional categories filter here as needed
+        if (categories != null && categories.length > 0) {
+            String categoryQuery = "Category IN (" + String.join(",", Collections.nCopies(categories.length, "?")) + ")";
+            filters.add(categoryQuery);
+        }
 
-        // Combine all filters together using AND
-        String finalQuery = String.join(" AND ", Arrays.copyOfRange(filters, 0, filterIndex));
-
-        // Add the constructed conditions to the query string
-        query.append(finalQuery);
+        // Combine all filters with AND and add to the query
+        if (!filters.isEmpty()) {
+            query.append(" AND ").append(String.join(" AND ", filters));
+        }
 
         // Now execute the query to fetch the ListingIDs that match the filters
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query.toString())) {
+
+            // Set the parameters for the query
+            int paramIndex = 1;
+            if (searchInput != null && !searchInput.trim().isEmpty()) {
+                stmt.setString(paramIndex++, "%" + searchInput + "%");
+                stmt.setString(paramIndex++, "%" + searchInput + "%");
+            }
+            if (conditions != null) {
+                for (String condition : conditions) {
+                    stmt.setString(paramIndex++, condition);
+                }
+            }
+            if (categories != null) {
+                for (String category : categories) {
+                    stmt.setString(paramIndex++, category);
+                }
+            }
 
             // Execute the query and process the results
             ResultSet rs = stmt.executeQuery();
@@ -686,7 +735,7 @@ public class DataBase {
 
                 // Get the Book object using the listingID
                 Book book = getBookFromListing(listingID);
-
+                System.out.println(listingID + " " + book.getTitle());;
                 // If the book is not null, add it to the list
                 if (book != null) {
                     books.add(book);
@@ -694,7 +743,7 @@ public class DataBase {
             }
 
         } catch (SQLException e) {
-            System.out.println("Error retrieving books: " + e.getMessage());
+            System.out.println("Error retrieving  in search Books: " + e.getMessage());
         }
 
         // Return the list of books that match the filters
@@ -846,29 +895,58 @@ public class DataBase {
     }
 
 
-    public static void updateTransaction(int buyerID, int sellerID, int bookID, double amount) {
-        String query = "UPDATE Transactions SET buyerID = ?, sellerID = ?, bookID = ?, amount = ? WHERE transactionID = ?";
+    public static void insertTransaction(int buyerID, int sellerID, int bookID, double amount) {
+        // Insert query for the Transactions table
+        String insertQuery = "INSERT INTO Transactions (buyerID, sellerID, bookID, amount) VALUES (?, ?, ?, ?)";
 
+        // Update query to mark the book as sold in the Listings table
+        String updateQuery = "UPDATE Listings SET Sold = 'Y' WHERE ListingID = ?";
+
+        // Start a transaction to ensure both queries are executed together
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+             PreparedStatement insertStmt = conn.prepareStatement(insertQuery);
+             PreparedStatement updateStmt = conn.prepareStatement(updateQuery)) {
 
-            // Since transactionID is auto-generated, we don't need to pass it as an argument
-            stmt.setInt(1, buyerID);
-            stmt.setInt(2, sellerID);
-            stmt.setInt(3, bookID);
-            stmt.setDouble(4, amount);
+            // Disable auto-commit for transaction
+            conn.setAutoCommit(false);
 
-            // You'll need to fetch the transactionID from somewhere to update it, e.g., passing it as a parameter or querying it.
-            // Let's assume we want to update the transaction with the provided buyerID and sellerID as primary identifiers
-            stmt.setInt(5, buyerID);  // Here, you may adjust logic based on how transactionID is to be identified.
+            // Insert the transaction details
+            insertStmt.setInt(1, buyerID);
+            insertStmt.setInt(2, sellerID);
+            insertStmt.setInt(3, bookID);
+            insertStmt.setDouble(4, amount);
 
-            // Execute the update
-            stmt.executeUpdate();
+            // Execute the insert query
+            insertStmt.executeUpdate();
+
+            // Mark the book as sold in the Listings table
+            updateStmt.setInt(1, bookID);
+
+            // Execute the update query
+            updateStmt.executeUpdate();
+
+            // Commit the transaction
+            conn.commit();
 
         } catch (SQLException e) {
-            System.out.println("Error updating transaction: " + e.getMessage());
+
+            System.out.println("Error inserting transaction: " + e.getMessage());
+            try {Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+                // If an error occurs, roll back the transaction
+                conn.rollback();
+            } catch (SQLException rollbackException) {
+                System.out.println("Error during rollback: " + rollbackException.getMessage());
+            }
+        } finally {
+            try {Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+                // Reset auto-commit to true for subsequent operations
+                conn.setAutoCommit(true);
+            } catch (SQLException e) {
+                System.out.println("Error resetting auto-commit: " + e.getMessage());
+            }
         }
     }
+
 
 
     public static List<Transaction> returnTransactions(int userID) {
