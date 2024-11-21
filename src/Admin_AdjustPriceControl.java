@@ -56,7 +56,7 @@ public class Admin_AdjustPriceControl extends Pane {
                     // Display a warning if any fields are empty
                     pane.displayEmptyFields();
 
-                } if (pane.notValid()){
+                } else if (pane.notValid()){
 
                     pane.displayNotValid();
 
