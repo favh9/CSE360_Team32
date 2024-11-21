@@ -27,6 +27,7 @@ public class Buyer_OrdersPane extends BorderPane {
         Buyer_NavigationControl navigationControl = new Buyer_NavigationControl(user, width, height);
 
 
+
         // set attributes for the Title Label
         Label titleLabel = new Label("Transactions");
         titleLabel.setFont(titleFont);
