@@ -136,6 +136,10 @@ public class Admin_AdjustPricePane extends BorderPane {
         return usedLikeNewTextField.getText().isEmpty() || moderatelyUsedTextField.getText().isEmpty() || heavilyUsedTextField.getText().isEmpty();
     }
 
+    public boolean notValid() {
+        return (Double.parseDouble(usedLikeNewTextField.getText()) > 100) || (Double.parseDouble(moderatelyUsedTextField.getText()) > 100) || (Double.parseDouble(heavilyUsedTextField.getText()) > 100);
+    }
+
     public static double getUsedLikeNewFee() {
         return Double.parseDouble(usedLikeNewTextField.getText());
     }
@@ -170,6 +174,13 @@ public class Admin_AdjustPricePane extends BorderPane {
             msg += "\tExp date\n";
 
         // Call the helper method to display the warning alert
+        displayAlert(Alert.AlertType.WARNING, title, msg);
+    }
+
+    public void displayNotValid() {
+        String title = "Warning";
+        String msg = "Your Fees can't be more than a 100%\n";
+
         displayAlert(Alert.AlertType.WARNING, title, msg);
     }
 
