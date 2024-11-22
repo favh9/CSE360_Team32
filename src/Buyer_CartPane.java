@@ -1,26 +1,21 @@
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
+import javafx.scene.text.*;
 
-import javax.xml.crypto.Data;
+import java.text.NumberFormat;
+import java.util.List;
+import java.util.Optional;
 
 public class Buyer_CartPane extends BorderPane {
 
+    private double width;
+    private double height;
     private VBox cartVBox;
     private Text cartAmountText;
     private Button backButton;
@@ -28,16 +23,34 @@ public class Buyer_CartPane extends BorderPane {
     private ScrollPane sp;
     private List<Book> bookList;
     private int cartAmount;
+    private double profit;
+    private double subtotal;
+    private double tax;
+    private double total;
+    private Label subtotalText;
+    private Label taxText;
+    private Label totalText;
     private Button checkOutButton;
+    private BorderPane receiptBP;
+    private HBox hbox1;
+    private HBox hbox2;
+    private HBox hbox3;
 
     public Buyer_CartPane(User user, double width, double height) {
 
         this.user = user;
+        this.width = width;
+        this.height = height;
+
+        subtotal = 0;
+        tax = .08; // hard code tax?
+        total = 0;
 
         bookList = DataBase.getCart(user.getUserID());
         cartAmount = bookList.size();
 
         Font titleFont = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 42);
+        Font normalFont = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 20);
         Font quantityFont = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 24);
 
         // back button image
@@ -138,20 +151,83 @@ public class Buyer_CartPane extends BorderPane {
         // set attributes for the users box that includes their header and scrollpane
         VBox headerAndScrollPane = new VBox(bodyheaderPane,lineSeparator,sp);
 
-        // set attributes for the main VBox which excludes the navigation bar
-        VBox mainVBox = new VBox(headerPane,headerAndScrollPane);
-        mainVBox.setPadding(new Insets(40,40,0,40));
-        mainVBox.setPrefWidth(width);
-        mainVBox.setSpacing(10);
-        mainVBox.setStyle(
+        // add an hbox where the left displays...
+        // a VBox with:
+        // HBox subtotal
+        // HBox tax
+        // HBox total
+        subtotalText = new Label("$" + subtotal);
+        taxText = new Label("$" + tax);
+        totalText = new Label("$" + total);
+
+        subtotalText.setFont(normalFont);
+        taxText.setFont(normalFont);
+        totalText.setFont(normalFont);
+
+        subtotalText.setPrefWidth(100);
+        taxText.setPrefWidth(100);
+        totalText.setPrefWidth(100);
+
+        subtotalText.setAlignment(Pos.CENTER_RIGHT);
+        taxText.setAlignment(Pos.CENTER_RIGHT);
+        totalText.setAlignment(Pos.CENTER_RIGHT);
+
+        Label subtotalLabel = new Label("Subtotal:");
+        Label taxLabel = new Label("Tax:");
+        Label totalLabel = new Label("Total:");
+
+        subtotalLabel.setPrefWidth(100);
+        taxLabel.setPrefWidth(100);
+        totalLabel.setPrefWidth(100);
+
+        subtotalLabel.setFont(normalFont);
+        taxLabel.setFont(normalFont);
+        totalLabel.setFont(normalFont);
+
+        subtotalLabel.setAlignment(Pos.CENTER_RIGHT);
+        taxLabel.setAlignment(Pos.CENTER_RIGHT);
+        totalLabel.setAlignment(Pos.CENTER_RIGHT);
+
+        hbox1 = new HBox(subtotalLabel,subtotalText);
+        hbox2 = new HBox(taxLabel,taxText);
+        hbox3 = new HBox(totalLabel,totalText);
+
+        hbox1.setSpacing(100);
+        hbox2.setSpacing(100);
+        hbox3.setSpacing(100);
+
+        checkOutButton = new Button("Checkout");
+        checkOutButton.setFont(normalFont);
+        checkOutButton.setPrefHeight(50);
+
+        VBox leftVBox = new VBox(hbox1,hbox2,hbox3);
+        VBox rightVBox = new VBox(checkOutButton);
+
+        leftVBox.setAlignment(Pos.CENTER_LEFT);
+        rightVBox.setAlignment(Pos.CENTER_RIGHT);
+
+        receiptBP = new BorderPane();
+        receiptBP.setLeft(leftVBox);
+        receiptBP.setRight(rightVBox);
+
+        receiptBP.setPadding(new Insets(5,20,5,20));
+        receiptBP.setStyle(
+                "-fx-border-radius: 2em;" + "-fx-background-color: #ffffff;" +
+                        "-fx-border-width: 1;" + "-fx-border-color: black;"
+        );
+
+        BorderPane bp = new BorderPane();
+        bp.setTop(new VBox(headerPane,headerAndScrollPane));
+        bp.setBottom(receiptBP);
+        bp.setPadding(new Insets(40,40,40,40));
+        bp.setPrefWidth(width);
+        bp.setStyle(
                 "-fx-background-radius: 2em;" + "-fx-background-color: #ffffff;"
         );
 
-        // set attributes for the container that holds the navigation bar and page
-        HBox MainHBox = new HBox(mainVBox);
 
-        this.setCenter(MainHBox);
-        BorderPane.setMargin(MainHBox, new Insets(20,20,20,20));
+        this.setCenter(bp);
+        BorderPane.setMargin(bp, new Insets(20,20,20,20));
 
         // these are by default what we use for the scene
         this.setPrefSize(width, height);
@@ -177,19 +253,61 @@ public class Buyer_CartPane extends BorderPane {
         return backButton;
     }
 
+    public Button getCheckOutButton() {
+        return checkOutButton;
+    }
+
     public List<Book> getBookList() {
         return bookList;
     }
 
     public void displayNoBooksFound() {
 
-        BorderPane bp = new BorderPane();
         Label noBooksFoundLabel = new Label("No Books Found");
+        noBooksFoundLabel.setPadding(new Insets(100,100,100,100));
         noBooksFoundLabel.setFont(Font.font(48));
-        bp.setCenter(noBooksFoundLabel);
-        bp.setPadding(new Insets(100));
-        sp.setContent(bp);
 
+        cartVBox.getChildren().clear();
+
+        cartVBox.getChildren().add(noBooksFoundLabel);
+
+        receiptBP.setVisible(false);
+
+
+
+    }
+
+    // the buyer arrives at the cart with books
+    public void atCart() {
+        // display subtotal
+        // display checkout
+        displaySubtotal();
+        hbox1.setVisible(true); // subtotal
+        hbox2.setVisible(false); // tax
+        hbox3.setVisible(false); // total
+        checkOutButton.setVisible(true);
+
+    }
+
+    // the buyer hits checkout and confirms the purchase
+    public void pushConfirm() {
+        // display tax
+        // display total
+        displayTax();
+        displayTotal();
+        hbox2.setVisible(true); // tax
+        hbox3.setVisible(true); // total
+        checkOutButton.setVisible(false);
+    }
+
+    public void cancelConfirm() {
+        // display tax
+        // display total
+        displayTax();
+        displayTotal();
+        hbox2.setVisible(false); // tax
+        hbox3.setVisible(false); // total
+        checkOutButton.setVisible(true);
     }
 
     public void displayCart() {
@@ -198,9 +316,16 @@ public class Buyer_CartPane extends BorderPane {
         cartAmountText.setText("0");
         cartAmount = 0;
 
-        for(Book book : bookList) {
-            cartVBox.getChildren().add(bookVBox(book));
-            increaseCount();
+        if(bookList.isEmpty()) {
+            displayNoBooksFound();
+        } else {
+            subtotal = 0;
+            for (Book book : bookList) {
+                subtotal += book.getPrice();
+                cartVBox.getChildren().add(bookVBox(book));
+                increaseCount();
+            }
+            atCart(); // display the subtotal and checkout button
         }
 
     }
@@ -248,8 +373,8 @@ public class Buyer_CartPane extends BorderPane {
         price.setPrefWidth(100);
         price.setWrapText(false);
         price.setFont(Font.font(20));
-        price.setAlignment(Pos.BASELINE_CENTER);
-        price.setPadding(new Insets(5));
+        price.setAlignment(Pos.CENTER_RIGHT);
+        price.setPadding(new Insets(5,10,5,5));
 
         VBox vbox4 = new VBox(price);
         vbox4.setAlignment(Pos.CENTER);
@@ -278,4 +403,94 @@ public class Buyer_CartPane extends BorderPane {
         return new VBox(transactionHBox,lineSeparator);
 
     }
+
+    // get the integer values and modify the gui
+    public void displaySubtotal() {
+        subtotalText.setText(formatCurrency(subtotal));
+    }
+
+    public String formatCurrency(double num) {
+        // Get a currency instance of NumberFormat
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
+
+        // Format the number as a currency string
+        return currencyFormat.format(num);
+    }
+
+    public void displayTax() {
+        taxText.setText(formatCurrency(computeTax()));
+    }
+
+    public double computeTax() {
+        return tax * subtotal;
+    }
+
+    public double computeTotal() {
+        return subtotal + computeTax();
+    }
+
+    public void displayTotal() {
+        totalText.setText(formatCurrency(computeTotal()));
+    }
+
+    public boolean displayConfirmOrder() {
+        String title = "Confirmation";
+        String msg = "Please confirm your order.";
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+
+        // Wait for user response
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.isPresent() && result.get() == ButtonType.OK;
+
+    }
+
+    public void displayTransactionSuccess() {
+
+        String title = "Congratulations";
+        String msg = "Your transaction was successful.\n" +
+                "Click 'ok' to view your order.";
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+
+        // Wait for user response
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            // show a congratulations
+            // empty the cart pane
+            Buyer_OrdersControl orders = new Buyer_OrdersControl(user,width,height);
+            Main.mainWindow.setScene(new Scene(orders));
+        } else {
+            Buyer_ShopControl shop = new Buyer_ShopControl(user,width,height);
+            Main.mainWindow.setScene(new Scene(shop));
+        }
+
+
+    }
+
+    public void displayNoPaymentMethodFound() {
+
+        String title = "Transaction failed";
+        String msg = "No payment method found.\n" +
+                "Please click 'ok' to fill in your payment information.\n" +
+                "Return to your cart to complete your purchase.";
+
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+
+        // Wait for user response
+        alert.showAndWait();
+        Buyer_PaymentInfoControl payment = new Buyer_PaymentInfoControl(user,width,height);
+        Main.mainWindow.setScene(new Scene(payment));
+
+    }
+
 }

@@ -22,7 +22,7 @@ public class DataBase {
 
     public static boolean updateUserType(String username, String usertype) {
 
-        String updateUserSQL = "UPDATE Users SET user_type = ? WHERE username = ?";
+        String updateUserSQL = "UPDATE users SET user_type = ? WHERE username = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement pstmt = conn.prepareStatement(updateUserSQL)) {
@@ -49,7 +49,7 @@ public class DataBase {
 
     public static boolean updatePassword(int userID, String newPassword) {
         String hashedPassword = hashPassword(newPassword);  // Hash the new password
-        String updateQuery = "UPDATE Users SET password = ? WHERE id = ?";
+        String updateQuery = "UPDATE users SET password = ? WHERE id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement pstmt = conn.prepareStatement(updateQuery)) {
@@ -69,7 +69,7 @@ public class DataBase {
     }
 
     public static boolean updateUserProfile(int userID, String firstName, String lastName, String email, String username) {
-        String query = "UPDATE Users SET firstname = ?, lastname = ?, email = ?, username = ? WHERE id = ?";
+        String query = "UPDATE users SET first_name = ?, last_name = ?, email = ?, username = ? WHERE id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -91,7 +91,7 @@ public class DataBase {
 
 
     public static boolean verifyPassword(int userID, String currentPassword) {
-        String verifySQL = "SELECT password FROM Users WHERE id = ?";
+        String verifySQL = "SELECT password FROM users WHERE id = ?";
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement pstmt = conn.prepareStatement(verifySQL)) {
             pstmt.setInt(1, userID);
@@ -109,23 +109,23 @@ public class DataBase {
 
 
     public static void createPaymentInfoTable() {
-        String createTableSQL = "CREATE TABLE IF NOT EXISTS PaymentInfo ("
+        String createTableSQL = "CREATE TABLE IF NOT EXISTS payment_info ("
                 + "id INT AUTO_INCREMENT PRIMARY KEY, "
-                + "userID INT NOT NULL UNIQUE, "
-                + "nameOnCard VARCHAR(100) NOT NULL, "
-                + "cardNumber CHAR(16) NOT NULL, "
-                + "expirationDate CHAR(7) NOT NULL, "
+                + "user_id INT NOT NULL UNIQUE, "
+                + "name_on_card VARCHAR(100) NOT NULL, "
+                + "card_number CHAR(16) NOT NULL, "
+                + "expiration_date CHAR(7) NOT NULL, "
                 + "cvc CHAR(3) NOT NULL, "
-                + "FOREIGN KEY (userID) REFERENCES Users(id) ON DELETE CASCADE"
+                + "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE"
                 + ")";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              Statement stmt = conn.createStatement()) {
 
             stmt.executeUpdate(createTableSQL);
-            System.out.println("PaymentInfo table created successfully...");
+            System.out.println("payment_info table created successfully...");
         } catch (SQLException e) {
-            System.out.println("PaymentInfo table creation failed...");
+            System.out.println("payment_info table creation failed...");
             e.printStackTrace();
         }
     }
@@ -133,10 +133,10 @@ public class DataBase {
     //make sure to prevent duplicates and connect them to the right users.
 
     public static boolean savePaymentInfo(int userID, String nameOnCard, String cardNumber, String expirationDate, String cvc) {
-        String upsertSQL = "INSERT INTO PaymentInfo (userID, nameOnCard, cardNumber, expirationDate, cvc) " +
+        String upsertSQL = "INSERT INTO payment_info (user_id, name_on_card, card_number, expiration_date, cvc) " +
                 "VALUES (?, ?, ?, ?, ?) " +
-                "ON DUPLICATE KEY UPDATE nameOnCard = VALUES(nameOnCard), " +
-                "cardNumber = VALUES(cardNumber), expirationDate = VALUES(expirationDate), cvc = VALUES(cvc)";
+                "ON DUPLICATE KEY UPDATE name_on_card = VALUES(name_on_card), " +
+                "card_number = VALUES(card_number), expiration_date = VALUES(expiration_date), cvc = VALUES(cvc)";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement pstmt = conn.prepareStatement(upsertSQL)) {
@@ -166,7 +166,7 @@ public class DataBase {
     public static boolean insertUser(String firstname, String lastname, String dob, String email, String username, String pwd) {
 
         // Modify SQL query to include the 'dob' column
-        String insertUserSQL = "INSERT INTO Users (firstname, lastname, dob, email, username, password) " +
+        String insertUserSQL = "INSERT INTO users (first_name, last_name, dob, email, username, password) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -191,7 +191,7 @@ public class DataBase {
     }
 
     public static void updateEmail(int userID, String newEmail) {
-        String query = "UPDATE Users SET email = ? WHERE id = ?";
+        String query = "UPDATE users SET email = ? WHERE id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -212,7 +212,7 @@ public class DataBase {
     }
 
     public static void updateUsername(int userID, String newUsername) {
-        String query = "UPDATE Users SET username = ? WHERE id = ?";
+        String query = "UPDATE users SET username = ? WHERE id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -233,7 +233,7 @@ public class DataBase {
     }
 
     public static void updateFirstName(int userID, String newFirstName) {
-        String query = "UPDATE Users SET firstname = ? WHERE id = ?";
+        String query = "UPDATE users SET first_name = ? WHERE id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -254,7 +254,7 @@ public class DataBase {
     }
 
     public static void updateLastName(int userID, String newLastName) {
-        String query = "UPDATE Users SET lastname = ? WHERE id = ?";
+        String query = "UPDATE users SET last_name = ? WHERE id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -275,7 +275,7 @@ public class DataBase {
     }
 
     public static void updateDob(int userID, Date newDob) {
-        String query = "UPDATE Users SET dob = ? WHERE id = ?";
+        String query = "UPDATE users SET dob = ? WHERE id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -296,7 +296,7 @@ public class DataBase {
     }
 
     public static User getUserFromDB(int userID) {
-        String query = "SELECT id, firstname, lastname, dob, email, username, password, userType FROM Users WHERE id = ?";
+        String query = "SELECT id, first_name, last_name, dob, email, username, password, userType FROM users WHERE id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -306,8 +306,8 @@ public class DataBase {
 
             if (rs.next()) {
                 int id = rs.getInt("id");
-                String firstName = rs.getString("firstname");
-                String lastName = rs.getString("lastname");
+                String firstName = rs.getString("first_name");
+                String lastName = rs.getString("last_name");
                 String dob = rs.getString("dob");
                 String email = rs.getString("email");
                 String username = rs.getString("username");
@@ -326,8 +326,8 @@ public class DataBase {
 
     public static List<User> searchUsers(String searchInput) {
         List<User> users = new ArrayList<>();
-        String searchQuery = "SELECT id, firstname, lastname, dob, email, username, password, userType FROM Users WHERE " +
-                "username LIKE ? OR firstname LIKE ? OR lastname LIKE ? OR id LIKE ? OR email LIKE ?";
+        String searchQuery = "SELECT id, first_name, last_name, dob, email, username, password, userType FROM users WHERE " +
+                "username LIKE ? OR first_name LIKE ? OR last_name LIKE ? OR id LIKE ? OR email LIKE ?";
 
         String searchPattern = "%" + searchInput + "%";  // To match part of the string
 
@@ -344,8 +344,8 @@ public class DataBase {
 
             while (rs.next()) {
                 int id = rs.getInt("id");
-                String firstName = rs.getString("firstname");
-                String lastName = rs.getString("lastname");
+                String firstName = rs.getString("first_name");
+                String lastName = rs.getString("last_name");
                 String dob = rs.getString("dob");
                 String email = rs.getString("email");
                 String username = rs.getString("username");
@@ -364,7 +364,7 @@ public class DataBase {
 
     public static boolean userExists(String username, String pwd) {
 
-        String selectUserSQL = "SELECT * FROM Users WHERE username = ? AND password = ?";
+        String selectUserSQL = "SELECT * FROM users WHERE username = ? AND password = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement pstmt = conn.prepareStatement(selectUserSQL)) {
@@ -394,7 +394,7 @@ public class DataBase {
     }
 
     public static User getUserByUsername(String username) {
-        String selectUserSQL = "SELECT id, firstname, lastname, dob, email, username, password, user_type FROM Users WHERE username = ?";
+        String selectUserSQL = "SELECT id, first_name, last_name, dob, email, username, password, user_type FROM users WHERE username = ?";
         User user = null;
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -406,8 +406,8 @@ public class DataBase {
                 if (rs.next()) {
                     // Map the result set to a User object
                     int userID = rs.getInt("id");
-                    String firstname = rs.getString("firstname");
-                    String lastname = rs.getString("lastname");
+                    String firstname = rs.getString("first_name");
+                    String lastname = rs.getString("last_name");
                     String dob = rs.getString("dob");
                     String email = rs.getString("email");
                     String password = rs.getString("password");
@@ -431,7 +431,7 @@ public class DataBase {
     }
 
     public static String getUserType(String username) {
-        String selectUserSQL = "SELECT user_type FROM Users WHERE username = ?";
+        String selectUserSQL = "SELECT user_type FROM users WHERE username = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement pstmt = conn.prepareStatement(selectUserSQL)) {
@@ -454,9 +454,9 @@ public class DataBase {
         }
     }
 
-    public static boolean listBook(int UserID, String bookName, int publishYear, String authorName, String category, String conditionn, double price) {
-        String insertQuery = "INSERT INTO Listings (Bookname, UserID, PublishYear, AuthorName, Category, Conditionn, Price) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+    public static boolean listBook(int UserID, String bookName, int publishYear, String authorName, String category, String condition, double profit, double price) {
+        String insertQuery = "INSERT INTO listings (book_name, user_id, publish_year, author_name, category, cond, profit, price) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DriverManager.getConnection(URL, USER,PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(insertQuery)) {
@@ -467,8 +467,9 @@ public class DataBase {
             stmt.setInt(3, publishYear);
             stmt.setString(4, authorName);
             stmt.setString(5, category);
-            stmt.setString(6, conditionn);
-            stmt.setDouble(7, price);
+            stmt.setString(6, condition);
+            stmt.setDouble(7, profit);
+            stmt.setDouble(8, price);
             //stmt.setString(7, "N");
 
             // Execute the insert operation
@@ -484,7 +485,7 @@ public class DataBase {
     }
 
     public static void deleteListing(int listingID) {
-        String sql = "DELETE FROM Listings WHERE ListingID = ?";  // SQL query to delete the listing
+        String sql = "DELETE FROM listings WHERE listing_id = ?";  // SQL query to delete the listing
 
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -498,7 +499,7 @@ public class DataBase {
             if (rowsAffected > 0) {
                 System.out.println("Listing deleted successfully.");
             } else {
-                System.out.println("No listing found with ListingID: " + listingID);
+                System.out.println("No listing found with listing_id: " + listingID);
             }
 
         } catch (SQLException e) {
@@ -534,7 +535,7 @@ public class DataBase {
     }
 
     public static PaymentInfo getPaymentInfo(int userID) {
-        String selectPaymentSQL = "SELECT nameOnCard, cardNumber, expirationDate, cvc FROM PaymentInfo WHERE userID = ?";
+        String selectPaymentSQL = "SELECT name_on_card, card_number, expiration_date, cvc FROM payment_info WHERE user_id = ?";
         PaymentInfo paymentInfo = null;
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -544,9 +545,9 @@ public class DataBase {
 
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    String nameOnCard = rs.getString("nameOnCard");
-                    String cardNumber = rs.getString("cardNumber");
-                    String expirationDate = rs.getString("expirationDate");
+                    String nameOnCard = rs.getString("name_on_card");
+                    String cardNumber = rs.getString("card_number");
+                    String expirationDate = rs.getString("expiration_date");
                     String cvc = rs.getString("cvc");
 
                     paymentInfo = new PaymentInfo(nameOnCard, cardNumber, expirationDate, cvc);
@@ -562,7 +563,7 @@ public class DataBase {
     }
 
     public static boolean addToCart(int userID, int bookID) {
-        String insertQuery = "INSERT INTO cart (userID, bookID) VALUES (?, ?)";
+        String insertQuery = "INSERT INTO cart (user_id, book_id) VALUES (?, ?)";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(insertQuery)) {
@@ -585,7 +586,7 @@ public class DataBase {
 
     public static List<Book> getCart(int userID) {
         List<Book> booksInCart = new ArrayList<>();
-        String query = "SELECT bookID FROM cart WHERE userID = ?";
+        String query = "SELECT book_id FROM cart WHERE user_id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -596,7 +597,7 @@ public class DataBase {
             ResultSet rs = stmt.executeQuery(); // Execute the query
 
             while (rs.next()) {
-                int bookID = rs.getInt("bookID");
+                int bookID = rs.getInt("book_id");
                 Book book = getBookFromListing(bookID); // Use the helper function to create the Book object
                 if (book != null) {
                     booksInCart.add(book); // Add the Book object to the list
@@ -612,7 +613,7 @@ public class DataBase {
 
     public static List<Integer> getCartBookIDs(int userID) {
         List<Integer> bookIDsInCart = new ArrayList<>();
-        String query = "SELECT bookID FROM cart WHERE userID = ?";
+        String query = "SELECT book_id FROM cart WHERE user_id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -623,7 +624,7 @@ public class DataBase {
             ResultSet rs = stmt.executeQuery(); // Execute the query
 
             while (rs.next()) {
-                int bookID = rs.getInt("bookID");
+                int bookID = rs.getInt("book_id");
                 bookIDsInCart.add(bookID); // Add the bookID directly to the list
             }
 
@@ -636,7 +637,7 @@ public class DataBase {
 
 
     public static boolean removeFromCart(int userID, int bookID) {
-        String deleteQuery = "DELETE FROM cart WHERE userID = ? AND bookID = ?";
+        String deleteQuery = "DELETE FROM cart WHERE user_id = ? AND book_id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(deleteQuery)) {
@@ -655,7 +656,7 @@ public class DataBase {
 
     public static int getCartCount(int userID) {
         int cartCount = 0;
-        String query = "SELECT COUNT(*) AS itemCount FROM cart WHERE UserID = ?";
+        String query = "SELECT COUNT(*) AS itemCount FROM cart WHERE user_id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -679,7 +680,7 @@ public class DataBase {
     }
 
     public static Book getBookFromListing(int listingID) {
-        String query = "SELECT Bookname, AuthorName, Category, Conditionn, PublishYear, Price, ListingID FROM Listings WHERE ListingID = ?";
+        String query = "SELECT book_name, author_name, category, cond, publish_year, profit, price, listing_id FROM listings WHERE listing_id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -688,15 +689,16 @@ public class DataBase {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                String title = rs.getString("Bookname");
-                String author = rs.getString("AuthorName");
+                String title = rs.getString("book_name");
+                String author = rs.getString("author_name");
                 String category = rs.getString("Category");
-                String condition = rs.getString("Conditionn");
-                int year = rs.getInt("PublishYear");
-                double price = rs.getDouble("Price");
-                int id = rs.getInt("ListingID");
+                String condition = rs.getString("cond");
+                int year = rs.getInt("publish_year");
+                double profit = rs.getDouble("profit");
+                double price = rs.getDouble("price");
+                int id = rs.getInt("listing_id");
 
-                return new Book(title, author, category, condition, price, year, id);
+                return new Book(title, author, category, condition, profit, price, year, id);
             }
 
         } catch (SQLException e) {
@@ -708,7 +710,7 @@ public class DataBase {
 
     public static List<Book> getAllBooks() {
         List<Book> books = new ArrayList<>();
-        String query = "SELECT ListingID FROM Listings WHERE Sold = 'N'"; // Query to get all ListingIDs from Listings table
+        String query = "SELECT listing_id FROM listings WHERE sold = 'N'"; // Query to get all ListingIDs from Listings table
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -716,7 +718,7 @@ public class DataBase {
             ResultSet rs = stmt.executeQuery(); // Execute query to get all ListingIDs
 
             while (rs.next()) {
-                int listingID = rs.getInt("ListingID");
+                int listingID = rs.getInt("listing_id");
                 Book book = getBookFromListing(listingID); // Convert ListingID to Book object
                 if (book != null) {
                     books.add(book); // Add the Book object to the list
@@ -733,7 +735,7 @@ public class DataBase {
     public static List<Book> myListedBooks(int userID) {
         List<Book> books = new ArrayList<>();
         // Query to get all ListingIDs where Sold = 'N' and the userID matches the seller
-        String query = "SELECT ListingID FROM Listings WHERE Sold = 'N' AND userID = ?";
+        String query = "SELECT listing_id FROM listings WHERE sold = 'N' AND user_id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -743,7 +745,7 @@ public class DataBase {
             ResultSet rs = stmt.executeQuery(); // Execute query to get all ListingIDs for unsold books by the user
 
             while (rs.next()) {
-                int listingID = rs.getInt("ListingID");
+                int listingID = rs.getInt("listing_id");
                 Book book = getBookFromListing(listingID); // Convert ListingID to Book object
                 if (book != null) {
                     books.add(book); // Add the Book object to the list
@@ -751,7 +753,7 @@ public class DataBase {
             }
 
         } catch (SQLException e) {
-            System.out.println("Error retrieving books for userID " + userID + ": " + e.getMessage());
+            System.out.println("Error retrieving books for user_id " + userID + ": " + e.getMessage());
         }
 
         return books; // Return the list of books
@@ -762,25 +764,25 @@ public class DataBase {
         List<Book> books = new ArrayList<>();
 
         // Initialize the query builder with the Sold condition
-        StringBuilder query = new StringBuilder("SELECT Bookname, AuthorName, Category, Conditionn, PublishYear, Price, ListingID FROM Listings WHERE Sold = 'N'");
+        StringBuilder query = new StringBuilder("SELECT book_name, author_name, category, cond, publish_year, profit, price, listing_id FROM listings WHERE sold = 'N'");
 
         // Initialize a list to hold the filters
         List<String> filters = new ArrayList<>();
 
         // Add the search filter if searchInput is provided (search in Bookname or AuthorName)
         if (searchInput != null && !searchInput.trim().isEmpty()) {
-            filters.add("(Bookname LIKE ? OR AuthorName LIKE ?)");
+            filters.add("(book_name LIKE ? OR author_name LIKE ?)");
         }
 
         // Add the condition filter if conditions are provided
         if (conditions != null && conditions.length > 0) {
-            String conditionQuery = "Conditionn IN (" + String.join(",", Collections.nCopies(conditions.length, "?")) + ")";
+            String conditionQuery = "cond IN (" + String.join(",", Collections.nCopies(conditions.length, "?")) + ")";
             filters.add(conditionQuery);
         }
 
         // Add any additional categories filter here as needed
         if (categories != null && categories.length > 0) {
-            String categoryQuery = "Category IN (" + String.join(",", Collections.nCopies(categories.length, "?")) + ")";
+            String categoryQuery = "category IN (" + String.join(",", Collections.nCopies(categories.length, "?")) + ")";
             filters.add(categoryQuery);
         }
 
@@ -791,9 +793,9 @@ public class DataBase {
 
         // Add the ORDER BY clause based on the 'order' parameter
         if (order == 1) {
-            query.append(" ORDER BY Price ASC");  // Ascending order
+            query.append(" ORDER BY price ASC");  // Ascending order
         } else if (order == 2) {
-            query.append(" ORDER BY Price DESC"); // Descending order
+            query.append(" ORDER BY price DESC"); // Descending order
         }
 
         // Now execute the query to fetch the listings that match the filters
@@ -823,16 +825,17 @@ public class DataBase {
             System.out.println("About to create bookList");
             // For each row in the result set, create a Book object
             while (rs.next()) {
-                String title = rs.getString("Bookname");
-                String author = rs.getString("AuthorName");
-                String category = rs.getString("Category");
-                String condition = rs.getString("Conditionn");
-                int year = rs.getInt("PublishYear");
-                double price = rs.getDouble("Price");
-                int id = rs.getInt("ListingID");
+                String title = rs.getString("book_name");
+                String author = rs.getString("author_name");
+                String category = rs.getString("category");
+                String condition = rs.getString("cond");
+                int year = rs.getInt("publish_year");
+                double profit = rs.getDouble("profit");
+                double price = rs.getDouble("price");
+                int id = rs.getInt("listing_id");
 
                 // Create a Book object and add it to the list
-                Book book = new Book(title, author, category, condition, price, year, id);
+                Book book = new Book(title, author, category, condition, profit, price, year, id);
                 books.add(book);
             }
             System.out.println("Created bookList");
@@ -851,25 +854,25 @@ public class DataBase {
         List<Book> books = new ArrayList<>();
 
         // Initialize the query builder with the Sold condition and the userID condition (to get books from that specific user)
-        StringBuilder query = new StringBuilder("SELECT ListingID FROM Listings WHERE Sold = 'N' AND userID = ?");
+        StringBuilder query = new StringBuilder("SELECT listing_id FROM listings WHERE sold = 'N' AND user_id = ?");
 
         // Initialize a list to hold the filters
         List<String> filters = new ArrayList<>();
 
         // Add the search filter if searchInput is provided (search in Bookname or AuthorName)
         if (searchInput != null && !searchInput.trim().isEmpty()) {
-            filters.add("(Bookname LIKE ? OR AuthorName LIKE ?)");
+            filters.add("(book_name LIKE ? OR author_name LIKE ?)");
         }
 
         // Add the condition filter if conditions are provided
         if (conditions != null && conditions.length > 0) {
-            String conditionQuery = "Conditionn IN (" + String.join(",", Collections.nCopies(conditions.length, "?")) + ")";
+            String conditionQuery = "cond IN (" + String.join(",", Collections.nCopies(conditions.length, "?")) + ")";
             filters.add(conditionQuery);
         }
 
         // Add any additional categories filter here as needed
         if (categories != null && categories.length > 0) {
-            String categoryQuery = "Category IN (" + String.join(",", Collections.nCopies(categories.length, "?")) + ")";
+            String categoryQuery = "category IN (" + String.join(",", Collections.nCopies(categories.length, "?")) + ")";
             filters.add(categoryQuery);
         }
 
@@ -880,9 +883,9 @@ public class DataBase {
 
         // Add the ORDER BY clause based on the 'order' parameter
         if (order == 1) {
-            query.append(" ORDER BY Price ASC");  // Ascending order
+            query.append(" ORDER BY price ASC");  // Ascending order
         } else if (order == 2) {
-            query.append(" ORDER BY Price DESC"); // Descending order
+            query.append(" ORDER BY price DESC"); // Descending order
         }
 
         // Now execute the query to fetch the ListingIDs that match the filters
@@ -913,7 +916,7 @@ public class DataBase {
 
             // For each ListingID in the result set, get the corresponding Book object
             while (rs.next()) {
-                int listingID = rs.getInt("ListingID");
+                int listingID = rs.getInt("listing_id");
 
                 // Get the Book object using the listingID
                 Book book = getBookFromListing(listingID);
@@ -934,7 +937,7 @@ public class DataBase {
     }
 
     public static void updateBookPrice(int bookID, int newPrice) {
-        String updateQuery = "UPDATE Listings SET Price = ? WHERE ListingID = ?";
+        String updateQuery = "UPDATE listings SET price = ? WHERE listing_id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(updateQuery)) {
@@ -958,7 +961,7 @@ public class DataBase {
     }
 
     public static void updateBookName(int bookID, String newName) {
-        String updateQuery = "UPDATE Listings SET Bookname = ? WHERE ListingID = ?";
+        String updateQuery = "UPDATE listings SET book_name = ? WHERE listing_id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(updateQuery)) {
@@ -982,7 +985,7 @@ public class DataBase {
     }
 
     public static void updateBookAuthor(int bookID, String newAuthor) {
-        String updateQuery = "UPDATE Listings SET AuthorName = ? WHERE ListingID = ?";
+        String updateQuery = "UPDATE listings SET author_name = ? WHERE listing_id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(updateQuery)) {
@@ -1006,7 +1009,7 @@ public class DataBase {
     }
 
     public static void updateBookCategory(int bookID, String newCategory) {
-        String updateQuery = "UPDATE Listings SET Category = ? WHERE ListingID = ?";
+        String updateQuery = "UPDATE listings SET category = ? WHERE listing_id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(updateQuery)) {
@@ -1030,7 +1033,7 @@ public class DataBase {
     }
 
     public static void updateBookCondition(int bookID, String newCondition) {
-        String updateQuery = "UPDATE Listings SET Conditionn = ? WHERE ListingID = ?";
+        String updateQuery = "UPDATE listings SET cond = ? WHERE listing_id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(updateQuery)) {
@@ -1055,34 +1058,34 @@ public class DataBase {
 
     public static Transaction getTransactionFromResultSet(ResultSet rs) throws SQLException {
         // Retrieve the data from the ResultSet
-        int transactionID = rs.getInt("transactionID");
-        int buyerID = rs.getInt("buyerID");
-        int sellerID = rs.getInt("sellerID");
-        int bookID = rs.getInt("bookID");
-        double amount = rs.getDouble("amount");
+        int transaction_id = rs.getInt("transaction_id");
+        int buyerID = rs.getInt("buyer_id");
+        int seller_id = rs.getInt("seller_id");
+        int bookID = rs.getInt("book_id");
+        double amount = rs.getDouble("listing_price");
 
         // Get the Timestamp from the ResultSet and convert to java.util.Date
-        Timestamp timestamp = rs.getTimestamp("date");
+        Timestamp timestamp = rs.getTimestamp("time_stamp");
         Date date = timestamp != null ? new Date(timestamp.getTime()) : null;  // Convert Timestamp to Date
 
         // Create a new Transaction object
         Transaction transaction = new Transaction();
-        transaction.transactionID = transactionID;
+        transaction.transactionID = transaction_id;
         transaction.buyerID = buyerID;
-        transaction.sellerID = sellerID;
+        transaction.sellerID = seller_id;
+        transaction.timestamp = date.toString();
         transaction.book = getBookFromListing(bookID);  // Assume this method retrieves a Book from Listings table based on bookID
         transaction.amount = amount;
-        transaction.date = date;
 
         return transaction;
     }
 
-    public static void insertTransaction(int buyerID, int sellerID, int bookID, double amount) {
+    public static void insertTransaction(int buyerID, int sellerID, int bookID, double price) {
         // Insert query for the Transactions table
-        String insertQuery = "INSERT INTO Transactions (buyerID, sellerID, bookID, amount) VALUES (?, ?, ?, ?)";
+        String insertQuery = "INSERT INTO transactions (buyer_id, seller_id, book_id, listing_price) VALUES (?, ?, ?, ?)";
 
         // Update query to mark the book as sold in the Listings table
-        String updateQuery = "UPDATE Listings SET Sold = 'Y' WHERE ListingID = ?";
+        String updateQuery = "UPDATE listings SET sold = 'Y' WHERE listing_id = ?";
 
         // Start a transaction to ensure both queries are executed together
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -1096,7 +1099,7 @@ public class DataBase {
             insertStmt.setInt(1, buyerID);
             insertStmt.setInt(2, sellerID);
             insertStmt.setInt(3, bookID);
-            insertStmt.setDouble(4, amount);
+            insertStmt.setDouble(4, price);
 
             // Execute the insert query
             insertStmt.executeUpdate();
@@ -1129,20 +1132,49 @@ public class DataBase {
         }
     }
 
-    public static List<Transaction> returnTransactions(int userID) {
-        List<Transaction> transactions = new ArrayList<>();
-        String query = "SELECT * FROM Transactions";
-
-//        if (userID != null) {
-//            query += " WHERE buyerID = ? OR sellerID = ?";
-//        }
+    public static Integer getSellerID(int bookID) {
+        // SQL query to retrieve the SellerID for the given BookID
+        String query = "SELECT user_id FROM listings WHERE listing_id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-//            // Set the parameters if userID is provided
-            stmt.setInt(1, userID);
-            stmt.setInt(2, userID);
+            // Set the bookID parameter in the query
+            stmt.setInt(1, bookID);
+
+            // Execute the query and process the result
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                // Return the SellerID if a match is found
+                return rs.getInt("user_id");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error retrieving seller ID: " + e.getMessage());
+        }
+
+        // Return null if no seller is found or an error occurs
+        return null;
+    }
+
+
+    public static List<Transaction> returnTransactions(Integer userID) {
+        List<Transaction> transactions = new ArrayList<>();
+        String query = "SELECT * FROM transactions";
+
+        // Modify the query if userID is provided
+        if (userID != null) {
+            query += " WHERE buyer_id = ? OR seller_id = ?";
+        }
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            // Set parameters only if userID is provided
+            if (userID != null) {
+                stmt.setInt(1, userID);
+                stmt.setInt(2, userID);
+            }
 
             ResultSet rs = stmt.executeQuery();
 
@@ -1159,13 +1191,14 @@ public class DataBase {
         return transactions;
     }
 
+
     public static double getMarkdown(int condition) {
         // Initialize a variable to hold the discount value
         double markdown = 0.0;
 
         // Query to fetch the markdown based on condition
-        String query = "SELECT Like_New, Moderately_Used, Heavily_Used FROM ConditionDiscount"; // Assume the condition_id is used to identify a single row
-      
+        String query = "SELECT like_new, moderately_used, heavily_used FROM price_adjustments"; // Assume the condition_id is used to identify a single row
+
         // Validate condition input
         if (condition < 1 || condition > 3) {
             System.out.println("Invalid condition value. Please provide 1, 2, or 3.");
@@ -1181,13 +1214,13 @@ public class DataBase {
                 // Based on condition, return the corresponding markdown value
                 switch (condition) {
                     case 1:
-                        markdown = rs.getDouble("Like_New");
+                        markdown = rs.getDouble("like_new");
                         break;
                     case 2:
-                        markdown = rs.getDouble("Moderately_Used");
+                        markdown = rs.getDouble("moderately_used");
                         break;
                     case 3:
-                        markdown = rs.getDouble("Heavily_Used");
+                        markdown = rs.getDouble("heavily_used");
                         break;
                 }
             }
@@ -1201,18 +1234,18 @@ public class DataBase {
 
     public static void setMarkdown(int condition, double conditionDiscount) {
         // Query to update the markdown value based on condition
-        String query = "UPDATE ConditionDiscount SET ";
+        String query = "UPDATE price_adjustments SET ";
 
         // Determine which column to update based on the condition value
         switch (condition) {
             case 1:
-                query += "Like_New = ?";
+                query += "like_new = ?";
                 break;
             case 2:
-                query += "Moderately_Used = ?";
+                query += "moderately_used = ?";
                 break;
             case 3:
-                query += "Heavily_Used = ?";
+                query += "heavily_used = ?";
                 break;
             default:
                 System.out.println("Invalid condition value. Please provide 1, 2, or 3.");
@@ -1242,7 +1275,7 @@ public class DataBase {
     }
 
     public static int getNumSold(String category) {
-        String query = "SELECT COUNT(*) AS numSold FROM Listings WHERE Sold = 'Y' AND Category = ?";
+        String query = "SELECT COUNT(*) AS numSold FROM listings WHERE sold = 'Y' AND category = ?";
         int numSold = 0;
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -1265,21 +1298,45 @@ public class DataBase {
         return numSold; // Return the count of sold listings in the specified category
     }
 
+    public static boolean markBookAsSold(int bookID) {
+        String updateQuery = "UPDATE listings SET sold = 'Y' WHERE listing_id = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(updateQuery)) {
+
+            // Set the bookID parameter
+            stmt.setInt(1, bookID);
+
+            // Execute the update query
+            int rowsAffected = stmt.executeUpdate();
+
+            // If at least one row was updated, the book was marked as sold
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            System.out.println("Error marking book as sold: " + e.getMessage());
+        }
+
+        // Return false if an error occurs
+        return false;
+    }
+
+
     public static void addReview(int userID, double newRating) {
-        String query = "SELECT rating, numReviews FROM Users WHERE id = ?";
-        String updateQuery = "UPDATE Users SET rating = ?, numReviews = ? WHERE id = ?";
+        String query = "SELECT rating, num_reviews FROM users WHERE id = ?";
+        String updateQuery = "UPDATE users SET rating = ?, num_reviews = ? WHERE id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement selectStmt = conn.prepareStatement(query);
              PreparedStatement updateStmt = conn.prepareStatement(updateQuery)) {
 
-            // Get the current rating and numReviews for the user
+            // Get the current rating and num_reviews for the user
             selectStmt.setInt(1, userID);
             ResultSet rs = selectStmt.executeQuery();
 
             if (rs.next()) {
                 double currentRating = rs.getDouble("rating");
-                int currentNumReviews = rs.getInt("numReviews");
+                int currentNumReviews = rs.getInt("num_reviews");
 
                 // Calculate the new rating
                 double totalRating = (currentRating * currentNumReviews) + newRating;
@@ -1294,7 +1351,7 @@ public class DataBase {
 
                 System.out.println("Updated user rating to: " + updatedRating + " with total reviews: " + newNumReviews);
             } else {
-                System.out.println("User not found with UserID: " + userID);
+                System.out.println("User not found with user_id: " + userID);
             }
 
         } catch (SQLException e) {
@@ -1305,7 +1362,7 @@ public class DataBase {
     public static double getReview(int userID) {
         double rating = 0.0;
 
-        String query = "SELECT Rating FROM Users WHERE id = ?";
+        String query = "SELECT Rating FROM users WHERE id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -1318,7 +1375,7 @@ public class DataBase {
             }
 
         } catch (SQLException e) {
-            System.out.println("Error retrieving rating for UserID " + userID + ": " + e.getMessage());
+            System.out.println("Error retrieving rating for user_id " + userID + ": " + e.getMessage());
         }
 
         // Format the rating to 2 decimal places
@@ -1327,7 +1384,7 @@ public class DataBase {
     }
 
     public static boolean isSeller(int userID) {
-        String query = "SELECT is_seller FROM Users WHERE id = ?";
+        String query = "SELECT is_seller FROM users WHERE id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -1349,7 +1406,7 @@ public class DataBase {
     }
 
     public static boolean isBuyer(int userID) {
-        String query = "SELECT is_buyer FROM Users WHERE id = ?";
+        String query = "SELECT is_buyer FROM users WHERE id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -1371,7 +1428,7 @@ public class DataBase {
     }
 
     public static void makeSeller(int userID) {
-        String query = "UPDATE Users SET is_seller = 'Y' WHERE id = ?";
+        String query = "UPDATE users SET is_seller = 'Y' WHERE id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -1393,7 +1450,7 @@ public class DataBase {
     }
 
     public static void makeBuyer(int userID) {
-        String query = "UPDATE Users SET is_buyer = 'Y' WHERE id = ?";
+        String query = "UPDATE users SET is_buyer = 'Y' WHERE id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -1415,7 +1472,7 @@ public class DataBase {
     }
 
     public static boolean isInCart(int userID, int bookID) {
-        String query = "SELECT 1 FROM cart WHERE userID = ? AND bookID = ?";
+        String query = "SELECT 1 FROM cart WHERE user_id = ? AND book_id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query)) {

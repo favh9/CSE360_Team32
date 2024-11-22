@@ -13,6 +13,8 @@ public class Buyer_OrdersControl extends Pane {
 
         pane.addAllOrdersToPane();
 
+        pane.displayTransactions();
+
         this.getChildren().addAll(pane);
     }
 

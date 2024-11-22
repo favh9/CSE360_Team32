@@ -9,6 +9,7 @@ public class Book {
     private int publishedYear;
     //private int quantity;
     private int id;
+    private double profit;
     private double price;
 
     public Book() {
@@ -21,7 +22,7 @@ public class Book {
         price = 0.0;
     }
 
-    public Book(String title, String author, String category, String condition, double price,
+    public Book(String title, String author, String category, String condition, double profit, double price,
                 int publishedYear , int id) {
         this.id = id;
         this.title = title;
@@ -29,6 +30,7 @@ public class Book {
         this.category = category;
         this.condition = condition;
         this.publishedYear = publishedYear;
+        this.profit = profit;
         this.price = price;
     }
 

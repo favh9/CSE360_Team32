@@ -1,3 +1,4 @@
+import com.mysql.cj.jdbc.exceptions.MySQLStatementCancelledException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -8,7 +9,9 @@ import javafx.scene.layout.Border;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
+import javax.xml.crypto.Data;
 import java.text.DecimalFormat;
+import java.util.List;
 
 public class Buyer_CartControl extends Pane {
 
@@ -16,6 +19,9 @@ public class Buyer_CartControl extends Pane {
     private double width;
     private double height;
     private Button backButton;
+    private Button checkoutButton;
+    private List<Book> cart;
+    private Buyer_CartPane pane;
 
     public Buyer_CartControl(User user, double width, double height) {
 
@@ -23,10 +29,13 @@ public class Buyer_CartControl extends Pane {
         this.width = width;
         this.height = height;
 
-        Buyer_CartPane pane = new Buyer_CartPane(user, width, height);
+        pane = new Buyer_CartPane(user, width, height);
 
         backButton = pane.getBackButton();
         backButton.setOnAction(new ButtonHandler());
+
+        checkoutButton = pane.getCheckOutButton();
+        checkoutButton.setOnAction(new ButtonHandler());
 
         if(pane.getBookList().isEmpty()) {
             pane.displayNoBooksFound();
@@ -46,6 +55,27 @@ public class Buyer_CartControl extends Pane {
 
                 Buyer_ShopControl buyer_shop = new Buyer_ShopControl(user,width,height);
                 Main.mainWindow.setScene(new Scene(buyer_shop));
+            } else if (a.getSource() == checkoutButton) {
+
+                pane.pushConfirm();
+
+                if(pane.displayConfirmOrder()) {
+
+                    cart = pane.getBookList();
+
+                    for (Book book : cart) {
+                        int sellerID = DataBase.getSellerID(book.getID());
+                        DataBase.insertTransaction(user.getUserID(), sellerID, book.getID(), pane.computeTotal());
+                        DataBase.removeFromCart(user.getUserID(), book.getID());
+                        DataBase.markBookAsSold(book.getID());
+                    }
+
+                    pane.displayTransactionSuccess();
+                } else {
+                    pane.cancelConfirm();
+                }
+
+
             }
 
         }

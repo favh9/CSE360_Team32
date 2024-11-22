@@ -1,5 +1,8 @@
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 
 public class Transaction {
@@ -8,6 +11,7 @@ public class Transaction {
     public int buyerID;
     public int sellerID;
     public Date date;
+    public String timestamp;
     public Book book;
     public double amount;
     public Transaction() {
@@ -15,8 +19,7 @@ public class Transaction {
         transactionID = 0;
         buyerID = 0;
         sellerID = 0;
-        date  = new Date(2024 - 1900, 11 - 1, 19, 14, 30, 0);  // November 19, 2024, 14:30:00
-
+        timestamp = "";
         book = new Book();
         amount = 0.0;
     }
@@ -45,13 +48,16 @@ public class Transaction {
         this.sellerID = sellerID;
     }
 
+//    public String getTimestamp() {
+//        return timestamp.toString();
+//    }
 
-    public Date getDate() {
-        return date;
+    public String getTimestamp() {
+        return timestamp;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setTimestamp(String string) {
+        timestamp = string;
     }
 
     public Book getBook() {
@@ -73,17 +79,17 @@ public class Transaction {
     }
 
     // prints the date and time
-    public String getTimestamp() {
-
-        // i.e. 01:00:00 AM
-        DateFormat dfTime = new SimpleDateFormat("hh:mm:ss aa");
-        String dsTime = dfTime.format(date);
-
-        // i.e. 01/01/2000 01:00 AM
-        DateFormat dfDateTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        String dsDateTime = dfDateTime.format(date);
-
-        return dsDateTime;
-    }
+//    public String getTimestamp() {
+//
+//        // i.e. 01:00:00 AM
+//        DateFormat dfTime = new SimpleDateFormat("hh:mm:ss aa");
+//        String dsTime = dfTime.format(date);
+//
+//        // i.e. 01/01/2000 01:00 AM
+//        DateFormat dfDateTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+//        String dsDateTime = dfDateTime.format(date);
+//
+//        return dsDateTime;
+//    }
 
 }

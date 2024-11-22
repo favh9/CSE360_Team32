@@ -1,4 +1,5 @@
 import java.text.NumberFormat;
+import java.util.List;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -18,8 +19,16 @@ public class Buyer_OrdersPane extends BorderPane {
     private Button refreshButton;
     private VBox transactionsVBox;
     private Text transactionsAmountText;
+    private User user;
+    private List<Transaction> transactionList;
+    private int transactionAmount;
 
     public Buyer_OrdersPane(User user, double width, double height) {
+
+        this.user = user;
+
+        transactionList = DataBase.returnTransactions(user.getUserID());
+
 
         Font titleFont = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 42);
         Font quantityFont = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 24);
@@ -70,7 +79,7 @@ public class Buyer_OrdersPane extends BorderPane {
 
         // set attributes for the header label
         Label headerLabel1 = new Label("Book Title");
-        headerLabel1.setPrefWidth(200);
+        headerLabel1.setPrefWidth(250);
         headerLabel1.setWrapText(true);
         headerLabel1.setFont(Font.font(20));
         headerLabel1.setAlignment(Pos.BASELINE_CENTER);
@@ -91,7 +100,7 @@ public class Buyer_OrdersPane extends BorderPane {
 
         // set attributes for the header label
         Label headerLabel4 = new Label("Rate Seller");
-        headerLabel4.setPrefWidth(150);
+        headerLabel4.setPrefWidth(100);
         headerLabel4.setWrapText(true);
         headerLabel4.setFont(Font.font(20));
         headerLabel4.setAlignment(Pos.BASELINE_CENTER);
@@ -172,20 +181,25 @@ public class Buyer_OrdersPane extends BorderPane {
 
     public void addAllOrdersToPane() {
 
-        int testAmountOfBooks = 20;
+        for(Transaction t : transactionList) {
 
-        for(int i = 0; i < testAmountOfBooks; i++){
-            addOrderToPane(new Transaction());
-            updateCount();
+            clearTransactions();
+
+
         }
 
     }
 
-    public void addOrderToPane(Transaction transaction) {
+    public VBox transactionVBox(Transaction transaction) {
+
+        NumberFormat nf = NumberFormat.getCurrencyInstance();
+
+
+        Book book = transaction.getBook();
 
         // set attributes for the header label
-        Label title = new Label("Theory to the universe of things in my world");
-        title.setPrefWidth(200);
+        Label title = new Label(book.getTitle());
+        title.setPrefWidth(250);
         title.setWrapText(true);
         title.setFont(Font.font(20));
         title.setAlignment(Pos.BASELINE_LEFT);
@@ -206,7 +220,7 @@ public class Buyer_OrdersPane extends BorderPane {
         timestampBox.setAlignment(Pos.CENTER);
 
         // set attributes for the header label
-        Label amount = new Label("$" + transaction.getAmount());
+        Label amount = new Label(nf.format(transaction.getAmount()));
         amount.setPrefWidth(150);
         amount.setWrapText(false);
         amount.setFont(Font.font(20));
@@ -229,7 +243,7 @@ public class Buyer_OrdersPane extends BorderPane {
 
         VBox soldToBox = new VBox(comboBox);
         soldToBox.setPadding(new Insets(5));
-        soldToBox.setPrefWidth(150);
+        soldToBox.setPrefWidth(100);
         soldToBox.setAlignment(Pos.CENTER);
 
         HBox transactionHBox = new HBox(titleBox,timestampBox,amountBox,soldToBox);
@@ -240,8 +254,37 @@ public class Buyer_OrdersPane extends BorderPane {
         lineSeparator.setHeight(1);
         lineSeparator.setFill(Color.BLACK);
 
-        transactionsVBox.getChildren().add(transactionHBox);
-        transactionsVBox.getChildren().add(lineSeparator);
+        return new VBox(transactionHBox,lineSeparator);
+
+
+    }
+
+    public void displayNoTransactionFound() {
+
+        Label noBooksFoundLabel = new Label("No Orders Found");
+        noBooksFoundLabel.setPadding(new Insets(100,100,100,300));
+        noBooksFoundLabel.setFont(Font.font(48));
+
+        transactionsVBox.getChildren().clear();
+
+        transactionsVBox.getChildren().add(noBooksFoundLabel);
+    }
+
+    public void displayTransactions() {
+
+        transactionsVBox.getChildren().clear();
+        transactionsAmountText.setText("0");
+        transactionAmount = 0;
+
+        if(transactionList.isEmpty()) {
+            displayNoTransactionFound();
+        } else {
+
+            for (Transaction t : transactionList) {
+                transactionsVBox.getChildren().add(transactionVBox(t));
+                updateCount();
+            }
+        }
 
     }
 

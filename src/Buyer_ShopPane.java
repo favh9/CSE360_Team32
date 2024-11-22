@@ -9,6 +9,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.util.List;
+import java.util.Optional;
 
 public class Buyer_ShopPane extends BorderPane {
 
@@ -40,10 +41,6 @@ public class Buyer_ShopPane extends BorderPane {
 
         // Create a StackPane to hold both the cart image and the badge
         cartStackPane = new StackPane();
-
-        if(cartTotal == 0) {
-            cartStackPane.setVisible(false);
-        }
 
         // add the cart image
         ImageView cartImage = new ImageView(Main.cartIcon);
@@ -288,7 +285,7 @@ public class Buyer_ShopPane extends BorderPane {
 
 
 
-    public void addBook(Book book, boolean isInCartBool) {
+    public void addBook(Book book) {
 
 
         Text titleText, authorText, categoryText, conditionText, priceText;
@@ -327,7 +324,7 @@ public class Buyer_ShopPane extends BorderPane {
         // set the text of the hyperlink to the seller's username
         seller.setText("username");
 
-
+        /*
         seller.setOnAction(e-> {
             Alert popUpReview = new Alert(Alert.AlertType.INFORMATION);
             String title = "Seller's Review";
@@ -338,7 +335,7 @@ public class Buyer_ShopPane extends BorderPane {
             popUpReview.setContentText(msg);
             popUpReview.show();
         });
-
+        */
         priceText = new Text("$" + book.getPrice());
         priceText.setWrappingWidth(textWrapWidth);
 
@@ -353,14 +350,14 @@ public class Buyer_ShopPane extends BorderPane {
         bookVBox.getChildren().add(priceText);
 
         addToCartButton = new Button("Add to Cart");
-        long startTime = System.nanoTime(); // Capture start time
+        //long startTime = System.nanoTime(); // Capture start time
+        //long endTime = System.nanoTime(); // Capture start time
+        boolean isInCartBool = DataBase.isInCart(user.getUserID(), book.getID());
 
-        long endTime = System.nanoTime(); // Capture start time
-        long elapsedTime = endTime - startTime;
-        //System.out.println("This is " + elapsedTime);
         if(isInCartBool) {
             addToCartButton.setDisable(true);
         }
+
 
         addToCartButton.setOnAction(e-> {
 
@@ -374,20 +371,19 @@ public class Buyer_ShopPane extends BorderPane {
 
                 // show the cart
                 setCartVisible(true);
+                addToCartButton.setDisable(true);
+
 
                 // check again
-               if (hasBooks()) {
-                    System.out.println("Start ends here");
-                    clearBooksPane();
-                    displayAllBooks();
-                } else {
-                    System.out.println("Start Ends here");
-                    setCartVisible(false);
-                    noBooksFound();
-                }
-            } else {
-                setCartVisible(true);
-                displayErrorAddingBook();
+                // if (hasBooks()) {
+                //     System.out.println("Start ends here");
+                //     clearBooksPane();
+                //     displayAllBooks();
+                // } else {
+                //     System.out.println("Start Ends here");
+                //     setCartVisible(false);
+                //     noBooksFound();
+                // }
             }
         });
 
@@ -451,7 +447,7 @@ public class Buyer_ShopPane extends BorderPane {
             long startTime = System.nanoTime(); // Capture start time
             boolean inCart = booksincart.contains(book.getID());
             System.out.println(inCart);
-            addBook(book, inCart);
+            addBook(book);
 
             long endTime = System.nanoTime(); // Capture end time
             long duration = endTime - startTime; // Calculate the interval in nanoseconds

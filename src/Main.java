@@ -71,7 +71,7 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-
+//        DataBase.insertTransaction(0,0,0,0);
         String[] testConditions = new String[0]; // An empty array with no elements
         String[] testCategory = new String[0]; // An empty array with no elements
 
