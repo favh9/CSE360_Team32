@@ -27,6 +27,8 @@ public class Buyer_ShopPane extends BorderPane {
 
         this.user = user;
 
+        int cartTotal = DataBase.getCart(user.getUserID()).size();
+
         Buyer_NavigationControl navBarVBox = new Buyer_NavigationControl(user,width,height);
 
         // set attributes for the Title Label
@@ -35,7 +37,10 @@ public class Buyer_ShopPane extends BorderPane {
 
         // Create a StackPane to hold both the cart image and the badge
         cartStackPane = new StackPane();
-        cartStackPane.setVisible(false);
+
+        if(cartTotal == 0) {
+            cartStackPane.setVisible(false);
+        }
 
         // add the cart image
         ImageView cartImage = new ImageView(Main.cartIcon);
@@ -52,7 +57,7 @@ public class Buyer_ShopPane extends BorderPane {
         badge.setFill(Color.RED);
 
         // Create the text to show the item count inside the badge
-        badgeCountText = new Text("0");
+        badgeCountText = new Text(Integer.toString(cartTotal));
         badgeCountText.setFill(Color.WHITE);
         badgeCountText.setStyle("-fx-font-size: 12; -fx-font-weight: bold;");
 
@@ -341,14 +346,21 @@ public class Buyer_ShopPane extends BorderPane {
         bookVBox.getChildren().add(priceText);
 
         addToCartButton = new Button("Add to Cart");
+
+        boolean isInCartBool = DataBase.isInCart(user.getUserID(),book.getID());
+        if(isInCartBool) {
+            addToCartButton.setDisable(true);
+        }
+
         addToCartButton.setOnAction(e-> {
 
-            if(true) {
+            if(!isInCartBool) {
                 // add to cart
                 DataBase.addToCart(user.getUserID(), book.getID());
 
                 // the number on the cart
                 updateBadgeCount();
+//                badgeCountText.setText(Integer.toString(DataBase.getCart(user.getUserID()).size()));
 
                 // show the cart
                 setCartVisible(true);
@@ -361,6 +373,9 @@ public class Buyer_ShopPane extends BorderPane {
                     setCartVisible(false);
                     noBooksFound();
                 }
+            } else {
+                setCartVisible(true);
+                displayErrorAddingBook();
             }
         });
 
@@ -439,6 +454,19 @@ public class Buyer_ShopPane extends BorderPane {
         bp.setPadding(new Insets(100));
         sp.setContent(bp);
 
+    }
+
+    public void displayErrorAddingBook() {
+
+        String title = "Warning";
+        String msg = "You already have this in your cart";
+
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+        alert.show();
     }
 
 }

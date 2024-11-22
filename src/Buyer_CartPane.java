@@ -1,4 +1,7 @@
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -20,10 +23,15 @@ public class Buyer_CartPane extends BorderPane {
     private VBox cartVBox;
     private Text cartAmountText;
     private Button backButton;
+    private User user;
+    private ScrollPane sp;
+    private List<Book> bookList;
 
     public Buyer_CartPane(User user, double width, double height) {
 
-        Buyer_CartPane navigationControl = new Buyer_CartPane(user,width,height);
+        this.user = user;
+
+        bookList = DataBase.getCart(user.getUserID());
 
         Font titleFont = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 42);
         Font quantityFont = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 24);
@@ -32,6 +40,7 @@ public class Buyer_CartPane extends BorderPane {
         backImage.setFitHeight(40);
         backImage.setFitWidth(40);
         backButton = new Button();
+        backButton.setBackground(null);
         backButton.setGraphic(backImage);
 
         // set attributes for the Title Label
@@ -56,19 +65,9 @@ public class Buyer_CartPane extends BorderPane {
         leftHeaderPaneHBox.setSpacing(40);
         leftHeaderPaneHBox.setAlignment(Pos.BASELINE_CENTER);
 
-        // set attributes for the image
-        ImageView image1 = new ImageView(Main.refreshIcon);
-        image1.setFitWidth(25);
-        image1.setFitHeight(25);
-
-        // set attributes for the container of two buttons
-        HBox rightHeaderPaneHBox = new HBox(refreshButton);
-        rightHeaderPaneHBox.setAlignment(Pos.CENTER_RIGHT);
-
         // set attributes for the header of the page
         BorderPane headerPane = new BorderPane();
         headerPane.setLeft(leftHeaderPaneHBox);
-        headerPane.setRight(rightHeaderPaneHBox);
 
         // set attributes for the header label
         Label headerLabel1 = new Label("Book Title");
@@ -93,7 +92,7 @@ public class Buyer_CartPane extends BorderPane {
 
         // set attributes for the header label
         Label headerLabel4 = new Label("Price");
-        headerLabel4.setPrefWidth(120);
+        headerLabel4.setPrefWidth(150);
         headerLabel4.setWrapText(true);
         headerLabel4.setFont(Font.font(20));
         headerLabel4.setAlignment(Pos.BASELINE_CENTER);
@@ -109,7 +108,7 @@ public class Buyer_CartPane extends BorderPane {
 
         // set attributes for the line that separates the header and the scrollpane
         Rectangle lineSeparator = new Rectangle();
-        lineSeparator.setWidth(840);
+        lineSeparator.setWidth(850);
         lineSeparator.setHeight(2);
         lineSeparator.setFill(Color.BLACK);
 
@@ -117,7 +116,15 @@ public class Buyer_CartPane extends BorderPane {
         cartVBox = new VBox();
 
         // set attributes for the scrollpane
-        ScrollPane sp = new ScrollPane(cartVBox);
+        sp = new ScrollPane(cartVBox);
+        sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        sp.minViewportHeightProperty().set(400);
+        sp.setPrefHeight(400);
+        sp.setStyle("-fx-background: white;");
+
+        // set attributes for the scrollpane
+        sp = new ScrollPane(cartVBox);
         sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         sp.minViewportHeightProperty().set(400);
@@ -129,19 +136,20 @@ public class Buyer_CartPane extends BorderPane {
 
         // set attributes for the main VBox which excludes the navigation bar
         VBox mainVBox = new VBox(headerPane,headerAndScrollPane);
-        mainVBox.setPadding(new Insets(40,40,0,40));
+        mainVBox.setPadding(new Insets(40,40,40,40));
         mainVBox.setSpacing(10);
-        mainVBox.setPrefWidth(width - navigationControl.getWidth() - 40);
+        mainVBox.setPrefWidth(width);
         mainVBox.setStyle(
                 "-fx-background-radius: 2em;" + "-fx-background-color: #ffffff;"
         );
 
         // set attributes for the container that holds the navigation bar and page
-        HBox navBarAndMainHBox = new HBox(navigationControl,mainVBox);
+        HBox navBarAndMainHBox = new HBox(mainVBox);
         navBarAndMainHBox.setSpacing(20);
 
-        this.setCenter(navBarAndMainHBox);
-        BorderPane.setMargin(navBarAndMainHBox, new Insets(20,20,20,20));
+        this.setCenter(mainVBox);
+        this.setPadding(new Insets(20,20,20,20));
+//        BorderPane.setMargin(navBarAndMainHBox, new Insets(20,20,20,20));
 
         // these are by default what we use for the scene
         this.setPrefSize(width, height);;
@@ -158,50 +166,12 @@ public class Buyer_CartPane extends BorderPane {
         cartAmountText.setText("0");
     }
 
-    // returns a container where a user's information is displayed
-    // modify it to match the transaction box
-    public void addBook(String username, String balance, String type) {
+    public void displayCart() {
 
-        NumberFormat nf = NumberFormat.getCurrencyInstance();
-        balance = (nf.format(Double.parseDouble(balance)));
+        for (Book book : bookList) {
+            addBook(book);
+        }
 
-        Label usernameLabel = new Label(username);
-        Label balanceLabel = new Label(balance);
-        Label typeLabel = new Label(type);
-
-        usernameLabel.setPrefWidth(390);
-        balanceLabel.setPrefWidth(150);
-        typeLabel.setPrefWidth(150);
-
-        usernameLabel.setFont(Font.font("Arial",FontWeight.NORMAL,18));
-        typeLabel.setFont(Font.font("Arial",FontWeight.NORMAL,18));
-        balanceLabel.setFont(Font.font("Arial",FontWeight.NORMAL,18));
-
-        usernameLabel.setAlignment(Pos.CENTER_LEFT);
-        balanceLabel.setAlignment(Pos.CENTER_RIGHT);
-        typeLabel.setAlignment(Pos.CENTER);
-
-        balanceLabel.setPadding(new Insets(0,40,0,0));
-
-        HBox usernameHBox = new HBox(usernameLabel);
-        HBox balanceHBox = new HBox(balanceLabel);
-        HBox typeHBox = new HBox(typeLabel);
-        usernameHBox.setAlignment(Pos.CENTER_LEFT);
-        balanceLabel.setAlignment(Pos.CENTER_RIGHT);
-        typeLabel.setAlignment(Pos.CENTER);
-
-        Rectangle lineSeparator = new Rectangle();
-        lineSeparator.setWidth(830);
-        lineSeparator.setHeight(1);
-        lineSeparator.setFill(Color.GRAY);
-
-        HBox hbox = new HBox(usernameHBox,balanceHBox,typeHBox);
-        hbox.setPadding(new Insets(5,0,5,0));
-
-        VBox vbox = new VBox(hbox,lineSeparator);
-
-        cartVBox.getChildren().add(vbox);
-        this.updateCount();
     }
 
     public void clearTransactions() {
@@ -216,90 +186,82 @@ public class Buyer_CartPane extends BorderPane {
         cartAmountText.setText(Integer.toString(incr));
     }
 
-    // modifies and updates the display amount text by an amount
-    public void updateCount(int num) {
-        String str = cartAmountText.getText();
-        int incr = Integer.parseInt(str) + num;
-        cartAmountText.setText(Integer.toString(incr));
-    }
-
-    public Button getRefreshButton() {
-        return refreshButton;
-    }
-
-    public void addAllTransactionsToPane() {
-
-        int testAmountOfBooks = 20;
-
-        for(int i = 0; i < testAmountOfBooks; i++){
-            addTransactionToPane(new Transaction());
-            updateCount();
-        }
-
-    }
-
-    public void addTransactionToPane(Transaction transaction) {
+    public void addBook(Book book) {
 
         // set attributes for the header label
-        Label title = new Label("Theory to the universe of things in my world");
-        title.setPrefWidth(200);
-        title.setWrapText(true);
-        title.setFont(Font.font(20));
-        title.setAlignment(Pos.BASELINE_LEFT);
-        title.setPadding(new Insets(5));
+        Label headerLabel1 = new Label("Book Title");
+        headerLabel1.setPrefWidth(240);
+        headerLabel1.setWrapText(true);
+        headerLabel1.setFont(Font.font(20));
+        headerLabel1.setAlignment(Pos.BASELINE_CENTER);
 
-        VBox titleBox = new VBox(title);
-        titleBox.setAlignment(Pos.CENTER);
-
-        // set attributes for the header label
-        Label timestamp = new Label(transaction.getTimestamp());
-        timestamp.setPrefWidth(200);
-        timestamp.setWrapText(false);
-        timestamp.setFont(Font.font(20));
-        timestamp.setAlignment(Pos.BASELINE_CENTER);
-        timestamp.setPadding(new Insets(5));
-
-        VBox timestampBox = new VBox(timestamp);
-        timestampBox.setAlignment(Pos.CENTER);
+        VBox vbox1 = new VBox(headerLabel1);
+        vbox1.setAlignment(Pos.CENTER);
+        vbox1.setPadding(new Insets(5));
 
         // set attributes for the header label
-        Label amount = new Label("$" + transaction.getAmount());
-        amount.setPrefWidth(150);
-        amount.setWrapText(false);
-        amount.setFont(Font.font(20));
-        amount.setAlignment(Pos.BASELINE_CENTER);
-        amount.setPadding(new Insets(5));
+        Label headerLabel2 = new Label("Category");
+        headerLabel2.setPrefWidth(240);
+        headerLabel2.setWrapText(false);
+        headerLabel2.setFont(Font.font(20));
+        headerLabel2.setAlignment(Pos.BASELINE_CENTER);
 
-        VBox amountBox = new VBox(amount);
-        amountBox.setAlignment(Pos.CENTER);
+        VBox vbox2 = new VBox(headerLabel2);
+        vbox2.setAlignment(Pos.CENTER);
+        vbox2.setPadding(new Insets(5));
 
-        ComboBox<String> comboBox = new ComboBox<>();
-        comboBox.setPromptText("Rate");
-        comboBox.getItems().addAll("1","2","3","4","5");
+        // set attributes for the header label
+        Label headerLabel3 = new Label("Condition");
+        headerLabel3.setPrefWidth(240);
+        headerLabel3.setWrapText(false);
+        headerLabel3.setFont(Font.font(20));
+        headerLabel3.setAlignment(Pos.BASELINE_CENTER);
 
-        // Add a listener to disable editing when a value is selected
-        comboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (!comboBox.getValue().isEmpty()) {
-                comboBox.setDisable(true);
-            }
-        });
+        VBox vbox3 = new VBox(headerLabel3);
+        vbox3.setAlignment(Pos.CENTER);
+        vbox3.setPadding(new Insets(5));
 
-        VBox soldToBox = new VBox(comboBox);
-        soldToBox.setPadding(new Insets(5));
-        soldToBox.setPrefWidth(150);
-        soldToBox.setAlignment(Pos.CENTER);
+        // set attributes for the header label
+        Label headerLabel4 = new Label("Price");
+        headerLabel4.setPrefWidth(150);
+        headerLabel4.setWrapText(true);
+        headerLabel4.setFont(Font.font(20));
+        headerLabel4.setAlignment(Pos.BASELINE_CENTER);
 
-        HBox transactionHBox = new HBox(titleBox,timestampBox,amountBox,soldToBox);
+        VBox vbox4 = new VBox(headerLabel4);
+        vbox4.setAlignment(Pos.CENTER);
+        vbox4.setPadding(new Insets(5));
 
         // set attributes for the line that separates the header and the scrollpane
         Rectangle lineSeparator = new Rectangle();
-        lineSeparator.setWidth(700);
+        lineSeparator.setWidth(860);
         lineSeparator.setHeight(1);
         lineSeparator.setFill(Color.BLACK);
 
-        cartVBox.getChildren().add(transactionHBox);
-        cartVBox.getChildren().add(lineSeparator);
+        /////////////////////////////////////////////////
 
+        // set attributes for the header of the body
+        HBox bodyheaderPane = new HBox(vbox1,vbox2,vbox3,vbox4);
+
+        cartVBox.getChildren().addAll(bodyheaderPane,lineSeparator);
+
+        sp.setContent(cartVBox);
+
+    }
+
+    public void displayNoBooksFound() {
+
+        BorderPane bp = new BorderPane();
+        Label noBooksFoundLabel = new Label("No Books Found");
+        noBooksFoundLabel.setFont(Font.font(48));
+        bp.setCenter(noBooksFoundLabel);
+        bp.setPadding(new Insets(100));
+        sp.setContent(bp);
+
+    }
+
+    public List<Book> getBookList() {
+        return  bookList;
     }
 
 }

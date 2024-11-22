@@ -588,7 +588,7 @@ public class DataBase {
 
     public static List<Book> getCart(int userID) {
         List<Book> booksInCart = new ArrayList<>();
-        String query = "SELECT bookID FROM Cart WHERE userID = ?";
+        String query = "SELECT bookID FROM cart WHERE userID = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -1364,7 +1364,7 @@ public class DataBase {
         }
     }
 
-    public boolean isInCart(int userID, int bookID) {
+    public static boolean isInCart(int userID, int bookID) {
         String query = "SELECT 1 FROM cart WHERE userID = ? AND bookID = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);

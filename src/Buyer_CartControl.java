@@ -28,6 +28,12 @@ public class Buyer_CartControl extends Pane {
         backButton = pane.getBackButton();
         backButton.setOnAction(new ButtonHandler());
 
+        if(pane.getBookList().isEmpty()) {
+            pane.displayNoBooksFound();
+        } else {
+            pane.displayCart();
+        }
+
         this.getChildren().addAll(pane);
     }
 
