@@ -98,6 +98,8 @@ public class Buyer_ProfilePane extends BorderPane {
         Label usernameLabel = new Label("Username:");
         usernameLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
 
+        //Test commit
+
         // set attributes for the username text field
         usernameTextField = new TextField();
         usernameTextField.setText(user.getUsername());
