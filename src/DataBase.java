@@ -1364,6 +1364,27 @@ public class DataBase {
         }
     }
 
+    public boolean isInCart(int userID, int bookID) {
+        String query = "SELECT 1 FROM cart WHERE userID = ? AND bookID = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, userID);
+            stmt.setInt(2, bookID);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                // If there is a result, the entry exists
+                return rs.next();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle exceptions appropriately in production code
+        }
+
+        // Return false if there was an error or no match found
+        return false;
+    }
 
 }
 
