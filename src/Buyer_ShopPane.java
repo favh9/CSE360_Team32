@@ -21,8 +21,11 @@ public class Buyer_ShopPane extends BorderPane {
     private GridPane booksPane;
     private Button cartButton;
     private StackPane cartStackPane;
+    private User user;
 
     public Buyer_ShopPane(User user, double width, double height) {
+
+        this.user = user;
 
         Buyer_NavigationControl navBarVBox = new Buyer_NavigationControl(user,width,height);
 
@@ -44,9 +47,6 @@ public class Buyer_ShopPane extends BorderPane {
         cartButton.setGraphic(cartImage);
         cartButton.setBackground(Background.fill(Color.TRANSPARENT));
 
-        // add the button to the stack pane
-        cartStackPane.getChildren().add(cartButton);
-
         // Create the badge circle to display the number of items
         Circle badge = new Circle(12);
         badge.setFill(Color.RED);
@@ -63,7 +63,7 @@ public class Buyer_ShopPane extends BorderPane {
         badgeCountText.setTranslateY(4);
 
         // Add the badge and the text to the StackPane
-        cartStackPane.getChildren().addAll(badge, badgeCountText);
+        cartStackPane.getChildren().addAll(cartButton,badge, badgeCountText);
 
 
         // set attributes for the header of the main page
@@ -342,17 +342,25 @@ public class Buyer_ShopPane extends BorderPane {
 
         addToCartButton = new Button("Add to Cart");
         addToCartButton.setOnAction(e-> {
-            System.out.println(book.getTitle());
-            addedToCart(book);
-            updateBadgeCount();
-            setCartVisible(true);
-            // check again
-            if(hasBooks()) {
-                clearBooksPane();
-                displayAllBooks();
-            } else {
-                setCartVisible(false);
-                noBooksFound();
+
+            if(true) {
+                // add to cart
+                DataBase.addToCart(user.getUserID(), book.getID());
+
+                // the number on the cart
+                updateBadgeCount();
+
+                // show the cart
+                setCartVisible(true);
+
+                // check again
+                if (hasBooks()) {
+                    clearBooksPane();
+                    displayAllBooks();
+                } else {
+                    setCartVisible(false);
+                    noBooksFound();
+                }
             }
         });
 
@@ -422,13 +430,6 @@ public class Buyer_ShopPane extends BorderPane {
         return !(DataBase.getAllBooks().isEmpty());
     }
 
-    // using the database,
-    // insert a book into the cart's user table
-    public boolean addedToCart(Book book) {
-
-        return false;
-    }
-
     public void noBooksFound() {
 
         BorderPane bp = new BorderPane();
@@ -439,4 +440,5 @@ public class Buyer_ShopPane extends BorderPane {
         sp.setContent(bp);
 
     }
+
 }
