@@ -56,7 +56,7 @@ public class Buyer_ShopControl extends Pane {
         // seller's books
         // if the seller has no books to display or not
         if(pane.hasBooks()) {
-            pane.populateBooks();
+            pane.displayAllBooks();
         } else {
             pane.noBooksFound();
         }
@@ -78,16 +78,17 @@ public class Buyer_ShopControl extends Pane {
             } else if (e.getSource().equals(searchButton)) {
 
                 String searchString = pane.getSearchField().getText();
-                // populate books containing either the book title
-                // or author
+                pane.clearBooksPane();
+                pane.displayAllBooks();
 
             } else if (e.getSource().equals(resetfiltersButton)) {
 
                 pane.clearCategoryButtons();
                 pane.clearConditionButtons();
+                searchField.clear();
                 pane.clearRadioButtons();
-
-                pane.populateBooks(); // might not fixing
+                pane.clearBooksPane();
+                pane.displayAllBooks(); // might not fixing
 
             }
 
@@ -110,6 +111,7 @@ public class Buyer_ShopControl extends Pane {
                 // populate the books in ascending order
                 // ......
             }
+            pane.displayAllBooks();
 
         }
     }
