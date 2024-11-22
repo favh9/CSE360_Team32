@@ -10,6 +10,7 @@ public class Admin_NavigationControl extends VBox {
     private double height;
     Admin_NavigationPane pane;
 
+    private final NavButton profileButton;
     private final NavButton usersButton;
     private final NavButton statsButton;
     private final NavButton transButton;
@@ -24,6 +25,8 @@ public class Admin_NavigationControl extends VBox {
 
         pane = new Admin_NavigationPane(height);
 
+        profileButton = pane.getProfileButton();
+        profileButton.setOnAction(new ButtonHandler());
         usersButton = pane.getUsersButton();
         usersButton.setOnAction(new ButtonHandler());
 
@@ -47,6 +50,10 @@ public class Admin_NavigationControl extends VBox {
 
         public void handle(ActionEvent a) {
 
+            if(a.getSource() == profileButton) {
+                Admin_ProfileControl profile = new Admin_ProfileControl(user,width,height);
+                Main.mainWindow.setScene(new Scene(profile));
+            }
             if(a.getSource() == usersButton) {
                 Admin_UsersControl users = new Admin_UsersControl(user, width, height);
                 Main.mainWindow.setScene(new Scene(users));

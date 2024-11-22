@@ -6,6 +6,7 @@ import javafx.scene.layout.VBox;
 
 public class Admin_NavigationPane extends VBox {
 
+    private final NavButton profileButton;
     private final NavButton usersButton;
     private final NavButton statsButton;
     private final NavButton transButton;
@@ -19,13 +20,18 @@ public class Admin_NavigationPane extends VBox {
         asuIcon.setFitHeight(70);
         asuIcon.setFitWidth(80);
 
-        usersButton = new NavButton(Main.usersIcon);
-        statsButton = new NavButton(Main.statsIcon);
-        transButton = new NavButton(Main.transIcon);
-        settButton = new NavButton(Main.settingsIcon);
-        logoutButton = new NavButton(Main.logOutIcon);
+        double widthImage = 55;
+        double heightImage = 55;
+
+        profileButton = new NavButton(Main.profileIcon,widthImage,heightImage);
+        usersButton = new NavButton(Main.usersIcon,widthImage,heightImage);
+        statsButton = new NavButton(Main.statsIcon,widthImage,heightImage);
+        transButton = new NavButton(Main.transIcon,widthImage,heightImage);
+        settButton = new NavButton(Main.settingsIcon,widthImage,heightImage);
+        logoutButton = new NavButton(Main.logOutIcon,widthImage,heightImage);
 
         // set attributes for the buttons' labels
+        Label profileButtonText = new Label("Profile");
         Label usersButtonText = new Label("Users");
         Label statsButtonText = new Label("Statistics");
         Label transButtonText = new Label("Transactions");
@@ -34,6 +40,10 @@ public class Admin_NavigationPane extends VBox {
 
         // set attributes for the NavigationAdminPane Bar Buttons
         // their respective images and/or descriptions are stored in VBoxes
+        VBox profileButtonTextVBox = new VBox(profileButton,profileButtonText);
+        profileButtonTextVBox.setAlignment(Pos.CENTER);
+        profileButtonTextVBox.setSpacing(0);
+
         VBox usersButtonTextVBox = new VBox(usersButton,usersButtonText);
         usersButtonTextVBox.setAlignment(Pos.CENTER);
         usersButtonTextVBox.setSpacing(-20);
@@ -54,8 +64,8 @@ public class Admin_NavigationPane extends VBox {
         logoutButtonTextVBox.setSpacing(-10);
 
         // set attributes for the navigation bar
-        VBox navBarVBox = new VBox(asuIcon,usersButtonTextVBox,statsButtonTextVBox,transButtonTextVBox,settButtonTextVBox,logoutButtonTextVBox);
-        navBarVBox.setSpacing(9);
+        VBox navBarVBox = new VBox(asuIcon,profileButtonTextVBox,usersButtonTextVBox,statsButtonTextVBox,transButtonTextVBox,settButtonTextVBox,logoutButtonTextVBox);
+        navBarVBox.setSpacing(3);
         navBarVBox.setPadding(new Insets(20,20,20,20));
         navBarVBox.setStyle(
                 "-fx-background-radius: 2em;" + "-fx-background-color: #ffffff;"
@@ -64,6 +74,10 @@ public class Admin_NavigationPane extends VBox {
         this.setPrefHeight(height);
         this.getChildren().addAll(navBarVBox);
 
+    }
+
+    public NavButton getProfileButton() {
+        return profileButton;
     }
 
     public NavButton getUsersButton() {
