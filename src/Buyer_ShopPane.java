@@ -22,12 +22,13 @@ public class Buyer_ShopPane extends BorderPane {
     private Button cartButton;
     private StackPane cartStackPane;
     private User user;
+    //private
 
     public Buyer_ShopPane(User user, double width, double height) {
 
         this.user = user;
 
-        int cartTotal = DataBase.getCart(user.getUserID()).size();
+        int cartTotal = DataBase.getCartCount(user.getUserID());
 
         Buyer_NavigationControl navBarVBox = new Buyer_NavigationControl(user,width,height);
 
@@ -283,7 +284,10 @@ public class Buyer_ShopPane extends BorderPane {
         booksPane.getChildren().clear();
     }
 
+
+
     public void addBook(Book book) {
+
 
         Text titleText, authorText, categoryText, conditionText, priceText;
         int textWrapWidth;
@@ -321,6 +325,7 @@ public class Buyer_ShopPane extends BorderPane {
         // set the text of the hyperlink to the seller's username
         seller.setText("username");
 
+        /*
         seller.setOnAction(e-> {
             Alert popUpReview = new Alert(Alert.AlertType.INFORMATION);
             String title = "Seller's Review";
@@ -331,7 +336,7 @@ public class Buyer_ShopPane extends BorderPane {
             popUpReview.setContentText(msg);
             popUpReview.show();
         });
-
+        */
         priceText = new Text("$" + book.getPrice());
         priceText.setWrappingWidth(textWrapWidth);
 
@@ -346,8 +351,9 @@ public class Buyer_ShopPane extends BorderPane {
         bookVBox.getChildren().add(priceText);
 
         addToCartButton = new Button("Add to Cart");
-
-        boolean isInCartBool = DataBase.isInCart(user.getUserID(),book.getID());
+        //long startTime = System.nanoTime(); // Capture start time
+        //long endTime = System.nanoTime(); // Capture start time
+        boolean isInCartBool = DataBase.isInCart(user.getUserID(), book.getID());
         if(isInCartBool) {
             addToCartButton.setDisable(true);
         }
@@ -366,13 +372,15 @@ public class Buyer_ShopPane extends BorderPane {
                 setCartVisible(true);
 
                 // check again
-                if (hasBooks()) {
-                    clearBooksPane();
-                    displayAllBooks();
-                } else {
-                    setCartVisible(false);
-                    noBooksFound();
-                }
+               // if (hasBooks()) {
+               //     System.out.println("Start ends here");
+               //     clearBooksPane();
+               //     displayAllBooks();
+               // } else {
+               //     System.out.println("Start Ends here");
+               //     setCartVisible(false);
+               //     noBooksFound();
+               // }
             } else {
                 setCartVisible(true);
                 displayErrorAddingBook();
@@ -392,25 +400,20 @@ public class Buyer_ShopPane extends BorderPane {
         booksPane.add(bp, booksPane.getChildren().size() % 3, booksPane.getChildren().size() / 3);
     }
 
-    // query the database,
-    // and display all of the books
-    // displays the books found from the seller
-
     public void displayAllBooks() {
 
-
+        System.out.println("Displaying all books");
         // i.e. for books in User.books, add a book
         String[] tempConditions = new String[3];
         String[] tempCategories = new String[5];
         int i = 0;
         if (naturalscienceCheckBox.isSelected()) {tempCategories[i++] = "Natural Science";}
-        System.out.println("Hi");
         if (computerscienceCheckBox.isSelected()) {tempCategories[i++] = "Computer Science";}
         if (mathCheckBox.isSelected()) {tempCategories[i++] = "Math";}
         if (englishCheckBox.isSelected()) {tempCategories[i++] = "English";}
         if (otherCheckBox.isSelected()) {tempCategories[i++] = "Other";}
         String[] categories = new String[i];
-        System.out.println(i);
+        System.out.println("Before creating lists");
         int ii = 0;
         if (i > 0) {
             while (ii < i) {
@@ -432,17 +435,32 @@ public class Buyer_ShopPane extends BorderPane {
                 jj++;
             }
         }
+
+        System.out.println("After creating lists");
+
         int sortOrder = 1;
         if (descendingRadioButton.isSelected()) { sortOrder = 2;}
-        for (Book book : DataBase.searchBooksByFilter( searchField.getText(), conditions, categories, sortOrder)) {
+        long totalDuration = 0;
+        for (Book book : DataBase.searchBooksByFilter(searchField.getText(), conditions, categories, sortOrder)) {
+            long startTime = System.nanoTime(); // Capture start time
+
             addBook(book);
+
+            long endTime = System.nanoTime(); // Capture end time
+            long duration = endTime - startTime; // Calculate the interval in nanoseconds
+            //System.out.println("Time interval for this iteration: " + (duration / 1_000_000.0) + " ms"); // Display in milliseconds
+            totalDuration += duration/ 1_000_000.0;
         }
+        System.out.println("totalDuration = " + totalDuration + " ms");
+
+        System.out.println("After getting the searchResults");
+
 
     }
 
-    // query the database to find books belonging to the user
     public boolean hasBooks() {
-        return !(DataBase.getAllBooks().isEmpty());
+        System.out.println("Starting here");
+        return !(DataBase.getCartCount(user.getUserID()) == 0);
     }
 
     public void noBooksFound() {
