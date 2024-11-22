@@ -799,9 +799,9 @@ public class DataBase {
             filters.add(categoryQuery);
         }
 
-        // Combine all filters with AND and add to the query
+        // Combine all filters with OR and add to the query
         if (!filters.isEmpty()) {
-            query.append(" AND ").append(String.join(" AND ", filters));
+            query.append(" OR ").append(String.join(" OR ", filters));
         }
 
         // Add the ORDER BY clause based on the 'order' parameter
