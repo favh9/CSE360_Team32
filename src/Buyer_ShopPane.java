@@ -374,28 +374,6 @@ public class Buyer_ShopPane extends BorderPane {
     // displays the books found from the seller
     public void populateBooks() {
 
-        // i.e. for books in User.books, add a book
-//        Book book1 = new Book("The Great Gatsby", "F. Scott Fitzgerald", "Classic", "New", 12.99, 1);
-//        Book book2 = new Book("To Kill a Mockingbird", "Harper Lee", "Fiction", "Used", 8.49, 2);
-//        Book book3 = new Book("1984", "George Orwell", "Dystopian", "Good", 6.99, 3);
-//        Book book4 = new Book("The Catcher in the Rye", "J.D. Salinger", "Classic", "Like New", 10.50, 4);
-//        Book book5 = new Book("The Hobbit", "J.R.R. Tolkien", "Fantasy", "New", 14.99, 5);
-//        Book book6 = new Book("Moby-Dick", "Herman Melville", "Adventure", "Acceptable", 5.50, 6);
-//        Book book7 = new Book("Pride and Prejudice", "Jane Austen", "Romance", "Used", 7.99, 7);
-//        Book book8 = new Book("The Lord of the Rings", "J.R.R. Tolkien", "Fantasy", "New", 20.00, 8);
-//        Book book9 = new Book("Brave New World", "Aldous Huxley", "Science Fiction", "Good", 9.99, 9);
-//        Book book10 = new Book("War and Peace", "Leo Tolstoy", "Historical Fiction", "Like New", 15.00, 10);
-//
-//        addBook(book1);
-//        addBook(book2);
-//        addBook(book3);
-//        addBook(book4);
-//        addBook(book5);
-//        addBook(book6);
-//        addBook(book7);
-//        addBook(book8);
-//        addBook(book9);
-//        addBook(book10);
     }
 
     // query the database to find books belonging to the user

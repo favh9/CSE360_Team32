@@ -779,7 +779,7 @@ public class DataBase {
 
                 // Get the Book object using the listingID
                 Book book = getBookFromListing(listingID);
-                System.out.println(listingID + " " + book.getTitle()); // For debugging
+                //System.out.println(listingID + " " + book.getTitle()); // For debugging
 
                 // If the book is not null, add it to the list
                 if (book != null) {
@@ -866,7 +866,7 @@ public class DataBase {
 
                 // Get the Book object using the listingID
                 Book book = getBookFromListing(listingID);
-                System.out.println(listingID + " " + book.getTitle()); // For debugging
+                //System.out.println(listingID + " " + book.getTitle()); // For debugging
 
                 // If the book is not null, add it to the list
                 if (book != null) {
