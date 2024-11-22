@@ -75,11 +75,11 @@ public class Main extends Application {
         String[] testConditions = new String[0]; // An empty array with no elements
         String[] testCategory = new String[0]; // An empty array with no elements
 
-        long startTime = System.nanoTime(); // Capture start time
-        DataBase.isInCart(14, 29);
-        long endTime = System.nanoTime(); // Capture start time
-        long totalTime = endTime - startTime;
-        System.out.println("isincart time: " + totalTime/ 1_000_000.0);
+        //long startTime = System.nanoTime(); // Capture start time
+        //DataBase.isInCart(14, 29);
+        //long endTime = System.nanoTime(); // Capture start time
+        //long totalTime = endTime - startTime;
+        //System.out.println("isincart time: " + totalTime/ 1_000_000.0);
         Random random = new Random();
         int randomRating = random.nextInt(5) + 1;
         System.out.println(randomRating);
