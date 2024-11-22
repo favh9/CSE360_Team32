@@ -613,6 +613,31 @@ public class DataBase {
         return booksInCart; // Return the list of books in the cart
     }
 
+    public static List<Integer> getCartBookIDs(int userID) {
+        List<Integer> bookIDsInCart = new ArrayList<>();
+        String query = "SELECT bookID FROM cart WHERE userID = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            // Set the userID parameter for the query
+            stmt.setInt(1, userID);
+
+            ResultSet rs = stmt.executeQuery(); // Execute the query
+
+            while (rs.next()) {
+                int bookID = rs.getInt("bookID");
+                bookIDsInCart.add(bookID); // Add the bookID directly to the list
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error retrieving book IDs in cart: " + e.getMessage());
+        }
+
+        return bookIDsInCart; // Return the list of book IDs in the cart
+    }
+
+
     public static boolean removeFromCart(int userID, int bookID) {
         String deleteQuery = "DELETE FROM cart WHERE userID = ? AND bookID = ?";
 

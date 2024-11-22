@@ -61,12 +61,14 @@ public class Buyer_ShopControl extends Pane {
         // make a condition that queries the database for the
         // seller's books
         // if the seller has no books to display or not
-        System.out.println("call hasBooks");
-        if(pane.hasBooks()) {
+        System.out.println("call hasBooks"); //MIGHT NEED TO REVERT THIS
+        pane.displayAllBooks();
+        /*if(pane.hasBooks()) {
             pane.displayAllBooks();
         } else {
+            System.out.println("How did we get here?");
             pane.noBooksFound();
-        }
+        }*/
 
         this.getChildren().addAll(pane);
     }
