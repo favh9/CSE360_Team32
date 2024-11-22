@@ -2,6 +2,9 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+
+import javax.xml.crypto.Data;
+import java.util.List;
 import java.util.Random;
 
 // this class initiates the gui app, loading the login page as the initial view
@@ -65,17 +68,24 @@ public class Main extends Application {
 
     }
 
+
+
     public static void main(String[] args) {
 
         String[] testConditions = new String[0]; // An empty array with no elements
         String[] testCategory = new String[0]; // An empty array with no elements
 
+        long startTime = System.nanoTime(); // Capture start time
+        DataBase.isInCart(14, 29);
+        long endTime = System.nanoTime(); // Capture start time
+        long totalTime = endTime - startTime;
+        System.out.println("isincart time: " + totalTime/ 1_000_000.0);
         Random random = new Random();
         int randomRating = random.nextInt(5) + 1;
         System.out.println(randomRating);
         DataBase.addReview(3, randomRating);
         System.out.println(DataBase.getReview(3));
-        DataBase.searchBooksByFilter(null, testConditions, testCategory, 1);
+        //DataBase.searchBooksByFilter(null, testConditions, testCategory, 1);
         launch(args);
 
     }
