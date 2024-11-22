@@ -168,7 +168,7 @@ public class Buyer_PaymentInfoPane extends BorderPane {
 
     // Method to check if any of the fields are empty
     public boolean emptyFields() {
-        return cardnumberField.getText().isEmpty() || expDateField.getText().isEmpty() || cvcField.getText().isEmpty();
+        return nameOnCardField.getText().isEmpty() || cardnumberField.getText().isEmpty() || expDateField.getText().isEmpty() || cvcField.getText().isEmpty();
     }
 
     // Method to validate the card details
