@@ -92,7 +92,7 @@ public class Buyer_CartPane extends BorderPane {
 
         // set attributes for the header label
         Label headerLabel4 = new Label("Price");
-        headerLabel4.setPrefWidth(150);
+        headerLabel4.setPrefWidth(100);
         headerLabel4.setWrapText(true);
         headerLabel4.setFont(Font.font(20));
         headerLabel4.setAlignment(Pos.BASELINE_CENTER);
@@ -108,7 +108,7 @@ public class Buyer_CartPane extends BorderPane {
 
         // set attributes for the line that separates the header and the scrollpane
         Rectangle lineSeparator = new Rectangle();
-        lineSeparator.setWidth(850);
+        lineSeparator.setWidth(830);
         lineSeparator.setHeight(2);
         lineSeparator.setFill(Color.BLACK);
 
@@ -119,16 +119,7 @@ public class Buyer_CartPane extends BorderPane {
         sp = new ScrollPane(cartVBox);
         sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        sp.minViewportHeightProperty().set(400);
-        sp.setPrefHeight(400);
-        sp.setStyle("-fx-background: white;");
-
-        // set attributes for the scrollpane
-        sp = new ScrollPane(cartVBox);
-        sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        sp.minViewportHeightProperty().set(400);
-        sp.setPrefHeight(400);
+        sp.setPrefWidth(830);
         sp.setStyle("-fx-background: white;");
 
         // set attributes for the users box that includes their header and scrollpane
@@ -138,7 +129,7 @@ public class Buyer_CartPane extends BorderPane {
         VBox mainVBox = new VBox(headerPane,headerAndScrollPane);
         mainVBox.setPadding(new Insets(40,40,40,40));
         mainVBox.setSpacing(10);
-        mainVBox.setPrefWidth(width);
+
         mainVBox.setStyle(
                 "-fx-background-radius: 2em;" + "-fx-background-color: #ffffff;"
         );
@@ -189,10 +180,10 @@ public class Buyer_CartPane extends BorderPane {
     public void addBook(Book book) {
 
         // set attributes for the header label
-        Label headerLabel1 = new Label("Book Title");
+        Label headerLabel1 = new Label(book.getTitle());
         headerLabel1.setPrefWidth(240);
         headerLabel1.setWrapText(true);
-        headerLabel1.setFont(Font.font(20));
+        headerLabel1.setFont(Font.font(18));
         headerLabel1.setAlignment(Pos.BASELINE_CENTER);
 
         VBox vbox1 = new VBox(headerLabel1);
@@ -200,10 +191,10 @@ public class Buyer_CartPane extends BorderPane {
         vbox1.setPadding(new Insets(5));
 
         // set attributes for the header label
-        Label headerLabel2 = new Label("Category");
+        Label headerLabel2 = new Label(book.getCategory());
         headerLabel2.setPrefWidth(240);
         headerLabel2.setWrapText(false);
-        headerLabel2.setFont(Font.font(20));
+        headerLabel2.setFont(Font.font(18));
         headerLabel2.setAlignment(Pos.BASELINE_CENTER);
 
         VBox vbox2 = new VBox(headerLabel2);
@@ -211,10 +202,10 @@ public class Buyer_CartPane extends BorderPane {
         vbox2.setPadding(new Insets(5));
 
         // set attributes for the header label
-        Label headerLabel3 = new Label("Condition");
+        Label headerLabel3 = new Label(book.getCondition());
         headerLabel3.setPrefWidth(240);
         headerLabel3.setWrapText(false);
-        headerLabel3.setFont(Font.font(20));
+        headerLabel3.setFont(Font.font(18));
         headerLabel3.setAlignment(Pos.BASELINE_CENTER);
 
         VBox vbox3 = new VBox(headerLabel3);
@@ -222,19 +213,24 @@ public class Buyer_CartPane extends BorderPane {
         vbox3.setPadding(new Insets(5));
 
         // set attributes for the header label
-        Label headerLabel4 = new Label("Price");
-        headerLabel4.setPrefWidth(150);
+        Label headerLabel4 = new Label(Double.toString(book.getPrice()));
+        headerLabel4.setPrefWidth(100);
         headerLabel4.setWrapText(true);
-        headerLabel4.setFont(Font.font(20));
+        headerLabel4.setFont(Font.font(18));
         headerLabel4.setAlignment(Pos.BASELINE_CENTER);
 
         VBox vbox4 = new VBox(headerLabel4);
         vbox4.setAlignment(Pos.CENTER);
         vbox4.setPadding(new Insets(5));
 
+        vbox1.setBorder(Border.stroke(Color.BLACK));
+        vbox2.setBorder(Border.stroke(Color.BLACK));
+        vbox3.setBorder(Border.stroke(Color.BLACK));
+        vbox4.setBorder(Border.stroke(Color.BLACK));
+
         // set attributes for the line that separates the header and the scrollpane
         Rectangle lineSeparator = new Rectangle();
-        lineSeparator.setWidth(860);
+        lineSeparator.setWidth(820);
         lineSeparator.setHeight(1);
         lineSeparator.setFill(Color.BLACK);
 
