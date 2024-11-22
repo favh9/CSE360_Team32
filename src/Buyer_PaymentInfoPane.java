@@ -144,7 +144,7 @@ public class Buyer_PaymentInfoPane extends BorderPane {
 
         // Main VBox that holds the header and grey VBox
         VBox mainVBox = new VBox(headerHBox, greyVBox);
-        mainVBox.setPadding(new Insets(40, 40, 40, 40));
+        mainVBox.setPadding(new Insets(40, 40, 0, 40));
         mainVBox.setSpacing(10);
         mainVBox.setStyle("-fx-background-radius: 2em; -fx-background-color: #ffffff;");
 
@@ -181,12 +181,32 @@ public class Buyer_PaymentInfoPane extends BorderPane {
         return validateCardNumber(cardNumber) && validateExpirationDate(expirationDate) && validateCVC(cvc);
     }
 
-    // Validate Card Number (between 13 to 19 digits)
+    // Validate Card Number using Luhn Algorithm
     public boolean validateCardNumber(String cardNumber) {
-        Pattern pattern = Pattern.compile("^[0-9]{13,19}$");
-        Matcher matcher = pattern.matcher(cardNumber);
-        return matcher.matches();
+        if (!cardNumber.matches("^[0-9]{13,19}$")) {
+            return false; // Invalid length or format shii
+        }
+
+        int sum = 0;
+        boolean alternate = false;
+
+        for (int i = cardNumber.length() - 1; i >= 0; i--) {
+            int n = Character.getNumericValue(cardNumber.charAt(i));
+
+            if (alternate) {
+                n *= 2;
+                if (n > 9) {
+                    n -= 9;
+                }
+            }
+
+            sum += n;
+            alternate = !alternate;
+        }
+
+        return (sum % 10 == 0);
     }
+
 
     // Validate Expiration Date (MM/YY or MM/YYYY format)
     public boolean validateExpirationDate(String expirationDate) {
@@ -239,12 +259,6 @@ public class Buyer_PaymentInfoPane extends BorderPane {
         alert.show(); // Display the alert
     }
 
-    // Display an alert when the card is invalid
-    public void displayInValidCard() {
-        String title = "Payment Failed";
-        String msg = "Your payment method was not saved."; // Message for invalid payment method
-        displayAlert(Alert.AlertType.WARNING, title, msg); // Call helper method to display alert
-    }
 
     // Display an alert when some fields are empty
     public void displayEmptyFields() {
@@ -263,6 +277,46 @@ public class Buyer_PaymentInfoPane extends BorderPane {
 
         // Call the helper method to display the warning alert
         displayAlert(Alert.AlertType.WARNING, title, msg);
+    }
+
+    public void displayDuplicateCardAlert() {
+        String title = "Duplicate Card Information";
+        String msg = "It seems you already have this card saved. No changes were made.\n" +
+                "If you'd like to update your card information, enter new details and try again.";
+        displayAlert(Alert.AlertType.INFORMATION, title, msg);
+    }
+
+    // Alert for database save error
+    public void displayDatabaseSaveErrorAlert() {
+        String title = "Unable to Save Information";
+        String msg = "We couldn't save your payment information due to a system issue. " +
+                "Please try again later or contact support if the issue persists.";
+        displayAlert(Alert.AlertType.ERROR, title, msg);
+    }
+
+    // General Alert for invalid input
+    public void displayInvalidInputAlert() {
+        String title = "Invalid Information";
+        String msg = "Some of the information you entered is invalid. Please review your inputs and try again.\n" +
+                "Ensure all fields are filled out correctly and meet the required formats.";
+        displayAlert(Alert.AlertType.WARNING, title, msg);
+    }
+
+    public void displayInvalidCVCAlert() {
+        String title = "Invalid CVC";
+        String msg = "The CVC must be a 3 or 4-digit number. Please double-check and try again.";
+        displayAlert(Alert.AlertType.ERROR, title, msg);
+    }
+
+    // Alert for invalid expiration date
+    public void displayInvalidExpirationDateAlert() {
+        String title = "Invalid Expiration Date";
+        String msg = "The expiration date is invalid. Ensure the format is MM/YYYY and the date is in the future.";
+        displayAlert(Alert.AlertType.ERROR, title, msg);
+    }
+
+    public void displayLuhnValidationFailed() {
+        displayAlert(Alert.AlertType.ERROR, "Invalid Card", "The card number entered is not valid.");
     }
 
     // Display an alert when the payment method has been successfully updated

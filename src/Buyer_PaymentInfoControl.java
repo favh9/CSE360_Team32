@@ -14,13 +14,13 @@ public class Buyer_PaymentInfoControl extends Pane {
     private Buyer_PaymentInfoPane pane;
 
     /**
-     * Constructor to initialize the payment information control for buyers.
+     * Constructor to initialize the payment information control.
      * This pane allows us to control input payment details such as card number, expiration date, and CVC.
      * It also sets the size and layout of the pane based on the provided parameters.
      *
-     * @param user   The user whose payment information will be displayed in the pane.
-     * @param width  The width of the pane.
-     * @param height The height of the pane.
+     * @param user   The user whose payment information will be displayed in the pane. This may include their details.
+     * @param width  The width of the pane. This defines the horizontal size of the pane.
+     * @param height The height of the pane. This defines the vertical size of the pane.
      */
     public Buyer_PaymentInfoControl(User user, double width, double height) {
 
@@ -30,7 +30,6 @@ public class Buyer_PaymentInfoControl extends Pane {
 
         pane = new Buyer_PaymentInfoPane(user, width, height);
 
-        // Load payment info for the user
         PaymentInfo paymentInfo = DataBase.getPaymentInfo(user.getUserID());
         if (paymentInfo != null) {
             pane.setNameOnCardField(paymentInfo.getNameOnCard());
@@ -38,7 +37,6 @@ public class Buyer_PaymentInfoControl extends Pane {
             pane.setExpDateField(paymentInfo.getExpirationDate());
             pane.setCvcField(paymentInfo.getCvc());
         }
-
         backButton = pane.getBackButton();
         backButton.setOnAction(new ButtonHandler());
 
@@ -46,27 +44,33 @@ public class Buyer_PaymentInfoControl extends Pane {
         confirmButton.setOnAction(new ButtonHandler());
 
         this.getChildren().add(pane);
+
     }
 
     private class ButtonHandler implements EventHandler<ActionEvent> {
-
         @Override
         public void handle(ActionEvent a) {
-
             if (a.getSource() == backButton) {
                 // Navigate back to the Buyer Settings page
                 Buyer_SettingsControl settings = new Buyer_SettingsControl(user, width, height);
                 Main.mainWindow.setScene(new Scene(settings));
 
             } else if (a.getSource() == confirmButton) {
-
+                // Check for empty fields
                 if (pane.emptyFields()) {
-                    // Display a warning if any fields are empty
                     pane.displayEmptyFields();
 
-                } else if (!pane.isCardValid()) {
-                    // Display a warning if the card details are invalid
-                    pane.displayInValidCard();
+                } else if (!pane.validateCardNumber(pane.getCardNumberField().getText())) {
+                    // Validate card number using Luhn Algorithm
+                    pane.displayLuhnValidationFailed();
+
+                } else if (!pane.validateExpirationDate(pane.getExpDateField().getText())) {
+                    // Validate expiration date
+                    pane.displayInvalidExpirationDateAlert();
+
+                } else if (!pane.validateCVC(pane.getCvcField().getText())) {
+                    // Validate CVC
+                    pane.displayInvalidCVCAlert();
 
                 } else {
                     // Attempt to save the payment info to the database
@@ -80,9 +84,15 @@ public class Buyer_PaymentInfoControl extends Pane {
 
                     if (success) {
                         pane.displayPaymentUpdated();
+                        PaymentInfo updatedInfo = DataBase.getPaymentInfo(user.getUserID());
+                        if (updatedInfo != null) {
+                            pane.setNameOnCardField(updatedInfo.getNameOnCard());
+                            pane.setCardNumberField(updatedInfo.getCardNumber());
+                            pane.setExpDateField(updatedInfo.getExpirationDate());
+                            pane.setCvcField(updatedInfo.getCvc());
+                        }
                     } else {
-                        // Show failure alert if saving to the database failed
-                        pane.displayInValidCard();
+                        pane.displayDatabaseSaveErrorAlert(); // Show database save error
                     }
                 }
             }

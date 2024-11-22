@@ -48,24 +48,29 @@ public class Seller_PaymentInfoControl extends Pane {
     }
 
     private class ButtonHandler implements EventHandler<ActionEvent> {
-
         @Override
         public void handle(ActionEvent a) {
-
             if (a.getSource() == backButton) {
                 // Navigate back to the Seller Settings page
                 Seller_SettingsControl settings = new Seller_SettingsControl(user, width, height);
                 Main.mainWindow.setScene(new Scene(settings));
 
             } else if (a.getSource() == confirmButton) {
-
+                // Check for empty fields
                 if (pane.emptyFields()) {
-                    // Display a warning if any fields are empty
                     pane.displayEmptyFields();
 
-                } else if (!pane.isCardValid()) {
-                    // Display a warning if the card details are invalid
-                    pane.displayInValidCard();
+                } else if (!pane.validateCardNumber(pane.getCardNumberField().getText())) {
+                    // Validate card number using Luhn Algorithm
+                    pane.displayLuhnValidationFailed();
+
+                } else if (!pane.validateExpirationDate(pane.getExpDateField().getText())) {
+                    // Validate expiration date
+                    pane.displayInvalidExpirationDateAlert();
+
+                } else if (!pane.validateCVC(pane.getCvcField().getText())) {
+                    // Validate CVC
+                    pane.displayInvalidCVCAlert();
 
                 } else {
                     // Attempt to save the payment info to the database
@@ -79,9 +84,15 @@ public class Seller_PaymentInfoControl extends Pane {
 
                     if (success) {
                         pane.displayPaymentUpdated();
+                        PaymentInfo updatedInfo = DataBase.getPaymentInfo(user.getUserID());
+                        if (updatedInfo != null) {
+                            pane.setNameOnCardField(updatedInfo.getNameOnCard());
+                            pane.setCardNumberField(updatedInfo.getCardNumber());
+                            pane.setExpDateField(updatedInfo.getExpirationDate());
+                            pane.setCvcField(updatedInfo.getCvc());
+                        }
                     } else {
-                        // Show failure alert if saving to the database failed
-                        pane.displayInValidCard();
+                        pane.displayDatabaseSaveErrorAlert(); // Show database save error
                     }
                 }
             }

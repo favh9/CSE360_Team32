@@ -111,7 +111,7 @@ public class DataBase {
     public static void createPaymentInfoTable() {
         String createTableSQL = "CREATE TABLE IF NOT EXISTS PaymentInfo ("
                 + "id INT AUTO_INCREMENT PRIMARY KEY, "
-                + "userID INT NOT NULL, "
+                + "userID INT NOT NULL UNIQUE, "
                 + "nameOnCard VARCHAR(100) NOT NULL, "
                 + "cardNumber CHAR(16) NOT NULL, "
                 + "expirationDate CHAR(7) NOT NULL, "
@@ -130,41 +130,38 @@ public class DataBase {
         }
     }
 
+    //make sure to prevent duplicates and connect them to the right users.
+
     public static boolean savePaymentInfo(int userID, String nameOnCard, String cardNumber, String expirationDate, String cvc) {
-        // SQL query to insert or update payment information
-        String insertPaymentSQL = "INSERT INTO PaymentInfo (userID, nameOnCard, cardNumber, expirationDate, cvc) " +
+        String upsertSQL = "INSERT INTO PaymentInfo (userID, nameOnCard, cardNumber, expirationDate, cvc) " +
                 "VALUES (?, ?, ?, ?, ?) " +
-                "ON DUPLICATE KEY UPDATE nameOnCard = ?, cardNumber = ?, expirationDate = ?, cvc = ?";
+                "ON DUPLICATE KEY UPDATE nameOnCard = VALUES(nameOnCard), " +
+                "cardNumber = VALUES(cardNumber), expirationDate = VALUES(expirationDate), cvc = VALUES(cvc)";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-             PreparedStatement pstmt = conn.prepareStatement(insertPaymentSQL)) {
+             PreparedStatement pstmt = conn.prepareStatement(upsertSQL)) {
 
-            // Set parameters for the insert statement
+            // Debugging: Print the query
+            System.out.println("Executing SQL: " + upsertSQL);
+
             pstmt.setInt(1, userID);
             pstmt.setString(2, nameOnCard);
             pstmt.setString(3, cardNumber);
             pstmt.setString(4, expirationDate);
             pstmt.setString(5, cvc);
 
-            // Set parameters for the update part of the query
-            pstmt.setString(6, nameOnCard);
-            pstmt.setString(7, cardNumber);
-            pstmt.setString(8, expirationDate);
-            pstmt.setString(9, cvc);
-
-            // Execute the query
             pstmt.executeUpdate();
-
-            System.out.println("Payment info saved successfully for user ID: " + userID);
+            System.out.println("Payment info replaced successfully for user ID: " + userID);
             return true;
 
         } catch (SQLException e) {
-            // Log the error if the query fails
-            System.out.println("Error saving payment info for user ID: " + userID);
-            e.printStackTrace();
+            System.out.println("Error replacing payment info for user ID: " + userID);
+            e.printStackTrace(); // Print detailed error
             return false;
         }
     }
+
+
 
     public static boolean insertUser(String firstname, String lastname, String dob, String email, String username, String pwd) {
 
