@@ -15,11 +15,17 @@ public class Buyer_ProfilePane extends BorderPane {
     private TextField lastnameTextField;
     private TextField emailTextField;
     private TextField usernameTextField;
-    private final Button button;
+    private Button confirmButton;
 
     public Buyer_ProfilePane(User user, double width, double height) {
 
         Buyer_NavigationControl navBarVBox = new Buyer_NavigationControl(user, width, height);
+
+        //confirm button :)
+        confirmButton = new Button("Confirm");
+        confirmButton.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
+        confirmButton.setPrefHeight(35);
+        confirmButton.setPrefWidth(150);
 
         // set attributes for the Title Label
         Label titleLabel = new Label("Profile");
@@ -43,9 +49,9 @@ public class Buyer_ProfilePane extends BorderPane {
         firstnameTextField = new TextField();
         firstnameTextField.setText(user.getFirstName());
         firstnameTextField.setPromptText("First Name");
-//        firstnameTextField.setStyle("-fx-text-fill: #B0B0B0;");
-//        firstnameTextField.setEditable(false);
-        firstnameTextField.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
+        firstnameTextField.setStyle("-fx-text-fill: #000000;");
+        firstnameTextField.setEditable(true);
+        firstnameTextField.setFont(Font.font("Arial",FontWeight.NORMAL,16));
 
         // add the first name label and first name text field into this hbox
         HBox firstnameTextfieldHBox = new HBox(firstnameLabel, firstnameTextField);
@@ -60,9 +66,9 @@ public class Buyer_ProfilePane extends BorderPane {
         lastnameTextField = new TextField();
         lastnameTextField.setText(user.getLastName());
         lastnameTextField.setPromptText("Last Name");
-//        lastnameTextField.setStyle("-fx-text-fill: #B0B0B0;");
-//        lastnameTextField.setEditable(false);
-        lastnameTextField.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
+        lastnameTextField.setStyle("-fx-text-fill: #000000;");
+        lastnameTextField.setEditable(true);
+        lastnameTextField.setFont(Font.font("Arial",FontWeight.NORMAL,16));
 
         // add the first name label and first name text field into this hbox
         HBox lastnameTextfieldHBox = new HBox(lastnameLabel, lastnameTextField);
@@ -77,6 +83,8 @@ public class Buyer_ProfilePane extends BorderPane {
         emailTextField = new TextField();
         emailTextField.setText(user.getEmail());
         emailTextField.setPromptText("E-mail");
+        emailTextField.setStyle("-fx-text-fill: #000000;");
+        emailTextField.setEditable(true);
 //        emailTextField.setStyle("-fx-text-fill: #B0B0B0;");
 //        emailTextField.setEditable(false);
         emailTextField.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
@@ -90,12 +98,14 @@ public class Buyer_ProfilePane extends BorderPane {
         Label usernameLabel = new Label("Username:");
         usernameLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
 
+        //Test commit :)
+
         // set attributes for the username text field
         usernameTextField = new TextField();
         usernameTextField.setText(user.getUsername());
         usernameTextField.setPromptText("Username");
-//        usernameTextField.setStyle("-fx-text-fill: #B0B0B0;");
-//        usernameTextField.setEditable(false);
+        usernameTextField.setStyle("-fx-text-fill: #000000;");
+        usernameTextField.setEditable(false);
         usernameTextField.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
 
         // add the username label and username text field into this hbox
@@ -103,19 +113,15 @@ public class Buyer_ProfilePane extends BorderPane {
         usernameTextfieldHBox.setAlignment(Pos.CENTER_RIGHT);
         usernameTextfieldHBox.setSpacing(10);
 
-        // set the attributes for the confirm button
-        button = new Button("Confirm");
-        button.setFont(Font.font("Arial",FontWeight.NORMAL,16));
-        button.setPrefSize(100,40);
-
         // add the grey box elements which includes the instructions label and all HBoxes
-        VBox greyVBox = new VBox(instructionLabel, firstnameTextfieldHBox, lastnameTextfieldHBox, emailTextFieldHBox, usernameTextfieldHBox, button);
+        VBox greyVBox = new VBox(instructionLabel, firstnameTextfieldHBox, lastnameTextfieldHBox, emailTextFieldHBox, usernameTextfieldHBox, confirmButton);
         // readjust the width of the HBoxes inside the greyVBox
+
         VBox.setMargin(firstnameTextfieldHBox, new Insets(0, 350, 0, 0));
         VBox.setMargin(lastnameTextfieldHBox, new Insets(0, 350, 0, 0));
         VBox.setMargin(emailTextFieldHBox, new Insets(0, 350, 0, 0));
         VBox.setMargin(usernameTextfieldHBox, new Insets(0, 350, 0, 0));
-        VBox.setMargin(button, new Insets(0,0,0,210));
+        VBox.setMargin(confirmButton, new Insets(0,0,0,210));
         greyVBox.setSpacing(20);
         greyVBox.setPrefHeight(height - 160);
         greyVBox.setPadding(new Insets(20, 20, 20, 20));
@@ -143,10 +149,11 @@ public class Buyer_ProfilePane extends BorderPane {
         this.setPrefSize(width, height);
 
         this.setBackground(Background.fill(Color.web("#4A1E2C"))); // darker maroon color
+
     }
 
     public Button getConfirmButton() {
-        return button;
+        return confirmButton;
     }
 
     public boolean emptyFields() {
@@ -230,6 +237,13 @@ public class Buyer_ProfilePane extends BorderPane {
         alert.show();
     }
 
+    public TextField getFirstNameTextField() { return firstnameTextField; }
+
+    public TextField getLastNameTextField() { return lastnameTextField; }
+
+    public TextField getEmailTextField() { return emailTextField; }
+
+    public TextField getUsernameTextField() { return usernameTextField; }
 }
 
 

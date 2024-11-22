@@ -349,7 +349,7 @@ public class Buyer_ShopPane extends BorderPane {
             // check again
             if(!hasBooks()) {
                 clearBooksPane();
-                populateBooks();
+                displayAllBooks();
             } else {
                 setCartVisible(false);
                 noBooksFound();
@@ -372,14 +372,56 @@ public class Buyer_ShopPane extends BorderPane {
     // query the database,
     // and display all of the books
     // displays the books found from the seller
-    public void populateBooks() {
 
+    public void displayAllBooks() {
+
+<<<<<<< HEAD
+        // i.e. for books in User.books, add a book
+        String[] tempConditions = new String[3];
+        String[] tempCategories = new String[5];
+        int i = 0;
+        if (naturalscienceCheckBox.isSelected()) {tempCategories[i++] = "Natural Science";}
+        System.out.println("Hi");
+        if (computerscienceCheckBox.isSelected()) {tempCategories[i++] = "Computer Science";}
+        if (mathCheckBox.isSelected()) {tempCategories[i++] = "Math";}
+        if (englishCheckBox.isSelected()) {tempCategories[i++] = "English";}
+        if (otherCheckBox.isSelected()) {tempCategories[i++] = "Other";}
+        String[] categories = new String[i];
+        System.out.println(i);
+        int ii = 0;
+        if (i > 0) {
+            while (ii < i) {
+                categories[ii] =  tempCategories[ii];
+                ii++;
+            }
+        }
+
+        int j = 0;
+        if (likenewCheckBox.isSelected()) {tempConditions[j++] = "Like New";}
+        if (moderatelyusedCheckBox.isSelected()) {tempConditions[j++] = "Moderately Used";}
+        if (heavilyusedCheckBox.isSelected()) {tempConditions[j++] = "Heavily Used";}
+        String[] conditions = new String[j];
+        int jj = 0;
+
+        if (j > 0) {
+            while (jj < j) {
+                conditions[jj] = tempConditions[jj];
+                jj++;
+            }
+        }
+        int sortOrder = 1;
+        if (descendingRadioButton.isSelected()) { sortOrder = 2;}
+        for (Book book : DataBase.searchBooksByFilter( searchField.getText(), conditions, categories, sortOrder)) {
+            addBook(book);
+        }
+
+=======
+>>>>>>> 1c24660802013783e2df57ce23fdf660810df2df
     }
 
     // query the database to find books belonging to the user
     public boolean hasBooks() {
-
-        return false;
+        return !(DataBase.getAllBooks().isEmpty());
     }
 
     // using the database,
