@@ -347,7 +347,7 @@ public class Buyer_ShopPane extends BorderPane {
             updateBadgeCount();
             setCartVisible(true);
             // check again
-            if(!hasBooks()) {
+            if(hasBooks()) {
                 clearBooksPane();
                 displayAllBooks();
             } else {
@@ -375,7 +375,7 @@ public class Buyer_ShopPane extends BorderPane {
 
     public void displayAllBooks() {
 
-<<<<<<< HEAD
+
         // i.e. for books in User.books, add a book
         String[] tempConditions = new String[3];
         String[] tempCategories = new String[5];
@@ -415,8 +415,6 @@ public class Buyer_ShopPane extends BorderPane {
             addBook(book);
         }
 
-=======
->>>>>>> 1c24660802013783e2df57ce23fdf660810df2df
     }
 
     // query the database to find books belonging to the user
