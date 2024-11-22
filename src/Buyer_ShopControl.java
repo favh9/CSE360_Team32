@@ -19,6 +19,11 @@ public class Buyer_ShopControl extends Pane {
     private Button cartButton;
 
     public Buyer_ShopControl(User user, double width, double height) {
+        long startTime = System.nanoTime(); // Capture start time
+        //DataBase.getCart(user.getUserID());
+        long endTime = System.nanoTime(); // Capture .
+        long duration = endTime-startTime;
+        System.out.println("GetCart Duration: " + duration/ 1_000_000.0);// start time
 
         this.user = user;
         this.width = width;
@@ -52,14 +57,18 @@ public class Buyer_ShopControl extends Pane {
         cartButton = pane.getCartButton();
         cartButton.setOnAction(new ButtonHandler());
 
+
         // make a condition that queries the database for the
         // seller's books
         // if the seller has no books to display or not
-        if(pane.hasBooks()) {
+        System.out.println("call hasBooks"); //MIGHT NEED TO REVERT THIS
+        pane.displayAllBooks();
+        /*if(pane.hasBooks()) {
             pane.displayAllBooks();
         } else {
+            System.out.println("How did we get here?");
             pane.noBooksFound();
-        }
+        }*/
 
         this.getChildren().addAll(pane);
     }

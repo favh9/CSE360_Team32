@@ -610,6 +610,31 @@ public class DataBase {
         return booksInCart; // Return the list of books in the cart
     }
 
+    public static List<Integer> getCartBookIDs(int userID) {
+        List<Integer> bookIDsInCart = new ArrayList<>();
+        String query = "SELECT bookID FROM cart WHERE userID = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            // Set the userID parameter for the query
+            stmt.setInt(1, userID);
+
+            ResultSet rs = stmt.executeQuery(); // Execute the query
+
+            while (rs.next()) {
+                int bookID = rs.getInt("bookID");
+                bookIDsInCart.add(bookID); // Add the bookID directly to the list
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error retrieving book IDs in cart: " + e.getMessage());
+        }
+
+        return bookIDsInCart; // Return the list of book IDs in the cart
+    }
+
+
     public static boolean removeFromCart(int userID, int bookID) {
         String deleteQuery = "DELETE FROM cart WHERE userID = ? AND bookID = ?";
 
@@ -626,6 +651,31 @@ public class DataBase {
             System.out.println("Error removing book from cart: " + e.getMessage());
             return false;
         }
+    }
+
+    public static int getCartCount(int userID) {
+        int cartCount = 0;
+        String query = "SELECT COUNT(*) AS itemCount FROM cart WHERE UserID = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            // Set the UserID parameter
+            stmt.setInt(1, userID);
+
+            // Execute the query
+            ResultSet rs = stmt.executeQuery();
+
+            // Retrieve the count of items in the cart
+            if (rs.next()) {
+                cartCount = rs.getInt("itemCount");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error retrieving cart count: " + e.getMessage());
+        }
+
+        return cartCount;
     }
 
     public static Book getBookFromListing(int listingID) {
@@ -712,7 +762,7 @@ public class DataBase {
         List<Book> books = new ArrayList<>();
 
         // Initialize the query builder with the Sold condition
-        StringBuilder query = new StringBuilder("SELECT ListingID FROM Listings WHERE Sold = 'N'");
+        StringBuilder query = new StringBuilder("SELECT Bookname, AuthorName, Category, Conditionn, PublishYear, Price, ListingID FROM Listings WHERE Sold = 'N'");
 
         // Initialize a list to hold the filters
         List<String> filters = new ArrayList<>();
@@ -746,7 +796,7 @@ public class DataBase {
             query.append(" ORDER BY Price DESC"); // Descending order
         }
 
-        // Now execute the query to fetch the ListingIDs that match the filters
+        // Now execute the query to fetch the listings that match the filters
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query.toString())) {
 
@@ -770,27 +820,31 @@ public class DataBase {
             // Execute the query and process the results
             ResultSet rs = stmt.executeQuery();
 
-            // For each ListingID in the result set, get the corresponding Book object
+            System.out.println("About to create bookList");
+            // For each row in the result set, create a Book object
             while (rs.next()) {
-                int listingID = rs.getInt("ListingID");
+                String title = rs.getString("Bookname");
+                String author = rs.getString("AuthorName");
+                String category = rs.getString("Category");
+                String condition = rs.getString("Conditionn");
+                int year = rs.getInt("PublishYear");
+                double price = rs.getDouble("Price");
+                int id = rs.getInt("ListingID");
 
-                // Get the Book object using the listingID
-                Book book = getBookFromListing(listingID);
-                //System.out.println(listingID + " " + book.getTitle()); // For debugging
-
-                // If the book is not null, add it to the list
-                if (book != null) {
-                    books.add(book);
-                }
+                // Create a Book object and add it to the list
+                Book book = new Book(title, author, category, condition, price, year, id);
+                books.add(book);
             }
+            System.out.println("Created bookList");
 
         } catch (SQLException e) {
-            System.out.println("Error retrieving books in searchBooks: " + e.getMessage());
+            System.out.println("Error retrieving books in searchBooksByFilter: " + e.getMessage());
         }
 
         // Return the list of books that match the filters
         return books;
     }
+
 
     public static List<Book> getMyBooksByFilter(int userID, String searchInput, String[] conditions, String[] categories, int order) {
         // Initialize a list to hold the resulting Book objects
@@ -1248,7 +1302,6 @@ public class DataBase {
         }
     }
 
-
     public static double getReview(int userID) {
         double rating = 0.0;
 
@@ -1378,6 +1431,7 @@ public class DataBase {
             e.printStackTrace();
             // Handle exceptions appropriately in production code
         }
+
 
         // Return false if there was an error or no match found
         return false;
