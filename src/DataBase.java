@@ -1250,13 +1250,13 @@ public class DataBase {
 
                 // Create Transaction object
                 Transaction transaction = new Transaction();
-                transaction.transactionID = rs.getInt("transaction_id");
-                transaction.buyerID = rs.getInt("buyer_id");
-                transaction.sellerID = rs.getInt("seller_id");
-                transaction.timestamp = rs.getString("time_stamp");
-                transaction.book = book;
-                transaction.buyer_reviewed = rs.getString("buyer_reviewed").charAt(0);
-                transaction.seller_reviewed = rs.getString("seller_reviewed").charAt(0);
+                transaction.setTransactionID(rs.getInt("transaction_id"));
+                transaction.setBuyerID(rs.getInt("buyer_id"));
+                transaction.setSellerID(rs.getInt("seller_id"));
+                transaction.setTimestamp(rs.getString("time_stamp"));
+                transaction.setBook(book);
+                transaction.setBuyer_reviewed(rs.getString("buyer_reviewed").charAt(0));
+                transaction.setSeller_reviewed(rs.getString("seller_reviewed").charAt(0));
 
                 transactions.add(transaction);
             }

@@ -220,7 +220,7 @@ public class Buyer_OrdersPane extends BorderPane {
         timestampBox.setAlignment(Pos.CENTER);
 
         // set attributes for the header label
-        Label amount = new Label(nf.format(transaction.getAmount()));
+        Label amount = new Label(nf.format(transaction.getPrice()));
         amount.setPrefWidth(150);
         amount.setWrapText(false);
         amount.setFont(Font.font(20));
@@ -239,18 +239,18 @@ public class Buyer_OrdersPane extends BorderPane {
             if (!comboBox.getValue().isEmpty()) {
                 comboBox.setDisable(true);
             }
-            if(transaction.seller_reviewed == 'Y'){
+            if(transaction.getSeller_reviewed() == 'Y'){
                 comboBox.setDisable(true);
             }
         });
 
-        if(transaction.seller_reviewed == 'Y'){
+        if(transaction.getSeller_reviewed() == 'Y'){
             comboBox.setDisable(true);
         }
 
         comboBox.setOnAction(event -> {
             String selectedRating = comboBox.getValue();
-            DataBase.addSellerReview(transaction.sellerID, Integer.parseInt(selectedRating), transaction.transactionID); // Call your function here
+            DataBase.addSellerReview(transaction.getSellerID(), Integer.parseInt(selectedRating), transaction.getTransactionID()); // Call your function here
         });
 
         VBox soldToBox = new VBox(comboBox);

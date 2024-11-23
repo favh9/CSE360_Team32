@@ -218,7 +218,7 @@ public class Admin_TransactionsPane extends BorderPane {
         timestampBox.setAlignment(Pos.CENTER);
 
         // set attributes for the header label
-        Label amount = new Label("$" + transaction.getAmount());
+        Label amount = new Label("$" + transaction.getPrice());
         amount.setPrefWidth(100);
         amount.setWrapText(false);
         amount.setFont(Font.font(20));
