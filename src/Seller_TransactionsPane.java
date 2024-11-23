@@ -184,7 +184,7 @@ public class Seller_TransactionsPane extends BorderPane {
     public void addTransactionToPane(Transaction transaction) {
 
         // set attributes for the header label
-        Label title = new Label("Theory to the universe of things in my world");
+        Label title = new Label(transaction.getBook().getTitle());
         title.setPrefWidth(200);
         title.setWrapText(true);
         title.setFont(Font.font(20));
@@ -210,8 +210,8 @@ public class Seller_TransactionsPane extends BorderPane {
         amount.setPrefWidth(150);
         amount.setWrapText(false);
         amount.setFont(Font.font(20));
-        amount.setAlignment(Pos.BASELINE_CENTER);
-        amount.setPadding(new Insets(5));
+        amount.setAlignment(Pos.BASELINE_RIGHT);
+        amount.setPadding(new Insets(5,10,5,5));
 
         VBox amountBox = new VBox(amount);
         amountBox.setAlignment(Pos.CENTER);
