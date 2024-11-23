@@ -276,7 +276,6 @@ public class Buyer_CartPane extends BorderPane {
 
 
     }
-
     // the buyer arrives at the cart with books
     public void atCart() {
         // display subtotal
@@ -288,7 +287,6 @@ public class Buyer_CartPane extends BorderPane {
         checkOutButton.setVisible(true);
 
     }
-
     // the buyer hits checkout and confirms the purchase
     public void pushConfirm() {
         // display tax

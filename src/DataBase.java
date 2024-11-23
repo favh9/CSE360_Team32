@@ -1130,56 +1130,73 @@ public class DataBase {
     }*/
 
     public static void insertTransaction(int buyerID, int sellerID, int bookID, double price) {
+        // Query to get the price from the Listings table
+        String priceQuery = "SELECT price FROM listings WHERE listing_id = ?";
+
         // Insert query for the Transactions table
-        String insertQuery = "INSERT INTO transactions (buyer_id, seller_id, book_id, listing_price) VALUES (?, ?, ?, ?)";
+        String insertQuery = "INSERT INTO transactions (buyer_id, seller_id, book_id, listing_price, profit) VALUES (?, ?, ?, ?, ?)";
 
         // Update query to mark the book as sold in the Listings table
         String updateQuery = "UPDATE listings SET sold = 'Y' WHERE listing_id = ?";
 
         // Start a transaction to ensure both queries are executed together
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement priceStmt = conn.prepareStatement(priceQuery);
              PreparedStatement insertStmt = conn.prepareStatement(insertQuery);
              PreparedStatement updateStmt = conn.prepareStatement(updateQuery)) {
 
             // Disable auto-commit for transaction
             conn.setAutoCommit(false);
 
-            // Insert the transaction details
-            insertStmt.setInt(1, buyerID);
-            insertStmt.setInt(2, sellerID);
-            insertStmt.setInt(3, bookID);
-            insertStmt.setDouble(4, price);
+            // Get the price from the Listings table
+            priceStmt.setInt(1, bookID);
+            ResultSet rs = priceStmt.executeQuery();
 
-            // Execute the insert query
-            insertStmt.executeUpdate();
+            if (rs.next()) {
+                double listingPrice = rs.getDouble("price");
 
-            // Mark the book as sold in the Listings table
-            updateStmt.setInt(1, bookID);
+                // Insert the transaction details with the given price for the transaction and listing price for the profit
+                insertStmt.setInt(1, buyerID);
+                insertStmt.setInt(2, sellerID);
+                insertStmt.setInt(3, bookID);
+                insertStmt.setDouble(4, price); // Insert the provided price into listing_price
+                insertStmt.setDouble(5, listingPrice); // Insert the listing price as profit
 
-            // Execute the update query
-            updateStmt.executeUpdate();
+                // Execute the insert query
+                insertStmt.executeUpdate();
 
-            // Commit the transaction
-            conn.commit();
+                // Mark the book as sold in the Listings table
+                updateStmt.setInt(1, bookID);
+
+                // Execute the update query
+                updateStmt.executeUpdate();
+
+                // Commit the transaction
+                conn.commit();
+            } else {
+                System.out.println("Book not found in listings with id: " + bookID);
+            }
 
         } catch (SQLException e) {
-
             System.out.println("Error inserting transaction: " + e.getMessage());
-            try {Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            try {
                 // If an error occurs, roll back the transaction
+                Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
                 conn.rollback();
             } catch (SQLException rollbackException) {
                 System.out.println("Error during rollback: " + rollbackException.getMessage());
             }
         } finally {
-            try {Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            try {
                 // Reset auto-commit to true for subsequent operations
+                Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
                 conn.setAutoCommit(true);
             } catch (SQLException e) {
                 System.out.println("Error resetting auto-commit: " + e.getMessage());
             }
         }
     }
+
 
     public static Integer getSellerID(int bookID) {
         // SQL query to retrieve the SellerID for the given BookID
@@ -1425,7 +1442,7 @@ public class DataBase {
     public static void addBuyerReview(int sellerID, double newRating, int transactionID) {
         String query = "SELECT rating, num_reviews FROM users WHERE id = ?";
         String updateUserQuery = "UPDATE users SET rating = ?, num_reviews = ? WHERE id = ?";
-        String updateTransactionQuery = "UPDATE transactions SET buyer_reviewed = 'Y' WHERE id = ?";
+        String updateTransactionQuery = "UPDATE transactions SET buyer_reviewed = 'Y' WHERE transaction_id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement selectStmt = conn.prepareStatement(query);
