@@ -72,13 +72,13 @@ public class Main extends Application {
 
     public static void main(String[] args) {
 //        DataBase.insertTransaction(0,0,0,0);
-        String[] testConditions = new String[0]; // An empty array with no elements
+        /*String[] testConditions = new String[0]; // An empty array with no elements
         String[] testCategory = new String[0]; // An empty array with no elements
 
         long startTime = System.nanoTime(); // Capture start time
         int counter = 0;
-        while(counter < 10) {
-            DataBase.getReview(3);
+        while(counter < 1000) {
+            //DataBase.insertTesterBook();
             counter++;
         }
         long endTime = System.nanoTime(); // Capture start time
@@ -88,7 +88,7 @@ public class Main extends Application {
         int randomRating = random.nextInt(5) + 1;
         System.out.println(randomRating);
         DataBase.addReview(3, randomRating);
-        System.out.println(DataBase.getReview(3));
+        System.out.println(DataBase.getReview(3));*/
 
         //DataBase.searchBooksByFilter(null, testConditions, testCategory, 1);
         launch(args);
