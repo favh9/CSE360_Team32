@@ -163,7 +163,7 @@ public class Seller_PostBookControl extends Pane {
         @Override
         public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
             // Define maximum allowed value
-            double maxPrice = 99999.99;
+            double maxPrice = 10000.00;
 
             // Regular expression for a valid price format
             String pricePattern = "^(\\d{0,5})(\\.\\d{0,2})?$"; // Allow empty input or partial input

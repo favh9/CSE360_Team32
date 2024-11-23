@@ -61,11 +61,15 @@ public class Buyer_CartControl extends Pane {
                 // gets the user's payment info
                 PaymentInfo paymentInfo = DataBase.getPaymentInfo(user.getUserID());
 
+
+                // base case payment info is needed
                 if (paymentInfo == null) {
                     pane.displayNoPaymentMethodFound();
                     return;
                 }
 
+                pane.pushConfirm();
+                // payment info verification - updates or confirms to proceed
                 boolean isPaymentInfoCorrect = pane.verifyPaymentInfo(paymentInfo);
 
                 if (isPaymentInfoCorrect) {
