@@ -27,14 +27,17 @@ public class Buyer_CartPane extends BorderPane {
     private double subtotal;
     private double tax;
     private double total;
+    private double shipping;
     private Label subtotalText;
     private Label taxText;
     private Label totalText;
+    private Label shippingText;
     private Button checkOutButton;
     private BorderPane receiptBP;
     private HBox hbox1;
     private HBox hbox2;
     private HBox hbox3;
+    private HBox hbox4;
 
     public Buyer_CartPane(User user, double width, double height) {
 
@@ -43,8 +46,9 @@ public class Buyer_CartPane extends BorderPane {
         this.height = height;
 
         subtotal = 0;
-        tax = .08; // hard code tax?
+        tax = .08;
         total = 0;
+        shipping = 5.49;
 
         bookList = DataBase.getCart(user.getUserID());
         cartAmount = bookList.size();
@@ -159,48 +163,58 @@ public class Buyer_CartPane extends BorderPane {
         subtotalText = new Label("$" + subtotal);
         taxText = new Label("$" + tax);
         totalText = new Label("$" + total);
+        shippingText = new Label("$" + shipping);
 
         subtotalText.setFont(normalFont);
         taxText.setFont(normalFont);
         totalText.setFont(normalFont);
+        shippingText.setFont(normalFont);
 
         subtotalText.setPrefWidth(100);
         taxText.setPrefWidth(100);
         totalText.setPrefWidth(100);
+        shippingText.setPrefWidth(100);
 
         subtotalText.setAlignment(Pos.CENTER_RIGHT);
         taxText.setAlignment(Pos.CENTER_RIGHT);
         totalText.setAlignment(Pos.CENTER_RIGHT);
+        shippingText.setAlignment(Pos.CENTER_RIGHT);
 
         Label subtotalLabel = new Label("Subtotal:");
         Label taxLabel = new Label("Tax:");
+        Label shippingLabel = new Label("Shipping:");
         Label totalLabel = new Label("Total:");
 
         subtotalLabel.setPrefWidth(100);
         taxLabel.setPrefWidth(100);
         totalLabel.setPrefWidth(100);
+        shippingLabel.setPrefWidth(100);
 
         subtotalLabel.setFont(normalFont);
         taxLabel.setFont(normalFont);
         totalLabel.setFont(normalFont);
+        shippingLabel.setFont(normalFont);
 
         subtotalLabel.setAlignment(Pos.CENTER_RIGHT);
         taxLabel.setAlignment(Pos.CENTER_RIGHT);
         totalLabel.setAlignment(Pos.CENTER_RIGHT);
+        shippingLabel.setAlignment(Pos.CENTER_RIGHT);
 
         hbox1 = new HBox(subtotalLabel,subtotalText);
         hbox2 = new HBox(taxLabel,taxText);
         hbox3 = new HBox(totalLabel,totalText);
+        hbox4 = new HBox(shippingLabel, shippingText);
 
         hbox1.setSpacing(100);
         hbox2.setSpacing(100);
         hbox3.setSpacing(100);
+        hbox4.setSpacing(100);
 
         checkOutButton = new Button("Checkout");
         checkOutButton.setFont(normalFont);
         checkOutButton.setPrefHeight(50);
 
-        VBox leftVBox = new VBox(hbox1,hbox2,hbox3);
+        VBox leftVBox = new VBox(hbox1,hbox2,hbox4,hbox3);
         VBox rightVBox = new VBox(checkOutButton);
 
         leftVBox.setAlignment(Pos.CENTER_LEFT);
@@ -284,6 +298,7 @@ public class Buyer_CartPane extends BorderPane {
         hbox1.setVisible(true); // subtotal
         hbox2.setVisible(false); // tax
         hbox3.setVisible(false); // total
+        hbox4.setVisible(false);
         checkOutButton.setVisible(true);
 
     }
@@ -295,6 +310,7 @@ public class Buyer_CartPane extends BorderPane {
         displayTotal();
         hbox2.setVisible(true); // tax
         hbox3.setVisible(true); // total
+        hbox4.setVisible(true);
         checkOutButton.setVisible(false);
     }
 
@@ -305,6 +321,7 @@ public class Buyer_CartPane extends BorderPane {
         displayTotal();
         hbox2.setVisible(false); // tax
         hbox3.setVisible(false); // total
+        hbox4.setVisible(false);
         checkOutButton.setVisible(true);
     }
 
@@ -424,7 +441,7 @@ public class Buyer_CartPane extends BorderPane {
     }
 
     public double computeTotal() {
-        return subtotal + computeTax();
+        return subtotal + computeTax() + shipping;
     }
 
     public void displayTotal() {

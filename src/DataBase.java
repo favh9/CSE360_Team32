@@ -1309,7 +1309,7 @@ public class DataBase {
                 transaction.setBuyer_reviewed(rs.getString("buyer_reviewed").charAt(0));
                 transaction.setSeller_reviewed(rs.getString("seller_reviewed").charAt(0));
                 transaction.setProfit(rs.getDouble("profit"));
-                transaction.setPrice(rs.getDouble("price"));
+                transaction.setPrice(rs.getDouble("price") + 5.49);
                 transactions.add(transaction);
             }
 
