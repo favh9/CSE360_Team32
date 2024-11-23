@@ -892,25 +892,29 @@ public class DataBase {
         List<Book> books = new ArrayList<>();
 
         // Initialize the query builder with the Sold condition and the userID condition (to get books from that specific user)
-        StringBuilder query = new StringBuilder("SELECT listing_id FROM listings WHERE sold = 'N' AND user_id = ?");
+        StringBuilder query = new StringBuilder("SELECT l.book_name, l.author_name, l.category, l.cond, l.publish_year, l.profit, l.price, l.listing_id, "
+                + "u.id AS seller_id, u.username AS seller_name, ROUND(u.rating, 1) AS seller_rating "
+                + "FROM listings l "
+                + "JOIN users u ON l.user_id = u.id "
+                + "WHERE l.sold = 'N' AND l.user_id = ?");
 
         // Initialize a list to hold the filters
         List<String> filters = new ArrayList<>();
 
         // Add the search filter if searchInput is provided (search in Bookname or AuthorName)
         if (searchInput != null && !searchInput.trim().isEmpty()) {
-            filters.add("(book_name LIKE ? OR author_name LIKE ?)");
+            filters.add("(l.book_name LIKE ? OR l.author_name LIKE ?)");
         }
 
         // Add the condition filter if conditions are provided
         if (conditions != null && conditions.length > 0) {
-            String conditionQuery = "cond IN (" + String.join(",", Collections.nCopies(conditions.length, "?")) + ")";
+            String conditionQuery = "l.cond IN (" + String.join(",", Collections.nCopies(conditions.length, "?")) + ")";
             filters.add(conditionQuery);
         }
 
         // Add any additional categories filter here as needed
         if (categories != null && categories.length > 0) {
-            String categoryQuery = "category IN (" + String.join(",", Collections.nCopies(categories.length, "?")) + ")";
+            String categoryQuery = "l.category IN (" + String.join(",", Collections.nCopies(categories.length, "?")) + ")";
             filters.add(categoryQuery);
         }
 
@@ -921,12 +925,12 @@ public class DataBase {
 
         // Add the ORDER BY clause based on the 'order' parameter
         if (order == 1) {
-            query.append(" ORDER BY price ASC");  // Ascending order
+            query.append(" ORDER BY l.price ASC");  // Ascending order
         } else if (order == 2) {
-            query.append(" ORDER BY price DESC"); // Descending order
+            query.append(" ORDER BY l.price DESC"); // Descending order
         }
 
-        // Now execute the query to fetch the ListingIDs that match the filters
+        // Now execute the query to fetch the listings that match the filters
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query.toString())) {
 
@@ -952,27 +956,33 @@ public class DataBase {
             // Execute the query and process the results
             ResultSet rs = stmt.executeQuery();
 
-            // For each ListingID in the result set, get the corresponding Book object
+            // For each row in the result set, create a Book object and add it to the list
             while (rs.next()) {
-                int listingID = rs.getInt("listing_id");
+                String title = rs.getString("book_name");
+                String author = rs.getString("author_name");
+                String category = rs.getString("category");
+                String condition = rs.getString("cond");
+                int year = rs.getInt("publish_year");
+                double profit = rs.getDouble("profit");
+                double price = rs.getDouble("price");
+                int id = rs.getInt("listing_id");
+                int sellerId = rs.getInt("seller_id");
+                String sellerName = rs.getString("seller_name");
+                double sellerRating = rs.getDouble("seller_rating"); // Get seller rating rounded to 1 decimal place
 
-                // Get the Book object using the listingID
-                Book book = getBookFromListing(listingID);
-                //System.out.println(listingID + " " + book.getTitle()); // For debugging
-
-                // If the book is not null, add it to the list
-                if (book != null) {
-                    books.add(book);
-                }
+                // Create Book object with seller information and rating
+                Book book = new Book(title, author, category, condition, profit, price, year, id, sellerId, sellerName, sellerRating);
+                books.add(book);
             }
 
         } catch (SQLException e) {
-            System.out.println("Error retrieving books in searchMyBooks: " + e.getMessage());
+            System.out.println("Error retrieving books in getMyBooksByFilter: " + e.getMessage());
         }
 
         // Return the list of books that match the filters and belong to the specified user
         return books;
     }
+
 
     public static void updateBookPrice(int bookID, int newPrice) {
         String updateQuery = "UPDATE listings SET price = ? WHERE listing_id = ?";

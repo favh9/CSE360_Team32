@@ -475,22 +475,69 @@ public class Buyer_CartPane extends BorderPane {
     }
 
     public void displayNoPaymentMethodFound() {
+        String title = "Payment Info Missing";
+        String msg = "No payment method is currently set up.\n" +
+                "Please add your payment information to proceed with your purchase.\n\n" +
+                "You can update your payment information now or return to this page after updating.";
 
-        String title = "Transaction failed";
-        String msg = "No payment method found.\n" +
-                "Please click 'ok' to fill in your payment information.\n" +
-                "Return to your cart to complete your purchase.";
-
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+        // Create the alert
+        Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(title);
-        alert.setHeaderText(null);
+        alert.setHeaderText("Payment Information Required");
         alert.setContentText(msg);
 
-        // Wait for user response
-        alert.showAndWait();
-        Buyer_PaymentInfoControl payment = new Buyer_PaymentInfoControl(user,width,height);
-        Main.mainWindow.setScene(new Scene(payment));
+        // Add a button to redirect the user to the Payment Info page
+        ButtonType updateButton = new ButtonType("Update", ButtonBar.ButtonData.OK_DONE);
+        ButtonType closeButton = new ButtonType("Close", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(updateButton, closeButton);
 
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == updateButton) {
+            // Redirect to Payment Info page
+            redirectToPaymentInfo();
+        }
     }
 
+    public boolean verifyPaymentInfo(PaymentInfo paymentInfo) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Verify Payment Information");
+        alert.setHeaderText("Is your payment information correct?");
+        alert.setContentText(
+                "Name on Card: " + paymentInfo.getNameOnCard() + "\n" +
+                        "Card Number: " + maskCardNumber(paymentInfo.getCardNumber()) + "\n" +
+                        "Expiration Date: " + paymentInfo.getExpirationDate() + "\n" +
+                        "CVC: ***\n\n" +
+                        "Please confirm your payment information."
+        );
+
+        ButtonType confirmButton = new ButtonType("Yes, proceed", ButtonBar.ButtonData.OK_DONE);
+        ButtonType updateButton = new ButtonType("No, update info", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(confirmButton, updateButton);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == updateButton) {
+            redirectToPaymentInfo();
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Redirects the user to the Payment Info page to update their details.
+     */
+    void redirectToPaymentInfo() {
+        if (Main.mainWindow != null) {
+            Buyer_PaymentInfoControl paymentInfoControl = new Buyer_PaymentInfoControl(user, width, height);
+            Main.mainWindow.setScene(new Scene(paymentInfoControl));
+        } else {
+            System.err.println("Main window is null. Cannot redirect to Payment Info.");
+        }
+    }
+
+     // Masks the card number except for the last 4 digits.
+    private String maskCardNumber(String cardNumber) {
+        if (cardNumber.length() <= 4) return cardNumber;
+        return "**** **** **** " + cardNumber.substring(cardNumber.length() - 4);
+    }
 }

@@ -51,27 +51,35 @@ public class Buyer_CartControl extends Pane {
         @Override
         public void handle(ActionEvent a) {
 
-            if(a.getSource() == backButton) {
+            if (a.getSource() == backButton) {
 
-                Buyer_ShopControl buyer_shop = new Buyer_ShopControl(user,width,height);
-                Main.mainWindow.setScene(new Scene(buyer_shop));
+                // go back to the shop
+                Buyer_ShopControl buyerShop = new Buyer_ShopControl(user, width, height);
+                Main.mainWindow.setScene(new Scene(buyerShop));
+
             } else if (a.getSource() == checkoutButton) {
+                // gets the user's payment info
+                PaymentInfo paymentInfo = DataBase.getPaymentInfo(user.getUserID());
 
-                pane.pushConfirm();
+                if (paymentInfo == null) {
+                    pane.displayNoPaymentMethodFound();
+                    return;
+                }
 
-                if(pane.displayConfirmOrder()) {
+                boolean isPaymentInfoCorrect = pane.verifyPaymentInfo(paymentInfo);
 
-                    cart = pane.getBookList();
+                if (isPaymentInfoCorrect) {
 
+                    List<Book> cart = pane.getBookList();
                     for (Book book : cart) {
                         int sellerID = DataBase.getSellerID(book.getID());
                         DataBase.insertTransaction(user.getUserID(), sellerID, book.getID(), pane.computeTotal());
                         DataBase.removeFromCart(user.getUserID(), book.getID());
                         DataBase.markBookAsSold(book.getID());
                     }
-
                     pane.displayTransactionSuccess();
                 } else {
+                    // Stay on cart page if payment info is incorrect
                     pane.cancelConfirm();
                 }
 
