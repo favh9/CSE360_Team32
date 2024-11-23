@@ -3,16 +3,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-
-import javax.swing.event.ChangeEvent;
-
-import java.sql.Date;
-import java.sql.SQLOutput;
-import java.text.NumberFormat;
 
 public class Seller_PostBookControl extends Pane {
 
@@ -30,17 +22,13 @@ public class Seller_PostBookControl extends Pane {
     private double generatedPrice;
     private double adminCharge;
     private double profit;
-
     private TextField booknameField;
     private TextField authorField;
     private ComboBox<String> yearComboBox;
     private ComboBox<String> categoryComboBox;
     private ComboBox<String> conditionComboBox;
     private TextField priceField;
-    private TextField generatedpriceField;
     private Button listmybookButton;
-
-    private boolean confirm = false;
 
     public Seller_PostBookControl(User user, double width, double height) {
 
@@ -56,7 +44,6 @@ public class Seller_PostBookControl extends Pane {
         categoryComboBox = pane.getCategoryComboBox();
         conditionComboBox = pane.getConditionComboBox();
         priceField = pane.getPriceField();
-        generatedpriceField = pane.getGeneratedpriceField();
         listmybookButton = pane.getListmybookButton();
 
         booknameField.textProperty().addListener(new TitleFieldListener());
@@ -230,12 +217,141 @@ public class Seller_PostBookControl extends Pane {
         }
     }
 
-//    private class GeneratedPriceFieldListener implements ChangeListener<String> {
-//
-//        @Override
-//        public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-//            generatedPrice = Double.parseDouble(t1);
-//        }
-//    }
+    public double getOriginalPrice() {
+        return originalPrice;
+    }
+
+    public double getGeneratedPrice() {
+        return generatedPrice;
+    }
+
+    public double getAdminCharge() {
+        return adminCharge;
+    }
+
+    public double getProfit() {
+        return profit;
+    }
+
+    public TextField getBooknameField() {
+        return booknameField;
+    }
+
+    public TextField getAuthorField() {
+        return authorField;
+    }
+
+    public ComboBox<String> getYearComboBox() {
+        return yearComboBox;
+    }
+
+    public ComboBox<String> getCategoryComboBox() {
+        return categoryComboBox;
+    }
+
+    public ComboBox<String> getConditionComboBox() {
+        return conditionComboBox;
+    }
+
+    public TextField getPriceField() {
+        return priceField;
+    }
+
+    public Button getListmybookButton() {
+        return listmybookButton;
+    }
+
+    public Seller_PostBookPane getPane() {
+        return pane;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public String getCondition() {
+        return condition;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setCondition(String condition) {
+        this.condition = condition;
+    }
+
+    public void setOriginalPrice(double originalPrice) {
+        this.originalPrice = originalPrice;
+    }
+
+    public void setGeneratedPrice(double generatedPrice) {
+        this.generatedPrice = generatedPrice;
+    }
+
+    public void setAdminCharge(double adminCharge) {
+        this.adminCharge = adminCharge;
+    }
+
+    public void setProfit(double profit) {
+        this.profit = profit;
+    }
+
+    public void setBooknameField(TextField booknameField) {
+        this.booknameField = booknameField;
+    }
+
+    public void setAuthorField(TextField authorField) {
+        this.authorField = authorField;
+    }
+
+    public void setYearComboBox(ComboBox<String> yearComboBox) {
+        this.yearComboBox = yearComboBox;
+    }
+
+    public void setCategoryComboBox(ComboBox<String> categoryComboBox) {
+        this.categoryComboBox = categoryComboBox;
+    }
+
+    public void setConditionComboBox(ComboBox<String> conditionComboBox) {
+        this.conditionComboBox = conditionComboBox;
+    }
+
+    public void setPriceField(TextField priceField) {
+        this.priceField = priceField;
+    }
+
+    public void setListmybookButton(Button listmybookButton) {
+        this.listmybookButton = listmybookButton;
+    }
+
 
 }
