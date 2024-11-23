@@ -35,12 +35,19 @@ public class Admin_UsersControl extends Pane {
         for(User user : users) {
             String username = user.getUsername();
             if(DataBase.isBuyer(user.getUserID())) {
-                pane.addUserToPane(username,"Buyer");
+                pane.addUserToPane(username,"buyer");
             } else if(DataBase.isSeller(user.getUserID())) {
-                pane.addUserToPane(username,"Seller");
+                pane.addUserToPane(username,"seller");
             } else if(user.getUserType().equals("new_user")) {
                 pane.addUserToPane(username, "new user");
+            } else if(user.getUserType().equals("returning_user")){
+                pane.addUserToPane(username,"user");
+            } else if(user.getUserType().equals("super_admin")){
+                pane.addUserToPane(username, "boss");
+            } else if(user.getUserType().equals("admin")) {
+                pane.addUserToPane(username, "slave");
             } else {
+                // what other user could there be
                 pane.addUserToPane(username, user.getUserType());
             }
         }
