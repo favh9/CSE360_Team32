@@ -680,7 +680,11 @@ public class DataBase {
     }
 
     public static Book getBookFromListing(int listingID) {
-        String query = "SELECT book_name, author_name, category, cond, publish_year, profit, price, listing_id FROM listings WHERE listing_id = ?";
+        String query = "SELECT l.book_name, l.author_name, l.category, l.cond, l.publish_year, l.profit, l.price, l.listing_id, "
+                + "u.id AS seller_id, u.username AS seller_name, ROUND(u.rating, 1) AS seller_rating "
+                + "FROM listings l "
+                + "JOIN users u ON l.user_id = u.id "
+                + "WHERE l.listing_id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -691,14 +695,18 @@ public class DataBase {
             if (rs.next()) {
                 String title = rs.getString("book_name");
                 String author = rs.getString("author_name");
-                String category = rs.getString("Category");
+                String category = rs.getString("category");
                 String condition = rs.getString("cond");
                 int year = rs.getInt("publish_year");
                 double profit = rs.getDouble("profit");
                 double price = rs.getDouble("price");
                 int id = rs.getInt("listing_id");
+                int sellerId = rs.getInt("seller_id");
+                String sellerName = rs.getString("seller_name");
+                double sellerRating = rs.getDouble("seller_rating"); // Retrieve rounded seller rating
 
-                return new Book(title, author, category, condition, profit, price, year, id);
+                // Return a Book object with the seller information and rating
+                return new Book(title, author, category, condition, profit, price, year, id, sellerId, sellerName, sellerRating);
             }
 
         } catch (SQLException e) {
@@ -708,7 +716,9 @@ public class DataBase {
         return null;
     }
 
-    public static List<Book> getAllBooks() {
+
+
+   /* public static List<Book> getAllBooks() {
         List<Book> books = new ArrayList<>();
         String query = "SELECT listing_id FROM listings WHERE sold = 'N'"; // Query to get all ListingIDs from Listings table
 
@@ -730,7 +740,7 @@ public class DataBase {
         }
 
         return books; // Return the list of books
-    }
+    }*/
 
     public static List<Book> myListedBooks(int userID) {
         List<Book> books = new ArrayList<>();
@@ -760,49 +770,52 @@ public class DataBase {
     }
 
     public static List<Book> searchBooksByFilter(String searchInput, String[] conditions, String[] categories, int order) {
-        // Initialize a list to hold the resulting Book objects
         List<Book> books = new ArrayList<>();
 
-        // Initialize the query builder with the Sold condition
-        StringBuilder query = new StringBuilder("SELECT book_name, author_name, category, cond, publish_year, profit, price, listing_id FROM listings WHERE sold = 'N'");
+        // Build the query with a join to get the seller's ID, username, and rating (up to 1 decimal place)
+        StringBuilder query = new StringBuilder(
+                "SELECT l.book_name, l.author_name, l.category, l.cond, l.publish_year, l.profit, l.price, l.listing_id, "
+                        + "u.id AS seller_id, u.username AS seller_name, ROUND(u.rating, 1) AS seller_rating "
+                        + "FROM listings l "
+                        + "JOIN users u ON l.user_id = u.id "
+                        + "WHERE l.sold = 'N'");
 
         // Initialize a list to hold the filters
         List<String> filters = new ArrayList<>();
 
-        // Add the search filter if searchInput is provided (search in Bookname or AuthorName)
+        // Add search filter
         if (searchInput != null && !searchInput.trim().isEmpty()) {
-            filters.add("(book_name LIKE ? OR author_name LIKE ?)");
+            filters.add("(l.book_name LIKE ? OR l.author_name LIKE ?)");
         }
 
-        // Add the condition filter if conditions are provided
+        // Add condition filter
         if (conditions != null && conditions.length > 0) {
-            String conditionQuery = "cond IN (" + String.join(",", Collections.nCopies(conditions.length, "?")) + ")";
+            String conditionQuery = "l.cond IN (" + String.join(",", Collections.nCopies(conditions.length, "?")) + ")";
             filters.add(conditionQuery);
         }
 
-        // Add any additional categories filter here as needed
+        // Add category filter
         if (categories != null && categories.length > 0) {
-            String categoryQuery = "category IN (" + String.join(",", Collections.nCopies(categories.length, "?")) + ")";
+            String categoryQuery = "l.category IN (" + String.join(",", Collections.nCopies(categories.length, "?")) + ")";
             filters.add(categoryQuery);
         }
 
-        // Combine all filters with AND and add to the query
+        // Combine all filters with AND
         if (!filters.isEmpty()) {
             query.append(" AND ").append(String.join(" AND ", filters));
         }
 
-        // Add the ORDER BY clause based on the 'order' parameter
+        // Add ORDER BY clause
         if (order == 1) {
-            query.append(" ORDER BY price ASC");  // Ascending order
+            query.append(" ORDER BY l.price ASC");
         } else if (order == 2) {
-            query.append(" ORDER BY price DESC"); // Descending order
+            query.append(" ORDER BY l.price DESC");
         }
 
-        // Now execute the query to fetch the listings that match the filters
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(query.toString())) {
 
-            // Set the parameters for the query
+            // Set the parameters
             int paramIndex = 1;
             if (searchInput != null && !searchInput.trim().isEmpty()) {
                 stmt.setString(paramIndex++, "%" + searchInput + "%");
@@ -822,8 +835,6 @@ public class DataBase {
             // Execute the query and process the results
             ResultSet rs = stmt.executeQuery();
 
-            System.out.println("About to create bookList");
-            // For each row in the result set, create a Book object
             while (rs.next()) {
                 String title = rs.getString("book_name");
                 String author = rs.getString("author_name");
@@ -833,20 +844,23 @@ public class DataBase {
                 double profit = rs.getDouble("profit");
                 double price = rs.getDouble("price");
                 int id = rs.getInt("listing_id");
+                int sellerId = rs.getInt("seller_id");
+                String sellerName = rs.getString("seller_name");
+                double sellerRating = rs.getDouble("seller_rating"); // Get seller rating rounded to 1 decimal place
 
-                // Create a Book object and add it to the list
-                Book book = new Book(title, author, category, condition, profit, price, year, id);
+                // Create Book object with seller information and rating
+                Book book = new Book(title, author, category, condition, profit, price, year, id, sellerId, sellerName, sellerRating);
                 books.add(book);
             }
-            System.out.println("Created bookList");
 
         } catch (SQLException e) {
             System.out.println("Error retrieving books in searchBooksByFilter: " + e.getMessage());
         }
 
-        // Return the list of books that match the filters
         return books;
     }
+
+
 
 
     public static List<Book> getMyBooksByFilter(int userID, String searchInput, String[] conditions, String[] categories, int order) {
@@ -1321,6 +1335,28 @@ public class DataBase {
         return false;
     }
 
+    public static  String getUsernameFromListingID(int listingID) {
+        String username = null;
+        String sql = "SELECT u.username " +
+                "FROM users u " +
+                "JOIN listings l ON u.id = l.user_id " +
+                "WHERE l.listing_id = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement statement = conn.prepareStatement(sql)) {
+            statement.setInt(1, listingID);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                username = resultSet.getString("username");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return username;
+    }
 
     public static void addReview(int userID, double newRating) {
         String query = "SELECT rating, num_reviews FROM users WHERE id = ?";
