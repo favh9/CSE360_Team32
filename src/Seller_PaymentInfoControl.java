@@ -68,6 +68,9 @@ public class Seller_PaymentInfoControl extends Pane {
                     // Validate expiration date
                     pane.displayInvalidExpirationDateAlert();
 
+                } else if(!pane.validateCardName(pane.getNameOnCardField().getText())) {
+
+                    pane.displayInvalidName();
                 } else if (!pane.validateCVC(pane.getCvcField().getText())) {
                     // Validate CVC
                     pane.displayInvalidCVCAlert();

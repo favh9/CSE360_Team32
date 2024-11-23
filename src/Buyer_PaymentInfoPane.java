@@ -242,6 +242,13 @@ public class Buyer_PaymentInfoPane extends BorderPane {
         return matcher.matches();
     }
 
+    public boolean validateCardName(String cardName) {
+        if (!cardName.matches("^[a-zA-Z]+$")) {
+            return false;
+        }
+        return true;
+    }
+
     // Method to check if the card details are valid
     public boolean isCardValid() {
         return validateCardNumber(cardnumberField.getText()) &&
@@ -284,6 +291,12 @@ public class Buyer_PaymentInfoPane extends BorderPane {
         String msg = "It seems you already have this card saved. No changes were made.\n" +
                 "If you'd like to update your card information, enter new details and try again.";
         displayAlert(Alert.AlertType.INFORMATION, title, msg);
+    }
+
+    public void displayInvalidName() {
+        String title = "Invalid Name";
+        String msg = "Name on card should not contain anything but letters";
+        displayAlert(Alert.AlertType.ERROR, title, msg);
     }
 
     // Alert for database save error
