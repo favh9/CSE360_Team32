@@ -285,7 +285,7 @@ public class Buyer_ShopPane extends BorderPane {
 
 
 
-    public void addBook(Book book) {
+    public void addBook(Book book, boolean isInCartBool) {
 
 
         Text titleText, authorText, categoryText, conditionText, priceText;
@@ -322,20 +322,20 @@ public class Buyer_ShopPane extends BorderPane {
         // find whose book this is
         // look for it in the database
         // set the text of the hyperlink to the seller's username
-        seller.setText("username");
+        //seller.setText(DataBase.getUsernameFromListingID(book.getID()));
+        seller.setText(book.getPublisher());
 
-        /*
         seller.setOnAction(e-> {
             Alert popUpReview = new Alert(Alert.AlertType.INFORMATION);
             String title = "Seller's Review";
-            String headerTitle = "This displays the seller's review";
-            String msg = "This displays the top three reviews";
+            String headerTitle = book.getSellerRating();
+            //String msg = "This displays the top three reviews";
             popUpReview.setTitle(title);
             popUpReview.setHeaderText(headerTitle);
-            popUpReview.setContentText(msg);
+            //popUpReview.setContentText(msg);
             popUpReview.show();
         });
-        */
+
         priceText = new Text("$" + book.getPrice());
         priceText.setWrappingWidth(textWrapWidth);
 
@@ -352,7 +352,6 @@ public class Buyer_ShopPane extends BorderPane {
         addToCartButton = new Button("Add to Cart");
         //long startTime = System.nanoTime(); // Capture start time
         //long endTime = System.nanoTime(); // Capture start time
-        boolean isInCartBool = DataBase.isInCart(user.getUserID(), book.getID());
 
         if(isInCartBool) {
             addToCartButton.setDisable(true);
@@ -446,17 +445,17 @@ public class Buyer_ShopPane extends BorderPane {
         for (Book book : DataBase.searchBooksByFilter(searchField.getText(), conditions, categories, sortOrder)) {
             long startTime = System.nanoTime(); // Capture start time
             boolean inCart = booksincart.contains(book.getID());
-            System.out.println(inCart);
-            addBook(book);
+            //System.out.println(inCart);
+            addBook(book, inCart);
 
             long endTime = System.nanoTime(); // Capture end time
             long duration = endTime - startTime; // Calculate the interval in nanoseconds
-            //System.out.println("Time interval for this iteration: " + (duration / 1_000_000.0) + " ms"); // Display in milliseconds
-            totalDuration += duration/ 1_000_000.0;
+            System.out.println("Time interval for this iteration: " + (duration / 1_000_000.0) + " ms"); // Display in milliseconds
+            totalDuration += duration;
         }
-        System.out.println("totalDuration = " + totalDuration + " ms");
+        System.out.println("totalDuration = " + totalDuration/ 1_000_000.0 + " ms");
 
-        System.out.println("After getting the searchResults");
+        //System.out.println("After getting the searchResults");
 
 
     }
