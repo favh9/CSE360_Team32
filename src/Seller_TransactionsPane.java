@@ -74,14 +74,14 @@ public class Seller_TransactionsPane extends BorderPane {
 
         // set attributes for the header label
         Label headerLabel1 = new Label("Book Title");
-        headerLabel1.setPrefWidth(200);
+        headerLabel1.setPrefWidth(225);
         headerLabel1.setWrapText(true);
         headerLabel1.setFont(Font.font(20));
         headerLabel1.setAlignment(Pos.BASELINE_CENTER);
 
         // set attributes for the header label
         Label headerLabel2 = new Label("Timestamp");
-        headerLabel2.setPrefWidth(200);
+        headerLabel2.setPrefWidth(225);
         headerLabel2.setWrapText(false);
         headerLabel2.setFont(Font.font(20));
         headerLabel2.setAlignment(Pos.BASELINE_CENTER);
@@ -95,7 +95,7 @@ public class Seller_TransactionsPane extends BorderPane {
 
         // set attributes for the header label
         Label headerLabel4 = new Label("Rate Buyer");
-        headerLabel4.setPrefWidth(150);
+        headerLabel4.setPrefWidth(100);
         headerLabel4.setWrapText(true);
         headerLabel4.setFont(Font.font(20));
         headerLabel4.setAlignment(Pos.BASELINE_CENTER);
@@ -194,7 +194,7 @@ public class Seller_TransactionsPane extends BorderPane {
 
         // set attributes for the header label
         Label title = new Label(book.getTitle());
-        title.setPrefWidth(250);
+        title.setPrefWidth(225);
         title.setWrapText(true);
         title.setFont(Font.font(20));
         title.setAlignment(Pos.BASELINE_LEFT);
@@ -205,7 +205,7 @@ public class Seller_TransactionsPane extends BorderPane {
 
         // set attributes for the header label
         Label timestamp = new Label(transaction.getTimestamp());
-        timestamp.setPrefWidth(200);
+        timestamp.setPrefWidth(225);
         timestamp.setWrapText(false);
         timestamp.setFont(Font.font(20));
         timestamp.setAlignment(Pos.BASELINE_CENTER);
@@ -219,8 +219,8 @@ public class Seller_TransactionsPane extends BorderPane {
         amount.setPrefWidth(150);
         amount.setWrapText(false);
         amount.setFont(Font.font(20));
-        amount.setAlignment(Pos.BASELINE_CENTER);
-        amount.setPadding(new Insets(5));
+        amount.setAlignment(Pos.BASELINE_RIGHT);
+        amount.setPadding(new Insets(5,30,5,5));
 
         VBox amountBox = new VBox(amount);
         amountBox.setAlignment(Pos.CENTER);

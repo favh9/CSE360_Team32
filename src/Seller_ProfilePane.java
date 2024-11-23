@@ -118,7 +118,7 @@ public class Seller_ProfilePane extends BorderPane {
         VBox.setMargin(lastnameTextfieldHBox, new Insets(0,350,0,0));
         VBox.setMargin(emailTextFieldHBox, new Insets(0,350,0,0));
         VBox.setMargin(usernameTextfieldHBox, new Insets(0,350,0,0));
-        VBox.setMargin(confirmButton, new Insets(20, 0, 0, 200)); // Position the button in the VBox
+        VBox.setMargin(confirmButton, new Insets(0,0,0,160)); // Position the button in the VBox
         greyVBox.setSpacing(20);
         greyVBox.setPrefHeight(height-160);
         greyVBox.setPadding(new Insets(20,20,20,20));
