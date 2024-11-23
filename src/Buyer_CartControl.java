@@ -29,16 +29,6 @@ public class Buyer_CartControl extends Pane {
         this.width = width;
         this.height = height;
 
-        PaymentInfo paymentInfo = DataBase.getPaymentInfo(user.getUserID());
-
-        if (paymentInfo == null) {
-
-            // If no payment info exists, show the popup and redirect if needed
-            Buyer_CartPane tempPane = new Buyer_CartPane(user, width, height);
-            tempPane.displayNoPaymentMethodFound();
-            return;
-        }
-
         pane = new Buyer_CartPane(user, width, height);
 
         backButton = pane.getBackButton();
@@ -62,6 +52,7 @@ public class Buyer_CartControl extends Pane {
         public void handle(ActionEvent a) {
 
             if (a.getSource() == backButton) {
+
                 // go back to the shop
                 Buyer_ShopControl buyerShop = new Buyer_ShopControl(user, width, height);
                 Main.mainWindow.setScene(new Scene(buyerShop));
@@ -71,10 +62,10 @@ public class Buyer_CartControl extends Pane {
                 PaymentInfo paymentInfo = DataBase.getPaymentInfo(user.getUserID());
 
                 if (paymentInfo == null) {
-                    // If no payment info is found, takes them to the Payment Info page
-                    pane.redirectToPaymentInfo();
+                    pane.displayNoPaymentMethodFound();
                     return;
                 }
+
                 boolean isPaymentInfoCorrect = pane.verifyPaymentInfo(paymentInfo);
 
                 if (isPaymentInfoCorrect) {
