@@ -679,6 +679,30 @@ public class DataBase {
         return cartCount;
     }
 
+    public static void insertTesterBook() {
+        String query = "INSERT INTO listings (book_name, category, cond, price, user_id, author_name, publish_year) "
+                + "VALUES ('test', 'Other', 'Like New', 50.00, 3, 'tester', 2000)";
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            int rowsAffected = stmt.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Tester book successfully inserted.");
+            } else {
+                System.out.println("Failed to insert tester book.");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error inserting tester book: " + e.getMessage());
+        }
+    }
+
+    public static void main(String[] args) {
+        insertTesterBook();
+    }
+
     public static Book getBookFromListing(int listingID) {
         String query = "SELECT l.book_name, l.author_name, l.category, l.cond, l.publish_year, l.profit, l.price, l.listing_id, "
                 + "u.id AS seller_id, u.username AS seller_name, ROUND(u.rating, 1) AS seller_rating "
