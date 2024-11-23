@@ -7,15 +7,17 @@ import java.util.Date;
 
 public class Transaction {
 
-    public int transactionID;
-    public int buyerID;
-    public int sellerID;
-    public Date date;
-    public String timestamp;
-    public Book book;
-    public double amount;
-    public char buyer_reviewed;
-    public char seller_reviewed;
+    private int transactionID;
+    private int buyerID;
+    private int sellerID;
+    private Date date;
+    private String timestamp;
+    private Book book;
+    private double price;
+    private double profit;
+    private char buyer_reviewed;
+    private char seller_reviewed;
+
     public Transaction() {
 
         transactionID = 0;
@@ -23,6 +25,8 @@ public class Transaction {
         sellerID = 0;
         timestamp = "";
         book = new Book();
+        price = 0;
+        profit = 0;
         buyer_reviewed = 'N';
         seller_reviewed = 'N';
     }
@@ -87,10 +91,20 @@ public class Transaction {
     }
 
 
-    public double getAmount() {return amount;}
+    public double getPrice() {
+        return price;
+    }
 
-    public void setAmount(double amount) {
-        this.amount = amount;
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public double getProfit() {
+        return profit;
+    }
+
+    public void setProfit(double profit) {
+        this.profit = profit;
     }
 
     // prints the date and time

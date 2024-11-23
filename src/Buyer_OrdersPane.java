@@ -179,16 +179,16 @@ public class Buyer_OrdersPane extends BorderPane {
         return refreshButton;
     }
 
-    public void addAllOrdersToPane() {
-
-        for(Transaction t : transactionList) {
-
-            clearTransactions();
-
-
-        }
-
-    }
+//    public void addAllOrdersToPane() {
+//
+//        for(Transaction t : transactionList) {
+//
+//            transactionsVBox.getChildren().add(transactionVBox(t));
+//
+//
+//        }
+//
+//    }
 
     public VBox transactionVBox(Transaction transaction) {
 

@@ -11,8 +11,6 @@ public class Buyer_OrdersControl extends Pane {
 
         pane = new Buyer_OrdersPane(user,width,height);
 
-        pane.addAllOrdersToPane();
-
         pane.displayTransactions();
 
         this.getChildren().addAll(pane);
