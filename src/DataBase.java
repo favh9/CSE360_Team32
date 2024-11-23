@@ -1257,7 +1257,8 @@ public class DataBase {
                 transaction.setBook(book);
                 transaction.setBuyer_reviewed(rs.getString("buyer_reviewed").charAt(0));
                 transaction.setSeller_reviewed(rs.getString("seller_reviewed").charAt(0));
-
+                transaction.setProfit(rs.getDouble("profit"));
+                transaction.setPrice(rs.getDouble("price"));
                 transactions.add(transaction);
             }
 
