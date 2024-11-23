@@ -176,9 +176,16 @@ public class Seller_PaymentInfoPane extends BorderPane {
         String cardNumber = cardNumberField.getText().trim();
         String expirationDate = expirationDateField.getText().trim();
         String cvc = cvcField.getText().trim();
-
+        String name = nameOnCardField.getText();
         // Validate Card Number, Expiration Date, and CVC
         return validateCardNumber(cardNumber) && validateExpirationDate(expirationDate) && validateCVC(cvc);
+    }
+
+    public boolean validateCardName(String cardName) {
+        if (!cardName.matches("^[a-zA-Z]+$")) {
+            return false;
+        }
+        return true;
     }
 
     // Validate Card Number using Luhn Algorithm
@@ -305,6 +312,12 @@ public class Seller_PaymentInfoPane extends BorderPane {
     public void displayInvalidCVCAlert() {
         String title = "Invalid CVC";
         String msg = "The CVC must be a 3 or 4-digit number. Please double-check and try again.";
+        displayAlert(Alert.AlertType.ERROR, title, msg);
+    }
+
+    public void displayInvalidName() {
+        String title = "Invalid Name";
+        String msg = "Name on card should not contain anything but letters";
         displayAlert(Alert.AlertType.ERROR, title, msg);
     }
 
