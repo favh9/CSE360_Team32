@@ -540,4 +540,9 @@ public class Buyer_CartPane extends BorderPane {
         if (cardNumber.length() <= 4) return cardNumber;
         return "**** **** **** " + cardNumber.substring(cardNumber.length() - 4);
     }
+
+    /////////////////////////////////////////////////////////
+    // calculate profit for each seller
+    // each book must have a sellerID to which the profit is credited
+    /////////////////////////////////////////////////////////
 }

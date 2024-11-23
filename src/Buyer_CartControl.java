@@ -77,7 +77,7 @@ public class Buyer_CartControl extends Pane {
                     List<Book> cart = pane.getBookList();
                     for (Book book : cart) {
                         int sellerID = DataBase.getSellerID(book.getID());
-                        DataBase.insertTransaction(user.getUserID(), sellerID, book.getID(), pane.computeTotal());
+                        DataBase.insertTransaction(user.getUserID(), sellerID, book.getID(),   pane.computeTotal());
                         DataBase.removeFromCart(user.getUserID(), book.getID());
                         DataBase.markBookAsSold(book.getID());
                     }

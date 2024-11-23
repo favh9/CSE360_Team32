@@ -1,4 +1,5 @@
 import java.text.NumberFormat;
+import java.util.List;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -18,8 +19,11 @@ public class Seller_TransactionsPane extends BorderPane {
     private Button refreshButton;
     private VBox transactionsVBox;
     private Text transactionsAmountText;
+    private List<Transaction> transactionList;
 
     public Seller_TransactionsPane(User user, double width, double height) {
+
+        transactionList = DataBase.returnTransactions(user.getUserID());
 
         Font titleFont = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 42);
         Font quantityFont = Font.font("Arial", FontWeight.NORMAL, FontPosture.REGULAR, 24);
@@ -174,18 +178,23 @@ public class Seller_TransactionsPane extends BorderPane {
 
         int testAmountOfBooks = 20;
 
-        for(int i = 0; i < testAmountOfBooks; i++){
-            addTransactionToPane(new Transaction());
+        for(Transaction t : transactionList){
+            transactionsVBox.getChildren().add(transactionVBox(t));
             updateCount();
         }
 
     }
 
-    public void addTransactionToPane(Transaction transaction) {
+    public VBox transactionVBox(Transaction transaction) {
+
+        NumberFormat nf = NumberFormat.getCurrencyInstance();
+
+
+        Book book = transaction.getBook();
 
         // set attributes for the header label
-        Label title = new Label(transaction.getBook().getTitle());
-        title.setPrefWidth(200);
+        Label title = new Label(book.getTitle());
+        title.setPrefWidth(250);
         title.setWrapText(true);
         title.setFont(Font.font(20));
         title.setAlignment(Pos.BASELINE_LEFT);
@@ -206,12 +215,12 @@ public class Seller_TransactionsPane extends BorderPane {
         timestampBox.setAlignment(Pos.CENTER);
 
         // set attributes for the header label
-        Label amount = new Label("$" + transaction.getProfit());
+        Label amount = new Label(nf.format(transaction.getProfit()));
         amount.setPrefWidth(150);
         amount.setWrapText(false);
         amount.setFont(Font.font(20));
-        amount.setAlignment(Pos.BASELINE_RIGHT);
-        amount.setPadding(new Insets(5,10,5,5));
+        amount.setAlignment(Pos.BASELINE_CENTER);
+        amount.setPadding(new Insets(5));
 
         VBox amountBox = new VBox(amount);
         amountBox.setAlignment(Pos.CENTER);
@@ -225,11 +234,23 @@ public class Seller_TransactionsPane extends BorderPane {
             if (!comboBox.getValue().isEmpty()) {
                 comboBox.setDisable(true);
             }
+            if(transaction.getBuyer_reviewed() == 'Y'){
+                comboBox.setDisable(true);
+            }
+        });
+
+        if(transaction.getBuyer_reviewed() == 'Y'){
+            comboBox.setDisable(true);
+        }
+
+        comboBox.setOnAction(event -> {
+            String selectedRating = comboBox.getValue();
+            DataBase.addBuyerReview(transaction.getBuyerID(), Integer.parseInt(selectedRating), transaction.getTransactionID()); // Call your function here
         });
 
         VBox soldToBox = new VBox(comboBox);
         soldToBox.setPadding(new Insets(5));
-        soldToBox.setPrefWidth(150);
+        soldToBox.setPrefWidth(100);
         soldToBox.setAlignment(Pos.CENTER);
 
         HBox transactionHBox = new HBox(titleBox,timestampBox,amountBox,soldToBox);
@@ -240,8 +261,6 @@ public class Seller_TransactionsPane extends BorderPane {
         lineSeparator.setHeight(1);
         lineSeparator.setFill(Color.BLACK);
 
-        transactionsVBox.getChildren().add(transactionHBox);
-        transactionsVBox.getChildren().add(lineSeparator);
-
+        return new VBox(transactionHBox,lineSeparator);
     }
 }
