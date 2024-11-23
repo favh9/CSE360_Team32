@@ -220,7 +220,9 @@ public class Buyer_OrdersPane extends BorderPane {
         timestampBox.setAlignment(Pos.CENTER);
 
         // set attributes for the header label
-        Label amount = new Label(nf.format(transaction.getPrice()));
+        double Price = transaction.getPrice();
+        double displayPrice = Price + 0.08*Price;
+        Label amount = new Label(nf.format(displayPrice));
         amount.setPrefWidth(150);
         amount.setWrapText(false);
         amount.setFont(Font.font(20));
