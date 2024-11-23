@@ -7,6 +7,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+import java.util.List;
+
 public class Seller_MyBooksPane extends BorderPane {
 
     private CheckBox naturalscienceCheckBox,computerscienceCheckBox,mathCheckBox,englishCheckBox,otherCheckBox,likenewCheckBox,moderatelyusedCheckBox,heavilyusedCheckBox;
@@ -234,7 +236,12 @@ public class Seller_MyBooksPane extends BorderPane {
     // query the database to find books belonging to the user
     public boolean hasBooks() {
 
-        return !(DataBase.myListedBooks(user.getUserID()).isEmpty());
+        long startTime = System.nanoTime();
+        boolean ans = !(DataBase.myListedBooks(user.getUserID()).isEmpty());
+        long endTime = System.nanoTime();
+        long duration = endTime - startTime;
+        System.out.println(" has Books Duration: " + duration/ 1_000_000.0);
+        return ans;
     }
 
     // query the database for the user's books
@@ -247,7 +254,7 @@ public class Seller_MyBooksPane extends BorderPane {
     }
 
     // add a book to the book pane
-    public void addBook(Book book) {
+    public void addBook(Book book, boolean hasBooks) {
 
         Text titleText, authorText, categoryText, conditionText,/* quantityText,*/ priceText;
         //Label quantityLabel;
@@ -298,7 +305,7 @@ public class Seller_MyBooksPane extends BorderPane {
         removeButton.setOnAction(e-> {
             removeBook(book);
             // check again
-            if(hasBooks()) {
+            if(hasBooks) {
                 clearBooks();
                 displayAllBooks();
             } else {
@@ -370,8 +377,20 @@ public class Seller_MyBooksPane extends BorderPane {
         }
         int sortOrder = 1;
         if (descendingRadioButton.isSelected()) { sortOrder = 2;}
-        for (Book book : DataBase.getMyBooksByFilter(user.getUserID(), searchField.getText(), conditions, categories, sortOrder)) {
-            addBook(book);
+        boolean hasBook = false;
+        long init_time = System.nanoTime();
+        List<Book> booksInDB = DataBase.getMyBooksByFilter(user.getUserID(), searchField.getText(), conditions, categories, sortOrder);
+        long fin_time = System.nanoTime();
+        System.out.println("Time to get bookList: " + (fin_time - init_time)/1_000_000.0);
+        for (Book book : booksInDB) {
+            hasBook = true;
+            long initial_time = System.nanoTime();
+            addBook(book, hasBook);
+            long final_time = System.nanoTime();
+            System.out.println("time to add one book:" +( final_time-initial_time)/ 1_000_000.0);
+        }
+        if(!hasBook){
+            displayNoBooksFound();
         }
 
     }
