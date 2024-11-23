@@ -239,6 +239,18 @@ public class Buyer_OrdersPane extends BorderPane {
             if (!comboBox.getValue().isEmpty()) {
                 comboBox.setDisable(true);
             }
+            if(transaction.seller_reviewed == 'Y'){
+                comboBox.setDisable(true);
+            }
+        });
+
+        if(transaction.seller_reviewed == 'Y'){
+            comboBox.setDisable(true);
+        }
+
+        comboBox.setOnAction(event -> {
+            String selectedRating = comboBox.getValue();
+            DataBase.addSellerReview(transaction.sellerID, Integer.parseInt(selectedRating), transaction.transactionID); // Call your function here
         });
 
         VBox soldToBox = new VBox(comboBox);

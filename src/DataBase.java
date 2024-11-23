@@ -1104,7 +1104,7 @@ public class DataBase {
         }
     }
 
-    public static Transaction getTransactionFromResultSet(ResultSet rs) throws SQLException {
+ /*   public static Transaction getTransactionFromResultSet(ResultSet rs) throws SQLException {
         // Retrieve the data from the ResultSet
         int transaction_id = rs.getInt("transaction_id");
         int buyerID = rs.getInt("buyer_id");
@@ -1124,9 +1124,10 @@ public class DataBase {
         transaction.timestamp = date.toString();
         transaction.book = getBookFromListing(bookID);  // Assume this method retrieves a Book from Listings table based on bookID
         transaction.amount = amount;
+        transaction.buyer_reviewed =
 
         return transaction;
-    }
+    }*/
 
     public static void insertTransaction(int buyerID, int sellerID, int bookID, double price) {
         // Insert query for the Transactions table
@@ -1208,11 +1209,16 @@ public class DataBase {
 
     public static List<Transaction> returnTransactions(Integer userID) {
         List<Transaction> transactions = new ArrayList<>();
-        String query = "SELECT * FROM transactions";
+        String query = "SELECT t.transaction_id, t.buyer_id, t.seller_id, t.time_stamp, t.buyer_reviewed, t.seller_reviewed, " +
+                "l.book_name, l.author_name, l.category, l.cond, l.publish_year, l.price, l.profit, l.listing_id, " +
+                "u.id AS seller_id, u.username AS seller_name, u.rating AS seller_rating " +
+                "FROM transactions t " +
+                "JOIN listings l ON t.book_id = l.listing_id " +
+                "JOIN users u ON l.user_id = u.id";
 
         // Modify the query if userID is provided
         if (userID != null) {
-            query += " WHERE buyer_id = ? OR seller_id = ?";
+            query += " WHERE t.buyer_id = ? OR t.seller_id = ?";
         }
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -1227,8 +1233,31 @@ public class DataBase {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                // Create a Transaction object from the result set
-                Transaction transaction = getTransactionFromResultSet(rs);
+                // Create Book object with rating and profit from listings and users tables
+                Book book = new Book(
+                        rs.getString("book_name"),
+                        rs.getString("author_name"),
+                        rs.getString("category"),
+                        rs.getString("cond"),
+                        rs.getDouble("profit"),       // Profit from listings table
+                        rs.getDouble("price"),
+                        rs.getInt("publish_year"),
+                        rs.getInt("listing_id"),
+                        rs.getInt("seller_id"),
+                        rs.getString("seller_name"),
+                        rs.getDouble("seller_rating")  // Rating from users table
+                );
+
+                // Create Transaction object
+                Transaction transaction = new Transaction();
+                transaction.transactionID = rs.getInt("transaction_id");
+                transaction.buyerID = rs.getInt("buyer_id");
+                transaction.sellerID = rs.getInt("seller_id");
+                transaction.timestamp = rs.getString("time_stamp");
+                transaction.book = book;
+                transaction.buyer_reviewed = rs.getString("buyer_reviewed").charAt(0);
+                transaction.seller_reviewed = rs.getString("seller_reviewed").charAt(0);
+
                 transactions.add(transaction);
             }
 
@@ -1392,13 +1421,65 @@ public class DataBase {
         return username;
     }
 
-    public static void addReview(int userID, double newRating) {
+    public static void addBuyerReview(int sellerID, double newRating, int transactionID) {
         String query = "SELECT rating, num_reviews FROM users WHERE id = ?";
-        String updateQuery = "UPDATE users SET rating = ?, num_reviews = ? WHERE id = ?";
+        String updateUserQuery = "UPDATE users SET rating = ?, num_reviews = ? WHERE id = ?";
+        String updateTransactionQuery = "UPDATE transactions SET buyer_reviewed = 'Y' WHERE id = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement selectStmt = conn.prepareStatement(query);
-             PreparedStatement updateStmt = conn.prepareStatement(updateQuery)) {
+             PreparedStatement updateUserStmt = conn.prepareStatement(updateUserQuery);
+             PreparedStatement updateTransactionStmt = conn.prepareStatement(updateTransactionQuery)) {
+
+            // Get the current rating and num_reviews for the user
+            selectStmt.setInt(1, sellerID);
+            ResultSet rs = selectStmt.executeQuery();
+
+            if (rs.next()) {
+                double currentRating = rs.getDouble("rating");
+                int currentNumReviews = rs.getInt("num_reviews");
+
+                // Calculate the new rating
+                double totalRating = (currentRating * currentNumReviews) + newRating;
+                int newNumReviews = currentNumReviews + 1;
+                double updatedRating = totalRating / newNumReviews;
+
+                // Update the rating and numReviews in the database
+                updateUserStmt.setDouble(1, updatedRating);
+                updateUserStmt.setInt(2, newNumReviews);
+                updateUserStmt.setInt(3, sellerID);
+                updateUserStmt.executeUpdate();
+
+                System.out.println("Updated user rating to: " + updatedRating + " with total reviews: " + newNumReviews);
+
+                // Update the buyer_reviewed status in the transactions table
+                updateTransactionStmt.setInt(1, transactionID);
+                int rowsAffected = updateTransactionStmt.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("Successfully set buyer_reviewed to 'Y' for transaction ID: " + transactionID);
+                } else {
+                    System.out.println("Transaction not found with transaction_id: " + transactionID);
+                }
+            } else {
+                System.out.println("User not found with user_id: " + sellerID);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error updating user review or transaction status: " + e.getMessage());
+        }
+    }
+
+
+    public static void addSellerReview(int userID, double newRating, int transactionID) {
+        String query = "SELECT rating, num_reviews FROM users WHERE id = ?";
+        String updateUserQuery = "UPDATE users SET rating = ?, num_reviews = ? WHERE id = ?";
+        String updateTransactionQuery = "UPDATE transactions SET seller_reviewed = 'Y' WHERE transaction_id = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement selectStmt = conn.prepareStatement(query);
+             PreparedStatement updateUserStmt = conn.prepareStatement(updateUserQuery);
+             PreparedStatement updateTransactionStmt = conn.prepareStatement(updateTransactionQuery)) {
 
             // Get the current rating and num_reviews for the user
             selectStmt.setInt(1, userID);
@@ -1414,20 +1495,33 @@ public class DataBase {
                 double updatedRating = totalRating / newNumReviews;
 
                 // Update the rating and numReviews in the database
-                updateStmt.setDouble(1, updatedRating);
-                updateStmt.setInt(2, newNumReviews);
-                updateStmt.setInt(3, userID);
-                updateStmt.executeUpdate();
+                updateUserStmt.setDouble(1, updatedRating);
+                updateUserStmt.setInt(2, newNumReviews);
+                updateUserStmt.setInt(3, userID);
+                updateUserStmt.executeUpdate();
 
                 System.out.println("Updated user rating to: " + updatedRating + " with total reviews: " + newNumReviews);
+
+                // Update the seller_reviewed status in the transactions table
+                updateTransactionStmt.setInt(1, transactionID);
+                int rowsAffected = updateTransactionStmt.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("Successfully set seller_reviewed to 'Y' for transaction ID: " + transactionID);
+                } else {
+                    System.out.println("Transaction not found with transaction_id: " + transactionID);
+                }
             } else {
                 System.out.println("User not found with user_id: " + userID);
             }
 
         } catch (SQLException e) {
-            System.out.println("Error updating user review: " + e.getMessage());
+            System.out.println("Error updating user review or transaction status: " + e.getMessage());
         }
     }
+
+
+
 
     public static double getReview(int userID) {
         double rating = 0.0;

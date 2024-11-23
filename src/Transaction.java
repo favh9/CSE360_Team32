@@ -14,6 +14,8 @@ public class Transaction {
     public String timestamp;
     public Book book;
     public double amount;
+    public char buyer_reviewed;
+    public char seller_reviewed;
     public Transaction() {
 
         transactionID = 0;
@@ -21,9 +23,25 @@ public class Transaction {
         sellerID = 0;
         timestamp = "";
         book = new Book();
-        amount = 0.0;
+        buyer_reviewed = 'N';
+        seller_reviewed = 'N';
     }
 
+    public char getBuyer_reviewed() {
+        return buyer_reviewed;
+    }
+
+    public void setBuyer_reviewed(char buyer_reviewed) {
+        this.buyer_reviewed = buyer_reviewed;
+    }
+
+    public char getSeller_reviewed() {
+        return seller_reviewed;
+    }
+
+    public void setSeller_reviewed(char seller_reviewed) {
+        this.seller_reviewed = seller_reviewed;
+    }
     public int getTransactionID() {
         return transactionID;
     }
@@ -48,9 +66,9 @@ public class Transaction {
         this.sellerID = sellerID;
     }
 
-//    public String getTimestamp() {
-//        return timestamp.toString();
-//    }
+//  public String getTimestamp() {
+//      return timestamp.toString();
+//  }
 
     public String getTimestamp() {
         return timestamp;
@@ -69,10 +87,7 @@ public class Transaction {
     }
 
 
-
-    public double getAmount() {
-        return amount;
-    }
+    public double getAmount() {return amount;}
 
     public void setAmount(double amount) {
         this.amount = amount;
