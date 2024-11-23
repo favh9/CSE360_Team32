@@ -1159,7 +1159,7 @@ public class DataBase {
                 insertStmt.setInt(1, buyerID);
                 insertStmt.setInt(2, sellerID);
                 insertStmt.setInt(3, bookID);
-                insertStmt.setDouble(4, price); // Insert the provided price into listing_price
+                insertStmt.setDouble(4, (price+ 0.08*price)); // Insert the provided price into listing_price
                 insertStmt.setDouble(5, listingPrice); // Insert the listing price as profit
 
                 // Execute the insert query
