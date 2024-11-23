@@ -164,19 +164,20 @@ public class Admin_UsersPane extends BorderPane {
         usersVBox.getChildren().clear();
     }
 
-    public void addUserToPane(int id, String usertype) {
+    public void addUserToPane(String username, String usertype) {
 
         updateCount();
 
         // set attributes for the header label
-        Label sellerLabel = new Label(Integer.toString(id));
-        sellerLabel.setPrefWidth(500);
-        sellerLabel.setWrapText(true);
-        sellerLabel.setFont(Font.font(20));
-        sellerLabel.setAlignment(Pos.BASELINE_LEFT);
-        sellerLabel.setPadding(new Insets(5));
+//        Label sellerLabel = new Label(Integer.toString(id));
+        Label usernameLabel = new Label(username);
+        usernameLabel.setPrefWidth(500);
+        usernameLabel.setWrapText(true);
+        usernameLabel.setFont(Font.font(20));
+        usernameLabel.setAlignment(Pos.BASELINE_LEFT);
+        usernameLabel.setPadding(new Insets(5));
 
-        VBox sellerVBox = new VBox(sellerLabel);
+        VBox sellerVBox = new VBox(usernameLabel);
         sellerVBox.setAlignment(Pos.CENTER);
 
         // set attributes for the header label
@@ -184,7 +185,7 @@ public class Admin_UsersPane extends BorderPane {
         buyerLabel.setPrefWidth(200);
         buyerLabel.setWrapText(true);
         buyerLabel.setFont(Font.font(20));
-        buyerLabel.setAlignment(Pos.BASELINE_LEFT);
+        buyerLabel.setAlignment(Pos.CENTER);
         buyerLabel.setPadding(new Insets(5));
 
         VBox buyerVBox = new VBox(buyerLabel);

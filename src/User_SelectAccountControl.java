@@ -63,7 +63,8 @@ public class User_SelectAccountControl extends Pane {
             if (a.getSource().equals(buyButton)) {
                 // If the user is new, update their user type and navigate to the Buyer_ShopControl
                 if (user.getUserType().equals("new_user")) {
-                    user.setUserType("returning_user");
+//                    user.setUserType("returning_user");
+                    DataBase.makeBuyer(user.getUserID());
                     DataBase.updateUserType(user.getUsername(), "returning_user");
                     Buyer_ShopControl buyer = new Buyer_ShopControl(user, width, height);
                     Main.mainWindow.setScene(new Scene(buyer)); // Set the scene for buying
@@ -77,7 +78,8 @@ public class User_SelectAccountControl extends Pane {
             } else if (a.getSource().equals(sellButton)) {
                 // If the user is new, update their user type and navigate to the Seller_PostBookControl
                 if (user.getUserType().equals("new_user")) {
-                    user.setUserType("returning_user");
+//                    user.setUserType("returning_user");
+                    DataBase.makeSeller(user.getUserID());
                     DataBase.updateUserType(user.getUsername(), "returning_user");
                     Seller_PostBookControl seller = new Seller_PostBookControl(user, width, height);
                     Main.mainWindow.setScene(new Scene(seller)); // Set the scene for selling

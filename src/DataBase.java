@@ -211,6 +211,40 @@ public class DataBase {
         }
     }
 
+    // displays the users in table
+    public static List<User> getUsers() {
+
+        List<User> users = new ArrayList<>();
+
+        String query = "SELECT id, first_name, last_name, dob, email, username, password, user_type FROM users";  // Select both username and user_type columns
+
+        // JDBC connection
+        try (Connection connection = DriverManager.getConnection(DataBase.URL, DataBase.USER, DataBase.PASSWORD);
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+
+            // Iterate through the ResultSet and process the data
+            while (resultSet.next()) {
+                // Get the data from the result set
+                int id = resultSet.getInt("id");
+                String firstname = resultSet.getString("first_name");
+                String lastname = resultSet.getString("last_name");
+                String dob = resultSet.getString("dob");
+                String email = resultSet.getString("email");
+                String username = resultSet.getString("username");
+                String password = resultSet.getString("password");
+                String usertype = resultSet.getString("user_type");
+
+                // int userID, String firstName, String lastName, String dob, String email, String username, String password, String userType
+                users.add(new User(id,firstname,lastname,dob,email,username,password,usertype));
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error retrieving users: " + e.getMessage());
+        }
+        return users;
+    }
+
     public static void updateUsername(int userID, String newUsername) {
         String query = "UPDATE users SET username = ? WHERE id = ?";
 
