@@ -211,6 +211,10 @@ public class Seller_PostBookPane extends BorderPane {
             if(price <= 0) {
                 return false;
             }
+            if(price > 10000) {
+                return false;
+            }
+
 
         } catch (NumberFormatException e) {
             System.out.println("Invalid price");
@@ -223,7 +227,7 @@ public class Seller_PostBookPane extends BorderPane {
     public void displayInvalidPrice() {
 
         Alert alert = new Alert(Alert.AlertType.WARNING);
-        String msg = "You have entered an invalid price, please input an amount greater than 0.";
+        String msg = "You have entered an invalid price, please input an amount between 0 and 10,000.";
         alert.setTitle("Warning");
         alert.setHeaderText(null);
         alert.setContentText(msg);
