@@ -13,24 +13,23 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Calendar;
 
 public class Seller_PostBookPane extends BorderPane {
 
+    private User user;
+    private double width;
+    private double height;
     private Seller_NavigationControl navigationControl;
     private TextField booknameField;
     private TextField authorField;
     private ComboBox<String> yearComboBox;
-    private ChoiceBox<String> categoryChoiceBox;
-    private ChoiceBox<String> conditionChoiceBox;
+    private ComboBox<String> categoryComboBox;
+    private ComboBox<String> conditionComboBox;
     private TextField priceField;
     private TextField generatedpriceField;
     private Button listmybookButton;
-    private User user;
-    private double originalPrice;
-    private double generatedPrice;
-    private double width;
-    private double height;
 
     public Seller_PostBookPane(User user, double width, double height) {
 
@@ -66,6 +65,7 @@ public class Seller_PostBookPane extends BorderPane {
 
         // set attributes for the box
         yearComboBox = new ComboBox<>();
+        yearComboBox.setPromptText("Select Year");
         yearComboBox.setVisibleRowCount(10);
 
         // get the current year
@@ -77,23 +77,20 @@ public class Seller_PostBookPane extends BorderPane {
             yearComboBox.getItems().add(Integer.toString(year));
         }
 
-        // set the default choice to current year
-        yearComboBox.setValue("Published Year");
+        // set attributes for choice box
+        categoryComboBox = new ComboBox<>();
+        categoryComboBox.setPromptText("Select Category");
+        categoryComboBox.getItems().add("Math");
+        categoryComboBox.getItems().add("Computer Science");
+        categoryComboBox.getItems().add("English");
+        categoryComboBox.getItems().add("Other");
 
         // set attributes for choice box
-        categoryChoiceBox = new ChoiceBox<>();
-        categoryChoiceBox.setValue("Select Category");
-        categoryChoiceBox.getItems().add("Math");
-        categoryChoiceBox.getItems().add("Computer Science");
-        categoryChoiceBox.getItems().add("English");
-        categoryChoiceBox.getItems().add("Other");
-
-        // set attributes for choice box
-        conditionChoiceBox = new ChoiceBox<>();
-        conditionChoiceBox.setValue("Select Condition");
-        conditionChoiceBox.getItems().add("Like New");
-        conditionChoiceBox.getItems().add("Moderately Used");
-        conditionChoiceBox.getItems().add("Heavily Used");
+        conditionComboBox = new ComboBox<>();
+        conditionComboBox.setPromptText("Select Condition");
+        conditionComboBox.getItems().add("Like New");
+        conditionComboBox.getItems().add("Moderately Used");
+        conditionComboBox.getItems().add("Heavily Used");
 
         // set attributes for the text field
         priceField = new TextField();
@@ -129,7 +126,7 @@ public class Seller_PostBookPane extends BorderPane {
         listmybookButton = new Button("List My Book");
 
         // insert user information boxes into this VBox
-        VBox infoVBox = new VBox(instructionLabel, booknameHBox, authorHBox, yearComboBox, categoryChoiceBox, conditionChoiceBox, priceHBox, priceVBox, listmybookButton);
+        VBox infoVBox = new VBox(instructionLabel, booknameHBox, authorHBox, yearComboBox, categoryComboBox, conditionComboBox, priceHBox, priceVBox, listmybookButton);
         infoVBox.setSpacing(15);
         infoVBox.setPadding(new Insets(20,20,20,20));
         infoVBox.setStyle(
@@ -170,13 +167,23 @@ public class Seller_PostBookPane extends BorderPane {
             return true;
         } else if (authorField.getText().isEmpty()) {
             return true;
-        } else if(yearComboBox.getValue().equals("Published Year")) {
+        } else if(yearComboBox.getValue() == null ) {
             return true;
-        } else if (categoryChoiceBox.getValue().equals("Select Category")) {
+        } else if (categoryComboBox.getValue() == null) {
             return true;
-        } else if (conditionChoiceBox.getValue().equals("Select Condition")) {
+        } else if (conditionComboBox.getValue() == null) {
             return true;
         } else return priceField.getText().isEmpty();
+    }
+
+//    public void displayPrice(double num) {
+////        NumberFormat nf = NumberFormat.getCurrencyInstance();
+////        priceField.setText(nf.format(num));
+//        priceField.setText("$" + num);
+//    }
+    public void displayGeneratedPrice(double num) {
+        NumberFormat nf = NumberFormat.getCurrencyInstance();
+        generatedpriceField.setText(nf.format(num));
     }
 
     public void displayEmptyFields() {
@@ -187,11 +194,11 @@ public class Seller_PostBookPane extends BorderPane {
             missingData += "\tBook Name\n";
         if(authorField.getText().isEmpty())
             missingData += "\tAuthor\n";
-        if(yearComboBox.getValue().equals("Published Year"))
+        if(yearComboBox.getValue() == null )
             missingData += "\tPublished Year\n";
-        if(categoryChoiceBox.getValue().equals("Select Category"))
+        if (categoryComboBox.getValue() == null)
             missingData += "\tCategory\n";
-        if(conditionChoiceBox.getValue().equals("Select Condition"))
+        if (conditionComboBox.getValue() == null)
             missingData += "\tCondition\n";
         if(priceField.getText().isEmpty())
             missingData += "\tPrice\n";
@@ -200,26 +207,6 @@ public class Seller_PostBookPane extends BorderPane {
         alert.setHeaderText(null);
         alert.setContentText(missingData);
         alert.show();
-    }
-
-    public boolean isPriceValid() {
-
-        double price;
-
-        try {
-
-            price = Double.parseDouble(priceField.getText());
-
-            if(price <= 0) {
-                return false;
-            }
-
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid price");
-            return false;
-        }
-
-        return true;
     }
 
     public void displayInvalidPrice() {
@@ -257,39 +244,17 @@ public class Seller_PostBookPane extends BorderPane {
     }
 
 
+    public boolean displayConfirmPost(double charge, double profit) {
 
-
-
-
-    public double computeGeneratedPrice() {
-        int type = 0;
-        double generatedPrice;
-
-        if(getCondition().compareTo("Like New") == 0) { type = 1; }
-        else if(getCondition().compareTo("Moderately Used") == 0) { type = 2; }
-        else if(getCondition().compareTo("Heavily Used") == 0) { type = 3; }
-
-        if(isPriceValid()) {
-
-            generatedPrice = Double.parseDouble(priceField.getText()) - (Double.parseDouble(priceField.getText()) * DataBase.getMarkdown(type));
-            generatedpriceField.setText("$"+ generatedPrice);
-            return generatedPrice;
-        }
-        return 0;
-    }
-
-    DecimalFormat df = new DecimalFormat("#.##");
-
-    public boolean confirmPost() {
-
+        NumberFormat nf = NumberFormat.getCurrencyInstance();
         boolean confirmed = false;
-        double fee = 0.20;
+        double fee = Main.fee;
 
         // Create the alert dialog
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         String msg = "You are about to post this book for sale." +
-                "\nYou will be charged $" + df.format(computeGeneratedPrice() * fee) +
-                "\nYour total profit is $" + df.format(computeGeneratedPrice() - (computeGeneratedPrice() * fee)) +
+                "\nYou will be charged " + nf.format(charge) +
+                "\nYour total profit is " + nf.format(profit) +
                 "\nPlease confirm whether you would like to continue.";
 
         alert.setTitle("Confirm Post");
@@ -300,58 +265,34 @@ public class Seller_PostBookPane extends BorderPane {
         ButtonType result = alert.showAndWait().orElse(ButtonType.CANCEL);
 
         // Update the confirmed variable based on the user's choice
-        if (result == ButtonType.OK) {
-            confirmed = true; // User clicked "Confirm"
-        } else if (result == ButtonType.CANCEL) {
-            confirmed = false; // User clicked "Cancel"
-        }
-
-        return confirmed;
+        return (result == ButtonType.OK);
     }
 
-
-    public String getBookTitle() {
-        return booknameField.getText();
+    public TextField getBooknameField() {
+        return booknameField;
     }
 
-    public String getAuthor() {
-        return authorField.getText();
+    public TextField getAuthorField() {
+        return authorField;
     }
 
-    public String getPublishedYear() {
-        return yearComboBox.getValue();
+    public ComboBox<String> getYearComboBox() {
+        return yearComboBox;
     }
 
-    public String getCategory() {
-        return categoryChoiceBox.getValue();
+    public ComboBox<String> getCategoryComboBox() {
+        return categoryComboBox;
     }
 
-    public String getCondition() {
-        return conditionChoiceBox.getValue();
+    public ComboBox<String> getConditionComboBox() {
+        return conditionComboBox;
     }
 
-    public double getPrice() {
-        return Double.parseDouble(priceField.getText());
+    public TextField getPriceField() {
+        return priceField;
     }
 
-    public double computeProfit() {
-        double fee = 0.20;
-        return (computeGeneratedPrice() - (computeGeneratedPrice() * fee));
-    }
-
-    public double getGeneratedPrice() {
-        return generatedPrice;
-    }
-
-    public void setGeneratedPrice(double generatedPrice) {
-        this.generatedPrice = generatedPrice;
-    }
-
-    public double getOriginalPrice() {
-        return originalPrice;
-    }
-
-    public void setOriginalPrice(double originalPrice) {
-        this.originalPrice = originalPrice;
+    public TextField getGeneratedpriceField() {
+        return generatedpriceField;
     }
 }

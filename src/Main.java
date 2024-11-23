@@ -21,6 +21,9 @@ public class Main extends Application {
     public final double WIDTH = 960;
     public final double HEIGHT = 600;
 
+    // global variables
+    public static double fee = .20; // admin fee per book
+
     // images are not ours, we get them from the following links
     // static images to later use for the rest of the project
     public static Image cartIcon = new Image("https://cdn-icons-png.flaticon.com/512/1413/1413908.png");
