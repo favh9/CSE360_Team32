@@ -13,7 +13,6 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.Calendar;
 
 public class Seller_PostBookPane extends BorderPane {
@@ -24,7 +23,6 @@ public class Seller_PostBookPane extends BorderPane {
     private ComboBox<String> yearComboBox;
     private ChoiceBox<String> categoryChoiceBox;
     private ChoiceBox<String> conditionChoiceBox;
-    private double profit;
     private TextField priceField;
     private TextField generatedpriceField;
     private Button listmybookButton;
@@ -256,59 +254,40 @@ public class Seller_PostBookPane extends BorderPane {
         acctCreatedAlert.show();
     }
 
-    public double getPriceAdjustment() {
+
+
+
+
+
+    public double computeGeneratedPrice() {
         int type = 0;
+        double generatedPrice;
+
         if(getCondition().compareTo("Like New") == 0) { type = 1; }
         else if(getCondition().compareTo("Moderately Used") == 0) { type = 2; }
         else if(getCondition().compareTo("Heavily Used") == 0) { type = 3; }
 
-        return DataBase.getMarkdown(type);
+        if(isPriceValid()) {
+
+            generatedPrice = Double.parseDouble(priceField.getText()) - (Double.parseDouble(priceField.getText()) * DataBase.getMarkdown(type));
+            generatedpriceField.setText("$"+ generatedPrice);
+            return generatedPrice;
+        }
+        return 0;
     }
 
-    public double computeGeneratedPrice() {
-        double priceAdjustment = getPriceAdjustment();
-        double originalPrice = getPrice();
-
-        return originalPrice - (originalPrice * priceAdjustment);
-    }
-
-    public double computeAdminCharge() {
-        return computeGeneratedPrice() - (computeGeneratedPrice() * getAdminFee());
-    }
-
-    public double getAdminFee() {
-        return .20;
-    }
-
-    public double computeProfit() {
-
-        double generatedPrice = computeGeneratedPrice();
-        return generatedPrice - (generatedPrice * getAdminFee());
-    }
-
-    public void displayGeneratedPrice() {
-
-        NumberFormat nf = NumberFormat.getCurrencyInstance();
-
-        String str = nf.format(computeGeneratedPrice());
-
-        generatedpriceField.setText(str);
-    }
+    DecimalFormat df = new DecimalFormat("#.##");
 
     public boolean confirmPost() {
 
-        NumberFormat nf = NumberFormat.getCurrencyInstance();
-
-        String adminCharge = nf.format(computeAdminCharge());
-        String profit = nf.format(computeProfit());
-
-        displayGeneratedPrice();
+        boolean confirmed = false;
+        double fee = 0.20;
 
         // Create the alert dialog
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         String msg = "You are about to post this book for sale." +
-                "\nYou will be charged $" + adminCharge +
-                "\nYour total profit is $" + profit +
+                "\nYou will be charged $" + df.format(computeGeneratedPrice() * fee) +
+                "\nYour total profit is $" + df.format(computeGeneratedPrice() - (computeGeneratedPrice() * fee)) +
                 "\nPlease confirm whether you would like to continue.";
 
         alert.setTitle("Confirm Post");
@@ -319,7 +298,13 @@ public class Seller_PostBookPane extends BorderPane {
         ButtonType result = alert.showAndWait().orElse(ButtonType.CANCEL);
 
         // Update the confirmed variable based on the user's choice
-        return result == ButtonType.OK;
+        if (result == ButtonType.OK) {
+            confirmed = true; // User clicked "Confirm"
+        } else if (result == ButtonType.CANCEL) {
+            confirmed = false; // User clicked "Cancel"
+        }
+
+        return confirmed;
     }
 
 
@@ -345,5 +330,10 @@ public class Seller_PostBookPane extends BorderPane {
 
     public double getPrice() {
         return Double.parseDouble(priceField.getText());
+    }
+
+    public double computeProfit() {
+        double fee = 0.20;
+        return (computeGeneratedPrice() - (computeGeneratedPrice() * fee));
     }
 }
