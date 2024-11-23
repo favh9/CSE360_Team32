@@ -29,6 +29,16 @@ public class Buyer_CartControl extends Pane {
         this.width = width;
         this.height = height;
 
+        PaymentInfo paymentInfo = DataBase.getPaymentInfo(user.getUserID());
+
+        if (paymentInfo == null) {
+
+            // If no payment info exists, show the popup and redirect if needed
+            Buyer_CartPane tempPane = new Buyer_CartPane(user, width, height);
+            tempPane.displayNoPaymentMethodFound();
+            return;
+        }
+
         pane = new Buyer_CartPane(user, width, height);
 
         backButton = pane.getBackButton();
@@ -51,27 +61,34 @@ public class Buyer_CartControl extends Pane {
         @Override
         public void handle(ActionEvent a) {
 
-            if(a.getSource() == backButton) {
+            if (a.getSource() == backButton) {
+                // go back to the shop
+                Buyer_ShopControl buyerShop = new Buyer_ShopControl(user, width, height);
+                Main.mainWindow.setScene(new Scene(buyerShop));
 
-                Buyer_ShopControl buyer_shop = new Buyer_ShopControl(user,width,height);
-                Main.mainWindow.setScene(new Scene(buyer_shop));
             } else if (a.getSource() == checkoutButton) {
+                // gets the user's payment info
+                PaymentInfo paymentInfo = DataBase.getPaymentInfo(user.getUserID());
 
-                pane.pushConfirm();
+                if (paymentInfo == null) {
+                    // If no payment info is found, takes them to the Payment Info page
+                    pane.redirectToPaymentInfo();
+                    return;
+                }
+                boolean isPaymentInfoCorrect = pane.verifyPaymentInfo(paymentInfo);
 
-                if(pane.displayConfirmOrder()) {
+                if (isPaymentInfoCorrect) {
 
-                    cart = pane.getBookList();
-
+                    List<Book> cart = pane.getBookList();
                     for (Book book : cart) {
                         int sellerID = DataBase.getSellerID(book.getID());
                         DataBase.insertTransaction(user.getUserID(), sellerID, book.getID(), pane.computeTotal());
                         DataBase.removeFromCart(user.getUserID(), book.getID());
                         DataBase.markBookAsSold(book.getID());
                     }
-
                     pane.displayTransactionSuccess();
                 } else {
+                    // Stay on cart page if payment info is incorrect
                     pane.cancelConfirm();
                 }
 
