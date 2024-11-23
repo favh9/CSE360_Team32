@@ -27,6 +27,8 @@ public class Seller_PostBookPane extends BorderPane {
     private TextField generatedpriceField;
     private Button listmybookButton;
     private User user;
+    private double originalPrice;
+    private double generatedPrice;
     private double width;
     private double height;
 
@@ -335,5 +337,21 @@ public class Seller_PostBookPane extends BorderPane {
     public double computeProfit() {
         double fee = 0.20;
         return (computeGeneratedPrice() - (computeGeneratedPrice() * fee));
+    }
+
+    public double getGeneratedPrice() {
+        return generatedPrice;
+    }
+
+    public void setGeneratedPrice(double generatedPrice) {
+        this.generatedPrice = generatedPrice;
+    }
+
+    public double getOriginalPrice() {
+        return originalPrice;
+    }
+
+    public void setOriginalPrice(double originalPrice) {
+        this.originalPrice = originalPrice;
     }
 }
